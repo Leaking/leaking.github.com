@@ -13,6 +13,7 @@ date: 2014-08-29T00:23:53+08:00
 ### 怎么新建类别，文章
 
 ##1，
+测试文章修改，，，-----delete
 用新建一个篇文章
 其中posts即将作为类别
 octopress new post "New Post Title" --dir posts
