@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2014-08-31T13:53:06+08:00</updated>
+<updated>2014-08-31T21:27:53+08:00</updated>
 <id>/</id>
 <author>
   <name>Your Name</name>
@@ -16,7 +16,7 @@
   
 
 <entry>
-  <title type="html"><![CDATA[How to Build Me]]></title>
+  <title type="html"><![CDATA[Jekyll搭建博客]]></title>
   <link rel="alternate" type="text/html" href="/tools/how-to-build-me/" />
   <id>/tools/how-to-build-me</id>
   <published>2014-08-29T00:23:53+08:00</published>
@@ -26,23 +26,37 @@
     <uri></uri>
     <email>you@email.com</email>
   </author>
-  <content type="html">&lt;h3 id=&quot;section&quot;&gt;怎么新建类别，文章&lt;/h3&gt;
+  <content type="html">&lt;p&gt;终于搭建好了这个博客，记录一下安装过程&lt;/p&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;1，&lt;/h2&gt;
-&lt;p&gt;用新建一个篇文章
-其中posts即将作为类别
-octopress new post “New Post Title” –dir posts
-然后_post文件夹中就会产生相应文件
-在每篇博文的md文件中，头部都有注明类别，这个地方很重要！&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;（必须）安装ruby,Devkit&lt;/li&gt;
+    &lt;li&gt;（必须）安装Jekyll&lt;/li&gt;
+    &lt;li&gt;（非必须）Python，&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
 
-&lt;h2 id=&quot;section-2&quot;&gt;2，&lt;/h2&gt;
-&lt;p&gt;在catagory中添加类别&lt;/p&gt;
+&lt;p&gt;其中安装Jekyll的时候，我总是遇到问题，结果发现问题是天朝的网络在作祟
+先运行如下代码即可&lt;/p&gt;
 
-&lt;h2 id=&quot;section-3&quot;&gt;3，&lt;/h2&gt;
-&lt;p&gt;在根目录下添加posts文件夹，加入一个index.html的布局文件，可以copy自其它分类
-完成！（_site中的文件会自动生成）&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sources&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;remove&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rubygems&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sources&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ruby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;taobao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sources&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;***&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;CURRENT&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SOURCES&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;***&lt;/span&gt;
 
-  &lt;p&gt;&lt;a href=&quot;/tools/how-to-build-me/&quot;&gt;How to Build Me&lt;/a&gt; was originally published by Your Name at &lt;a href=&quot;&quot;&gt;Site Title&lt;/a&gt; on August 29, 2014.&lt;/p&gt;</content>
+&lt;span class=&quot;ss&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ruby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;taobao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# 请确保只有 ruby.taobao.org&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rails&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;以下是我参考的网站，根据这几个网站完全能搞懂如何在Github上搭建博客&lt;/p&gt;
+
+&lt;p&gt;1、&lt;a href=&quot;http://yizeng.me/2013/05/10/setup-jekyll-on-windows/#install-pygments&quot;&gt;http://yizeng.me/2013/05/10/setup-jekyll-on-windows/#install-pygments&lt;/a&gt;
+2、&lt;a href=&quot;http://www.cnblogs.com/hutaoer/archive/2013/02/06/3078873.html&quot;&gt;http://www.cnblogs.com/hutaoer/archive/2013/02/06/3078873.html&lt;/a&gt;
+3、&lt;a href=&quot;http://blog.fens.me/jekyll-bootstarp-github/&quot;&gt;http://blog.fens.me/jekyll-bootstarp-github/&lt;/a&gt;
+4、&lt;a href=&quot;http://www.jekyllbootstrap.com/usage/jekyll-quick-start.html&quot;&gt;http://www.jekyllbootstrap.com/usage/jekyll-quick-start.html&lt;/a&gt;&lt;/p&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/tools/how-to-build-me/&quot;&gt;Jekyll搭建博客&lt;/a&gt; was originally published by Your Name at &lt;a href=&quot;&quot;&gt;Site Title&lt;/a&gt; on August 29, 2014.&lt;/p&gt;</content>
 </entry>
 
 

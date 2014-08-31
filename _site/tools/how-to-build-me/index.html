@@ -5,14 +5,14 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>How to Build Me &#8211; Site Title</title>
+<title>Jekyll搭建博客 &#8211; Site Title</title>
 
 <meta name="keywords" content="">
 
 
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="How to Build Me">
+<meta name="twitter:title" content="Jekyll搭建博客">
 
 
 
@@ -23,7 +23,7 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="How to Build Me">
+<meta property="og:title" content="Jekyll搭建博客">
 
 <meta property="og:url" content="/tools/how-to-build-me/">
 <meta property="og:site_name" content="Site Title">
@@ -87,7 +87,7 @@
 		    
 		        
 		    
-		    <li><a href="/Tools/" >Tools</a></li>
+		    <li><a href="/tools/" >Tools</a></li>
 		  
 		    
 		        
@@ -142,7 +142,7 @@
       <header class="entry-header">
         <span class="entry-tags"></span>
         
-          <h1 class="entry-title">How to Build Me</h1>
+          <h1 class="entry-title">Jekyll搭建博客</h1>
         
       </header>
       <footer class="entry-meta">
@@ -169,21 +169,35 @@
 </div><!-- /.google-ads --><!-- /.google-ads -->
       </footer>
       <div class="entry-content">
-        <h3 id="section">怎么新建类别，文章</h3>
+        <p>终于搭建好了这个博客，记录一下安装过程</p>
 
-<h2 id="section-1">1，</h2>
-<p>用新建一个篇文章
-其中posts即将作为类别
-octopress new post “New Post Title” –dir posts
-然后_post文件夹中就会产生相应文件
-在每篇博文的md文件中，头部都有注明类别，这个地方很重要！</p>
+<blockquote>
+  <ul>
+    <li>（必须）安装ruby,Devkit</li>
+    <li>（必须）安装Jekyll</li>
+    <li>（非必须）Python，</li>
+  </ul>
+</blockquote>
 
-<h2 id="section-2">2，</h2>
-<p>在catagory中添加类别</p>
+<p>其中安装Jekyll的时候，我总是遇到问题，结果发现问题是天朝的网络在作祟
+先运行如下代码即可</p>
 
-<h2 id="section-3">3，</h2>
-<p>在根目录下添加posts文件夹，加入一个index.html的布局文件，可以copy自其它分类
-完成！（_site中的文件会自动生成）</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">gem</span> <span class="n">sources</span> <span class="o">--</span><span class="n">remove</span> <span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">rubygems</span><span class="o">.</span><span class="n">org</span><span class="o">/</span>
+<span class="err">$</span> <span class="n">gem</span> <span class="n">sources</span> <span class="o">-</span><span class="n">a</span> <span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">ruby</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">org</span><span class="o">/</span>
+<span class="err">$</span> <span class="n">gem</span> <span class="n">sources</span> <span class="o">-</span><span class="n">l</span>
+<span class="o">***</span> <span class="no">CURRENT</span> <span class="no">SOURCES</span> <span class="o">***</span>
+
+<span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">ruby</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">org</span>
+<span class="c1"># 请确保只有 ruby.taobao.org</span>
+<span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">rails</span></code></pre></div>
+
+<p>以下是我参考的网站，根据这几个网站完全能搞懂如何在Github上搭建博客</p>
+
+<p>1、<a href="http://yizeng.me/2013/05/10/setup-jekyll-on-windows/#install-pygments">http://yizeng.me/2013/05/10/setup-jekyll-on-windows/#install-pygments</a>
+2、<a href="http://www.cnblogs.com/hutaoer/archive/2013/02/06/3078873.html">http://www.cnblogs.com/hutaoer/archive/2013/02/06/3078873.html</a>
+3、<a href="http://blog.fens.me/jekyll-bootstarp-github/">http://blog.fens.me/jekyll-bootstarp-github/</a>
+4、<a href="http://www.jekyllbootstrap.com/usage/jekyll-quick-start.html">http://www.jekyllbootstrap.com/usage/jekyll-quick-start.html</a></p>
+
 
         <nav class="pagination" role="navigation">
           
