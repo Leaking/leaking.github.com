@@ -1,6 +1,7 @@
 ---
 layout: {{ layout }}
 title: {{ title }}
+comments: true
 modified:
 categories: {{ dir }}
 excerpt:

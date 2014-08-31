@@ -3,6 +3,7 @@ layout: post
 title: "Jekyll搭建博客"
 modified:
 categories: Tools
+comments: true
 excerpt:
 tags: []
 image:
