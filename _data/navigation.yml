@@ -1,19 +1,22 @@
 # Site navigation links
 
-- title: About
-  url: /about/
+- title: Home
+  url: /home/
+
+
+- title: JS
+  url: /js/
+
+- title: Android
+  url: /android/
 
 - title: Tools
   url: /tools/
 
-- title: Articles
-  url: /articles/
+- title: About
+  url: /about/
 
-- title: Blog
-  url: /blog/
 
 - title: Theme Setup
   url: /theme-setup/
 
-- title: Made Mistakes
-  url: http://mademistakes.com
