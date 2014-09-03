@@ -5,15 +5,15 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Hello World &#8211; My Stupid Blog</title>
-
-<meta name="keywords" content="">
+<title>基于XMPP协议即时通讯工具开发总结 &#8211; My Stupid Blog</title>
+<meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta name="keywords" content="sample-post, video">
 
 
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="Hello World">
-
+<meta name="twitter:title" content="基于XMPP协议即时通讯工具开发总结">
+<meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 
 
 
@@ -23,16 +23,16 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-
-<meta property="og:url" content="/android/hello-world/">
+<meta property="og:title" content="基于XMPP协议即时通讯工具开发总结">
+<meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta property="og:url" content="/android/xmpp-IM/">
 <meta property="og:site_name" content="My Stupid Blog">
 
 
 
 
 
-<link rel="canonical" href="/android/hello-world/">
+<link rel="canonical" href="/android/xmpp-IM/">
 <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
 
 
@@ -97,6 +97,11 @@
 		    
 		        
 		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
 		    <li><a href="/tools/" >Tools</a></li>
 		  
 		    
@@ -140,9 +145,9 @@
     
     <div class="entry-wrapper">
       <header class="entry-header">
-        <span class="entry-tags"></span>
+        <span class="entry-tags"><a href="/tags/#sample-post" title="Pages tagged sample-post">sample-post</a>&nbsp;&bull;&nbsp;<a href="/tags/#video" title="Pages tagged video">video</a></span>
         
-          <h1 class="entry-title">Hello World</h1>
+          <h1 class="entry-title">基于XMPP协议即时通讯工具开发总结</h1>
         
       </header>
       <footer class="entry-meta">
@@ -152,9 +157,20 @@
           <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
         
         <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
-        <span class="entry-date date published"><time datetime="2014-08-09T03:39:55+08:00"><i class="fa fa-calendar-o"></i> August 09, 2014</time></span>
+        <span class="entry-date date published"><time datetime="2013-06-25T00:00:00+08:00"><i class="fa fa-calendar-o"></i> June 25, 2013</time></span>
         
         
+        
+        <span class="social-share-twitter">
+          <a href="https://twitter.com/intent/tweet?hashtags=sample-post,video&text=基于XMPP协议即时通讯工具开发总结&url=/android/xmpp-IM/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+        </span>
+        <span class="social-share-facebook">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/android/xmpp-IM/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+        </span>
+        <span class="social-share-googleplus">
+          <a href="https://plus.google.com/share?url=/android/xmpp-IM/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+        </span>
+        <!-- /.social-share -->
         
         <div class="google-ads" style="margin-top:40px; text-align:center;">
   <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -169,27 +185,59 @@
 </div><!-- /.google-ads --><!-- /.google-ads -->
       </footer>
       <div class="entry-content">
-        <p>You’ll find this post in your <code>_posts</code> directory - edit this post and re-build (or run with the <code>-w</code> switch) to see your changes!
-To add new posts, simply add a file in the <code>_posts</code> directory that follows the convention: YYYY-MM-DD-name-of-post.ext.</p>
+        <h2 id="section">一、概要</h2>
+<p>转眼毕业了，毕业设计的课题是“基于XMPP协议的通讯工具”，开发平台式android，实现了基本的离线消息，文字聊天，表情聊天，文件传输，语音聊天的功能。
+本文主要介绍开发过程中服务器的配置，开发包Asmack的使用，以及其它一些开源包的使用（如表情包）。</p>
 
-<h2 id="sample-heading">Sample Heading</h2>
+<h2 id="xmppopenfire">二、XMPP协议以及Openfire服务器</h2>
 
-<h3 id="sample-heading-2">Sample Heading 2</h3>
+<h3 id="xmpp">1，XMPP协议</h3>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<p>何为XMPP协议，简要（不精确）地说：“XMPP一种开源的通讯协议，只要是基于这个协议开发的通讯工具，都可以相互通讯（不同服务器的用户则需要在服务器相互连接的前提下，才能跨服务器通讯）。” 另外XMPP协议以前的名字是Jabber。
+关于XMPP协议的官网，如下（英文为官网，中文为国人翻译的版本）
+<a href="http://xmpp.org/rfcs/rfc3921.html#toc">XMPP官网</a>
+<a href="http://wiki.jabbercn.org/RFC3921#.E4.BA.A4.E6.8D.A2.E5.87.BA.E5.B8.AD.E4.BF.A1.E6.81.AF">XMPP官网中文翻译</a></p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">&quot;Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">&#39;Tom&#39;</span><span class="p">)</span>
-<span class="c1">#=&gt; prints &#39;Hi, Tom&#39; to STDOUT.</span></code></pre></div>
+<h3 id="openfire">2，Openfire服务器</h3>
 
-<p>Check out the <a href="http://jekyllrb.com">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>.</p>
+<p>开发过程中只需要专注于客户端的开发，因为我们可以使用开源免费的服务器Openfire         </p>
 
+<p><a href="http://www.igniterealtime.org/downloads/index.jsp">Openfire官网地址: </a></p>
+
+<p><a href="http://www.cnblogs.com/tanlon/archive/2011/07/16/2108419.html">Openfier 服务器配置教程：</a></p>
+
+<p>另外，开发过程中可以用一个测试客户端，官网提供的Spark，目前最新版本（好久没更新）存在一个问题，收发文件的功能不是很稳定。</p>
+
+<p><a href="http://www.igniterealtime.org/downloads/index.jsp">Spark下载地址：</a></p>
+
+<h2 id="asmack-api">三，Asmack开发包 API的使用</h2>
+
+<p>smack是官方给出的xmpp协议在java平台的开发包，而asmack是android平台的xmpp协议开发包
+<a href="https://github.com/Flowdalic/asmack">Asmack下载官网：</a></p>
+
+<p>smack和Asmack的API基本没有区别，所以可以开发过程可以参照smack的API</p>
+
+<p><a href="http://www.igniterealtime.org/builds/smack/docs/latest/javadoc/">smack(Asmack) API官网：</a></p>
+
+<p><a href="http://www.igniterealtime.org/builds/smack/docs/latest/documentation/index.html">smack(Asmack)使用指导：</a></p>
+
+<h2 id="section-1">四，表情聊天</h2>
+<p>表情聊天使用了开源包Emojicon</p>
+
+<p><a href="http://rockerhieu.com/">Emojicon官网：</a></p>
+
+<h2 id="section-2">五，版本问题</h2>
+
+<p>开发过程中遇到两个关于版本的问题</p>
+
+<p>1，Openfire 3.9.2开始才支持emoji字符，3.9.1及更旧的版本多不支持emojicon字符
+2，不知道为什么部分版本的asmack在文件传输时会出现问题，以下这个版本是我在网上找到的一个可以正常使用的版本</p>
+
+<p><a href="http://download.csdn.net/detail/chziroy/7482381">可以使用的asmack下载地址：</a></p>
 
         <nav class="pagination" role="navigation">
           
-            <a href="/js/author-override/" class="btn" title="Override Author Byline Test Post">Previous</a>
+            <a href="/js/sample-post/" class="btn" title="Sample Post">Previous</a>
           
           
             <a href="/tools/how-to-build-me/" class="btn" title="Jekyll搭建博客">Next</a>
@@ -279,6 +327,8 @@ To add new posts, simply add a file in the <code>_posts</code> directory that fo
 
 
 
+
+  
 	        
 
 </body>

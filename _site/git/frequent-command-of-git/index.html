@@ -5,34 +5,34 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Override Author Byline Test Post &#8211; My Stupid Blog</title>
-<meta name="description" content="An article to test overriding the default site author.">
-<meta name="keywords" content="sample-post, readability, test">
+<title>Git常用工作流 &#8211; My Stupid Blog</title>
 
-  
+<meta name="keywords" content="">
+
+
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="Override Author Byline Test Post">
-<meta name="twitter:description" content="An article to test overriding the default site author.">
+<meta name="twitter:title" content="Git常用工作流">
 
-<meta name="twitter:creator" content="@extravagantman">
 
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="/images/so-simple-sample-image-7.jpg">
+
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/site-logo.png">
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Override Author Byline Test Post">
-<meta property="og:description" content="An article to test overriding the default site author.">
-<meta property="og:url" content="/js/author-override/">
+<meta property="og:title" content="Git常用工作流">
+
+<meta property="og:url" content="/git/frequent-command-of-git/">
 <meta property="og:site_name" content="My Stupid Blog">
 
 
 
 
 
-<link rel="canonical" href="/js/author-override/">
+<link rel="canonical" href="/git/frequent-command-of-git/">
 <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
 
 
@@ -97,6 +97,11 @@
 		    
 		        
 		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
 		    <li><a href="/tools/" >Tools</a></li>
 		  
 		    
@@ -125,46 +130,36 @@
 </div><!-- ./search-wrapper -->
 
 <header class="masthead">
-	
-		<div class="wrap">
-			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
-		</div>
-	
+	<div class="wrap">
+        
+    		<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated fadeInUp"></a>
+        
+        <h1 class="site-title animated fadeIn"><a href="/">My Stupid Blog</a></h1>
+		<h2 class="site-description animated fadeIn" itemprop="description">I love code and girls.</h2>
+	</div>
 </header><!-- /.masthead -->
-
 
 
 <div id="main" role="main">
   <article class="hentry">
-    <img src="/images/so-simple-sample-image-7.jpg" class="entry-feature-image" alt="Override Author Byline Test Post" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    
     <div class="entry-wrapper">
       <header class="entry-header">
-        <span class="entry-tags"><a href="/tags/#sample-post" title="Pages tagged sample-post">sample-post</a>&nbsp;&bull;&nbsp;<a href="/tags/#readability" title="Pages tagged readability">readability</a>&nbsp;&bull;&nbsp;<a href="/tags/#test" title="Pages tagged test">test</a></span>
+        <span class="entry-tags"></span>
         
-          <h1 class="entry-title">Override Author Byline Test Post</h1>
+          <h1 class="entry-title">Git常用工作流</h1>
         
       </header>
       <footer class="entry-meta">
         
-          
-        
-          <img src="/images/bio-photo-2.jpg" class="bio-photo" alt="Billy Rick bio photo"></a>
-        
-        <span class="author vcard">By <span class="fn">Billy Rick</span></span>
-        <span class="entry-date date published"><time datetime="2014-06-19T00:00:00+08:00"><i class="fa fa-calendar-o"></i> June 19, 2014</time></span>
         
         
+          <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
         
-        <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=sample-post,readability,test&text=Override%20Author%20Byline%20Test%20Post&url=/js/author-override/&via=extravagantman" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
-        </span>
-        <span class="social-share-facebook">
-          <a href="https://www.facebook.com/sharer/sharer.php?u=/js/author-override/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
-        </span>
-        <span class="social-share-googleplus">
-          <a href="https://plus.google.com/share?url=/js/author-override/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
-        </span>
-        <!-- /.social-share -->
+        <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
+        <span class="entry-date date published"><time datetime="2014-09-04T06:41:52+08:00"><i class="fa fa-calendar-o"></i> September 04, 2014</time></span>
+        
+        
         
         <div class="google-ads" style="margin-top:40px; text-align:center;">
   <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -179,43 +174,62 @@
 </div><!-- /.google-ads --><!-- /.google-ads -->
       </footer>
       <div class="entry-content">
-        <p>For those of you who may have content written by multiple authors on your site you can now assign different authors to each post if desired.</p>
+        <p>近来在电脑上写博客然后提交到Github上时，学习了一点Git的指令。Git值得学习的东西很多，但是经常用到的
+却不多。于是我这里记录几条通用的指令的用法，以及整个提交流程。</p>
 
-<p>Previously the theme used a global author for the entire site and those attributes would be used in all bylines, social networking links, Twitter Card attribution, and Google Authorship. These <code>owner</code> variables were defined in <code>config.yml</code></p>
+<h2 id="section">1、查看状态</h2>
 
-<p>Start by modifying or creating a new <code>authors.yml</code> file in the <code>_data</code> folder and add your authors using the following format.</p>
+<p>执行如下代码</p>
 
-<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># Authors</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git status</code></pre></div>
 
-<span class="l-Scalar-Plain">billy_rick</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Billy Rick</span>
-  <span class="l-Scalar-Plain">web</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://thewhip.com</span>
-  <span class="l-Scalar-Plain">email</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">billy@rick.com</span>
-  <span class="l-Scalar-Plain">bio</span><span class="p-Indicator">:</span> <span class="s">&quot;What</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">you</span><span class="nv"> </span><span class="s">want,</span><span class="nv"> </span><span class="s">jewels?</span><span class="nv"> </span><span class="s">I</span><span class="nv"> </span><span class="s">am</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">very</span><span class="nv"> </span><span class="s">extravagant</span><span class="nv"> </span><span class="s">man.&quot;</span>
-  <span class="l-Scalar-Plain">avatar</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">bio-photo-2.jpg</span>
-  <span class="l-Scalar-Plain">twitter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">extravagantman</span>
-  <span class="l-Scalar-Plain">google</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">plus</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">BillyRick</span>
+<p>插卡结果又两种，一种时本来就被Git跟踪的文件（可能被修改或者删除），一种是未被Git跟踪的文件（新增加的文件），
+Git将其描述为Untracked files</p>
 
-<span class="l-Scalar-Plain">cornelius_fiddlebone</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Cornelius Fiddlebone</span>
-  <span class="l-Scalar-Plain">email</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">cornelius@thewhip.com</span>
-  <span class="l-Scalar-Plain">bio</span><span class="p-Indicator">:</span> <span class="s">&quot;I</span><span class="nv"> </span><span class="s">ordered</span><span class="nv"> </span><span class="s">what?&quot;</span>
-  <span class="l-Scalar-Plain">avatar</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">bio-photo.jpg</span>
-  <span class="l-Scalar-Plain">twitter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">rhymeswithsackit</span>
-  <span class="l-Scalar-Plain">google</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">plus</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">CorneliusFiddlebone</span></code></pre></div>
+<h3 id="section-1">1.1、被修改或者删除的文件</h3>
+<p>如下图</p>
+<figure>
+  <img src="/images/delete_modified.jpg" alt="search screenshot" />
+  <figcaption>修改或者删除的文件</figcaption>
+</figure>
 
-<p>To assign Billy Rick as an author for our post. You’d add the following YAML front matter to a post:</p>
+<h3 id="section-2">1.2、新增加的文件</h3>
+<p>如下图</p>
+<figure>
+  <img src="/images/untrack.jpg" alt="search screenshot" />
+  <figcaption>新增加的文件</figcaption>
+</figure>
 
-<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">author</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">billy_rick</span></code></pre></div>
+<h2 id="section-3">2、</h2>
+
+<p>执行如下代码</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git add。</code></pre></div>
+
+<p>该指令能将上面<strong>所有</strong>“被修改或者删除的文件”都标记（标记过才能准备push到Github，此处所谓“标记”的用词只是为了方便理解，并非正式用语）</p>
+
+<h2 id="section-4">3、———-重点</h2>
+
+<p>执行如下代码</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git add -u</code></pre></div>
+
+<p>这条指令能“标记”<strong>所有</strong>被删除的文件</p>
+
+<h2 id="section-5">4、</h2>
+
+<p>执行如下指令</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git commit -m <span class="s2">&quot;some comments&quot;</span>
+<span class="nv">$ </span>git push origin master</code></pre></div>
+
+<p>执行完如上指令，即完成整个提交过程</p>
+
 
         <nav class="pagination" role="navigation">
           
-            <a href="/js/code-highlighting-post/" class="btn" title="Syntax Highlighting Post">Previous</a>
+            <a href="/tools/how-to-build-me/" class="btn" title="Jekyll搭建博客">Previous</a>
           
-          
-            <a href="/android/hello-world/" class="btn" title="Hello World">Next</a>
           
         </nav><!-- /.pagination -->
         
