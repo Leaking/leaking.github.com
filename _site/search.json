@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "工作2个月了",
+		  "category"   : "",
+      "tags"       : "reflection",
+		  "url"        : "/reflection/first-diary/",
+		  "date"       : "2014-09-06 00:00:00 +0800",
+		  "shortdate"  : "September 06, 2014"
+		} ,
+	
+		{
 		  "title"      : "Git常用工作流",
 		  "category"   : "",
       "tags"       : "",
