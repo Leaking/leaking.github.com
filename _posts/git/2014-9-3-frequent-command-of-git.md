@@ -5,7 +5,7 @@ modified:
 categories: Git
 comments: true
 excerpt:
-tags: []
+tags: [Git]
 image:
   feature:
 date: 2014-9-3 22:41:52
