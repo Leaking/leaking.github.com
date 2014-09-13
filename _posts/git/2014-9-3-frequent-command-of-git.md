@@ -6,9 +6,13 @@ categories: Git
 comments: true
 excerpt:
 tags: [Git]
-image:
-  feature:
 date: 2014-9-3 22:41:52
+image:
+  feature: so-simple-sample-image-1.jpg
+  credit: WeGraphics
+  creditlink: http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/
+comments: true
+share: true
 ---
 
 近来在电脑上写博客然后提交到Github上时，学习了一点Git的指令。Git值得学习的东西很多，但是经常用到的

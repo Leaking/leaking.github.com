@@ -6,9 +6,13 @@ categories: Tools
 comments: true
 excerpt:
 tags: [jekyll]
-image:
-  feature:
 date: 2014-08-29T00:23:53+08:00
+image:
+  feature: so-simple-sample-image-1.jpg
+  credit: WeGraphics
+  creditlink: http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/
+comments: true
+share: true
 ---
 
 

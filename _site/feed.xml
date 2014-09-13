@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2014-09-13T15:44:17+08:00</updated>
+<updated>2014-09-13T15:49:51+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -19,9 +19,8 @@
   <title type="html"><![CDATA[Variables, Scope, and Memory]]></title>
   <link rel="alternate" type="text/html" href="/js/.Variables,%20Scope,%20and%20Memory/" />
   <id>/js/.Variables, Scope, and Memory</id>
-  <updated>2013-05-31T00:00:00-00:00</updated>
   <published>2014-09-13T00:00:00+08:00</published>
-  
+  <updated>2014-09-13T00:00:00+08:00</updated>
   <author>
     <name>Quinn Chen</name>
     <uri></uri>
@@ -442,9 +441,8 @@ Git将其描述为Untracked files&lt;/p&gt;
   <title type="html"><![CDATA[What Is JavaScript?]]></title>
   <link rel="alternate" type="text/html" href="/js/what-is-js/" />
   <id>/js/what-is-js</id>
-  <updated>2013-05-31T00:00:00-00:00</updated>
   <published>2014-08-25T00:00:00+08:00</published>
-  
+  <updated>2014-08-25T00:00:00+08:00</updated>
   <author>
     <name>Quinn Chen</name>
     <uri></uri>
