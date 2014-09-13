@@ -12,7 +12,7 @@
 		{
 		  "title"      : "工作2个月了",
 		  "category"   : "",
-      "tags"       : "reflection",
+      "tags"       : "diary",
 		  "url"        : "/reflection/first-diary/",
 		  "date"       : "2014-09-06 00:00:00 +0800",
 		  "shortdate"  : "September 06, 2014"
@@ -21,7 +21,7 @@
 		{
 		  "title"      : "Git常用工作流",
 		  "category"   : "",
-      "tags"       : "",
+      "tags"       : "Git",
 		  "url"        : "/git/frequent-command-of-git/",
 		  "date"       : "2014-09-04 06:41:52 +0800",
 		  "shortdate"  : "September 04, 2014"
@@ -30,7 +30,7 @@
 		{
 		  "title"      : "Jekyll搭建博客",
 		  "category"   : "",
-      "tags"       : "",
+      "tags"       : "jekyll",
 		  "url"        : "/tools/how-to-build-me/",
 		  "date"       : "2014-08-29 00:23:53 +0800",
 		  "shortdate"  : "August 29, 2014"
@@ -48,7 +48,7 @@
 		{
 		  "title"      : "基于XMPP协议即时通讯工具开发总结",
 		  "category"   : "",
-      "tags"       : "sample-post and video",
+      "tags"       : "android, xmpp, and IM",
 		  "url"        : "/android/xmpp-IM/",
 		  "date"       : "2013-06-25 00:00:00 +0800",
 		  "shortdate"  : "June 25, 2013"
