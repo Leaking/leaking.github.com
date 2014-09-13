@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>/js/.Variables,%20Scope,%20and%20Memory/</loc>
+    <lastmod>2014-09-13T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>/reflection/first-diary/</loc>
     <lastmod>2014-09-06T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
@@ -21,84 +27,84 @@
   </url>
   
   <url>
-    <loc>/android/xmpp-IM/</loc>
-    <lastmod>2013-06-25T00:00:00+08:00</lastmod>
+    <loc>/js/what-is-js/</loc>
+    <lastmod>2014-08-25T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>/js/sample-post/</loc>
-    <lastmod>2011-03-10T00:00:00+08:00</lastmod>
+    <loc>/android/xmpp-IM/</loc>
+    <lastmod>2013-06-25T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   
   <url>
     <loc>/</loc>
-    <lastmod>2014-09-06T21:48:47+08:00</lastmod>
+    <lastmod>2014-09-13T15:28:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>/git/</loc>
-    <lastmod>2014-09-06T21:48:47+08:00</lastmod>
+    <lastmod>2014-09-13T15:28:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/home/</loc>
-    <lastmod>2014-09-06T21:48:47+08:00</lastmod>
+    <lastmod>2014-09-13T15:28:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/reflection/</loc>
-    <lastmod>2014-09-06T21:48:47+08:00</lastmod>
+    <lastmod>2014-09-13T15:28:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/android/</loc>
-    <lastmod>2014-09-06T21:48:47+08:00</lastmod>
+    <lastmod>2014-09-13T15:28:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/js/</loc>
-    <lastmod>2014-09-06T21:48:47+08:00</lastmod>
+    <lastmod>2014-09-13T15:28:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/theme-setup/</loc>
-    <lastmod>2014-09-06T21:48:47+08:00</lastmod>
+    <lastmod>2014-09-13T15:28:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/tools/</loc>
-    <lastmod>2014-09-06T21:48:47+08:00</lastmod>
+    <lastmod>2014-09-13T15:28:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2014-09-06T21:48:47+08:00</lastmod>
+    <lastmod>2014-09-13T15:28:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/about/</loc>
-    <lastmod>2014-09-06T21:48:47+08:00</lastmod>
+    <lastmod>2014-09-13T15:28:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

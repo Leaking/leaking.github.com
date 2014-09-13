@@ -1,0 +1,537 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Variables, Scope, and Memory &#8211; My Stupid Blog</title>
+<meta name="description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
+<meta name="keywords" content="JS">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Variables, Scope, and Memory">
+<meta name="twitter:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Variables, Scope, and Memory">
+<meta property="og:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
+<meta property="og:url" content="/js/.Variables,%20Scope,%20and%20Memory/">
+<meta property="og:site_name" content="My Stupid Blog">
+
+
+
+
+
+<link rel="canonical" href="/js/.Variables,%20Scope,%20and%20Memory/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<script src="//use.edgefonts.net/source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9;source-code-pro:n4,n7;volkhov.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+      
+		    
+		        
+		    
+		    <li><a href="/home/" >Home</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/js/" >JS</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/android/" >Android</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/tools/" >Tools</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/reflection/" >Reflection</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/about/" >About</a></li>
+		  
+        <li class="dosearch"><i class="fa fa-search"></i> Search</li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	
+		<div class="wrap">
+			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
+		</div>
+	
+</header><!-- /.masthead -->
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Variables, Scope, and Memory" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"><a href="/tags/#JS" title="Pages tagged JS">JS</a></span>
+        
+          <h1 class="entry-title">Variables, Scope, and Memory</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+        
+          <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
+        <span class="entry-date date published"><time datetime="2014-09-13T00:00:00+08:00"><i class="fa fa-calendar-o"></i> September 13, 2014</time></span>
+        <span class="entry-date date modified"><time datetime="2013-05-31"><i class="fa fa-pencil"></i> May 31, 2013</time></span>
+        
+        
+        <span class="social-share-twitter">
+          <a href="https://twitter.com/intent/tweet?hashtags=JS&text=Variables,%20Scope,%20and%20Memory&url=/js/.Variables,%20Scope,%20and%20Memory/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+        </span>
+        <span class="social-share-facebook">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/js/.Variables,%20Scope,%20and%20Memory/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+        </span>
+        <span class="social-share-googleplus">
+          <a href="https://plus.google.com/share?url=/js/.Variables,%20Scope,%20and%20Memory/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+        </span>
+        <!-- /.social-share -->
+        
+        <div class="google-ads" style="margin-top:40px; text-align:center;">
+  <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- 160x600 ad -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:160px;height:600px"
+       data-ad-client=""
+       data-ad-slot=""></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div><!-- /.google-ads --><!-- /.google-ads -->
+      </footer>
+      <div class="entry-content">
+        <h1 id="working-with-primitive-and-reference-values-in-variables">Working with primitive and reference values in variables</h1>
+
+<p><strong>基本类型（primitive values）</strong> 有5种：Undefined, Null, Boolean, Number, and String</p>
+
+<p><strong>引用类型（Reference values）</strong> 在操作对象时，是通过引用访问的，而非直接操作对象。</p>
+
+<h3 id="dynamic-properties---">Dynamic Properties   （动态的属性）</h3>
+
+<p>对引用添加属性，如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">//”Nicholas”</span></code></pre></div>
+
+<p>对基本类型添加属性，不会报错，但是并未真正能添加的属性。如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">;</span>
+<span class="nx">name</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">27</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">name</span><span class="p">.</span><span class="nx">age</span><span class="p">);</span> <span class="c1">//undefined</span></code></pre></div>
+
+<h3 id="copying-values-">Copying Values （复制变量值）</h3>
+
+<p>复制基本类型，如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">num1</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">num2</span> <span class="o">=</span> <span class="nx">num1</span><span class="p">;</span></code></pre></div>
+
+<p>复制之后，num1和num2是相互独立的，占有不同的空间，如下</p>
+
+<p><img src="/images/num1_2.jpg" alt="num1 and num2" /></p>
+
+<p>复制引用类型时，如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">obj1</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">obj2</span> <span class="o">=</span> <span class="nx">obj1</span><span class="p">;</span>
+<span class="nx">obj1</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">obj2</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">//&quot;Nicholas&quot;</span></code></pre></div>
+
+<p>复制之后，obje1和obje2两个变量指向同一个对象，操作同一个地址的数据。如下图</p>
+
+<p><img src="/images/ref1_2.jpg" alt="num1 and num2" /></p>
+
+<h3 id="argument-passing-">Argument Passing （传递参数）</h3>
+
+<p>访问变量有安值和按引用两种方式，而参数只能按值传递</p>
+
+<p>为函数传递基本类型，很容易理解，如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">addTen</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">num</span> <span class="o">+=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">num</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="kd">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">addTen</span><span class="p">(</span><span class="nx">count</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">count</span><span class="p">);</span> <span class="c1">//20 - no change</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span> <span class="c1">//30</span></code></pre></div>
+
+<p>为函数传递引用类型，如下面这个例子（有点类似Java语言）</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">setName</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">obj</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+<span class="nx">setName</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">//”Nicholas”</span></code></pre></div>
+
+<p>看上面的例子，很容易理解为引用类型的参数传递，是按引用传递，其实不然</p>
+
+<p>看下面的例子</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">setName</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">obj</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">;</span>
+    <span class="nx">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+    <span class="nx">obj</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;Greg&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+<span class="nx">setName</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">//”Nicholas”</span></code></pre></div>
+
+<p>这样理解，传递近来的obj和person是指向同一个Object对象的两个指针，之所以它们指向同一个对象，是因为赋值的作用
+而当obj被赋予新的对象时，则和person不再指向同一个对象。</p>
+
+<h3 id="determining-type-">Determining Type （检测类型）</h3>
+
+<p>对基本类型进行类型检测，使用typeof，如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">22</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">u</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+                   
+<span class="nx">alert</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">s</span><span class="p">);</span> <span class="c1">//string</span>
+<span class="nx">alert</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">i</span><span class="p">);</span> <span class="c1">//number</span>
+<span class="nx">alert</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">b</span><span class="p">);</span> <span class="c1">//boolean</span>
+<span class="nx">alert</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">u</span><span class="p">);</span> <span class="c1">//undefined</span>
+<span class="nx">alert</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">n</span><span class="p">);</span> <span class="c1">//object</span>
+<span class="nx">alert</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">o</span><span class="p">);</span> <span class="c1">//object</span></code></pre></div>
+
+<p>在检测引用类型时，使用typeof只能检测出是Object类型，而我们想要检测出是属于哪种Object</p>
+
+<p>于是我们用instanceof操作符，如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">alert</span><span class="p">(</span><span class="nx">person</span> <span class="k">instanceof</span> <span class="nb">Object</span><span class="p">);</span> <span class="c1">//is the variable person an Object?</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">colors</span> <span class="k">instanceof</span> <span class="nb">Array</span><span class="p">);</span> <span class="c1">//is the variable colors an Array?</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">pattern</span> <span class="k">instanceof</span> <span class="nb">RegExp</span><span class="p">);</span> <span class="c1">//is the variable pattern a RegExp?</span></code></pre></div>
+
+<p>使用instanceof检测一个基本数据类型是不是Object，始终返回false</p>
+
+<p>使用typeof操作函数时，该操作符返回“function”，
+使用typeof操作正则表达式时，部分浏览器返回”function”，部分返回”object”.</p>
+
+<h1 id="execution-context-and-scope-">EXECUTION CONTEXT AND SCOPE （执行环境及作用域）</h1>
+
+<p>执行环境概念就是作用域，而作用域链，则是作用域的连接，其中内层的作用域能访问到外层作用域的数据。</p>
+
+<p>其实这里的概念与其他语言的作用域很类似，看几个例子即可</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">;</span>
+                   
+<span class="kd">function</span> <span class="nx">changeColor</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">anotherColor</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">;</span>
+                   
+    <span class="kd">function</span> <span class="nx">swapColors</span><span class="p">(){</span>
+        <span class="kd">var</span> <span class="nx">tempColor</span> <span class="o">=</span> <span class="nx">anotherColor</span><span class="p">;</span>
+        <span class="nx">anotherColor</span> <span class="o">=</span> <span class="nx">color</span><span class="p">;</span>
+        <span class="nx">color</span> <span class="o">=</span> <span class="nx">tempColor</span><span class="p">;</span>
+        
+        <span class="c1">//color, anotherColor, and tempColor are all accessible here</span>
+    <span class="p">}</span>
+                   
+    <span class="c1">//color and anotherColor are accessible here, but not tempColor  </span>
+
+ <span class="nx">swapColors</span><span class="p">();</span>
+<span class="p">}</span>
+                   
+<span class="c1">//only color is accessible here</span>
+<span class="nx">changeColor</span><span class="p">();</span></code></pre></div>
+
+<p>如下图，
+window ，changeColor()，swapColor()及其各自下方的矩形，代表3个执行环境，
+而其中的树状结构则代表作用域链。</p>
+
+<p><img src="/images/excute.jpg" alt="num1 and num2" /></p>
+
+<h3 id="identifi-er-lookup-">Identifi er Lookup （搜索标识符）</h3>
+
+<p>如下代码</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">;</span>
+                   
+<span class="kd">function</span> <span class="nx">getColor</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="nx">color</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="nx">alert</span><span class="p">(</span><span class="nx">getColor</span><span class="p">());</span> <span class="c1">//”blue”</span></code></pre></div>
+
+<p>该段代码中，对color的搜索过程如下</p>
+
+<p><img src="/images/searchTree.jpg" alt="num1 and num2" /></p>
+
+<p>如果子环境和父环境拥名字相同的变量，如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">;</span>
+                   
+<span class="kd">function</span> <span class="nx">getColor</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">color</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="nx">alert</span><span class="p">(</span><span class="nx">getColor</span><span class="p">());</span> <span class="c1">//”red”</span></code></pre></div>
+
+<p>如果要返回全局变量中的color，则需要使用</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">return</span> <span class="nb">window</span><span class="p">.</span><span class="nx">color</span><span class="p">;</span></code></pre></div>
+
+<h3 id="scope-chain-augmentation-">Scope Chain Augmentation （延长作用域链）</h3>
+
+<p>延长作用域链的方法有两个</p>
+
+<ul>
+  <li>try-catch语句的catch块</li>
+  <li>with语句</li>
+</ul>
+
+<p>此处主要讲解with语句,看下面例子</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">buildUrl</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">qs</span> <span class="o">=</span> <span class="s2">&quot;?debug=true&quot;</span><span class="p">;</span>
+                   
+    <span class="kd">with</span><span class="p">(</span><span class="nx">location</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">href</span> <span class="o">+</span> <span class="nx">qs</span><span class="p">;</span> 
+    <span class="p">}</span>
+                   
+    <span class="k">return</span> <span class="nx">url</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>注意两点
+* with语句的功能类似于java中的静态引入，原本你要写location.href，现在只需要写href
+* with块中声明定义的变量，属于包含着with块的作用域中。（外一层可以访问，因为js中没有块作用域的概念）</p>
+
+<h3 id="no-block-level-scopes--">No Block-Level Scopes  （没有块级作用域）</h3>
+
+<p>如下代码</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">if</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="nx">alert</span><span class="p">(</span><span class="nx">color</span><span class="p">);</span> <span class="c1">//”blue”</span></code></pre></div>
+
+<p>再比如下代码</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="nx">doSomething</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+<span class="p">}</span>
+                   
+<span class="nx">alert</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span> <span class="c1">//10</span></code></pre></div>
+
+<h4 id="variable-declaration-">Variable Declaration （声明变量）</h4>
+
+<p>初始化变量时没有使用var声明，则该变量会自动成为全局变量</p>
+
+<p>如下两段代码</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">sum</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> <span class="c1">//30</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">sum</span><span class="p">);</span> <span class="c1">//causes an error since sum is not a valid variable</span></code></pre></div>
+
+<p>如下：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">sum</span> <span class="o">=</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">sum</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> <span class="c1">//30</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">sum</span><span class="p">);</span> <span class="c1">//30</span></code></pre></div>
+
+<p>不声明变量而直接初始化变量是一个错误的习惯</p>
+
+<h1 id="garbage-collection-">GARBAGE COLLECTION （垃圾收集）</h1>
+
+<p>垃圾收集有两种方式，
+* 标记清除，目前主流的方式
+* 引用技术，会有循环引用的隐患</p>
+
+        <nav class="pagination" role="navigation">
+          
+            <a href="/reflection/first-diary/" class="btn" title="工作2个月了">Previous</a>
+          
+          
+        </nav><!-- /.pagination -->
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+  </article>
+</div><!-- /#main -->
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chenhuazhao020'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    
+
+<span>&copy; 2014 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/so-simple/">So Simple Theme</a>.</span>
+<div class="social-icons">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+  <a href="/feed.xml" title="Atom/RSS feed"><i class="fa fa-rss-square fa-2x"></i></a>
+</div><!-- /.social-icons -->
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: '/search.json',
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+  
+	        
+
+</body>
+</html>
