@@ -49,7 +49,7 @@ Git将其描述为Untracked files
 
 执行如下代码
 {% highlight bash %}
-$ git add。
+$ git add .
 {% endhighlight %}
 
 该指令能将上面**所有**“被修改或者删除的文件”都标记（标记过才能准备push到Github，此处所谓“标记”的用词只是为了方便理解，并非正式用语）
