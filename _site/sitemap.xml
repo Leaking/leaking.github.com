@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>/js/.Object%20Type,%20Function%20Type/</loc>
+    <lastmod>2014-09-14T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>/js/.Variables,%20Scope,%20and%20Memory/</loc>
     <lastmod>2014-09-13T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
@@ -41,63 +47,63 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2014-09-13T15:49:51+08:00</lastmod>
+    <lastmod>2014-09-14T13:24:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>/git/</loc>
-    <lastmod>2014-09-13T15:49:51+08:00</lastmod>
+    <lastmod>2014-09-14T13:24:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/home/</loc>
-    <lastmod>2014-09-13T15:49:51+08:00</lastmod>
+    <lastmod>2014-09-14T13:24:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/about/</loc>
-    <lastmod>2014-09-13T15:49:51+08:00</lastmod>
+    <lastmod>2014-09-14T13:24:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2014-09-13T15:49:51+08:00</lastmod>
+    <lastmod>2014-09-14T13:24:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/reflection/</loc>
-    <lastmod>2014-09-13T15:49:51+08:00</lastmod>
+    <lastmod>2014-09-14T13:24:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/tools/</loc>
-    <lastmod>2014-09-13T15:49:51+08:00</lastmod>
+    <lastmod>2014-09-14T13:24:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/js/</loc>
-    <lastmod>2014-09-13T15:49:51+08:00</lastmod>
+    <lastmod>2014-09-14T13:24:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/android/</loc>
-    <lastmod>2014-09-13T15:49:51+08:00</lastmod>
+    <lastmod>2014-09-14T13:24:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

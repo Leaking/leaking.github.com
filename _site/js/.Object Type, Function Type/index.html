@@ -1,0 +1,688 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Object Type, Function Type &#8211; My Stupid Blog</title>
+<meta name="description" content="">
+<meta name="keywords" content="JS">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Object Type, Function Type">
+<meta name="twitter:description" content="">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Object Type, Function Type">
+<meta property="og:description" content="">
+<meta property="og:url" content="/js/.Object%20Type,%20Function%20Type/">
+<meta property="og:site_name" content="My Stupid Blog">
+
+
+
+
+
+<link rel="canonical" href="/js/.Object%20Type,%20Function%20Type/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<script src="//use.edgefonts.net/source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9;source-code-pro:n4,n7;volkhov.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+      
+		    
+		        
+		    
+		    <li><a href="/home/" >Home</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/js/" >JS</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/android/" >Android</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/tools/" >Tools</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/reflection/" >Reflection</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/about/" >About</a></li>
+		  
+        <li class="dosearch"><i class="fa fa-search"></i> Search</li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	
+		<div class="wrap">
+			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
+		</div>
+	
+</header><!-- /.masthead -->
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Object Type, Function Type" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"><a href="/tags/#JS" title="Pages tagged JS">JS</a></span>
+        
+          <h1 class="entry-title">Object Type, Function Type</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+        
+          <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
+        <span class="entry-date date published"><time datetime="2014-09-14T00:00:00+08:00"><i class="fa fa-calendar-o"></i> September 14, 2014</time></span>
+        
+        
+        
+        <span class="social-share-twitter">
+          <a href="https://twitter.com/intent/tweet?hashtags=JS&text=Object%20Type,%20Function%20Type&url=/js/.Object%20Type,%20Function%20Type/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+        </span>
+        <span class="social-share-facebook">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/js/.Object%20Type,%20Function%20Type/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+        </span>
+        <span class="social-share-googleplus">
+          <a href="https://plus.google.com/share?url=/js/.Object%20Type,%20Function%20Type/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+        </span>
+        <!-- /.social-share -->
+        
+        <div class="google-ads" style="margin-top:40px; text-align:center;">
+  <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- 160x600 ad -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:160px;height:600px"
+       data-ad-client=""
+       data-ad-slot=""></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div><!-- /.google-ads --><!-- /.google-ads -->
+      </footer>
+      <div class="entry-content">
+        <h1 id="object-type">Object Type</h1>
+
+<h3 id="object">创建Object实例</h3>
+
+<p>创建Object实例的方法有两种</p>
+
+<p><strong>Object构造函数</strong></p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">;</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">29</span><span class="p">;</span></code></pre></div>
+
+<p><strong>对象字面量</strong></p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span> <span class="o">:</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">,</span> <span class="c1">// 用逗号隔开各个属性</span>
+    <span class="nx">age</span> <span class="o">:</span> <span class="mi">29</span>   <span class="c1">// 此处无逗号</span>
+<span class="p">};</span></code></pre></div>
+
+<p>使用对象字面量时，属性名可以是字符串，如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span> <span class="o">:</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;age&quot;</span> <span class="o">:</span> <span class="mi">29</span><span class="p">,</span>
+    <span class="mi">5</span><span class="o">:</span> <span class="kc">true</span>
+<span class="p">};</span></code></pre></div>
+
+<p>此处name,age,5都会作为字符串处理</p>
+
+<p>如下的定义方式也是正确的</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">//same as new Object()</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">;</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">29</span><span class="p">;</span></code></pre></div>
+
+<p>通过对象字面量定义对象时，不会调用Object构造函数</p>
+
+<p>另外，对象字面量也是向函数传递大量可选参数的首选方法</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">displayInfo</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">output</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+                   
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">args</span><span class="p">.</span><span class="nx">name</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">){</span>
+        <span class="nx">output</span> <span class="o">+=</span> <span class="s2">&quot;Name: &quot;</span> <span class="o">+</span> <span class="nx">args</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+                   
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">args</span><span class="p">.</span><span class="nx">age</span> <span class="o">==</span> <span class="s2">&quot;number&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">output</span> <span class="o">+=</span> <span class="s2">&quot;Age: &quot;</span> <span class="o">+</span> <span class="nx">args</span><span class="p">.</span><span class="nx">age</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+                   
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">output</span><span class="p">);</span>
+<span class="p">}</span>
+                   
+<span class="nx">displayInfo</span><span class="p">({</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">,</span>
+    <span class="nx">age</span><span class="o">:</span> <span class="mi">29</span>
+<span class="p">});</span>
+                   
+<span class="nx">displayInfo</span><span class="p">({</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Greg&quot;</span>
+<span class="p">});</span></code></pre></div>
+
+<p>上面的代码中，我们先定义了一个displayInfo函数，然后两次调用该函数，两次调用所传递的参数都不同</p>
+
+<p>上面的方式最适合传递若干可选参数的情形。</p>
+
+<h3 id="section">访问对象的属性</h3>
+
+<p>访问对象的属性可以有两种方式，除了<strong>点表示法</strong>，还可以使用<strong>方括号表示法</strong>。不过属性名应该以字符串的形式放在方括号中
+如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">alert</span><span class="p">(</span><span class="nx">person</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]);</span> <span class="c1">//&quot;Nicholas&quot;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">//&quot;Nicholas&quot;</span></code></pre></div>
+
+<p>以上两种方法没有区别，但方括号语法的优点是可以通过变量的方式访问，如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">propertyName</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">person</span><span class="p">[</span><span class="nx">propertyName</span><span class="p">]);</span> <span class="c1">//&quot;Nicholas&quot;</span></code></pre></div>
+
+<p>如果属性名中包含导致语法错误的字符，或者关键字，保留字，则可以使用方括号表示法，如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">person</span><span class="p">[</span><span class="s2">&quot;first name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">;</span></code></pre></div>
+
+<p>除了特别情况，一般推荐使用点表示法</p>
+
+<h1 id="function-type">Function Type</h1>
+
+<p>javascript中的函数也是对象，函数名是指向函数对象的指针，所以，javascript中的重载其实只是
+函数名指向另一个函数而已。</p>
+
+<p>定义函数可以有以下三种方式</p>
+
+<p><strong>using function-declaration syntax</strong></p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">sum</span> <span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p><strong>using a function expression</strong></p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span> 
+    <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span> 
+<span class="p">};</span></code></pre></div>
+
+<p><strong>using the Function constructor</strong></p>
+
+<p>这种方式不推荐使用。这种语法能很好解释函数时一种对象。</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Function</span><span class="p">(</span><span class="s2">&quot;num1&quot;</span><span class="p">,</span> <span class="s2">&quot;num2&quot;</span><span class="p">,</span> <span class="s2">&quot;return num1 + num2&quot;</span><span class="p">);</span> <span class="c1">//not recommended</span></code></pre></div>
+
+<p>以上表达式中，Function的最后一个参数是函数体，其他为函数参数。</p>
+
+<p>由于函数名只是函数对象的指针，那么一个函数可以有多个名字（一个函数对象可以有多个函数指针），如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">sum</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span> <span class="c1">//20</span>
+                   
+<span class="kd">var</span> <span class="nx">anotherSum</span> <span class="o">=</span> <span class="nx">sum</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">anotherSum</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span> <span class="c1">//20</span>
+                   
+<span class="nx">sum</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">anotherSum</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span> <span class="c1">//20</span></code></pre></div>
+
+<h3 id="no-overloading-">No Overloading （没有重载）</h3>
+
+<p>看如下例子</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">addSomeNumber</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">num</span> <span class="o">+</span> <span class="mi">100</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="kd">function</span> <span class="nx">addSomeNumber</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">num</span> <span class="o">+</span> <span class="mi">200</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">addSomeNumber</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span> <span class="c1">//300</span></code></pre></div>
+
+<p>我们貌似对addSomeNumber(num)进行了重载，然后进行调用，最后调用到了第二个函数，
+其实此处没有重载，下面代码等同于上面代码，</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">addSomeNumber</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">num</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">num</span> <span class="o">+</span> <span class="mi">100</span><span class="p">;</span>
+<span class="p">};</span>
+                   
+<span class="nx">addSomeNumber</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">num</span> <span class="o">+</span> <span class="mi">200</span><span class="p">;</span>
+<span class="p">};</span>
+                   
+<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">addSomeNumber</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span> <span class="c1">//300</span></code></pre></div>
+
+<p>很明显，所谓的”重载”，只是函数对象被重新定义了而已，而非重载。</p>
+
+<h3 id="function-declarations-versus-function-expressions-">Function Declarations versus Function Expressions （函数声明和函数表达式）</h3>
+
+<p>如下代码</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">alert</span><span class="p">(</span><span class="nx">sum</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span>
+<span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>函数sum声明在调用之后，但是能正常执行。</p>
+
+<p>Function Declarations 与 Function Expressions 之间有一个区别，就是Function Declarations 中有函数声明提升（function declaration hoisting.）  在代码执行之前，解析器会将函数声明添加到执行环境，并放到源代码树的顶部。</p>
+
+<p>再看如下代码，</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">alert</span><span class="p">(</span><span class="nx">sum</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span>   <span class="c1">//unexpected identifi er</span>
+<span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">};</span></code></pre></div>
+
+<p>如上代码使用函数表达式，则会出错。</p>
+
+<h3 id="functions-as-values">Functions as Values</h3>
+
+<p>函数作为值，可以作为值传入给某个函数，也可以作为某个函数的返回值
+(This means it’s possible not only to pass a function into another
+function as an argument but also to return a function as the result of another function.)</p>
+
+<h3 id="pass-a-function-into-another-function">pass a function into another function</h3>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">callSomeFunction</span><span class="p">(</span><span class="nx">someFunction</span><span class="p">,</span> <span class="nx">someArgument</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">someFunction</span><span class="p">(</span><span class="nx">someArgument</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">add10</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">num</span> <span class="o">+</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="kd">var</span> <span class="nx">result1</span> <span class="o">=</span> <span class="nx">callSomeFunction</span><span class="p">(</span><span class="nx">add10</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">result1</span><span class="p">);</span> <span class="c1">//20</span>
+                   
+<span class="kd">function</span> <span class="nx">getGreeting</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+    <span class="k">return</span> <span class="s2">&quot;Hello, &quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="kd">var</span> <span class="nx">result2</span> <span class="o">=</span> <span class="nx">callSomeFunction</span><span class="p">(</span><span class="nx">getGreeting</span><span class="p">,</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">result2</span><span class="p">);</span> <span class="c1">//&quot;Hello, Nicholas&quot;</span></code></pre></div>
+
+<p>上面代码定义函数callSomeFunction，它能接收2个参数，一个是某个函数指针x，一个是函数x的参数，
+然后在callSomeFunction执行函数x 。</p>
+
+<h3 id="return-a-function-as-the-result-of-another-function">return a function as the result of another function</h3>
+
+<p>以下函数返回结果是一个函数，这个返回函数主要是对object1，object2两个对象的某个属性进行比较。
+该函数常用于数组的排序</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">createComparisonFunction</span><span class="p">(</span><span class="nx">propertyName</span><span class="p">)</span> <span class="p">{</span>
+                   
+    <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">object1</span><span class="p">,</span> <span class="nx">object2</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">value1</span> <span class="o">=</span> <span class="nx">object1</span><span class="p">[</span><span class="nx">propertyName</span><span class="p">];</span>
+        <span class="kd">var</span> <span class="nx">value2</span> <span class="o">=</span> <span class="nx">object2</span><span class="p">[</span><span class="nx">propertyName</span><span class="p">];</span>
+                   
+        <span class="k">if</span> <span class="p">(</span><span class="nx">value1</span> <span class="o">&lt;</span> <span class="nx">value2</span><span class="p">){</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">value1</span> <span class="o">&gt;</span> <span class="nx">value2</span><span class="p">){</span>
+            <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+
+<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">[{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Zachary&quot;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span> <span class="mi">28</span><span class="p">},</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span> <span class="mi">29</span><span class="p">}];</span>
+                   
+<span class="nx">data</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="nx">createComparisonFunction</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">);</span> <span class="c1">//Nicholas</span>
+                   
+<span class="nx">data</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="nx">createComparisonFunction</span><span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">);</span> <span class="c1">//Zachary</span></code></pre></div>
+
+<h3 id="function-internals-">Function Internals （函数内部属性）</h3>
+
+<p>Two special objects exist inside a function: arguments and this。</p>
+
+<p><strong>arguments</strong></p>
+
+<p>arguments 对象代表传递给函数的参数数组，它也是一个对象，它有一个特殊的属性： callee
+callee此处其实也是个函数，但是在javascript中函数也是对象，所以此处也称为属性。
+callee指向拥有arguments对象的对象（ the arguments object
+also has a property named callee, which is a pointer to the function that owns the arguments
+object）</p>
+
+<p>看如下递归例子</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">factorial</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">num</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">num</span> <span class="o">*</span> <span class="nx">factorial</span><span class="p">(</span><span class="nx">num</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<p>当函数指针赋值给另一个变量时，上面函数内部与名字factorial耦合则会出现问题
+为了解决这个问题，可以用如下方式</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">factorial</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">num</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">num</span> <span class="o">*</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">callee</span><span class="p">(</span><span class="nx">num</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">trueFactorial</span> <span class="o">=</span> <span class="nx">factorial</span><span class="p">;</span>
+                   
+<span class="nx">factorial</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+                   
+<span class="nx">alert</span><span class="p">(</span><span class="nx">trueFactorial</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span> <span class="c1">//120</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">factorial</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span> <span class="c1">//0</span></code></pre></div>
+
+<p><strong>this</strong></p>
+
+<p>某个全局环境中的函数，它的this指针等同于window
+某个对象内部的函数的this，它指向这个对象本身。</p>
+
+<p>如下：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">window</span><span class="p">.</span><span class="nx">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">color</span><span class="o">:</span> <span class="s2">&quot;blue&quot;</span> <span class="p">};</span>
+                   
+<span class="kd">function</span> <span class="nx">sayColor</span><span class="p">(){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">color</span><span class="p">);</span>
+<span class="p">}</span>
+                   
+<span class="nx">sayColor</span><span class="p">();</span> <span class="c1">//&quot;red&quot;</span>
+                   
+<span class="nx">o</span><span class="p">.</span><span class="nx">sayColor</span> <span class="o">=</span> <span class="nx">sayColor</span><span class="p">;</span>
+<span class="nx">o</span><span class="p">.</span><span class="nx">sayColor</span><span class="p">();</span> <span class="c1">//&quot;blue&quot;</span></code></pre></div>
+
+<p>ECMAScript还规范化了另一个函数对象的属性：caller。它指向调用当前函数的函数的引用，如果当前函数时在全局作用域中，
+则它的caller属性为null。如下代码：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">outer</span><span class="p">(){</span>
+    <span class="nx">inner</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">inner</span><span class="p">(){</span>
+ <span class="nx">alert</span><span class="p">(</span><span class="nx">inner</span><span class="p">.</span><span class="nx">caller</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">outer</span><span class="p">();</span></code></pre></div>
+
+<p>上述代码将在警告框显示outer()函数的源代码
+为了实现更松散的耦合，可以如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">outer</span><span class="p">(){</span>
+    <span class="nx">inner</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">inner</span><span class="p">(){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">callee</span><span class="p">.</span><span class="nx">caller</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">outer</span><span class="p">();</span></code></pre></div>
+
+<h3 id="function-properties-and-methods">Function Properties and Methods</h3>
+
+<p>Each function has two properties: length and prototype
+.length属性返回函数的参数个数，prototype不在这里讲解。</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">sayName</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+<span class="p">}</span> 
+                   
+<span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="kd">function</span> <span class="nx">sayHi</span><span class="p">(){</span>
+ <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;hi&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+                   
+<span class="nx">alert</span><span class="p">(</span><span class="nx">sayName</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span> <span class="c1">//1</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">sum</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span> <span class="c1">//2</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">sayHi</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span> <span class="c1">//0</span></code></pre></div>
+
+<p>There are two additional methods for functions: apply() and call().</p>
+
+<p>apply(),call()的基本作用都是调用函数，如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">}</span>
+                   
+<span class="kd">function</span> <span class="nx">callSum1</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">sum</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span> <span class="c1">//passing in arguments object</span>
+<span class="p">}</span>
+                   
+<span class="kd">function</span> <span class="nx">callSum2</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">sum</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">[</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">]);</span> <span class="c1">//passing in array</span>
+<span class="p">}</span>
+                   
+<span class="nx">alert</span><span class="p">(</span><span class="nx">callSum1</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span> <span class="c1">//20</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">callSum2</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span> <span class="c1">//20</span>
+
+<span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>call()方法需要罗列出具体每个参数，apply()方法只需使用arguments。</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">callSum</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">sum</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">);</span>
+<span class="p">}</span>
+                   
+<span class="nx">alert</span><span class="p">(</span><span class="nx">callSum</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span> <span class="c1">//20</span></code></pre></div>
+
+<p>apply(),call()最强大的作用并不在于传递参数，调用函数，而是扩充函数的作用域，如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">window</span><span class="p">.</span><span class="nx">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">color</span><span class="o">:</span> <span class="s2">&quot;blue&quot;</span> <span class="p">};</span>
+                   
+<span class="kd">function</span> <span class="nx">sayColor</span><span class="p">(){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">color</span><span class="p">);</span>
+<span class="p">}</span>
+                   
+<span class="nx">sayColor</span><span class="p">();</span> <span class="c1">//red</span>
+                   
+<span class="nx">sayColor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="c1">//red</span>
+<span class="nx">sayColor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">window</span><span class="p">);</span> <span class="c1">//red</span>
+<span class="nx">sayColor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span> <span class="c1">//blue</span></code></pre></div>
+
+<p>Running sayColor.call(o) switches the context of the function such that this points to o, 
+resulting in a display of “blue”.</p>
+
+<p>使用apply() , call() 扩大函数的作用域的好处是，对象与方法不需要有任何耦合关系。</p>
+
+<p>ECMAScript 5 定义了一个bind()方法，The bind() method creates a new 
+function instance whose this value is bound to the value that was passed into bind()</p>
+
+<p>如下</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">window</span><span class="p">.</span><span class="nx">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">color</span><span class="o">:</span> <span class="s2">&quot;blue&quot;</span> <span class="p">};</span>
+                   
+<span class="kd">function</span> <span class="nx">sayColor</span><span class="p">(){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">color</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">objectSayColor</span> <span class="o">=</span> <span class="nx">sayColor</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span>
+<span class="nx">objectSayColor</span><span class="p">();</span> <span class="c1">//blue</span></code></pre></div>
+
+<p>函数对象调用toLocaleString() toString() valueOf() 将返回函数代码</p>
+
+        <nav class="pagination" role="navigation">
+          
+            <a href="/js/.Variables,%20Scope,%20and%20Memory/" class="btn" title="Variables, Scope, and Memory">Previous</a>
+          
+          
+        </nav><!-- /.pagination -->
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+  </article>
+</div><!-- /#main -->
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chenhuazhao020'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    
+
+<span>&copy; 2014 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/so-simple/">So Simple Theme</a>.</span>
+<div class="social-icons">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+  <a href="/feed.xml" title="Atom/RSS feed"><i class="fa fa-rss-square fa-2x"></i></a>
+</div><!-- /.social-icons -->
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: '/search.json',
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+  
+	        
+
+</body>
+</html>

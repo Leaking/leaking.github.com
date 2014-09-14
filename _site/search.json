@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "Object Type, Function Type",
+		  "category"   : "",
+      "tags"       : "JS",
+		  "url"        : "/js/.Object%20Type,%20Function%20Type/",
+		  "date"       : "2014-09-14 00:00:00 +0800",
+		  "shortdate"  : "September 14, 2014"
+		} ,
+	
+		{
 		  "title"      : "Variables, Scope, and Memory",
 		  "category"   : "",
       "tags"       : "JS",
