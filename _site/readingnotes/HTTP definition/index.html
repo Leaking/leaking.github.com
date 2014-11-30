@@ -5,34 +5,34 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>《JS高级程序设计》Note1-What Is JavaScript? &#8211; My Stupid Blog</title>
+<title>《HTTP权威指南》Note1-Overview of HTTP &#8211; My Stupid Blog</title>
 <meta name="description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
-<meta name="keywords" content="sample-post">
+<meta name="keywords" content="readingnotes">
 
 
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="《JS高级程序设计》Note1-What Is JavaScript?">
+<meta name="twitter:title" content="《HTTP权威指南》Note1-Overview of HTTP">
 <meta name="twitter:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
 
 
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
+<meta name="twitter:image" content="/images/http_definitive_guide.jpg">
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《JS高级程序设计》Note1-What Is JavaScript?">
+<meta property="og:title" content="《HTTP权威指南》Note1-Overview of HTTP">
 <meta property="og:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
-<meta property="og:url" content="/js/what-is-js/">
+<meta property="og:url" content="/readingnotes/HTTP%20definition/">
 <meta property="og:site_name" content="My Stupid Blog">
 
 
 
 
 
-<link rel="canonical" href="/js/what-is-js/">
+<link rel="canonical" href="/readingnotes/HTTP%20definition/">
 <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
 
 
@@ -146,12 +146,12 @@
 
 <div id="main" role="main">
   <article class="hentry">
-    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="《JS高级程序设计》Note1-What Is JavaScript?" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <img src="/images/http_definitive_guide.jpg" class="entry-feature-image" alt="《HTTP权威指南》Note1-Overview of HTTP" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
     <div class="entry-wrapper">
       <header class="entry-header">
-        <span class="entry-tags"><a href="/tags/#sample-post" title="Pages tagged sample-post">sample-post</a></span>
+        <span class="entry-tags"><a href="/tags/#readingnotes" title="Pages tagged readingnotes">readingnotes</a></span>
         
-          <h1 class="entry-title">《JS高级程序设计》Note1-What Is JavaScript?</h1>
+          <h1 class="entry-title">《HTTP权威指南》Note1-Overview of HTTP</h1>
         
       </header>
       <footer class="entry-meta">
@@ -161,18 +161,18 @@
           <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
         
         <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
-        <span class="entry-date date published"><time datetime="2014-08-25T00:00:00+08:00"><i class="fa fa-calendar-o"></i> August 25, 2014</time></span>
+        <span class="entry-date date published"><time datetime="2014-11-30T00:00:00+08:00"><i class="fa fa-calendar-o"></i> November 30, 2014</time></span>
         
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=sample-post&text=《JS高级程序设计》Note1-What%20Is%20JavaScript?&url=/js/what-is-js/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=readingnotes&text=《HTTP权威指南》Note1-Overview%20of%20HTTP&url=/readingnotes/HTTP%20definition/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
-          <a href="https://www.facebook.com/sharer/sharer.php?u=/js/what-is-js/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/readingnotes/HTTP%20definition/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
         </span>
         <span class="social-share-googleplus">
-          <a href="https://plus.google.com/share?url=/js/what-is-js/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+          <a href="https://plus.google.com/share?url=/readingnotes/HTTP%20definition/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
         </span>
         <!-- /.social-share -->
         
@@ -189,67 +189,155 @@
 </div><!-- /.google-ads --><!-- /.google-ads -->
       </footer>
       <div class="entry-content">
-        <h1 id="javascript">第一章 JavaScript简介</h1>
+        <h2 id="http-the-internets-multimedia-courier">HTTP: The Internet’s Multimedia Courier</h2>
 
-<p>1.2 JavaScript简史、
-网景推出了Javascript，微软推出了Jscript。后来被某个国际组织统一除了一个标准——-ECMAScript
-1.2 JavaScript实现</p>
+<p>首先，HTTP的全称为：Hypertext Transfer Protocol。属于可靠数据传输协议</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Temp</span><span class="o">{</span>
-	<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
-	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getA</span><span class="o">(){</span>
-		<span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">a</span><span class="o">;</span>
-	<span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<h2 id="web-clients-and-servers">Web Clients and Servers</h2>
 
-<p>JavaScript与ECMAScript经常被混为同一含义。但是事实不然
-JavaScript实现包含以下三种不同组成
-核心（ECMAScript）
-文档对象模型（DOM）
-浏览器对象模型（BOM）</p>
+<p>服务器存储某些web内容，客户端向服务器发送一个http request请求某个对象（可能为文档，图片等等），
+若请求成功，服务器将返回一个http response，其中包含该对象，对象的内容长度，对象的类型等等信息。</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-  <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.search-field&#39;</span><span class="p">).</span><span class="nx">jekyllSearch</span><span class="p">({</span>
-          <span class="nx">jsonFile</span><span class="o">:</span> <span class="s1">&#39;/search.json&#39;</span><span class="p">,</span>
-          <span class="nx">searchResults</span><span class="o">:</span> <span class="s1">&#39;.search-results&#39;</span><span class="p">,</span>
-          <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;&lt;li&gt;&lt;article&gt;&lt;a href=&quot;{url}&quot;&gt;{title} &lt;span class=&quot;entry-date&quot;&gt;&lt;time datetime=&quot;{date}&quot;&gt;{shortdate}&lt;/time&gt;&lt;/span&gt;&lt;/a&gt;&lt;/article&gt;&lt;/li&gt;&#39;</span><span class="p">,</span>
-          <span class="nx">fuzzy</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-          <span class="nx">noResults</span><span class="o">:</span> <span class="s1">&#39;&lt;p&gt;Nothing found.&lt;/p&gt;&#39;</span>
-        <span class="p">});</span>
-  <span class="p">});</span>
+<p>最常见的HTTP客户端是浏览器</p>
 
-  <span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span><span class="p">,</span> <span class="nb">window</span><span class="p">,</span> <span class="kc">undefined</span> <span class="p">)</span> <span class="p">{</span>
-    
-     <span class="kd">var</span> <span class="nx">bs</span> <span class="o">=</span> <span class="p">{</span>
-          <span class="nx">close</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.close-btn&quot;</span><span class="p">),</span>
-          <span class="nx">searchform</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.search-form&quot;</span><span class="p">),</span>
-          <span class="nx">canvas</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">),</span>
-          <span class="nx">dothis</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.dosearch&#39;</span><span class="p">)</span>
-      <span class="p">};</span>
-    
-    <span class="nx">bs</span><span class="p">.</span><span class="nx">dothis</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.search-wrapper&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span> <span class="nx">display</span><span class="o">:</span> <span class="s2">&quot;block&quot;</span> <span class="p">});</span>
-      <span class="nx">bs</span><span class="p">.</span><span class="nx">searchform</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">);</span>
-      <span class="nx">bs</span><span class="p">.</span><span class="nx">searchform</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">focus</span><span class="p">();</span>
-      <span class="nx">bs</span><span class="p">.</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s1">&#39;search-overlay&#39;</span><span class="p">);</span>
-    <span class="p">});</span>
-    
-      <span class="nx">bs</span><span class="p">.</span><span class="nx">close</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.search-wrapper&#39;</span><span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s1">&#39;style&#39;</span> <span class="p">);</span>
-        <span class="nx">bs</span><span class="p">.</span><span class="nx">searchform</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">);</span>
-        <span class="nx">bs</span><span class="p">.</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">&#39;search-overlay&#39;</span><span class="p">);</span>
-    <span class="p">});</span>
-  <span class="p">})(</span> <span class="nx">jQuery</span><span class="p">,</span> <span class="nb">window</span> <span class="p">);</span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span></code></pre></div>
+<h2 id="resources">Resources</h2>
+
+<p>服务器上web内容都是资源，包括文件，图片等等。网关和搜索引擎也是资源（这一句不大懂）
+关于资源，主要有两个知识点，一个是媒体类型，一个是URI，如下</p>
+
+<h3 id="media-types">Media Types</h3>
+
+<p>服务器传输给客户端的对象可能是文本文件，图片等各种类型，HTTP协议通过MINE type来标记各种数据类型，客户端根据传输对象的数据类型，选择接收、显示该对象的方式。</p>
+
+<p>如下图</p>
+<figure>
+  <img src="/images/http_overview01.jpg" alt="search screenshot" />
+  <figcaption>Mine type其实就是平时见到的Content-type</figcaption>
+</figure>
+
+<p>Mine type的文本标记方式为 “类型/子类型”，如下几种常见情况</p>
+
+<blockquote>
+  <ul>
+    <li>html文本类型：text/html</li>
+    <li>ASCLL文本：text/plain</li>
+    <li>jpeg图片：image/jpeg</li>
+    <li>gif图片：image/gif</li>
+  </ul>
+</blockquote>
+
+<h3 id="uris">URIs</h3>
+
+<p>URI:uniform resource identifier,URI标记着所有资源在互联网上的位置</p>
+
+<p>URIs有两种，一种是URLs，一种是URNs</p>
+
+<h4 id="urls">URLs</h4>
+
+<p>URL: uniform resource locator,平常说的URI基本默认就是URL。</p>
+
+<figure>
+  <img src="/images/httpoverview02.jpg" alt="search screenshot" />
+  <figcaption>URL的解析</figcaption>
+</figure>
+
+<p>从上图可以得知，URL一般遵循一种标准格式，这种格式包括三部分</p>
+
+<blockquote>
+  <ul>
+    <li>scheme：经常是 HTTP 协议 (http://)</li>
+    <li>主机地址：比如上面的 www.joes-hardware.com</li>
+    <li>指定某个资源：比如上面的 /specials/saw-blade.gif</li>
+  </ul>
+</blockquote>
+
+<h4 id="urns">URNs</h4>
+
+<p>URN:uniform resource name URN的用途是使客户端只要获取URN，无论资源的位置在哪里，都能获取到资源。URN的技术还未成熟，没有普及，所以目前URI基本都是默认为URL</p>
+
+<h2 id="transactions">Transactions（事务）</h2>
+
+<figure>
+  &lt;img src="/images/httpoverview03.jpg alt="search screenshot"&gt;
+  <figcaption>HTTP事务</figcaption>
+</figure>
+
+<p>一个HTTP事务是由一个HTTP请求命令和一个HTTP相应结果组成的，这种通信是具有HTTP报文的格式化数据块实现的。</p>
+
+<figure>
+  <img src="/images/httpoverview03.jpg" alt="search screenshot" />
+  <figcaption>事务</figcaption>
+</figure>
+
+<p>客户端完成一个任务可能不仅仅只有一个事务。加载一个图片浏览的页面，需要多个事务，首先是加载页面框架的事务，然后是获取各个图片的事务。</p>
+
+<h3 id="methods">Methods</h3>
+
+<p>HTTP 支持集中请求命令，这种请求命令也称为请求方法，这些方法告知服务器应该执行什么操作，常见方法如下如</p>
+
+<figure>
+  <img src="/images/httpoverview04.jpg" alt="search screenshot" />
+  <figcaption>HTTP请求方法</figcaption>
+</figure>
+<p>### 状态码</p>
+
+<p>HTTP响应报文都会携带一个状态码，并带有一个解释状态码的文本。</p>
+
+<h2 id="messages">Messages（报文）</h2>
+
+<p>报文有两种，一种是请求报文，一种是请求报文，两者格式基本相同。</p>
+
+<figure>
+  <img src="/images/httpoverview05.jpg" alt="search screenshot" />
+  <figcaption>HTTP报文格式</figcaption>
+</figure>
+
+<p>HTTP报文包含三个部分：</p>
+
+<blockquote>
+  <ul>
+    <li>起始行（start line）：如上图，请求报文的起始行包括“方法+资源+HTTP版本”
+ 而响应报文中则保罗“HTTP版本+状态码及其解释文本”</li>
+    <li>首部（header）：起始行之后跟随的是首部，首部每行都是一个键值对，键和值用双引号:分开。
+   <strong>首部的最后是一个空行</strong></li>
+    <li>主体（body）：起始行和首部都是纯文本的格式，而主体则为二进制数据，可以是文本，图片等。</li>
+  </ul>
+</blockquote>
+
+<h2 id="connections">Connections</h2>
+
+<p>HTTP基于TCP连接，TCP是可靠传输协议，前者是应用层协议，后者是传输层协议</p>
+
+<figure>
+  <img src="/images/httpoverview07.jpg" alt="search screenshot" />
+  <figcaption>HTTP基于TCP协议</figcaption>
+</figure>
+
+<h2 id="protocol-versions">Protocol Versions</h2>
+
+<p>目前推荐使用的HTTP版本是1.1，还存在其他0.9，1.0等版本</p>
+
+<h2 id="architectural-components-of-the-webweb">Architectural Components of the Web（Web的结构组件）</h2>
+
+<p>上文讲到的HTTP客户端和HTTP服务器都是属于HTTP应用程序</p>
+
+<p>还有其他一些重要的HTTP应用程序（比较难理解）</p>
+
+<blockquote>
+  <ul>
+    <li>Proxies (代理)</li>
+    <li>Caches （缓存）</li>
+    <li>Gateways （网关）</li>
+    <li>CTunnels （隧道）</li>
+    <li>Agents （agent代理）</li>
+  </ul>
+</blockquote>
 
 
         <nav class="pagination" role="navigation">
           
-            <a href="/android/xmpp-IM/" class="btn" title="基于XMPP协议即时通讯工具开发总结">Previous</a>
+            <a href="/js/.Object%20Type,%20Function%20Type/" class="btn" title="《JS高级程序设计》Note3-Object Type, Function Type">Previous</a>
           
-          
-            <a href="/tools/how-to-build-me/" class="btn" title="Jekyll搭建博客">Next</a>
           
         </nav><!-- /.pagination -->
         

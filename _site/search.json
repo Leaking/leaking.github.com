@@ -1,7 +1,16 @@
 [
 	
 		{
-		  "title"      : "Object Type, Function Type",
+		  "title"      : "《HTTP权威指南》Note1-Overview of HTTP",
+		  "category"   : "",
+      "tags"       : "readingnotes",
+		  "url"        : "/readingnotes/HTTP%20definition/",
+		  "date"       : "2014-11-30 00:00:00 +0800",
+		  "shortdate"  : "November 30, 2014"
+		} ,
+	
+		{
+		  "title"      : "《JS高级程序设计》Note3-Object Type, Function Type",
 		  "category"   : "",
       "tags"       : "JS",
 		  "url"        : "/js/.Object%20Type,%20Function%20Type/",
@@ -10,7 +19,7 @@
 		} ,
 	
 		{
-		  "title"      : "Variables, Scope, and Memory",
+		  "title"      : "《JS高级程序设计》Note2-Variables, Scope, and Memory",
 		  "category"   : "",
       "tags"       : "JS",
 		  "url"        : "/js/.Variables,%20Scope,%20and%20Memory/",
@@ -46,7 +55,7 @@
 		} ,
 	
 		{
-		  "title"      : "What Is JavaScript?",
+		  "title"      : "《JS高级程序设计》Note1-What Is JavaScript?",
 		  "category"   : "",
       "tags"       : "sample-post",
 		  "url"        : "/js/what-is-js/",

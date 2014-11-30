@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2014-09-14T13:36:58+08:00</updated>
+<updated>2014-11-30T18:30:02+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -16,7 +16,169 @@
   
 
 <entry>
-  <title type="html"><![CDATA[Object Type, Function Type]]></title>
+  <title type="html"><![CDATA[《HTTP权威指南》Note1-Overview of HTTP]]></title>
+  <link rel="alternate" type="text/html" href="/readingnotes/HTTP%20definition/" />
+  <id>/readingnotes/HTTP definition</id>
+  <published>2014-11-30T00:00:00+08:00</published>
+  <updated>2014-11-30T00:00:00+08:00</updated>
+  <author>
+    <name>Quinn Chen</name>
+    <uri></uri>
+    <email>chenhuazhaoao@gmail.com</email>
+  </author>
+  <content type="html">&lt;h2 id=&quot;http-the-internets-multimedia-courier&quot;&gt;HTTP: The Internet’s Multimedia Courier&lt;/h2&gt;
+
+&lt;p&gt;首先，HTTP的全称为：Hypertext Transfer Protocol。属于可靠数据传输协议&lt;/p&gt;
+
+&lt;h2 id=&quot;web-clients-and-servers&quot;&gt;Web Clients and Servers&lt;/h2&gt;
+
+&lt;p&gt;服务器存储某些web内容，客户端向服务器发送一个http request请求某个对象（可能为文档，图片等等），
+若请求成功，服务器将返回一个http response，其中包含该对象，对象的内容长度，对象的类型等等信息。&lt;/p&gt;
+
+&lt;p&gt;最常见的HTTP客户端是浏览器&lt;/p&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;p&gt;服务器上web内容都是资源，包括文件，图片等等。网关和搜索引擎也是资源（这一句不大懂）
+关于资源，主要有两个知识点，一个是媒体类型，一个是URI，如下&lt;/p&gt;
+
+&lt;h3 id=&quot;media-types&quot;&gt;Media Types&lt;/h3&gt;
+
+&lt;p&gt;服务器传输给客户端的对象可能是文本文件，图片等各种类型，HTTP协议通过MINE type来标记各种数据类型，客户端根据传输对象的数据类型，选择接收、显示该对象的方式。&lt;/p&gt;
+
+&lt;p&gt;如下图&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/images/http_overview01.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;Mine type其实就是平时见到的Content-type&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Mine type的文本标记方式为 “类型/子类型”，如下几种常见情况&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;html文本类型：text/html&lt;/li&gt;
+    &lt;li&gt;ASCLL文本：text/plain&lt;/li&gt;
+    &lt;li&gt;jpeg图片：image/jpeg&lt;/li&gt;
+    &lt;li&gt;gif图片：image/gif&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;uris&quot;&gt;URIs&lt;/h3&gt;
+
+&lt;p&gt;URI:uniform resource identifier,URI标记着所有资源在互联网上的位置&lt;/p&gt;
+
+&lt;p&gt;URIs有两种，一种是URLs，一种是URNs&lt;/p&gt;
+
+&lt;h4 id=&quot;urls&quot;&gt;URLs&lt;/h4&gt;
+
+&lt;p&gt;URL: uniform resource locator,平常说的URI基本默认就是URL。&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/httpoverview02.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;URL的解析&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;从上图可以得知，URL一般遵循一种标准格式，这种格式包括三部分&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;scheme：经常是 HTTP 协议 (http://)&lt;/li&gt;
+    &lt;li&gt;主机地址：比如上面的 www.joes-hardware.com&lt;/li&gt;
+    &lt;li&gt;指定某个资源：比如上面的 /specials/saw-blade.gif&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;urns&quot;&gt;URNs&lt;/h4&gt;
+
+&lt;p&gt;URN:uniform resource name URN的用途是使客户端只要获取URN，无论资源的位置在哪里，都能获取到资源。URN的技术还未成熟，没有普及，所以目前URI基本都是默认为URL&lt;/p&gt;
+
+&lt;h2 id=&quot;transactions&quot;&gt;Transactions（事务）&lt;/h2&gt;
+
+&lt;figure&gt;
+  &amp;lt;img src=&quot;/images/httpoverview03.jpg alt=&quot;search screenshot&quot;&amp;gt;
+  &lt;figcaption&gt;HTTP事务&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;一个HTTP事务是由一个HTTP请求命令和一个HTTP相应结果组成的，这种通信是具有HTTP报文的格式化数据块实现的。&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/httpoverview03.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;事务&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;客户端完成一个任务可能不仅仅只有一个事务。加载一个图片浏览的页面，需要多个事务，首先是加载页面框架的事务，然后是获取各个图片的事务。&lt;/p&gt;
+
+&lt;h3 id=&quot;methods&quot;&gt;Methods&lt;/h3&gt;
+
+&lt;p&gt;HTTP 支持集中请求命令，这种请求命令也称为请求方法，这些方法告知服务器应该执行什么操作，常见方法如下如&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/httpoverview04.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;HTTP请求方法&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;### 状态码&lt;/p&gt;
+
+&lt;p&gt;HTTP响应报文都会携带一个状态码，并带有一个解释状态码的文本。&lt;/p&gt;
+
+&lt;h2 id=&quot;messages&quot;&gt;Messages（报文）&lt;/h2&gt;
+
+&lt;p&gt;报文有两种，一种是请求报文，一种是请求报文，两者格式基本相同。&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/httpoverview05.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;HTTP报文格式&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;HTTP报文包含三个部分：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;起始行（start line）：如上图，请求报文的起始行包括“方法+资源+HTTP版本”
+ 而响应报文中则保罗“HTTP版本+状态码及其解释文本”&lt;/li&gt;
+    &lt;li&gt;首部（header）：起始行之后跟随的是首部，首部每行都是一个键值对，键和值用双引号:分开。
+   &lt;strong&gt;首部的最后是一个空行&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;主体（body）：起始行和首部都是纯文本的格式，而主体则为二进制数据，可以是文本，图片等。&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;connections&quot;&gt;Connections&lt;/h2&gt;
+
+&lt;p&gt;HTTP基于TCP连接，TCP是可靠传输协议，前者是应用层协议，后者是传输层协议&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/httpoverview07.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;HTTP基于TCP协议&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&quot;protocol-versions&quot;&gt;Protocol Versions&lt;/h2&gt;
+
+&lt;p&gt;目前推荐使用的HTTP版本是1.1，还存在其他0.9，1.0等版本&lt;/p&gt;
+
+&lt;h2 id=&quot;architectural-components-of-the-webweb&quot;&gt;Architectural Components of the Web（Web的结构组件）&lt;/h2&gt;
+
+&lt;p&gt;上文讲到的HTTP客户端和HTTP服务器都是属于HTTP应用程序&lt;/p&gt;
+
+&lt;p&gt;还有其他一些重要的HTTP应用程序（比较难理解）&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Proxies (代理)&lt;/li&gt;
+    &lt;li&gt;Caches （缓存）&lt;/li&gt;
+    &lt;li&gt;Gateways （网关）&lt;/li&gt;
+    &lt;li&gt;CTunnels （隧道）&lt;/li&gt;
+    &lt;li&gt;Agents （agent代理）&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/readingnotes/HTTP%20definition/&quot;&gt;《HTTP权威指南》Note1-Overview of HTTP&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on November 30, 2014.&lt;/p&gt;</content>
+</entry>
+
+
+  
+
+<entry>
+  <title type="html"><![CDATA[《JS高级程序设计》Note3-Object Type, Function Type]]></title>
   <link rel="alternate" type="text/html" href="/js/.Object%20Type,%20Function%20Type/" />
   <id>/js/.Object Type, Function Type</id>
   <published>2014-09-14T00:00:00+08:00</published>
@@ -430,16 +592,18 @@ function instance whose this value is bound to the value that was passed into bi
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;objectSayColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sayColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;objectSayColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//blue&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;p&gt;另外&lt;/p&gt;
+
 &lt;p&gt;函数对象调用toLocaleString() toString() valueOf() 将返回函数代码&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;/js/.Object%20Type,%20Function%20Type/&quot;&gt;Object Type, Function Type&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on September 14, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;/js/.Object%20Type,%20Function%20Type/&quot;&gt;《JS高级程序设计》Note3-Object Type, Function Type&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on September 14, 2014.&lt;/p&gt;</content>
 </entry>
 
 
   
 
 <entry>
-  <title type="html"><![CDATA[Variables, Scope, and Memory]]></title>
+  <title type="html"><![CDATA[《JS高级程序设计》Note2-Variables, Scope, and Memory]]></title>
   <link rel="alternate" type="text/html" href="/js/.Variables,%20Scope,%20and%20Memory/" />
   <id>/js/.Variables, Scope, and Memory</id>
   <published>2014-09-13T00:00:00+08:00</published>
@@ -451,9 +615,8 @@ function instance whose this value is bound to the value that was passed into bi
   </author>
   <content type="html">&lt;h1 id=&quot;working-with-primitive-and-reference-values-in-variables&quot;&gt;Working with primitive and reference values in variables&lt;/h1&gt;
 
-&lt;p&gt;&lt;strong&gt;基本类型（primitive values）&lt;/strong&gt; 有5种：Undefined, Null, Boolean, Number, and String&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;引用类型（Reference values）&lt;/strong&gt; 在操作对象时，是通过引用访问的，而非直接操作对象。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;基本ss类型（primitive values）&lt;/strong&gt; 有5种：Undefined, Null, Boolean, Number, and Strin
+&lt;strong&gt;引用类型（Reference values）&lt;/strong&gt; 在操作对象时，是通过引用访问的，而非直接操作对象。&lt;/p&gt;
 
 &lt;h3 id=&quot;dynamic-properties---&quot;&gt;Dynamic Properties   （动态的属性）&lt;/h3&gt;
 
@@ -704,7 +867,7 @@ window ，changeColor()，swapColor()及其各自下方的矩形，代表3个执
 * 标记清除，目前主流的方式
 * 引用技术，会有循环引用的隐患&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;/js/.Variables,%20Scope,%20and%20Memory/&quot;&gt;Variables, Scope, and Memory&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on September 13, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;/js/.Variables,%20Scope,%20and%20Memory/&quot;&gt;《JS高级程序设计》Note2-Variables, Scope, and Memory&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on September 13, 2014.&lt;/p&gt;</content>
 </entry>
 
 
@@ -860,7 +1023,7 @@ Git将其描述为Untracked files&lt;/p&gt;
   
 
 <entry>
-  <title type="html"><![CDATA[What Is JavaScript?]]></title>
+  <title type="html"><![CDATA[《JS高级程序设计》Note1-What Is JavaScript?]]></title>
   <link rel="alternate" type="text/html" href="/js/what-is-js/" />
   <id>/js/what-is-js</id>
   <published>2014-08-25T00:00:00+08:00</published>
@@ -925,7 +1088,7 @@ JavaScript实现包含以下三种不同组成
 &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;/js/what-is-js/&quot;&gt;What Is JavaScript?&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on August 25, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;/js/what-is-js/&quot;&gt;《JS高级程序设计》Note1-What Is JavaScript?&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on August 25, 2014.&lt;/p&gt;</content>
 </entry>
 
 
