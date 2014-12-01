@@ -95,6 +95,8 @@ HTTP 支持集中请求命令，这种请求命令也称为请求方法，这些
   <img src="{{ site.url }}/images/httpoverview04.jpg" alt="search screenshot">
   <figcaption>HTTP请求方法</figcaption>
 </figure>
+
+
 ### 状态码
 
 HTTP响应报文都会携带一个状态码，并带有一个解释状态码的文本。
