@@ -1,0 +1,338 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>《HTTP权威指南》Note2-URLs and Resources &#8211; My Stupid Blog</title>
+<meta name="description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
+<meta name="keywords" content="readingnotes">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="《HTTP权威指南》Note2-URLs and Resources">
+<meta name="twitter:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/http_definitive_guide.jpg">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《HTTP权威指南》Note2-URLs and Resources">
+<meta property="og:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
+<meta property="og:url" content="/readingnotes/HTTP%20definition02/">
+<meta property="og:site_name" content="My Stupid Blog">
+
+
+
+
+
+<link rel="canonical" href="/readingnotes/HTTP%20definition02/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<script src="//use.edgefonts.net/source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9;source-code-pro:n4,n7;volkhov.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+      
+		    
+		        
+		    
+		    <li><a href="/home/" >Home</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/js/" >JS</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/android/" >Android</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/tools/" >Tools</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/readingnotes/" >ReadingNotes</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/reflection/" >Reflection</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/about/" >About</a></li>
+		  
+        <li class="dosearch"><i class="fa fa-search"></i> Search</li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	
+		<div class="wrap">
+			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
+		</div>
+	
+</header><!-- /.masthead -->
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <img src="/images/http_definitive_guide.jpg" class="entry-feature-image" alt="《HTTP权威指南》Note2-URLs and Resources" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"><a href="/tags/#readingnotes" title="Pages tagged readingnotes">readingnotes</a></span>
+        
+          <h1 class="entry-title">《HTTP权威指南》Note2-URLs and Resources</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+        
+          <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
+        <span class="entry-date date published"><time datetime="2014-12-01T00:00:00+08:00"><i class="fa fa-calendar-o"></i> December 01, 2014</time></span>
+        
+        
+        
+        <span class="social-share-twitter">
+          <a href="https://twitter.com/intent/tweet?hashtags=readingnotes&text=《HTTP权威指南》Note2-URLs%20and%20Resources&url=/readingnotes/HTTP%20definition02/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+        </span>
+        <span class="social-share-facebook">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/readingnotes/HTTP%20definition02/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+        </span>
+        <span class="social-share-googleplus">
+          <a href="https://plus.google.com/share?url=/readingnotes/HTTP%20definition02/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+        </span>
+        <!-- /.social-share -->
+        
+        <div class="google-ads" style="margin-top:40px; text-align:center;">
+  <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- 160x600 ad -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:160px;height:600px"
+       data-ad-client=""
+       data-ad-slot=""></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div><!-- /.google-ads --><!-- /.google-ads -->
+      </footer>
+      <div class="entry-content">
+        <p>URLs(Uniform resource locators)是互联网资源的标准化名称</p>
+
+<h2 id="navigating-the-internets-resources">Navigating the Internet’s Resources</h2>
+
+<p>像上一篇博客<a href="http://leaking.github.io/readingnotes/HTTP%20definition01/">“《HTTP权威指南》Note1-Overview of HTTP”</a>中提到的，URLs只是URI的一个子集，另一个子集是URN，URL强调资源的位置，URN抢到资源的名称，当某个资源在互联网的位置发生改变，旧的URL将不能再访问该资源，而URN则依然可以。由于URN还未普及，我们一般默认URL就是URI。</p>
+
+<p>URL有统一的格式：scheme://server location/path</p>
+
+<p>URL被应用于除了HTTP之外的其他协议，比如FTP，电子邮件等等。URL是众多网络协议的访问点（原文是access point，翻译有点怪）。</p>
+
+<h2 id="url-syntax">URL Syntax</h2>
+
+<p>URL的语法格式（详细）如下</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;scheme&gt;</span>://<span class="nt">&lt;user&gt;</span>:<span class="nt">&lt;password&gt;</span>@<span class="nt">&lt;host&gt;</span>:<span class="nt">&lt;port&gt;</span>/<span class="nt">&lt;path&gt;</span>;<span class="nt">&lt;params&gt;</span>?<span class="nt">&lt;query&gt;</span>#<span class="nt">&lt;frag&gt;</span></code></pre></div>
+
+<p>一般没有哪个URL同时拥有以上9个部分，一般用于scheme，host，path.
+接下来讲解以详细语法格式中的9个组成部分。</p>
+
+<h3 id="schemes-what-protocol-to-use">Schemes: What Protocol to Use</h3>
+
+<p>scheme一般表示访问某个资源是通过哪种协议。它不区分大小写，用冒号:隔开后面的字段，所以
+HTTP://等同于http://</p>
+
+<h3 id="hosts-and-ports">Hosts and Ports</h3>
+
+<p>host和port指定你得通过互联网中哪台主机的哪个端口获取某个资源。</p>
+
+<h3 id="usernames-and-passwords">Usernames and Passwords</h3>
+
+<p>用户名和密码，一般运用于FTP协议，举几个例子，如下：</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">ftp://ftp.prep.ai.mit.edu/pub/gnu
+ftp://anonymous@ftp.prep.ai.mit.edu/pub/gnu
+ftp://anonymous:my_passwd@ftp.prep.ai.mit.edu/pub/gnu
+http://joe:joespasswd@www.joes-hardware.com/sales_info.txt</code></pre></div>
+
+<p>第一个URL中，没有账户名也没有密码，则默认插入“anonymous”作为账号，而密码，也会插入默认值，不同浏览器的默认密码不同，IE是“IEUser”，Netscape Navigator 是 “mozilla”。
+第二个URL中，有账号，则只需要自动插入默认密码。
+第三个和第四个URL中，拥有账号也有密码。</p>
+
+<p>通常账号密码通过“@”字符与后续的URL组成部分分隔开，而账号密码之间则用冒号”:”分开。</p>
+
+<h2 id="paths">Paths</h2>
+
+<p>path是指你需要到某个主机的哪个位置获取资源，</p>
+
+<p>Each path segment can have its own params component.</p>
+
+<h2 id="parameters">Parameters</h2>
+
+        <nav class="pagination" role="navigation">
+          
+            <a href="/readingnotes/HTTP%20definition01/" class="btn" title="《HTTP权威指南》Note1-Overview of HTTP">Previous</a>
+          
+          
+        </nav><!-- /.pagination -->
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+  </article>
+</div><!-- /#main -->
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chenhuazhao020'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    
+
+<span>&copy; 2014 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
+<div class="social-icons">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+  <a href="/feed.xml" title="Atom/RSS feed"><i class="fa fa-rss-square fa-2x"></i></a>
+</div><!-- /.social-icons -->
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: '/search.json',
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+  
+	        
+
+</body>
+</html>

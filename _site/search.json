@@ -1,10 +1,19 @@
 [
 	
 		{
+		  "title"      : "《HTTP权威指南》Note2-URLs and Resources",
+		  "category"   : "",
+      "tags"       : "readingnotes",
+		  "url"        : "/readingnotes/HTTP%20definition02/",
+		  "date"       : "2014-12-01 00:00:00 +0800",
+		  "shortdate"  : "December 01, 2014"
+		} ,
+	
+		{
 		  "title"      : "《HTTP权威指南》Note1-Overview of HTTP",
 		  "category"   : "",
       "tags"       : "readingnotes",
-		  "url"        : "/readingnotes/HTTP%20definition/",
+		  "url"        : "/readingnotes/HTTP%20definition01/",
 		  "date"       : "2014-11-30 00:00:00 +0800",
 		  "shortdate"  : "November 30, 2014"
 		} ,

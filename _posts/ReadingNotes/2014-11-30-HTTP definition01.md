@@ -77,11 +77,6 @@ URN:uniform resource name URN的用途是使客户端只要获取URN，无论资
 
 ## Transactions（事务）
 
-<figure>
-  <img src="{{ site.url }}/images/httpoverview03.jpg alt="search screenshot">
-  <figcaption>HTTP事务</figcaption>
-</figure>
-
 一个HTTP事务是由一个HTTP请求命令和一个HTTP相应结果组成的，这种通信是具有HTTP报文的格式化数据块实现的。
 
 

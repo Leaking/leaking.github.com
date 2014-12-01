@@ -3,7 +3,13 @@
   
   
   <url>
-    <loc>/readingnotes/HTTP%20definition/</loc>
+    <loc>/readingnotes/HTTP%20definition02/</loc>
+    <lastmod>2014-12-01T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>/readingnotes/HTTP%20definition01/</loc>
     <lastmod>2014-11-30T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
@@ -53,70 +59,70 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2014-11-30T18:30:02+08:00</lastmod>
+    <lastmod>2014-12-01T21:25:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>/about/</loc>
-    <lastmod>2014-11-30T18:30:02+08:00</lastmod>
+    <lastmod>2014-12-01T21:25:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/home/</loc>
-    <lastmod>2014-11-30T18:30:02+08:00</lastmod>
+    <lastmod>2014-12-01T21:25:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/reflection/</loc>
-    <lastmod>2014-11-30T18:30:02+08:00</lastmod>
+    <lastmod>2014-12-01T21:25:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/git/</loc>
-    <lastmod>2014-11-30T18:30:02+08:00</lastmod>
+    <lastmod>2014-12-01T21:25:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/readingnotes/</loc>
-    <lastmod>2014-11-30T18:30:02+08:00</lastmod>
+    <lastmod>2014-12-01T21:25:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2014-11-30T18:30:02+08:00</lastmod>
+    <lastmod>2014-12-01T21:25:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/tools/</loc>
-    <lastmod>2014-11-30T18:30:02+08:00</lastmod>
+    <lastmod>2014-12-01T21:25:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/js/</loc>
-    <lastmod>2014-11-30T18:30:02+08:00</lastmod>
+    <lastmod>2014-12-01T21:25:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/android/</loc>
-    <lastmod>2014-11-30T18:30:02+08:00</lastmod>
+    <lastmod>2014-12-01T21:25:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
