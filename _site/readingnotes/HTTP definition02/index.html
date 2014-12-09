@@ -232,18 +232,71 @@ http://joe:joespasswd@www.joes-hardware.com/sales_info.txt</code></pre></div>
 
 <p>通常账号密码通过“@”字符与后续的URL组成部分分隔开，而账号密码之间则用冒号”:”分开。</p>
 
-<h2 id="paths">Paths</h2>
+<h3 id="paths">Paths</h3>
 
 <p>path是指你需要到某个主机的哪个位置获取资源，</p>
 
-<p>Each path segment can have its own params component.</p>
+<p>path中的每一级，都可以有自己的参数（Each path segment can have its own params component）</p>
 
 <h2 id="parameters">Parameters</h2>
+
+<p>还记得参数Parameters放在哪个位置吗？再看看URL的完整格式，它与path之间用分号“;”隔开。</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;scheme&gt;</span>://<span class="nt">&lt;user&gt;</span>:<span class="nt">&lt;password&gt;</span>@<span class="nt">&lt;host&gt;</span>:<span class="nt">&lt;port&gt;</span>/<span class="nt">&lt;path&gt;</span>;<span class="nt">&lt;params&gt;</span>?<span class="nt">&lt;query&gt;</span>#<span class="nt">&lt;frag&gt;</span></code></pre></div>
+
+<p>参数都以键值对的方式出现，如下例子</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">ftp://prep.ai.mit.edu/pub/gnu;type=d</code></pre></div>
+
+<p>向前面提到的，path的各个级别都可以有自己的参数，如下</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">http://www.joes-hardware.com/hammers;sale=false/index.html;graphics=true</code></pre></div>
+
+<p>路径在hammers级别有参数sale，值为false，路径在index.html有参数graphics，其值为true</p>
+
+<h3 id="query-strings">Query Strings</h3>
+
+<p>Query Strings的例子如下，不大理解，这个和get方法后面的参数不是一样吗</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">http://www.joes-hardware.com/inventory-check.cgi?item=12731</code></pre></div>
+
+<h3 id="fragments">Fragments</h3>
+
+<p>这个概念是指从服务器获取某个对象，显示在浏览器之后，直接滚动显示到某个片段，如下语句</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">http://www.joes-hardware.com/tools.html#drills</code></pre></div>
+
+<p>该网页www.joes-hardware.com/tools.html的源代码为：</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;HTML&gt;</span>
+
+<span class="nt">&lt;HEAD&gt;&lt;TITLE&gt;</span>Joe&#39;s Tools<span class="nt">&lt;/TITLE&gt;&lt;/HEAD&gt;</span>
+
+<span class="nt">&lt;BODY&gt;</span>
+
+<span class="nt">&lt;H1&gt;</span>Tools Page<span class="nt">&lt;/H1&gt;</span>
+
+<span class="nt">&lt;H2&gt;</span>Hammers<span class="nt">&lt;/H2&gt;</span>
+
+<span class="nt">&lt;P&gt;</span>Joe&#39;s Hardware Online has the largest selection of 
+<span class="nt">&lt;A</span> <span class="na">HREF=</span><span class="s">&quot;./hammers.html&quot;</span><span class="nt">&gt;</span>hammers<span class="nt">&lt;/A&gt;</span> on the earth.<span class="nt">&lt;/P&gt;</span>
+
+<span class="nt">&lt;H2&gt;&lt;A</span> <span class="na">NAME=</span><span class="s">drills</span><span class="nt">&gt;&lt;/A&gt;</span>Drills<span class="nt">&lt;/H2&gt;</span>
+
+<span class="nt">&lt;P&gt;</span>Joe&#39;s Hardware has a complete line of cordless and corded drills,
+as well as the latest in plutonium-powered atomic drills, for those
+big around the house jobs.<span class="nt">&lt;/P&gt;</span> ...
+
+<span class="nt">&lt;/BODY&gt;</span>
+
+<span class="nt">&lt;/HTML&gt;</span></code></pre></div>
 
         <nav class="pagination" role="navigation">
           
             <a href="/readingnotes/HTTP%20definition01/" class="btn" title="《HTTP权威指南》Note1-Overview of HTTP">Previous</a>
           
+          
+            <a href="/android/offlineDocs/" class="btn" title="安卓离线文档">Next</a>
           
         </nav><!-- /.pagination -->
         

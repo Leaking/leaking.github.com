@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "安卓离线文档",
+		  "category"   : "",
+      "tags"       : "android, xmpp, and IM",
+		  "url"        : "/android/offlineDocs/",
+		  "date"       : "2014-12-10 00:00:00 +0800",
+		  "shortdate"  : "December 10, 2014"
+		} ,
+	
+		{
 		  "title"      : "《HTTP权威指南》Note2-URLs and Resources",
 		  "category"   : "",
       "tags"       : "readingnotes",
@@ -77,8 +86,8 @@
 		  "category"   : "",
       "tags"       : "android, xmpp, and IM",
 		  "url"        : "/android/xmpp-IM/",
-		  "date"       : "2013-06-25 00:00:00 +0800",
-		  "shortdate"  : "June 25, 2013"
+		  "date"       : "2014-06-25 00:00:00 +0800",
+		  "shortdate"  : "June 25, 2014"
 		} 
 	
 ]
