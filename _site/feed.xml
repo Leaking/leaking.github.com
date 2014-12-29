@@ -4,13 +4,118 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2014-12-22T21:50:11+08:00</updated>
+<updated>2014-12-26T19:51:34+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
   <uri>/</uri>
   <email>chenhuazhaoao@gmail.com</email>
 </author>
+
+
+  
+
+<entry>
+  <title type="html"><![CDATA[【译】Fragment]]></title>
+  <link rel="alternate" type="text/html" href="/android/(translate)Fragment/" />
+  <id>/android/(translate)Fragment</id>
+  <published>2014-12-25T00:00:00+08:00</published>
+  <updated>2014-12-25T00:00:00+08:00</updated>
+  <author>
+    <name>Quinn Chen</name>
+    <uri></uri>
+    <email>chenhuazhaoao@gmail.com</email>
+  </author>
+  <content type="html">&lt;h2 id=&quot;fragments&quot;&gt;Fragments&lt;/h2&gt;
+
+&lt;p&gt;Fragment属于Activity的一个部分，它能让你在一个activity中建立多屏（muti-pane）。并且一个fragment可以再多个activity中复用。fragment拥有自己的生命周期，自己的输入事件。你可以在activity运行期间动态加入或者移除一个fragment。&lt;/p&gt;
+
+&lt;p&gt;fragment必须嵌入在activity中而且其生命周期直接受宿主activity生命周期的影响。比如一个activity进入paused状态时，其中的所有fragment也会进入paused。当activity进入destroyed，其中的所有fragment也会。在activity运行期间，你可以加入移除fragment，并且可以为它们建立一个back stack，这个back stack由activity维护，这个back stack允许用于按下返回键弹出一个fragment。&lt;/p&gt;
+
+&lt;p&gt;当你将fragment当做布局的一部分，你可以再xml布局文件插入fragment，或者在你的代码中插入。然后，其实你可以使用一个没有UI的fragment，拥有后台线程。&lt;/p&gt;
+
+&lt;h2 id=&quot;design-philosophy&quot;&gt;Design Philosophy&lt;/h2&gt;
+
+&lt;p&gt;利用fragment，你可以更好的处理多屏显示，如下图&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/fragments.png&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;fragment的设计原理&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;关于利用fragment适应屏幕旋转，可以参考&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://developer.android.com/guide/practices/tablets-and-handsets.html&quot;&gt;Supporting Tablets and Handsets&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;creating-a-fragment&quot;&gt;Creating a Fragment&lt;/h2&gt;
+
+&lt;p&gt;创建Fragment需要继承Fragment或者其现成的子类。创建一个Fragment和创建一个Activity非常相似，它们拥有很多一样的生命周期回调方法。创建一个Fragment，你至少实现以下几个方法：&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;onCreate()&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;在这个方法里，你需要对一些特殊的数据进行初始化，即时fragment从paused或者stopped恢复过来，这些数据也会保持不变。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;onCreateView()&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;当fragment开始绘制自己的UI时，就会回调这个方法，并且返回一个view对象，当一个fragment不提供UI时（只是跑后台进程），这个方法也可以返回null。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;onPause()&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;和activity的生命周期类似，你需要在fragment中的onPause()保存一些数据（比如写入数据库）。调用onPause时，fragment可能进入后台不可见，也可能被销毁destroy。&lt;/p&gt;
+
+&lt;p&gt;APP至少要实现以上三个方法。另外，其他生命周期的回调方法下文将会讲解。&lt;/p&gt;
+
+&lt;p&gt;平时你需要了解几个常用的Fragment的子类&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;DialogFragment&lt;/strong&gt;
+&lt;strong&gt;ListFragment&lt;/strong&gt;
+&lt;strong&gt;PreferenceFragment&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;adding-a-user-interface&quot;&gt;Adding a user interface&lt;/h2&gt;
+
+&lt;p&gt;Fragment的UI创建在onCreateView()中进行，如下&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ExampleFragment&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Fragment&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onCreateView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LayoutInflater&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inflater&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ViewGroup&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+                             &lt;span class=&quot;n&quot;&gt;Bundle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Inflate the layout for this fragment&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inflater&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;inflate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;layout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;example_fragment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;关于在该方法中使用savedInstanceState下文会详细讲解。&lt;/p&gt;
+
+&lt;p&gt;inflate的第三个参数true或者false，还不大懂。&lt;/p&gt;
+
+&lt;h2 id=&quot;adding-a-fragment-to-an-activity&quot;&gt;Adding a fragment to an activity&lt;/h2&gt;
+
+&lt;p&gt;往activity中添加fragment有两种方法，一种是通过XML文件，一种是通过代码。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Declare the fragment inside the activity’s layout file.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;LinearLayout&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:android=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schemas.android.com/apk/res/android&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;android:orientation=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;horizontal&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;fragment&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;android:name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;com.example.news.ArticleListFragment&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;android:id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;@+id/list&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;android:layout_weight=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;1&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;0dp&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;fragment&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;android:name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;com.example.news.ArticleReaderFragment&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;android:id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;@+id/viewer&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;android:layout_weight=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;2&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;0dp&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/LinearLayout&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Or, programmatically add the fragment to an existing ViewGroup&lt;/strong&gt;&lt;/p&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/android/(translate)Fragment/&quot;&gt;【译】Fragment&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on December 25, 2014.&lt;/p&gt;</content>
+</entry>
 
 
   
@@ -110,14 +215,14 @@ topics/ui/index.html&quot;&gt;User Interface&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;在这个activity元素中，可以增加诸多属性，比如label,icon,name,theme，其中name属性不能随便进行修改，可以阅读以下这篇文章&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://android-developers.blogspot.jp/2011/06/things-that-cannot-change.html&quot;&gt;Things That Cannot Change)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://android-developers.blogspot.jp/2011/06/things-that-cannot-change.html&quot;&gt;Things That Cannot Change&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;using-intent-filters&quot;&gt;Using intent filters&lt;/h2&gt;
 
 &lt;p&gt;activty元素可以通过定义intent filter来声明其他app或者其他app 
 component如何启动它。具体可以查看如下这篇文章&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://developer.android.com/guide/components/intents-filters.html&quot;&gt;Intents and Intent Filters)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.android.com/guide/components/intents-filters.html&quot;&gt;Intents and Intent Filters&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;starting-an-activity&quot;&gt;Starting an Activity&lt;/h2&gt;
 

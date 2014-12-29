@@ -1,0 +1,375 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>【译】Fragment &#8211; My Stupid Blog</title>
+<meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta name="keywords" content="android">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="【译】Fragment">
+<meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】Fragment">
+<meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta property="og:url" content="/android/(translate)Fragment/">
+<meta property="og:site_name" content="My Stupid Blog">
+
+
+
+
+
+<link rel="canonical" href="/android/(translate)Fragment/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<script src="//use.edgefonts.net/source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9;source-code-pro:n4,n7;volkhov.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+      
+		    
+		        
+		    
+		    <li><a href="/home/" >Home</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/js/" >JS</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/android/" >Android</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/tools/" >Tools</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/readingnotes/" >ReadingNotes</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/reflection/" >Reflection</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/about/" >About</a></li>
+		  
+        <li class="dosearch"><i class="fa fa-search"></i> Search</li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	
+		<div class="wrap">
+			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
+		</div>
+	
+</header><!-- /.masthead -->
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="【译】Fragment" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"><a href="/tags/#android" title="Pages tagged android">android</a></span>
+        
+          <h1 class="entry-title">【译】Fragment</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+        
+          <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
+        <span class="entry-date date published"><time datetime="2014-12-25T00:00:00+08:00"><i class="fa fa-calendar-o"></i> December 25, 2014</time></span>
+        
+        
+        
+        <span class="social-share-twitter">
+          <a href="https://twitter.com/intent/tweet?hashtags=android&text=【译】Fragment&url=/android/(translate)Fragment/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+        </span>
+        <span class="social-share-facebook">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/android/(translate)Fragment/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+        </span>
+        <span class="social-share-googleplus">
+          <a href="https://plus.google.com/share?url=/android/(translate)Fragment/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+        </span>
+        <!-- /.social-share -->
+        
+        <div class="google-ads" style="margin-top:40px; text-align:center;">
+  <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- 160x600 ad -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:160px;height:600px"
+       data-ad-client=""
+       data-ad-slot=""></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div><!-- /.google-ads --><!-- /.google-ads -->
+      </footer>
+      <div class="entry-content">
+        <h2 id="fragments">Fragments</h2>
+
+<p>Fragment属于Activity的一个部分，它能让你在一个activity中建立多屏（muti-pane）。并且一个fragment可以再多个activity中复用。fragment拥有自己的生命周期，自己的输入事件。你可以在activity运行期间动态加入或者移除一个fragment。</p>
+
+<p>fragment必须嵌入在activity中而且其生命周期直接受宿主activity生命周期的影响。比如一个activity进入paused状态时，其中的所有fragment也会进入paused。当activity进入destroyed，其中的所有fragment也会。在activity运行期间，你可以加入移除fragment，并且可以为它们建立一个back stack，这个back stack由activity维护，这个back stack允许用于按下返回键弹出一个fragment。</p>
+
+<p>当你将fragment当做布局的一部分，你可以再xml布局文件插入fragment，或者在你的代码中插入。然后，其实你可以使用一个没有UI的fragment，拥有后台线程。</p>
+
+<h2 id="design-philosophy">Design Philosophy</h2>
+
+<p>利用fragment，你可以更好的处理多屏显示，如下图</p>
+
+<figure>
+  <img src="/images/fragments.png" alt="search screenshot" />
+  <figcaption>fragment的设计原理</figcaption>
+</figure>
+
+<p>关于利用fragment适应屏幕旋转，可以参考</p>
+
+<p><a href="https://developer.android.com/guide/practices/tablets-and-handsets.html">Supporting Tablets and Handsets</a></p>
+
+<h2 id="creating-a-fragment">Creating a Fragment</h2>
+
+<p>创建Fragment需要继承Fragment或者其现成的子类。创建一个Fragment和创建一个Activity非常相似，它们拥有很多一样的生命周期回调方法。创建一个Fragment，你至少实现以下几个方法：</p>
+
+<p><strong>onCreate()</strong></p>
+
+<p>在这个方法里，你需要对一些特殊的数据进行初始化，即时fragment从paused或者stopped恢复过来，这些数据也会保持不变。</p>
+
+<p><strong>onCreateView()</strong></p>
+
+<p>当fragment开始绘制自己的UI时，就会回调这个方法，并且返回一个view对象，当一个fragment不提供UI时（只是跑后台进程），这个方法也可以返回null。</p>
+
+<p><strong>onPause()</strong></p>
+
+<p>和activity的生命周期类似，你需要在fragment中的onPause()保存一些数据（比如写入数据库）。调用onPause时，fragment可能进入后台不可见，也可能被销毁destroy。</p>
+
+<p>APP至少要实现以上三个方法。另外，其他生命周期的回调方法下文将会讲解。</p>
+
+<p>平时你需要了解几个常用的Fragment的子类</p>
+
+<p><strong>DialogFragment</strong>
+<strong>ListFragment</strong>
+<strong>PreferenceFragment</strong></p>
+
+<h2 id="adding-a-user-interface">Adding a user interface</h2>
+
+<p>Fragment的UI创建在onCreateView()中进行，如下</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">ExampleFragment</span> <span class="kd">extends</span> <span class="n">Fragment</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">View</span> <span class="nf">onCreateView</span><span class="o">(</span><span class="n">LayoutInflater</span> <span class="n">inflater</span><span class="o">,</span> <span class="n">ViewGroup</span> <span class="n">container</span><span class="o">,</span>
+                             <span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Inflate the layout for this fragment</span>
+        <span class="k">return</span> <span class="n">inflater</span><span class="o">.</span><span class="na">inflate</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">example_fragment</span><span class="o">,</span> <span class="n">container</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>关于在该方法中使用savedInstanceState下文会详细讲解。</p>
+
+<p>inflate的第三个参数true或者false，还不大懂。</p>
+
+<h2 id="adding-a-fragment-to-an-activity">Adding a fragment to an activity</h2>
+
+<p>往activity中添加fragment有两种方法，一种是通过XML文件，一种是通过代码。</p>
+
+<p><strong>Declare the fragment inside the activity’s layout file.</strong></p>
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="nt">&lt;LinearLayout</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class="na">android:orientation=</span><span class="s">&quot;horizontal&quot;</span>
+    <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
+    <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;fragment</span> <span class="na">android:name=</span><span class="s">&quot;com.example.news.ArticleListFragment&quot;</span>
+            <span class="na">android:id=</span><span class="s">&quot;@+id/list&quot;</span>
+            <span class="na">android:layout_weight=</span><span class="s">&quot;1&quot;</span>
+            <span class="na">android:layout_width=</span><span class="s">&quot;0dp&quot;</span>
+            <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;fragment</span> <span class="na">android:name=</span><span class="s">&quot;com.example.news.ArticleReaderFragment&quot;</span>
+            <span class="na">android:id=</span><span class="s">&quot;@+id/viewer&quot;</span>
+            <span class="na">android:layout_weight=</span><span class="s">&quot;2&quot;</span>
+            <span class="na">android:layout_width=</span><span class="s">&quot;0dp&quot;</span>
+            <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/LinearLayout&gt;</span></code></pre></div>
+
+<p><strong>Or, programmatically add the fragment to an existing ViewGroup</strong></p>
+
+
+        <nav class="pagination" role="navigation">
+          
+            <a href="/android/(translate)Activities/" class="btn" title="【译】Activities">Previous</a>
+          
+          
+        </nav><!-- /.pagination -->
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+  </article>
+</div><!-- /#main -->
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chenhuazhao020'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    
+
+<span>&copy; 2014 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
+<div class="social-icons">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+  <a href="/feed.xml" title="Atom/RSS feed"><i class="fa fa-rss-square fa-2x"></i></a>
+</div><!-- /.social-icons -->
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: '/search.json',
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+  
+	        
+
+</body>
+</html>

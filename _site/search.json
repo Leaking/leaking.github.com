@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "【译】Fragment",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/(translate)Fragment/",
+		  "date"       : "2014-12-25 00:00:00 +0800",
+		  "shortdate"  : "December 25, 2014"
+		} ,
+	
+		{
 		  "title"      : "【译】Activities",
 		  "category"   : "",
       "tags"       : "android, xmpp, and IM",
