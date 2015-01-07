@@ -152,13 +152,54 @@ singletInstance和singleTask类似，
 
 + FLAG_ACTIVITY_NEW_TASK 
 
+在一个新的task中创建一个activity实例，如果某个已经存在的task中有一个同样的activity，则该task被切换到前台.并且调用该activity的onNewIntent()
+
+该intent flag的作用与上文讲到的“singleTask”一样
 
 
 + FLAG_ACTIVITY_SINGLE_TOP
 
-
+该intent flag与上文讲到的"singleTop"一样
 
 + FLAG_ACTIVITY_CLEAR_TOP
+
+如果某个activity已经有一个实例在当前task中，则再次试图创建该activity的实例时，则task中在该activity实例上面的activity都将会被弹出并destroy，使该activity实例处于堆栈顶端，并调用其onNewIntent()
+
+launchMode中没有一个属性值与FLAG_ACTIVITY_CLEAR_TOP作用一样
+
+
+FLAG_ACTIVITY_CLEAR_TOP经常与FLAG_ACTIVITY_NEW_TASK结合使用。它们能跳转到另一个task中某个activity并且响应接收到的intent对象。
+
+
+##处理 affinities（亲和度）
+
+未遇到使用场景，以后再参考文档学习
+
+##清空 back stack
+
+如果用户离开一个task一段比较长的时间，系统会清除task中除了根部activity之外的其他activity。当用户再次回到该task，只能看到根部activity的状态被保存了。系统这样做是因为超出了某个时间长度之后，用户可能已经不要他们之前操作留下的状态，而将重新进行其他的操作。
+
+以上将的这个系统的特点，可以通过activity的属性进行修改定制
+
++ alwaysRetainTaskState
+
+如果一个task中的根部activity的这个属性被设置为"true"，则上面描述的系统默认设定将不会发挥作用。即时离开了task很长的时间，其中的activity也将被保存状态
+
++ clearTaskOnLaunch
+
+如果task中的根部activity的这个属性被设置为“true”，则无论用户离开task的时间是短还是长，task中根部activity以上的activity都将被清除。这恰恰好和alwaysRetainTaskState相反
+
++ finishOnTaskLaunch
+
+
+这个属性有点像clearTaskOnLaunch，但是它的作用对象是某个activity，而非整个task。当某个activity的finishOnTaskLaunch属性被设置为“true”，则每当用户离开该task再回来，该activity都将被销毁
+
+
+
+
+
+
+
 
 
 

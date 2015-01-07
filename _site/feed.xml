@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-01-07T17:11:44+08:00</updated>
+<updated>2015-01-07T22:51:12+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -220,9 +220,92 @@
   &lt;li&gt;singleTask&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;与singleTop类似，singleTop中的概念类似“复用”，该复用的前提是：要复用的实例必须处于back stack的顶端。而singleTask也有“复用”的作用，但是复用的前提比较宽松：要复用的实例存在back stack中即可。&lt;/p&gt;
+&lt;p&gt;与singleTop类似，singleTop中的概念类似“复用”，该复用的前提是：要复用的实例必须处于back stack的顶端。而singleTask也有“复用”的作用，但是复用的前提比较宽松：要复用的实例存在当前task中即可，或者存在后台某个task也可以。&lt;/p&gt;
 
-&lt;p&gt;比如，back stack 中的内容是A-B-C-D，其中B的启动模式为singleTask，在D中启动一个新的实例B，此时调用堆栈中B实例的onNewIntent()方法，然后back stack就变成A-B，此时C,D都被弹出。&lt;/p&gt;
+&lt;p&gt;注意，本文中，讲到的task和back stack都是一样的意思，因为一个task中只有一个bask stack.&lt;/p&gt;
+
+&lt;p&gt;举个例子，back stack 中的内容是A-B-C-D，其中B的启动模式为singleTask，在D中启动一个新的实例B，此时调用堆栈中B实例的onNewIntent()方法，然后back stack就变成A-B，此时C,D都被弹出。&lt;/p&gt;
+
+&lt;p&gt;另一个例子，有两个task，一个是A-B,一个是C-D,其中D被声明为D，则在B中启动一个D时，第一个task将会变成A-B-C-D&lt;/p&gt;
+
+&lt;p&gt;以上讲的是启动模式为singleTask的activity实例已经存在，可以“复用”的情况。那么当activity实例不存在，则会重新创建一个activity实例，并且放到单独一个task中，但是一般情况下，如果是启动同一个应用程序中activity，该新建的activity实例依然会被放到当前task中。只有启动其它应用程序的activity才会放置到新的task中。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;singleInstance&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;singletInstance和singleTask类似，&lt;/p&gt;
+
+&lt;p&gt;当back stack中只有一个声明为singleTask的activity实例时，继续启动其它activity实例，则会继续加到同一个task中。&lt;/p&gt;
+
+&lt;p&gt;当back stack中只有一个声明为singleInstacne的activity实例时，继续启动其它activity实例，则会在一个新的task中创建activity。&lt;/p&gt;
+
+&lt;p&gt;再举一个例子，android的浏览器应用程序中的浏览器activity被定义为singleTask启动模式。所以当你的app试图打开android浏览器时，浏览器的activity不会被放到和你的app的task中，而是重新启动一个task来放置浏览器的activity。或者浏览器已经在后台的某个task中，则直接将该task转到前台呈现给用户。&lt;/p&gt;
+
+&lt;p&gt;当我们在同一个task中或者不同task中启动一个activity，按下返回键都将返回到前一个activity。但是当我们启动一个启动模式为singleTask的activity时，如果该activity有一个实例在某个后台task中，则该后台task被转到前台，此时这个task中的activity将会被放到原本task中上端。比如下图&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/singleTask.png&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;singleTask的特殊back stack示意图&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;如上图所示，当调用到后台task中的Y（Y的启动模式时singleTask），Y所在的整个Task都被放到前台，其中的activity都被放到原本back stack的上端。&lt;/p&gt;
+
+&lt;h1 id=&quot;intent-flags&quot;&gt;使用 intent flags&lt;/h1&gt;
+
+&lt;p&gt;除了manifest file可以定义启动模式，intent flag也可以。如上面提到的，intent flag定义的启动模式会覆盖manifest file中定义的启动模式。 几种常见的intent flag如下&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;FLAG_ACTIVITY_NEW_TASK &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;在一个新的task中创建一个activity实例，如果某个已经存在的task中有一个同样的activity，则该task被切换到前台.并且调用该activity的onNewIntent()&lt;/p&gt;
+
+&lt;p&gt;该intent flag的作用与上文讲到的“singleTask”一样&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;FLAG_ACTIVITY_SINGLE_TOP&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;该intent flag与上文讲到的”singleTop”一样&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;FLAG_ACTIVITY_CLEAR_TOP&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;如果某个activity已经有一个实例在当前task中，则再次试图创建该activity的实例时，则task中在该activity实例上面的activity都将会被弹出并destroy，使该activity实例处于堆栈顶端，并调用其onNewIntent()&lt;/p&gt;
+
+&lt;p&gt;launchMode中没有一个属性值与FLAG_ACTIVITY_CLEAR_TOP作用一样&lt;/p&gt;
+
+&lt;p&gt;FLAG_ACTIVITY_CLEAR_TOP经常与FLAG_ACTIVITY_NEW_TASK结合使用。它们能跳转到另一个task中某个activity并且响应接收到的intent对象。&lt;/p&gt;
+
+&lt;h2 id=&quot;affinities&quot;&gt;处理 affinities（亲和度）&lt;/h2&gt;
+
+&lt;p&gt;未遇到使用场景，以后再参考文档学习&lt;/p&gt;
+
+&lt;h2 id=&quot;back-stack&quot;&gt;清空 back stack&lt;/h2&gt;
+
+&lt;p&gt;如果用户离开一个task一段比较长的时间，系统会清除task中除了根部activity之外的其他activity。当用户再次回到该task，只能看到根部activity的状态被保存了。系统这样做是因为超出了某个时间长度之后，用户可能已经不要他们之前操作留下的状态，而将重新进行其他的操作。&lt;/p&gt;
+
+&lt;p&gt;以上将的这个系统的特点，可以通过activity的属性进行修改定制&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;alwaysRetainTaskState&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;如果一个task中的根部activity的这个属性被设置为”true”，则上面描述的系统默认设定将不会发挥作用。即时离开了task很长的时间，其中的activity也将被保存状态&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;clearTaskOnLaunch&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;如果task中的根部activity的这个属性被设置为“true”，则无论用户离开task的时间是短还是长，task中根部activity以上的activity都将被清除。这恰恰好和alwaysRetainTaskState相反&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;finishOnTaskLaunch&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;这个属性有点像clearTaskOnLaunch，但是它的作用对象是某个activity，而非整个task。当某个activity的finishOnTaskLaunch属性被设置为“true”，则每当用户离开该task再回来，该activity都将被销毁&lt;/p&gt;
 
 
   &lt;p&gt;&lt;a href=&quot;/android/(translate)Tasks-and-Back-Stack/&quot;&gt;【译】Tasks and Back Stack&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on December 25, 2014.&lt;/p&gt;</content>
