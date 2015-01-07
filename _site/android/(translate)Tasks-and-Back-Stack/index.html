@@ -5,14 +5,14 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>基于XMPP协议即时通讯工具开发总结 &#8211; My Stupid Blog</title>
+<title>【译】Tasks and Back Stack &#8211; My Stupid Blog</title>
 <meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 <meta name="keywords" content="android, xmpp, IM">
 
 
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="基于XMPP协议即时通讯工具开发总结">
+<meta name="twitter:title" content="【译】Tasks and Back Stack">
 <meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 
 
@@ -23,16 +23,16 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于XMPP协议即时通讯工具开发总结">
+<meta property="og:title" content="【译】Tasks and Back Stack">
 <meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-<meta property="og:url" content="/android/xmpp-IM/">
+<meta property="og:url" content="/android/(translate)Tasks-and-Back-Stack/">
 <meta property="og:site_name" content="My Stupid Blog">
 
 
 
 
 
-<link rel="canonical" href="/android/xmpp-IM/">
+<link rel="canonical" href="/android/(translate)Tasks-and-Back-Stack/">
 <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
 
 
@@ -146,12 +146,12 @@
 
 <div id="main" role="main">
   <article class="hentry">
-    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="基于XMPP协议即时通讯工具开发总结" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="【译】Tasks and Back Stack" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
     <div class="entry-wrapper">
       <header class="entry-header">
         <span class="entry-tags"><a href="/tags/#android" title="Pages tagged android">android</a>&nbsp;&bull;&nbsp;<a href="/tags/#xmpp" title="Pages tagged xmpp">xmpp</a>&nbsp;&bull;&nbsp;<a href="/tags/#IM" title="Pages tagged IM">IM</a></span>
         
-          <h1 class="entry-title">基于XMPP协议即时通讯工具开发总结</h1>
+          <h1 class="entry-title">【译】Tasks and Back Stack</h1>
         
       </header>
       <footer class="entry-meta">
@@ -161,18 +161,18 @@
           <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
         
         <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
-        <span class="entry-date date published"><time datetime="2014-06-25T00:00:00+08:00"><i class="fa fa-calendar-o"></i> June 25, 2014</time></span>
+        <span class="entry-date date published"><time datetime="2014-12-25T00:00:00+08:00"><i class="fa fa-calendar-o"></i> December 25, 2014</time></span>
         
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=android,xmpp,IM&text=基于XMPP协议即时通讯工具开发总结&url=/android/xmpp-IM/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=android,xmpp,IM&text=【译】Tasks%20and%20Back%20Stack&url=/android/(translate)Tasks-and-Back-Stack/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
-          <a href="https://www.facebook.com/sharer/sharer.php?u=/android/xmpp-IM/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/android/(translate)Tasks-and-Back-Stack/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
         </span>
         <span class="social-share-googleplus">
-          <a href="https://plus.google.com/share?url=/android/xmpp-IM/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+          <a href="https://plus.google.com/share?url=/android/(translate)Tasks-and-Back-Stack/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
         </span>
         <!-- /.social-share -->
         
@@ -189,60 +189,127 @@
 </div><!-- /.google-ads --><!-- /.google-ads -->
       </footer>
       <div class="entry-content">
-        <h2 id="section">一、概要</h2>
-<p>转眼毕业了，毕业设计的课题是“基于XMPP协议的通讯工具”，开发平台式android，实现了基本的离线消息，文字聊天，表情聊天，文件传输，语音聊天的功能。
-本文主要介绍开发过程中服务器的配置，开发包Asmack的使用，以及其它一些开源包的使用（如表情包）。</p>
+        <p>tips:<em>该本博客的翻译类似笔记，大多着重意译博主觉得需要记住的知识。</em></p>
 
-<h2 id="xmppopenfire">二、XMPP协议以及Openfire服务器</h2>
+<p>总结一下activities和tasks的常见用法</p>
 
-<h3 id="xmpp">1，XMPP协议</h3>
+<ol>
+  <li>
+    <p>当Activity A启动Activity B，Activity A进入stopped的状态，但是系统保持其状态（比如你滚动视图的滚动位置以及表格中填写的数据）。当用户在Activity B中按下返回键，那么Activity A的状态数据将会还原。</p>
+  </li>
+  <li>
+    <p>当用户按下home键，当前的activity将会进入stopped状态，该activity所在task也会进入后台，系统保存所有在该task中的activity的状态。当用户在home主页上点击该app的图标，将还原该task的状态，该task回到前台。</p>
+  </li>
+  <li>
+    <p>当用户按下返回键，当前的activity被弹出堆栈并且被destroy，前一个activity会被resume。注意，一个呗destroy的activity不会保存其状态。</p>
+  </li>
+  <li>
+    <p>activity可以被初始化多次，甚至从其他task中初始化。</p>
+  </li>
+</ol>
 
-<p>何为XMPP协议，简要（不精确）地说：“XMPP一种开源的通讯协议，只要是基于这个协议开发的通讯工具，都可以相互通讯（不同服务器的用户则需要在服务器相互连接的前提下，才能跨服务器通讯）。” 另外XMPP协议以前的名字是Jabber。
-关于XMPP协议的官网，如下（英文为官网，中文为国人翻译的版本）
-<a href="http://xmpp.org/rfcs/rfc3921.html#toc">XMPP官网</a>
-<a href="http://wiki.jabbercn.org/RFC3921#.E4.BA.A4.E6.8D.A2.E5.87.BA.E5.B8.AD.E4.BF.A1.E6.81.AF">XMPP官网中文翻译</a></p>
+<h2 id="saving-activity-state">Saving Activity State</h2>
 
-<h3 id="openfire">2，Openfire服务器</h3>
+<p>如前面所说，当从activity A中跳转到activity B中，activity A进入stopped状态，但是也可能被系统回收资源而destroy，所以为了预防这种情况，得作用保存数据，还原数据的准备。使用onSaveInstanceState()</p>
 
-<p>开发过程中只需要专注于客户端的开发，因为我们可以使用开源免费的服务器Openfire         </p>
+<h2 id="managing-tasks">Managing Tasks</h2>
 
-<p><a href="http://www.igniterealtime.org/downloads/index.jsp">Openfire官网地址: </a></p>
+<p>Android中的Activity和Task的管理基本都是自动化的，但是开发过程中如果想要按照自己的需要操纵Activity和Task，可以使用<activity>标签和为传递给startActivity的intent设置flag属性。</activity></p>
 
-<p><a href="http://www.cnblogs.com/tanlon/archive/2011/07/16/2108419.html">Openfier 服务器配置教程：</a></p>
+<p>如下，是可以使用的activity标签：</p>
 
-<p>另外，开发过程中可以用一个测试客户端，官网提供的Spark，目前最新版本（好久没更新）存在一个问题，收发文件的功能不是很稳定。</p>
+<ul>
+  <li>taskAffinity</li>
+  <li>launchMode</li>
+  <li>allowTaskReparenting</li>
+  <li>clearTaskOnLaunch</li>
+  <li>alwaysRetainTaskState</li>
+  <li>finishOnTaskLaunch</li>
+</ul>
 
-<p><a href="http://www.igniterealtime.org/downloads/index.jsp">Spark下载地址：</a></p>
+<p>以下是你经常要使用的flag属性</p>
 
-<h2 id="asmack-api">三，Asmack开发包 API的使用</h2>
+<ul>
+  <li>FLAG_ACTIVITY_NEW_TASK</li>
+  <li>FLAG_ACTIVITY_CLEAR_TOP</li>
+  <li>FLAG_ACTIVITY_SINGLE_TOP</li>
+</ul>
 
-<p>smack是官方给出的xmpp协议在java平台的开发包，而asmack是android平台的xmpp协议开发包
-<a href="https://github.com/Flowdalic/asmack">Asmack下载官网：</a></p>
+<h2 id="defining-launch-modes">Defining launch modes</h2>
 
-<p>smack和Asmack的API基本没有区别，所以可以开发过程可以参照smack的API</p>
+<p>Launch modes可以让你控制activity以怎样的方式启动到当前的task中。</p>
 
-<p><a href="http://www.igniterealtime.org/builds/smack/docs/latest/javadoc/">smack(Asmack) API官网：</a></p>
+<p>你可以通过以下两种方式定义Launch mode</p>
 
-<p><a href="http://www.igniterealtime.org/builds/smack/docs/latest/documentation/index.html">smack(Asmack)使用指导：</a></p>
+<ul>
+  <li>
+    <p>使用manifest file</p>
+  </li>
+  <li>
+    <p>使用Intent flags</p>
+  </li>
+</ul>
 
-<h2 id="section-1">四，表情聊天</h2>
-<p>表情聊天使用了开源包Emojicon</p>
+<p>举个例子，Activity A启动 Activity B的时候，如果要定义Activity B的启动方式，可以通过在manifest file中定义Activity B的launch mode，也可以在Activity A启动Activity B时使用的intent中设置flags。如果manifest和intent中的flags中都设置了launch mode，则intent中的flag优先。</p>
 
-<p><a href="http://rockerhieu.com/">Emojicon官网：</a></p>
+<p>有些launch mode 只能在manifest file中定义，有些只能在intent flags中定义。</p>
 
-<h2 id="section-2">五，版本问题</h2>
+<h1 id="manifest-file">使用manifest file</h1>
 
-<p>开发过程中遇到两个关于版本的问题</p>
+<p>可以在manifest file中使用 &lt;activity&gt; 标签的launchMode属性定义launch mode</p>
 
-<p>1，Openfire 3.9.2开始才支持emoji字符，3.9.1及更旧的版本多不支持emojicon字符
-2，不知道为什么部分版本的asmack在文件传输时会出现问题，以下这个版本是我在网上找到的一个可以正常使用的版本</p>
+<p>launchMode属性可以有四个值</p>
 
-<p><a href="http://download.csdn.net/detail/chziroy/7482381">可以使用的asmack下载地址：</a></p>
+<ul>
+  <li>standard (默认方式)</li>
+</ul>
+
+<p>默认情况下，系统通过standard的方式启动一个activity，并且这个activity可以被创建多次，一个task中可以拥有多个
+该activity的实例。</p>
+
+<ul>
+  <li>singleTop</li>
+</ul>
+
+<p>如果某个activity的实例已经处于当前task中的back statck的最上层，则当再次调用该activity时，将不会再次创建一个新的实例，而是将调用栈顶的activity实例的onNewIntent()，并且intent也被传递到onNewIntent()，从而跳转到back stack最上层的实例。如果再创建一个activity时，当前back stack的顶层不是该activity的实例，则按照standard的方式继续创建一个实例</p>
+
+<p>举个例子：</p>
+
+<p>一个back stack中拥有A-B-C-D四个activity，其中D处于最顶层。</p>
+
+<p>如果一个新的创建activityD的intent到来了，如果此时D被设置成”standard”，则新建一个D实例，此时back stack的内容为A-B-C-D-D。</p>
+
+<p>如果此时D被设置成”singleTop”,则创建Activity D的intent被传递到栈顶的D实例的onNewIntent()方法，于是跳转到栈顶的activityD实例。此时back stack内容是A-B-C-D。此时按下返回键会返回到C，back stack变为A-B-C</p>
+
+<p>但是，如果实例D中启动一个activity B实例，即时B的启动模式为”signleTop”, back stack 都将变为 A-B-C-D-B.</p>
+
+<p>此处讲解一下onNewIntent()方法</p>
+
+<figure>
+  <img src="/images/onNewIntent.png" alt="search screenshot" />
+  <figcaption>onNewIntent()</figcaption>
+</figure>
+
+<blockquote>
+  <p>onNewIntent()只有在singleTop启动模式发挥作用时才会被调用，并且此时它将会接收到一个intent.举一个例子，还是上面的back stack，其中内容是A-B-C，此时在C中启动一个D，并且传递的一个intent C，此时新建一个D实例，back stack的状态变为A-B-C-D，而且D中收到intent C。我们定义D的启动模式时singleTop，此时在栈顶的D中启动一个activity D实例，并且传递一个intent D 由于D是singleTop的启动模式，所以此时不会创建新的D实例，而只会调用back stack顶端的activity D实例的onBackIntent() 方法，并且将intentD传递给onNewIntenet()。但是这个时候通过getIntent获取到的依然是intent C，
+此时可以利用setIntent()将其更新为intent D。另外，调用完onNewIntent()之后会调用onResume()，你可以在这个时候根据需要刷新界面。</p>
+</blockquote>
+
+<ul>
+  <li>singleTask</li>
+</ul>
+
+<p>与singleTop类似，singleTop中的概念类似“复用”，该复用的前提是：要复用的实例必须处于back stack的顶端。而singleTask也有“复用”的作用，但是复用的前提比较宽松：要复用的实例存在back stack中即可。</p>
+
+<p>比如，back stack 中的内容是A-B-C-D，其中B的启动模式为singleTask，在D中启动一个新的实例B，此时调用堆栈中B实例的onNewIntent()方法，然后back stack就变成A-B，此时C,D都被弹出。</p>
+
 
         <nav class="pagination" role="navigation">
           
+            <a href="/android/(translate)Fragment/" class="btn" title="【译】Fragment">Previous</a>
           
-            <a href="/js/what-is-js/" class="btn" title="《JS高级程序设计》Note1-What Is JavaScript?">Next</a>
+          
+            <a href="/reflection/new-year/" class="btn" title="进入2015年了">Next</a>
           
         </nav><!-- /.pagination -->
         

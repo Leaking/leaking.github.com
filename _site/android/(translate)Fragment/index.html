@@ -197,7 +197,7 @@
 
 <p>当你将fragment当做布局的一部分，你可以再xml布局文件插入fragment，或者在你的代码中插入。然后，其实你可以使用一个没有UI的fragment，拥有后台线程。</p>
 
-<h2 id="design-philosophy">Design Philosophy</h2>
+<h3 id="design-philosophy">Design Philosophy</h3>
 
 <p>利用fragment，你可以更好的处理多屏显示，如下图</p>
 
@@ -210,7 +210,7 @@
 
 <p><a href="https://developer.android.com/guide/practices/tablets-and-handsets.html">Supporting Tablets and Handsets</a></p>
 
-<h2 id="creating-a-fragment">Creating a Fragment</h2>
+<h3 id="creating-a-fragment">Creating a Fragment</h3>
 
 <p>创建Fragment需要继承Fragment或者其现成的子类。创建一个Fragment和创建一个Activity非常相似，它们拥有很多一样的生命周期回调方法。创建一个Fragment，你至少实现以下几个方法：</p>
 
@@ -276,11 +276,34 @@
 
 <p><strong>Or, programmatically add the fragment to an existing ViewGroup</strong></p>
 
+<p>在activity中动态的加入一个fragment，只需要指定一个fragment所在的viewgroup的ID，具体方法如下：</p>
+
+<p>首先你需要获得一个FragmentTransaction对象。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">FragmentManager</span> <span class="n">fragmentManager</span> <span class="o">=</span> <span class="n">getFragmentManager</span><span class="o">()</span>
+<span class="n">FragmentTransaction</span> <span class="n">fragmentTransaction</span> <span class="o">=</span> <span class="n">fragmentManager</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span></code></pre></div>
+
+<p>然后使用add()方法，指定将fragment插入到哪个viewgroup。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ExampleFragment</span> <span class="n">fragment</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ExampleFragment</span><span class="o">();</span>
+<span class="n">fragmentTransaction</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">fragment_container</span><span class="o">,</span> <span class="n">fragment</span><span class="o">);</span>
+<span class="n">fragmentTransaction</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span></code></pre></div>
+
+<p>add()的第一个参数是fragment将要插入的viewgroup的ID。使用FragmentTransaction之后，你调用commit()方法，FragmentTransaction做出的修改才会起作用。</p>
+
+<h2 id="adding-a-fragment-without-a-ui">Adding a fragment without a UI</h2>
+
+<p>用一个没有UI的fragment运行后台程序，参考ApiDemo中的FragmentRetainInstance.java</p>
+
+<h3 id="managing-fragments">Managing Fragments</h3>
+
 
         <nav class="pagination" role="navigation">
           
             <a href="/android/(translate)Activities/" class="btn" title="【译】Activities">Previous</a>
           
+          
+            <a href="/android/(translate)Tasks-and-Back-Stack/" class="btn" title="【译】Tasks and Back Stack">Next</a>
           
         </nav><!-- /.pagination -->
         
@@ -309,7 +332,7 @@
   <footer role="contentinfo">
     
 
-<span>&copy; 2014 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
+<span>&copy; 2015 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
 <div class="social-icons">
 	
 	
