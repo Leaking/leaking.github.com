@@ -105,7 +105,11 @@ http://www.joes-hardware.com/inventory-check.cgi?item=12731
 
 ### Fragments
 
-这个概念是指从服务器获取某个对象，显示在浏览器之后，直接滚动显示到某个片段，如下语句
+这个概念是指从服务器获取某个对象，显示在浏览器之后，直接滚动显示到某个片段。
+
+注意，该语法不会使服务器只返回某个对象的片段，服务器仍然返回整个对象，只是浏览器默认滚动到某个片段的位置。
+
+如下语句
 
 {% highlight html %}
 http://www.joes-hardware.com/tools.html#drills
@@ -139,3 +143,5 @@ big around the house jobs.</P> ...
 </HTML>
 
 {% endhighlight %}
+
+

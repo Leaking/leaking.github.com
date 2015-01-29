@@ -1,7 +1,7 @@
 [
 	
 		{
-		  "title"      : "【译】Tasks and Back Stack",
+		  "title"      : "【译】Intents and Intent Filters",
 		  "category"   : "",
       "tags"       : "android, xmpp, and IM",
 		  "url"        : "/android/(translate)Intents%20and%20Intent%20Filters/",
@@ -68,6 +68,15 @@
 		  "category"   : "",
       "tags"       : "readingnotes",
 		  "url"        : "/readingnotes/HTTP%20definition01/",
+		  "date"       : "2014-11-30 00:00:00 +0800",
+		  "shortdate"  : "November 30, 2014"
+		} ,
+	
+		{
+		  "title"      : "《HTTP权威指南》Note1-Overview of HTTP",
+		  "category"   : "",
+      "tags"       : "readingnotes",
+		  "url"        : "/readingnotes/HTTP%20definition/",
 		  "date"       : "2014-11-30 00:00:00 +0800",
 		  "shortdate"  : "November 30, 2014"
 		} ,
