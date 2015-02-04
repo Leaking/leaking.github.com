@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "《HTTP权威指南》Chapter11-Client Identification and Cookies",
+		  "category"   : "",
+      "tags"       : "readingnotes",
+		  "url"        : "/readingnotes/HTTP-cookies/",
+		  "date"       : "2015-02-03 00:00:00 +0800",
+		  "shortdate"  : "February 03, 2015"
+		} ,
+	
+		{
 		  "title"      : "【译】Intents and Intent Filters",
 		  "category"   : "",
       "tags"       : "android, xmpp, and IM",
@@ -52,15 +61,6 @@
 		  "url"        : "/android/offlineDocs/",
 		  "date"       : "2014-12-10 00:00:00 +0800",
 		  "shortdate"  : "December 10, 2014"
-		} ,
-	
-		{
-		  "title"      : "《HTTP权威指南》Note2-URLs and Resources",
-		  "category"   : "",
-      "tags"       : "readingnotes",
-		  "url"        : "/readingnotes/HTTP%20definition02/",
-		  "date"       : "2014-12-01 00:00:00 +0800",
-		  "shortdate"  : "December 01, 2014"
 		} ,
 	
 		{
