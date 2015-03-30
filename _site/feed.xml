@@ -4,13 +4,326 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-02-04T23:32:17+08:00</updated>
+<updated>2015-03-31T01:09:09+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
   <uri>/</uri>
   <email>chenhuazhaoao@gmail.com</email>
 </author>
+
+
+  
+
+<entry>
+  <title type="html"><![CDATA[【自定义View】IOS风格的滑动开关]]></title>
+  <link rel="alternate" type="text/html" href="/android/(customView)SlideSwitch/" />
+  <id>/android/(customView)SlideSwitch</id>
+  <published>2015-03-09T00:00:00+08:00</published>
+  <updated>2015-03-09T00:00:00+08:00</updated>
+  <author>
+    <name>Quinn Chen</name>
+    <uri></uri>
+    <email>chenhuazhaoao@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;源码和测试例子已经放到github:&lt;a href=&quot;https://github.com/Leaking/SlideSwitch&quot;&gt;https://github.com/Leaking/SlideSwitch&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;项目开发中，经常会有一些关于用户个性化的设置，此时经常需要一个开关控件，周末将之前写的自定义开关控件优化了一下，效果图如下。先说说大概思路：按钮绘制了三个图层，最下面是覆盖整个View的灰色，第二个是覆盖整个View的自定义的颜色，它可以改变透明度。第三个是白色。当白色部分移动时，修改第二个图层的透明度，即可作出如图滑动过程中颜色渐变的效果。&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/slideswitch.gif&quot; alt=&quot;search screenshot&quot; width=&quot;200&quot; height=&quot;200&quot; /&gt;
+  &lt;figcaption&gt;效果图&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;大概记录一下重写一个组件的实现过程。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;定义属性&lt;/li&gt;
+  &lt;li&gt;在Java代码中的构造器获取属性的值&lt;/li&gt;
+  &lt;li&gt;重写onMeasure()&lt;/li&gt;
+  &lt;li&gt;重写onDraw()&lt;/li&gt;
+  &lt;li&gt;如果需要，重写onTouch监听&lt;/li&gt;
+  &lt;li&gt;在自己项目的布局文件中，定义一个命名空间，使用属性&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;1，定义属性&lt;/h1&gt;
+
+&lt;p&gt;新建一个项目，命名为SlieSwitch，并新建属性文件SlideSwitch\res\values\attrs.xml&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;&lt;/span&gt;  
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;resources&amp;gt;&lt;/span&gt;  
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;declare-styleable&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;slideswitch&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;  
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;attr&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;themeColor&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;format=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;color&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;  
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;attr&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;isOpen&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;format=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;boolean&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;  
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;attr&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;shape&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;  
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;enum&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;rect&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;1&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;  
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;enum&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;circle&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;2&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;  
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/attr&amp;gt;&lt;/span&gt;  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/declare-styleable&amp;gt;&lt;/span&gt;  
+  
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/resources&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;其中定义了三个属性，一个是按钮的颜色，一个是按钮的打开状态，一个是枚举类型，它用来描述按钮的形状，关于这些的属性以及其它几个类型的属性的使用，可以容易百度谷歌到相关知识，这里暂不作记录。&lt;/p&gt;
+
+&lt;h1 id=&quot;java&quot;&gt;2,，在Java代码中的构造器获取属性的值&lt;/h1&gt;
+
+&lt;p&gt;在SlieSwitch中新建一个包com.leaking.slideswitch，然后再包里面新建一个文件文件SlieSwitch.java。自定义组件首先得继承View类，然后再构造器中获取自定义属性，如下艾玛片段：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SlideSwitch&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+  
+    &lt;span class=&quot;c1&quot;&gt;//,,,,,,,省略,,,,,,,,,,  &lt;/span&gt;
+      
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SlideSwitch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AttributeSet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defStyleAttr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defStyleAttr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;listener&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;paint&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Paint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;paint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setAntiAlias&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;TypedArray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;obtainStyledAttributes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;  
+                &lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;styleable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;slideswitch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;color_theme&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getColor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;styleable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;slideswitch_themeColor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;  
+                &lt;span class=&quot;n&quot;&gt;COLOR_THEME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;isOpen&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBoolean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;styleable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;slideswitch_isOpen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getInt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;styleable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;slideswitch_shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SHAPE_RECT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;recycle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+  
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SlideSwitch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AttributeSet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+  
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SlideSwitch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+         &lt;span class=&quot;c1&quot;&gt;//,,,,,,,省略,,,,,,,,,,  &lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;一般View有三个构造器，我习惯让只有一个参数的构造方法调用有两个参数的构造方法，然后两个的调用三个的，在有三个参数的构造方法里使用TypeArray读取自定义属性，然后调用TypeArray的recycle()方法回收资源。&lt;/p&gt;
+
+&lt;h1 id=&quot;onmeasure&quot;&gt;3，重写onMeasure()&lt;/h1&gt;
+
+&lt;p&gt;上网稍微搜索一下，很快能只奥怎么重写onMeasure()方法，但是为什么需要重写onMeasure()方法这一点，倒是不好搜索到。这个问题我记录在另一篇文章。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://leaking.github.io/android/(customView)onMeasure/&quot;&gt;【自定义View】为什么重写onMeasure()以及怎么重写&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;我们在onMeasure()中此处主要做了两件事，第一是计算View的大小，也就是它的长和宽，第二是记录了白色色块的起始位置，以及绘制按钮的一些其他参数。需要注意的是，当你调用view的invalidate()方法进行重绘时，系统只会去调用onDraw()方法，但是如果有关于其他组件的大小、内容（比如TextView的setText()）发生修改，都会触发onMeasure()，所以在onMeasure()中计算的位置变量，要避免受到重新调用onMeasure()的影响。编码过程遇到的一个bug就是因为这个原因。&lt;/p&gt;
+
+&lt;h1 id=&quot;ondraw&quot;&gt;4，重写onDraw()&lt;/h1&gt;
+
+&lt;p&gt;onDraw()部分比较容易，只需按照onMeasure()中计算出来的参数绘制三个图层即可。&lt;/p&gt;
+
+&lt;h1 id=&quot;ontouch&quot;&gt;5，如果需要，重写onTouch监听(这里需要)&lt;/h1&gt;
+
+&lt;p&gt;该部分也是比较容易，就是分别按照down,move,up三个事件计算位置，修改第二个图层颜色的透明度，然后调用invaliate重绘View。在up事件中启动一个线程，让按钮的滑动自动进行到结束。&lt;/p&gt;
+
+&lt;h1 id=&quot;section-1&quot;&gt;6，在自己项目的布局文件中，定义一个命名空间，使用属性&lt;/h1&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;LinearLayout&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:android=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schemas.android.com/apk/res/android&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;xmlns:tools=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schemas.android.com/tools&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;xmlns:slideswitch=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schemas.android.com/apk/res/com.example.testlibs&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;android:background=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#ffffffff&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;android:gravity=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;center_horizontal&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;android:orientation=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;vertical&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;android:padding=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;10dip&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;tools:context=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;com.example.testlibs.MainActivity&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;  
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;com.leaking.slideswitch.SlideSwitch&lt;/span&gt;  
+        &lt;span class=&quot;na&quot;&gt;android:id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;@+id/swit&amp;quot;&lt;/span&gt;  
+        &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;150dip&amp;quot;&lt;/span&gt;  
+        &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;60dip&amp;quot;&lt;/span&gt;  
+        &lt;span class=&quot;na&quot;&gt;slideswitch:isOpen=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;true&amp;quot;&lt;/span&gt;  
+        &lt;span class=&quot;na&quot;&gt;slideswitch:shape=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;rect&amp;quot;&lt;/span&gt;  
+        &lt;span class=&quot;na&quot;&gt;slideswitch:themeColor=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#ffee3a00&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/com.leaking.slideswitch.SlideSwitch&amp;gt;&lt;/span&gt;  
+  
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/LinearLayout&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;需要注意的是，上述代码片段的第二行，它引入了一个命名空间，其格式如下&lt;/p&gt;
+
+&lt;p&gt;xmlns:随便起名字=”http://schemas.android.com/apk/res/你的应用的包名”  &lt;/p&gt;
+
+&lt;p&gt;注意最后一部分，是你使用这个自定义VIew的那个项目的应用包名。&lt;/p&gt;
+
+&lt;p&gt;接下来，在Java代码中设置开关的监听以及状态的设置，如下代码&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MainActivity&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Activity&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SlideListener&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+  
+    &lt;span class=&quot;n&quot;&gt;TextView&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;SlideSwitch&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;slide&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;SlideSwitch&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;slide2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
+  
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;  
+    &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Bundle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;setContentView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;layout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;activity_main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;slide&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SlideSwitch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findViewById&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;swit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;slide2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SlideSwitch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findViewById&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;swit2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+  
+        &lt;span class=&quot;n&quot;&gt;slide&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TextView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findViewById&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;slide&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setSlideListener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+  
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;  
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;c1&quot;&gt;// TODO Auto-generated method stub  &lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setText&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot; is opend &amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+  
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;  
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;c1&quot;&gt;// TODO Auto-generated method stub  &lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setText&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot; is close &amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/android/(customView)SlideSwitch/&quot;&gt;【自定义View】IOS风格的滑动开关&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on March 09, 2015.&lt;/p&gt;</content>
+</entry>
+
+
+  
+
+<entry>
+  <title type="html"><![CDATA[【自定义View】为什么重写onMeasure()以及怎么重写]]></title>
+  <link rel="alternate" type="text/html" href="/android/(customView)onMeasure/" />
+  <id>/android/(customView)onMeasure</id>
+  <published>2015-03-08T00:00:00+08:00</published>
+  <updated>2015-03-08T00:00:00+08:00</updated>
+  <author>
+    <name>Quinn Chen</name>
+    <uri></uri>
+    <email>chenhuazhaoao@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;这两天在看关于android自定义组件的知识，刚开始查阅了很多资料，依然觉得对onMeasure()方法的理解不够透彻，后来大致知道onMeasure怎么用了之后，又很好奇为什么需要去实现onMeasure()这个方法。&lt;/p&gt;
+
+&lt;p&gt;这篇文章主要记录两个问题，&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;自定义组件时什么情况下需要实现onMeasure()&lt;/li&gt;
+  &lt;li&gt;怎么实现onMeasure()方法&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;onmeasure&quot;&gt;为什么需要实现onMeasure()方法&lt;/h1&gt;
+
+&lt;p&gt;我们看以下例子，我们自己定义一个View，很简单，只是继承View类。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyView&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+  
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MyView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AttributeSet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defStyleAttr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defStyleAttr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;c1&quot;&gt;// TODO Auto-generated constructor stub  &lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+  
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MyView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AttributeSet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;c1&quot;&gt;// TODO Auto-generated constructor stub  &lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+  
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MyView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;c1&quot;&gt;// TODO Auto-generated constructor stub  &lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+      
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;  
+    &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onMeasure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widthMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;heightMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;c1&quot;&gt;// TODO Auto-generated method stub  &lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onMeasure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;widthMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;heightMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;然后在布局文件中定义如下布局:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;LinearLayout&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:android=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schemas.android.com/apk/res/android&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;xmlns:tools=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schemas.android.com/tools&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;xmlns:MyView=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schemas.android.com/apk/res/com.notes.notes_onmeasure&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;android:orientation=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;vertical&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;android:padding=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;@dimen/activity_vertical_margin&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;tools:context=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;com.notes.notes_onmeasure.EasyActivity&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;  
+  
+      
+      
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;com.notes.notes_onmeasure.MyView&lt;/span&gt;  
+        &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wrap_content&amp;quot;&lt;/span&gt;  
+        &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wrap_content&amp;quot;&lt;/span&gt;  
+        &lt;span class=&quot;na&quot;&gt;android:background=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#78787878&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;  
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;TextView&lt;/span&gt;  
+        &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wrap_content&amp;quot;&lt;/span&gt;  
+        &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wrap_content&amp;quot;&lt;/span&gt;  
+        &lt;span class=&quot;na&quot;&gt;android:text=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;能看到我吗？&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;  
+  
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/LinearLayout&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;结果显示如&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/onMeasure.jpg&quot; alt=&quot;search screenshot&quot; width=&quot;200&quot; height=&quot;200&quot; /&gt;
+  &lt;figcaption&gt;效果图&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;当MyView的宽和高设置为match_parent时，MyView会填充整个界面是毋庸置疑的，当将其宽和高设置为某个确定值时，MyView的大小也会按这个确定的值显示。但是上面的例子中，我们把MyView的宽和高设置为wrap_content，它依然填充整个界面。问题就出在这里，所以我们需要重写onMeasure()方法控制其大小。其它继承于View的组件，如Button，TextView，它们都已经通过重写onMeasuer()方法。&lt;/p&gt;
+
+&lt;h1 id=&quot;onmeasure-1&quot;&gt;怎么重写onMeasure()方法&lt;/h1&gt;
+
+&lt;p&gt;android中，每个View的大小，不仅取决于自身，而且也受父视图的影响，可以参考我的另一篇文章&lt;/p&gt;
+
+&lt;p&gt;而onMeasure()是在父视图计算子视图大小时被调用的，其中的细节就不在此详细讲述了，我们暂时只需要这一点即可。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onMeasure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widthMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;heightMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+   &lt;span class=&quot;c1&quot;&gt;//,,,  &lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;onMeasure()方法有两个参数，这两个参数就是父视图发过来给子视图的限制条件。我们直接来重写上面的MyView中的onMeasure()方法，通过一个例子了解onMeasure()方法怎么实现。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;  
+    &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onMeasure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widthMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;heightMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;c1&quot;&gt;// TODO Auto-generated method stub  &lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onMeasure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;widthMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;heightMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;measureDimension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widthMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;measureDimension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;heightMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;setMeasuredDimension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+  
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;measureDimension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defaultSize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;measureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;  
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
+          
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specMode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getMode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;measureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specSize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;measureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+          
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;specMode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;EXACTLY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;  
+            &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specSize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+            &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defaultSize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;//UNSPECIFIED  &lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;specMode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;AT_MOST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;  
+                &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specSize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;重写onMeasure()方法时，必须最后调用setMeasureDimension()方法，否则会报错。然后我们最终setMeasureDimension()的width和height是怎么计算得到的呢？&lt;/p&gt;
+
+&lt;p&gt;首先我们解析widthMeasureSpec获得两个数据，一个是父视图希望子视图的大小是多少，一个是关于大小的模式，这两个数据分别通过以下两句代码获得&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specMode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getMode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;measureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specSize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;measureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;MeasureSpec.getMode()方法返回的结果有三种：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;UNSPECIFIED&lt;/strong&gt;：父结点对子结点的大小没有任何要求。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;EXACTLY&lt;/strong&gt;:  父结点要求其子节点的大小指定为某个确切的值。其子节点以及其他子孙结点都需要适应该大小。   &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;AT MOST&lt;/strong&gt;：父结点要求其子节点的大小不能超过某个最大值，其子节点以及其他子孙结点的大小都需要小于这个值&lt;/li&gt;
+&lt;/ul&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/android/(customView)onMeasure/&quot;&gt;【自定义View】为什么重写onMeasure()以及怎么重写&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on March 08, 2015.&lt;/p&gt;</content>
+</entry>
 
 
   
@@ -28,7 +341,7 @@
   </author>
   <content type="html">&lt;p&gt;Web服务器可能同时和很多人在通信，服务器需要知道它正在和谁通信，而不是每个客户端都当做一个匿名的用户，这一章主要就是为了讲解服务器如何辨别它正在和谁通信。&lt;/p&gt;
 
-&lt;h1 id=&quot;the-personal-touch&quot;&gt;The Personal Touch&lt;/h1&gt;
+&lt;h3 id=&quot;the-personal-touch&quot;&gt;The Personal Touch&lt;/h3&gt;
 
 &lt;p&gt;HTTP本来就是一种匿名的，无状态，请求响应形式的协议。服务器难以知道在和哪个客户端通信，而且无法跟踪同个用户先后发出的请求。&lt;/p&gt;
 
@@ -43,7 +356,7 @@
   &lt;li&gt;Cookie，能持久保存的识别标志&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;http-headers&quot;&gt;HTTP Headers&lt;/h1&gt;
+&lt;h3 id=&quot;http-headers&quot;&gt;HTTP Headers&lt;/h3&gt;
 
 &lt;p&gt;下面表格中的七个http头部属性，经常用于携带用户信息，我们先介绍前面三个，后面四个在下一小节再仔细介绍&lt;/p&gt;
 
@@ -66,7 +379,130 @@ User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)&lt;/p&gt;
 
 &lt;p&gt;从上面的讨论可知， From, User-Agent, 和 Referer headers都无法用于识别用户身份，下面讨论能更精确识别用户身份的方式。&lt;/p&gt;
 
-&lt;h1 id=&quot;client-ip-address&quot;&gt;Client IP Address&lt;/h1&gt;
+&lt;h3 id=&quot;client-ip-address&quot;&gt;Client IP Address&lt;/h3&gt;
+
+&lt;p&gt;如果用户的IP不改变，那么通过IP也是识别用户的一种方式。即时HTTP头部没有携带IP地址，也可以通过TCP连接获取连接另一端的IP地址。但是通过IP地址识别用户存在以下缺点：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;IP只能代表用户使用的机器，不能代表用户，一个用户可能使用多个电脑。或者一个电脑被多个用户使用。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;很多网络提供商为用户提供的是动态IP地址，随时会变化&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;另一种情况就是NAT共享IP&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;HTTP代理和网关使得服务器看到的IP是代理或者网关的IP，而不是客户端的IP。虽然代理可以加上”Client-ip”和”X-forwarded-for”拓展头部—–它们的值为客户端真正的地址。但是很多代理不支持这种拓展头部。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;依然有部分情况使用IP地址做用户识别，比如局域网内限制某些IP地址的电话访问某些保密资源。在因特网上则不能采取这种策略了，IP地址很容易i被伪造。&lt;/p&gt;
+
+&lt;h3 id=&quot;user-login&quot;&gt;User Login&lt;/h3&gt;
+
+&lt;p&gt;与其被动地凭借IP地址猜测用户的身份，服务器不如直接让用户使用账号密码认证登陆。从而验证其身份。&lt;/p&gt;
+
+&lt;p&gt;为了方便，HTTP自带内建的WWW-Authenticate 和 Authorization两个头部，它们可以携带用户信息房网服务器，一旦验证登陆通过，则以后每次请求都带上这个登陆信息。&lt;/p&gt;
+
+&lt;p&gt;如果服务器希望用户在访问网页之前登陆，则服务器可以返回一个401的要求登陆的信息给浏览器，然后浏览器会弹出一个登陆窗口，下次请求时就将带上这个登陆信息。如下图：&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/chapter11image02.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt; Registering username using HTTP authentication headers&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;如上图，&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;用户访问 www.joes-hardware.com&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;网站并不知道用户身份，服务器返回一个401的登陆要求和WWW-Authenticate头部给客户端，然后浏览器就会弹出扥股窗口。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;当用户输入账号密码，浏览器重复上一次请求，并且在头部加上Authorization信息指定账号密码，当然账号密码是加密的。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;服务器可以识别客户端&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;以后浏览器的每次请求如果需要认证，都会自动带上刚才输入的账号密码。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;然而，使用登陆认证的方式也不大方便，因为用户浏览每个网站都需要输入账号密码，太麻烦。&lt;/p&gt;
+
+&lt;h3 id=&quot;fat-urls&quot;&gt;Fat URLs&lt;/h3&gt;
+
+&lt;p&gt;Fat URLs的原理就是在URL的前缀或者后缀加入用户信息，以此识别用户身份。但是它有诸多缺点。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;URL太丑陋，是用户混淆。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;URL不能共享，不能发给别人，因为URL中包含特定的用户和会话信息。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;需要重写HTML页面，将其中的URL改为对应的fat URLs&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;如果不小心fat URLs中丢失了用户信息，会话将失效。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;不能持久保存&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;cookies&quot;&gt;Cookies&lt;/h3&gt;
+
+&lt;p&gt;Cookie是现在最好的识别用户、保存持久会话的最佳方案。Cookie没有以上几种方法的缺点，但是有时会结合以上几种方法一起使用，Cookie最开始是由Netscape开发的，现在已经被大部分浏览器支持。&lt;/p&gt;
+
+&lt;p&gt;Cookie使得HTTP头部需要重新定义，而且影响了缓存。另外很多浏览器禁止缓存cookie的内容。&lt;/p&gt;
+
+&lt;h2 id=&quot;types-of-cookes&quot;&gt;Types of Cookes&lt;/h2&gt;
+
+&lt;p&gt;session cookies和 持久cookies，这就是常见的两种cookie。前者不是持久的，后者是持久的，会保存到本地。如果设置了Discard参数或者没有设置Expires和Max-Age参数，则代表是session cookies。&lt;/p&gt;
+
+&lt;h2 id=&quot;how-cookies-work&quot;&gt;How Cookies Work&lt;/h2&gt;
+
+&lt;p&gt;用户首次访问网站时，网站并不知道用户身份，这时服务器生成一个标志用户的ID号，使用Set-Cookie 或者 Set-Cookie2携带这个ID返回给客户端，客户端保存这个cooked值，下次访问网站时，自动在头部携带上这个cookie。另外，cookie不止可以携带ID，还可以携带电话号码，邮箱地址等等信息。&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/chapter11image03.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt; Slapping a cookie onto a user&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&quot;cookie-jar-client-side-state&quot;&gt;Cookie Jar: Client-Side State&lt;/h2&gt;
+
+&lt;p&gt;Cookie机制的全称为HTTP状态管理机制。&lt;/p&gt;
+
+&lt;h2 id=&quot;different-cookies-for-different-sites&quot;&gt;Different Cookies for Different Sites&lt;/h2&gt;
+
+&lt;p&gt;浏览器的cookie并不会全部发给某个服务器，这样会让网络传输变大，而且不是所有cookie都能被特定的网站识别，甚至会引起安全问题。&lt;/p&gt;
+
+&lt;p&gt;而且服务器返回Set-cookie回来给客户端时，可以通过制定domain和path，告诉客户端，这些cookie下次要发到哪个domain下的哪个path。&lt;/p&gt;
+
+&lt;h2 id=&quot;cookie-ingredients-&quot;&gt;Cookie Ingredients （成分）&lt;/h2&gt;
+
+&lt;p&gt;现在有两种Version 0 cookies(有时称为 “Netscape cookies”), 和 Version 1 (“RFC 2965”) cookies.它们都没被写入HTTP/1.1 规范。&lt;/p&gt;
+
+&lt;p&gt;前者就是我们现在经常使用的cookie，后者是拓展的，还没完全支持，普及。&lt;/p&gt;
+
+&lt;h2 id=&quot;cookies-and-session-tracking&quot;&gt;Cookies and Session Tracking&lt;/h2&gt;
+
+&lt;p&gt;容易理解&lt;/p&gt;
+
+&lt;h2 id=&quot;cookies-and-caching&quot;&gt;Cookies and Caching&lt;/h2&gt;
+
+&lt;p&gt;简短的一段，但是缓存的概念不大理解，留作下次。&lt;/p&gt;
+
+&lt;h2 id=&quot;cookies-security-and-privacy&quot;&gt;Cookies, Security, and Privacy&lt;/h2&gt;
+
+&lt;p&gt;Cookie存在安全风险，而且很多网站滥用Set-cookie，甚至第三方营销公司会结合IP地址和Referer header记录用户的浏览习惯。但是作用还是大于风险的。&lt;/p&gt;
 
 
   &lt;p&gt;&lt;a href=&quot;/readingnotes/HTTP-cookies/&quot;&gt;《HTTP权威指南》Chapter11-Client Identification and Cookies&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on February 03, 2015.&lt;/p&gt;</content>
@@ -76,22 +512,204 @@ User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)&lt;/p&gt;
   
 
 <entry>
-  <title type="html"><![CDATA[【译】Intents and Intent Filters]]></title>
-  <link rel="alternate" type="text/html" href="/android/(translate)Intents%20and%20Intent%20Filters/" />
-  <id>/android/(translate)Intents and Intent Filters</id>
-  <published>2015-01-14T00:00:00+08:00</published>
-  <updated>2015-01-14T00:00:00+08:00</updated>
+  <title type="html"><![CDATA[【译】Processes and Threads]]></title>
+  <link rel="alternate" type="text/html" href="/android/(translate)ProcessesAndThreads/" />
+  <id>/android/(translate)ProcessesAndThreads</id>
+  <published>2015-01-31T00:00:00+08:00</published>
+  <updated>2015-01-31T00:00:00+08:00</updated>
   <author>
     <name>Quinn Chen</name>
     <uri></uri>
     <email>chenhuazhaoao@gmail.com</email>
   </author>
-  <content type="html">&lt;p&gt;tips:&lt;em&gt;该本博客的翻译类似笔记，大多着重意译博主觉得需要记住的知识。&lt;/em&gt;&lt;/p&gt;
+  <content type="html">&lt;p&gt;大致翻译一下，记录笔记。原文地址&lt;a href=&quot;http://developer.android.com/tools/docs/docs/guide/components/processes-and-threads.html&quot;&gt;Processes and Threads&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;一个app中的三个最重要的组件——activity，service，broadcast receiver，都是借助intent启动的。Intent messaging is a facility for late run-time binding between components in the same or different applications.intent对象本身是一个数据结构，这个数据结构描述某个操作，或者是描述某种已经发生的事情。以上说到的几个组件，它们使用intent的方式各不相同。&lt;/p&gt;
+&lt;h1 id=&quot;processes-and-threads&quot;&gt;Processes and Threads&lt;/h1&gt;
 
+&lt;p&gt;当一个app的组件（这里一般指四大组件Activity，Service等）启动时，如果此时系统没有其他组件正在运行，则android系统会为该app启动一个新的linux进程，而且该进程中只有一个线程。默认情况下，app中的所有组件，都运行在同个进程中的同个线程（称为主线程）。如果一个app的组件启动时，该app中已经存在一个进程，则该组件将运行在同一个进程中，并且使用同一个执行线程(thread of execution)。其实，你还可以设置同一个app中的各个组件运行在不同的进程中，并且各个进程中可以创建多个线程。&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;/android/(translate)Intents%20and%20Intent%20Filters/&quot;&gt;【译】Intents and Intent Filters&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on January 14, 2015.&lt;/p&gt;</content>
+&lt;p&gt;这篇文档主要讨论关于android应用中的进程和线程（Processes and Threads）&lt;/p&gt;
+
+&lt;h2 id=&quot;processes&quot;&gt;Processes&lt;/h2&gt;
+
+&lt;p&gt;默认情况下，app中的各个组件时运行在同一个进程中的，并且大多应用应该遵循这个规则。然后，如果你觉得你需要指定某个组件专属于某个进程，则你可以在manifest 文件中做相应配置。&lt;/p&gt;
+
+&lt;p&gt;manifest文件中各种组件的标签——&amp;lt;activity&amp;gt;, &amp;lt;service&amp;gt;, &amp;lt;receiver&amp;gt;, &amp;lt;provider&amp;gt;都支持属性android:process，这个属性可以为该组件指定一个进程。组件通过这个属性指定了一个自己专属的进程之后，虽然有些组件仍然共享一个进程，但是有些组件将不再与其他组件共享一个进程。甚至，你可以通过设置android:process使得不同app运行在同一个进程里面——前提是不同app要使用想用的linux 用户ID和相同的签名。（android插件的原理貌似涉及到这一点）&lt;/p&gt;
+
+&lt;p&gt;&amp;lt;application&amp;gt;元素也支持android：process属性，它的作用范围将是所有的组件。&lt;/p&gt;
+
+&lt;p&gt;android系统中，某些正在服务于用户的进程需要内存时，如果此时系统内存不足，则系统会考虑关闭某些进程。一个进程被杀死，则进程中的所有组件都将被销毁。被销毁的组件重新启动时，其所在的进程也将重新启动。&lt;/p&gt;
+
+&lt;p&gt;当决定该杀死哪个进程时，android系统会衡量各个进程对于用户的重要性。比如，某个进程持有多个不会再显示于屏幕上的activity，则该进程是极有可能会先被杀死的，杀死一个进程的决定因素是运行在该进程中的组件的状态。以下讨论关于选择杀死哪些进程的规则。&lt;/p&gt;
+
+&lt;h3 id=&quot;process-lifecycle&quot;&gt;Process lifecycle&lt;/h3&gt;
+
+&lt;p&gt;android系统会尽可能地维持app的进程，但是有时为了回收内存用于更新更重要的进程，不得不杀死某些进程。为了选择一个进程杀死，系统将进程划分出一个重要性分级，这个划分基于进程中的组件以及组件的状态。当需要回收系统资源时，重要性最低的进程首先被杀死，然后按照重要性依次杀死其他进程。&lt;/p&gt;
+
+&lt;p&gt;重要的分级分为5个级别，以下按照重要性从高到底列出各种进程。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Foreground  process&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;用户的当前操作所在的进程就是前台进程。满足以下任何一个条件的进程都是前台进程。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;用户当前交互的activity所在的进程（没有消失，而且获得焦点）&lt;/li&gt;
+  &lt;li&gt;某个service与用户当前交互的activity绑定，这个service所在的进程。&lt;/li&gt;
+  &lt;li&gt;某个service运行于前台（也就是调用了startForeground()的service），这些service所在的进程。&lt;/li&gt;
+  &lt;li&gt;某个进程执行了它的任何一个生命周期回调方法（onCreate(),onStart(),onDestroy()），这些service所在的进程。&lt;/li&gt;
+  &lt;li&gt;正在执行某个BroadcastReceiver的onReceive()方法的进程&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;通常情况下，一个app只会同时拥有很少的前台进程。当系统的内存特别低时，前台进程也将不能继续运行，杀死它们以维持用户UI界面可以正常反应，前台进程都是在最后才被杀死，&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Visible process&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;虽然有些进程中没有任何前台组件，当时依然可以对当前屏幕显示的东西有所影响。这种进程就是可见进程，满足以下任何条件的组件都是可见进程。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;某个activity虽然不是处于前台（foreground），但是依然可见（visible），一般都是因为visible precess执行了onPause方法。举个例子，某个处于前台的activity启动了一个dialog，此时该activity从前台（foreground）转变为可见（visible）。这种可见activity所在进程就是visible precess.&lt;/li&gt;
+  &lt;li&gt;某个service与某个visible 或者foreground的activity绑定，则该service所在的进程就是visible precess。
+一般visible precess不会被杀死，除非系统急需回收资源，并且得保持foreground process运行，则就必须杀死visible process。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Service process&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Service process 中一般运行一个startService()启动的Service，并且还没变成上面两种进程。虽然service process并不会直接和用户界面有直接的关系，但是通常都在执行某些和用户相关的操作，比如播放音乐或者从网络下载数据。系统一般会保持这些进程运行，除非需要到了需要杀死它们以释放资源的时候。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Background process&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Background process中拥有用户当前看不见的activity，也就是该activity执行了onStop方法，比如activityA启动了activityB，则activityA就变得不可见。这种进程并不会对用户界面有直接影响，系统当需要为foreground ,visible 或者 service process回收内存时，就会杀死background  process。通常会同时有多个background process在运行，它们被保持在一个LRU（least recently used）队列中。这样太久没呈现到界面上的activity所在的进程就会被优先杀死。如果activity适当地重写它的生命周期回调方法，将可以在进程被杀死时保存数据，并在activity重新出现时恢复数据，通过这种方式，用户就不会感受到进程被杀死。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Empty process&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Empty process中没有任何活跃的组件。这种进程存在的意义就是为了缓存，它们可以改善下次组件的启动时长。系统杀死这种进程一般是为了平衡这些进程中的缓存以及底层kernel缓存。（这句话不大懂，翻译不好）
+当一个进程同时属于以上5种进程中的多种类型，则android系统会将其归类到重要性较高的一种。比如一个进程同时拥有一个service和一个visible的activity，则该进程将被归类到visible process，而不是service process。
+另外，一个进程的排序，可能会因为某种依赖关系而上升，比如，进程A中某个组件依赖于进程B中的某个组件，则进程B的重要性排序就不能低于进程A。至少重要性要相同。&lt;/p&gt;
+
+&lt;p&gt;如上所述，我们可以知道，运行着service的进程，以及运行着后台activity的进程，前者的重要性排序高于后者。所以需要启动一个耗时操作的activity，这个activity最好启动一个service执行该耗时操作，而不是通过建立一个普通的worker thread。特别是当该耗时操作的时间长于activity的生命周期。比如，一个activity将上传一张图片，可以启动一个service来上传图片，这样，这个service将可以在用户离开activity时仍继续运行。使用service可以保证该耗时操作至少有一个“service process”级别的重要性。无论所在的activity发生了什么。同理，我们最好在broadcast receiver中通过启动一个service执行耗时操作，而不是启动一个thread。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;（上面的耗时操作如果是启动thread，则所在进程的重要性排序只能是“background process”，低于”service process”）&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;threads&quot;&gt;Threads&lt;/h2&gt;
+
+&lt;p&gt;当一个app启动时，系统会为该app创建一个线程，该线程称为“main thread”（主线程），这个线程管理UI界面中各个控件的事件分发，控件交互，绘制。所在该线程的重要性不言而喻。主线程有时也被称为UI线程。&lt;/p&gt;
+
+&lt;p&gt;系统并不会为各个控件创建单独的线程（我们这里说的控件区别以上的组件，控件这里指UI控件）。同个进程中的所有控件都在UI线程中（一个进程中只有一个UI线程），系统对每个控件的调用都是发生在UI线程中。所以，系统的回调方法（比如onKeyDown()这种反映用户动作的方法和生命周期回调方法）都运行在进程中的UI线程。&lt;/p&gt;
+
+&lt;p&gt;比如：当用户按下屏幕上某个按钮，UI线程会将该touch event分发给该按钮控件，然后按钮控件将依次设置其自身状态为pressed state，然后发出一个把自己设置为invalidate（暂时不可以再被按下）的请求到事件队列中。UI线程处理队列中的请求并且通知按钮组件进行重绘。&lt;/p&gt;
+
+&lt;p&gt;当app在相应用户操作时还要执行一些繁杂的操作，UI线程这种单线程的模型的性能将会很差，除非你恰当的进行处理。需要抢到的一点，如果访问网络，访问数据库等耗时操作都在UI线程中执行，将会阻塞整个UI进程。当UI进程被阻塞，事件将不能被分发，重绘也不能进行。从用户的角度来看，此时应用被挂起了，暂停了。当UI线程被阻塞超过几秒钟之后（目前系统设置大概5秒钟），用户将会得到一个臭名昭著的“application not responding”（ANR）的弹出窗口。用户此时只能被迫选择退出app了。&lt;/p&gt;
+
+&lt;p&gt;另外，android的UI控件都不是线程安全的，所以对UI组件的修改，不能再worker thread进行，而应该在UI 线程中修改UI控件。综上，android系统UI线程的这种单线程模型有以下两条规则：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;不能阻塞UI线程&lt;/li&gt;
+  &lt;li&gt;不能再UI线程之外操控UI控件。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;worker-threads&quot;&gt;Worker threads&lt;/h3&gt;
+
+&lt;p&gt;如上面所描述的单线程模型，UI的反应不该阻塞UI线程，当你需要执行不是短时间的操作，那么你最好就在单独的线程中执行。
+比如，以下在一个点击监听器中下载图片，并将图片显示在imageview中，&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onClick&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Runnable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+            &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loadImageFromNetwork&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://example.com/image.png&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+            &lt;span class=&quot;n&quot;&gt;mImageView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setImageBitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;  
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;乍一看，上面的代码似乎没什么问题，我们创建一个新的线程处理网络操作。然后它只符合了上面讲到的关于单线程模型两条规则的第一条，而未被了第二条——–只能在UI线程中操纵UI控件。而上面的代码中，我们在worker thread中修改ImageView而非在UI线程中修改。由于UI控件不是线程安全的，所以将会导致不可预知的错误。&lt;/p&gt;
+
+&lt;p&gt;为了解决这个问题，android系统提供了几个方式，让其他线程可以访问UI线程，以下是几个可以起到这个作用的方法：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Activity.runOnUiThread(Runnable)&lt;/li&gt;
+  &lt;li&gt;View.post(Runnable)&lt;/li&gt;
+  &lt;li&gt;View.postDelayed(Runnable, long)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;为了解决上面的问题，以上代码片段可以修改成使用View.post(Runnable)，&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onClick&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Runnable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+            &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitmap&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loadImageFromNetwork&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://example.com/image.png&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+            &lt;span class=&quot;n&quot;&gt;mImageView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Runnable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+                &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+                    &lt;span class=&quot;n&quot;&gt;mImageView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setImageBitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+                &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+            &lt;span class=&quot;o&quot;&gt;});&lt;/span&gt;  
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;  
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;现在，上面的戴拿片段就是线程安全的了，网络访问是在单独的线程中执行，ImageView是在UI线程中修改的。&lt;/p&gt;
+
+&lt;p&gt;然后随着耗时操作的逻辑代码变得复杂，上面的这种编码风格会变得复杂，难以维护。为了处理worker thread中复杂的代码，你可以在worker thread中结合使用handler，handler可以处理从UI线程中分发过来的消息。但是，最好的方式是使用AsyncTas，当worker thread需要与UI 线程交互时，AsyncTas能大大简化代码。&lt;/p&gt;
+
+&lt;h3 id=&quot;using-asynctask&quot;&gt;Using AsyncTask&lt;/h3&gt;
+
+&lt;p&gt;AsyncTask的作用是能让你在UI界面上执行异步任务。它将阻塞过程安排熬worker thread中执行，并且将执行结果发布到UI线程，而且不需要你自己处理上面的thread和handler的问题。&lt;/p&gt;
+
+&lt;p&gt;使用AsyncTask，你需要实现一个AsyncTask的子类，并且实现其中的doInBackground() 回调方法，该方法运行在后台一个线程池中。为了更新UI，你需要实现onPostExecute(）方法，该方法接收来自doInBackground() 的结果，并且该方法是运行在UI线程中的，所有你可以放心在onPostExecute(）中更新UI界面。AsyncTask的启动是通过在UI线程中调用其execute()方法。&lt;/p&gt;
+
+&lt;p&gt;以下通过AsyncTask实现上面的下载图片更新ImageView的例子。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onClick&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;DownloadImageTask&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://example.com/image.png&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+  
+&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DownloadImageTask&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AsyncTask&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;cm&quot;&gt;/** The system calls this to perform work in a worker thread and &lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;      * delivers it the parameters given to AsyncTask.execute() */&lt;/span&gt;  
+    &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;doInBackground&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urls&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loadImageFromNetwork&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urls&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]);&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+      
+    &lt;span class=&quot;cm&quot;&gt;/** The system calls this to perform work in the UI thread and delivers &lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;      * the result from doInBackground() */&lt;/span&gt;  
+    &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onPostExecute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
+        &lt;span class=&quot;n&quot;&gt;mImageView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setImageBitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;该代码符合线程安全，而且由于将workers thread和UI  thread中需要完成的任务分割开了，所以代码看起来简洁多了。&lt;/p&gt;
+
+&lt;p&gt;如果想要有一个更深入的了解，你可以阅读AsyncTask的API文档。下面先大致列出AsyncTask的要点.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;你可以通过泛型制定参数的类型，进度数值，task的结果值。&lt;/li&gt;
+  &lt;li&gt;doInBackground()自动在一个worker thread中执行&lt;/li&gt;
+  &lt;li&gt;onPreExecute(), onPostExecute(),和onProgressUpdate() 在UI线程中执行&lt;/li&gt;
+  &lt;li&gt;doInBackground()执行的结果发送到onPostExecute()&lt;/li&gt;
+  &lt;li&gt;你可以在doInBackground()随时调用publishProgress()，该方法会调用onProgressUpdate()，而且onProgressUpdate()是在UI线程中执行。&lt;/li&gt;
+  &lt;li&gt;你可以在任何线程中任何时间取消AsyncTask。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;需要注意一点，当系统在运行时发生设置变化，比如屏幕旋转，则worker thread可能会被迫重新启动。至于如何恰当地在重启前后维持线程任务，以及如何恰当地在activity被销毁时终止线程，这一点可以参考Shelves的例子&lt;/p&gt;
+
+&lt;h3 id=&quot;thread-safe-methods&quot;&gt;Thread-safe methods&lt;/h3&gt;
+
+&lt;p&gt;该知识点暂时使用不多，了解有限，以后开发用到了在细读该段落&lt;/p&gt;
+
+&lt;h2 id=&quot;interprocess-communication&quot;&gt;Interprocess Communication&lt;/h2&gt;
+
+&lt;p&gt;IPC ，该知识点暂时使用不多，了解有限，以后开发用到了在细读该段落&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;/android/(translate)ProcessesAndThreads/&quot;&gt;【译】Processes and Threads&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on January 31, 2015.&lt;/p&gt;</content>
 </entry>
 
 
@@ -882,158 +1500,248 @@ component如何启动它。具体可以查看如下这篇文章&lt;/p&gt;
   
 
 <entry>
-  <title type="html"><![CDATA[《HTTP权威指南》Note1-Overview of HTTP]]></title>
-  <link rel="alternate" type="text/html" href="/readingnotes/HTTP%20definition01/" />
-  <id>/readingnotes/HTTP definition01</id>
-  <published>2014-11-30T00:00:00+08:00</published>
-  <updated>2014-11-30T00:00:00+08:00</updated>
+  <title type="html"><![CDATA[《HTTP权威指南》Note2-URLs and Resources]]></title>
+  <link rel="alternate" type="text/html" href="/readingnotes/HTTP%20Resource/" />
+  <id>/readingnotes/HTTP Resource</id>
+  <published>2014-12-01T00:00:00+08:00</published>
+  <updated>2014-12-01T00:00:00+08:00</updated>
   <author>
     <name>Quinn Chen</name>
     <uri></uri>
     <email>chenhuazhaoao@gmail.com</email>
   </author>
-  <content type="html">&lt;h2 id=&quot;http-the-internets-multimedia-courier&quot;&gt;HTTP: The Internet’s Multimedia Courier&lt;/h2&gt;
+  <content type="html">&lt;p&gt;URLs(Uniform resource locators)是互联网资源的标准化名称&lt;/p&gt;
 
-&lt;p&gt;首先，HTTP的全称为：Hypertext Transfer Protocol。属于可靠数据传输协议&lt;/p&gt;
+&lt;h2 id=&quot;navigating-the-internets-resources&quot;&gt;Navigating the Internet’s Resources&lt;/h2&gt;
 
-&lt;h2 id=&quot;web-clients-and-servers&quot;&gt;Web Clients and Servers&lt;/h2&gt;
+&lt;p&gt;像上一篇博客&lt;a href=&quot;http://leaking.github.io/readingnotes/HTTP%20definition01/&quot;&gt;“《HTTP权威指南》Note1-Overview of HTTP”&lt;/a&gt;中提到的，URLs只是URI的一个子集，另一个子集是URN，URL强调资源的位置，URN抢到资源的名称，当某个资源在互联网的位置发生改变，旧的URL将不能再访问该资源，而URN则依然可以。由于URN还未普及，我们一般默认URL就是URI。&lt;/p&gt;
 
-&lt;p&gt;服务器存储某些web内容，客户端向服务器发送一个http request请求某个对象（可能为文档，图片等等），
-若请求成功，服务器将返回一个http response，其中包含该对象，对象的内容长度，对象的类型等等信息。&lt;/p&gt;
+&lt;p&gt;URL有统一的格式：scheme://server location/path&lt;/p&gt;
 
-&lt;p&gt;最常见的HTTP客户端是浏览器&lt;/p&gt;
+&lt;p&gt;URL被应用于除了HTTP之外的其他协议，比如FTP，电子邮件等等。URL是众多网络协议的访问点（原文是access point，翻译有点怪）。&lt;/p&gt;
 
-&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+&lt;h2 id=&quot;url-syntax&quot;&gt;URL Syntax&lt;/h2&gt;
 
-&lt;p&gt;服务器上web内容都是资源，包括文件，图片等等。网关和搜索引擎也是资源（这一句不大懂）
-关于资源，主要有两个知识点，一个是媒体类型，一个是URI，如下&lt;/p&gt;
+&lt;p&gt;URL的语法格式（详细）如下&lt;/p&gt;
 
-&lt;h3 id=&quot;media-types&quot;&gt;Media Types&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;scheme&amp;gt;&lt;/span&gt;://&lt;span class=&quot;nt&quot;&gt;&amp;lt;user&amp;gt;&lt;/span&gt;:&lt;span class=&quot;nt&quot;&gt;&amp;lt;password&amp;gt;&lt;/span&gt;@&lt;span class=&quot;nt&quot;&gt;&amp;lt;host&amp;gt;&lt;/span&gt;:&lt;span class=&quot;nt&quot;&gt;&amp;lt;port&amp;gt;&lt;/span&gt;/&lt;span class=&quot;nt&quot;&gt;&amp;lt;path&amp;gt;&lt;/span&gt;;&lt;span class=&quot;nt&quot;&gt;&amp;lt;params&amp;gt;&lt;/span&gt;?&lt;span class=&quot;nt&quot;&gt;&amp;lt;query&amp;gt;&lt;/span&gt;#&lt;span class=&quot;nt&quot;&gt;&amp;lt;frag&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;服务器传输给客户端的对象可能是文本文件，图片等各种类型，HTTP协议通过MINE type来标记各种数据类型，客户端根据传输对象的数据类型，选择接收、显示该对象的方式。&lt;/p&gt;
+&lt;p&gt;一般没有哪个URL同时拥有以上9个部分，一般用于scheme，host，path.
+接下来讲解以详细语法格式中的9个组成部分。&lt;/p&gt;
 
-&lt;p&gt;如下图&lt;/p&gt;
-&lt;figure&gt;
-  &lt;img src=&quot;/images/http_overview01.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;Mine type其实就是平时见到的Content-type&lt;/figcaption&gt;
-&lt;/figure&gt;
+&lt;h3 id=&quot;schemes-what-protocol-to-use&quot;&gt;Schemes: What Protocol to Use&lt;/h3&gt;
 
-&lt;p&gt;Mine type的文本标记方式为 “类型/子类型”，如下几种常见情况&lt;/p&gt;
+&lt;p&gt;scheme一般表示访问某个资源是通过哪种协议。它不区分大小写，用冒号:隔开后面的字段，所以
+HTTP://等同于http://&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;html文本类型：text/html&lt;/li&gt;
-    &lt;li&gt;ASCLL文本：text/plain&lt;/li&gt;
-    &lt;li&gt;jpeg图片：image/jpeg&lt;/li&gt;
-    &lt;li&gt;gif图片：image/gif&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
+&lt;h3 id=&quot;hosts-and-ports&quot;&gt;Hosts and Ports&lt;/h3&gt;
 
-&lt;h3 id=&quot;uris&quot;&gt;URIs&lt;/h3&gt;
+&lt;p&gt;host和port指定你得通过互联网中哪台主机的哪个端口获取某个资源。&lt;/p&gt;
 
-&lt;p&gt;URI:uniform resource identifier,URI标记着所有资源在互联网上的位置&lt;/p&gt;
+&lt;h3 id=&quot;usernames-and-passwords&quot;&gt;Usernames and Passwords&lt;/h3&gt;
 
-&lt;p&gt;URIs有两种，一种是URLs，一种是URNs&lt;/p&gt;
+&lt;p&gt;用户名和密码，一般运用于FTP协议，举几个例子，如下：&lt;/p&gt;
 
-&lt;h4 id=&quot;urls&quot;&gt;URLs&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;ftp://ftp.prep.ai.mit.edu/pub/gnu
+ftp://anonymous@ftp.prep.ai.mit.edu/pub/gnu
+ftp://anonymous:my_passwd@ftp.prep.ai.mit.edu/pub/gnu
+http://joe:joespasswd@www.joes-hardware.com/sales_info.txt&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;URL: uniform resource locator,平常说的URI基本默认就是URL。&lt;/p&gt;
+&lt;p&gt;第一个URL中，没有账户名也没有密码，则默认插入“anonymous”作为账号，而密码，也会插入默认值，不同浏览器的默认密码不同，IE是“IEUser”，Netscape Navigator 是 “mozilla”。
+第二个URL中，有账号，则只需要自动插入默认密码。
+第三个和第四个URL中，拥有账号也有密码。&lt;/p&gt;
 
-&lt;figure&gt;
-  &lt;img src=&quot;/images/httpoverview02.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;URL的解析&lt;/figcaption&gt;
-&lt;/figure&gt;
+&lt;p&gt;通常账号密码通过“@”字符与后续的URL组成部分分隔开，而账号密码之间则用冒号”:”分开。&lt;/p&gt;
 
-&lt;p&gt;从上图可以得知，URL一般遵循一种标准格式，这种格式包括三部分&lt;/p&gt;
+&lt;h3 id=&quot;paths&quot;&gt;Paths&lt;/h3&gt;
 
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;scheme：经常是 HTTP 协议 (http://)&lt;/li&gt;
-    &lt;li&gt;主机地址：比如上面的 www.joes-hardware.com&lt;/li&gt;
-    &lt;li&gt;指定某个资源：比如上面的 /specials/saw-blade.gif&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;path是指你需要到某个主机的哪个位置获取资源，&lt;/p&gt;
 
-&lt;h4 id=&quot;urns&quot;&gt;URNs&lt;/h4&gt;
+&lt;p&gt;path中的每一级，都可以有自己的参数（Each path segment can have its own params component）&lt;/p&gt;
 
-&lt;p&gt;URN:uniform resource name URN的用途是使客户端只要获取URN，无论资源的位置在哪里，都能获取到资源。URN的技术还未成熟，没有普及，所以目前URI基本都是默认为URL&lt;/p&gt;
+&lt;h2 id=&quot;parameters&quot;&gt;Parameters&lt;/h2&gt;
 
-&lt;h2 id=&quot;transactions&quot;&gt;Transactions（事务）&lt;/h2&gt;
+&lt;p&gt;还记得参数Parameters放在哪个位置吗？再看看URL的完整格式，它与path之间用分号“;”隔开。&lt;/p&gt;
 
-&lt;p&gt;一个HTTP事务是由一个HTTP请求命令和一个HTTP相应结果组成的，这种通信是具有HTTP报文的格式化数据块实现的。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;scheme&amp;gt;&lt;/span&gt;://&lt;span class=&quot;nt&quot;&gt;&amp;lt;user&amp;gt;&lt;/span&gt;:&lt;span class=&quot;nt&quot;&gt;&amp;lt;password&amp;gt;&lt;/span&gt;@&lt;span class=&quot;nt&quot;&gt;&amp;lt;host&amp;gt;&lt;/span&gt;:&lt;span class=&quot;nt&quot;&gt;&amp;lt;port&amp;gt;&lt;/span&gt;/&lt;span class=&quot;nt&quot;&gt;&amp;lt;path&amp;gt;&lt;/span&gt;;&lt;span class=&quot;nt&quot;&gt;&amp;lt;params&amp;gt;&lt;/span&gt;?&lt;span class=&quot;nt&quot;&gt;&amp;lt;query&amp;gt;&lt;/span&gt;#&lt;span class=&quot;nt&quot;&gt;&amp;lt;frag&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;figure&gt;
-  &lt;img src=&quot;/images/httpoverview03.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;事务&lt;/figcaption&gt;
-&lt;/figure&gt;
+&lt;p&gt;参数都以键值对的方式出现，如下例子&lt;/p&gt;
 
-&lt;p&gt;客户端完成一个任务可能不仅仅只有一个事务。加载一个图片浏览的页面，需要多个事务，首先是加载页面框架的事务，然后是获取各个图片的事务。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;ftp://prep.ai.mit.edu/pub/gnu;type=d&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h3 id=&quot;methods&quot;&gt;Methods&lt;/h3&gt;
+&lt;p&gt;向前面提到的，path的各个级别都可以有自己的参数，如下&lt;/p&gt;
 
-&lt;p&gt;HTTP 支持集中请求命令，这种请求命令也称为请求方法，这些方法告知服务器应该执行什么操作，常见方法如下如&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;http://www.joes-hardware.com/hammers;sale=false/index.html;graphics=true&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;figure&gt;
-  &lt;img src=&quot;/images/httpoverview04.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;HTTP请求方法&lt;/figcaption&gt;
-&lt;/figure&gt;
+&lt;p&gt;路径在hammers级别有参数sale，值为false，路径在index.html有参数graphics，其值为true&lt;/p&gt;
 
-&lt;h3 id=&quot;status-codes&quot;&gt;Status Codes（状态码）&lt;/h3&gt;
+&lt;h3 id=&quot;query-strings&quot;&gt;Query Strings&lt;/h3&gt;
 
-&lt;p&gt;HTTP响应报文都会携带一个状态码，并带有一个解释状态码的文本。&lt;/p&gt;
+&lt;p&gt;Query Strings的例子如下，不大理解，这个和get方法后面的参数不是一样吗&lt;/p&gt;
 
-&lt;h2 id=&quot;messages&quot;&gt;Messages（报文）&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;http://www.joes-hardware.com/inventory-check.cgi?item=12731&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;报文有两种，一种是请求报文，一种是请求报文，两者格式基本相同。&lt;/p&gt;
+&lt;h3 id=&quot;fragments&quot;&gt;Fragments&lt;/h3&gt;
 
-&lt;figure&gt;
-  &lt;img src=&quot;/images/httpoverview05.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;HTTP报文格式&lt;/figcaption&gt;
-&lt;/figure&gt;
+&lt;p&gt;这个概念是指从服务器获取某个对象，显示在浏览器之后，直接滚动显示到某个片段。&lt;/p&gt;
 
-&lt;p&gt;HTTP报文包含三个部分：&lt;/p&gt;
+&lt;p&gt;注意，该语法不会使服务器只返回某个对象的片段，服务器仍然返回整个对象，只是浏览器默认滚动到某个片段的位置。&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;起始行（start line）：如上图，请求报文的起始行包括“方法+资源+HTTP版本”
- 而响应报文中则保罗“HTTP版本+状态码及其解释文本”&lt;/li&gt;
-    &lt;li&gt;首部（header）：起始行之后跟随的是首部，首部每行都是一个键值对，键和值用双引号:分开。
-   &lt;strong&gt;首部的最后是一个空行&lt;/strong&gt;&lt;/li&gt;
-    &lt;li&gt;主体（body）：起始行和首部都是纯文本的格式，而主体则为二进制数据，可以是文本，图片等。&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;如下语句&lt;/p&gt;
 
-&lt;h2 id=&quot;connections&quot;&gt;Connections&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;http://www.joes-hardware.com/tools.html#drills&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;HTTP基于TCP连接，TCP是可靠传输协议，前者是应用层协议，后者是传输层协议&lt;/p&gt;
+&lt;p&gt;该网页www.joes-hardware.com/tools.html的源代码为：&lt;/p&gt;
 
-&lt;figure&gt;
-  &lt;img src=&quot;/images/httpoverview07.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;HTTP基于TCP协议&lt;/figcaption&gt;
-&lt;/figure&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;HTML&amp;gt;&lt;/span&gt;
 
-&lt;h2 id=&quot;protocol-versions&quot;&gt;Protocol Versions&lt;/h2&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;HEAD&amp;gt;&amp;lt;TITLE&amp;gt;&lt;/span&gt;Joe&amp;#39;s Tools&lt;span class=&quot;nt&quot;&gt;&amp;lt;/TITLE&amp;gt;&amp;lt;/HEAD&amp;gt;&lt;/span&gt;
 
-&lt;p&gt;目前推荐使用的HTTP版本是1.1，还存在其他0.9，1.0等版本&lt;/p&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;BODY&amp;gt;&lt;/span&gt;
 
-&lt;h2 id=&quot;architectural-components-of-the-webweb&quot;&gt;Architectural Components of the Web（Web的结构组件）&lt;/h2&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;H1&amp;gt;&lt;/span&gt;Tools Page&lt;span class=&quot;nt&quot;&gt;&amp;lt;/H1&amp;gt;&lt;/span&gt;
 
-&lt;p&gt;上文讲到的HTTP客户端和HTTP服务器都是属于HTTP应用程序&lt;/p&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;H2&amp;gt;&lt;/span&gt;Hammers&lt;span class=&quot;nt&quot;&gt;&amp;lt;/H2&amp;gt;&lt;/span&gt;
 
-&lt;p&gt;还有其他一些重要的HTTP应用程序（比较难理解）&lt;/p&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;P&amp;gt;&lt;/span&gt;Joe&amp;#39;s Hardware Online has the largest selection of 
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;A&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;HREF=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;./hammers.html&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;hammers&lt;span class=&quot;nt&quot;&gt;&amp;lt;/A&amp;gt;&lt;/span&gt; on the earth.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/P&amp;gt;&lt;/span&gt;
 
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Proxies (代理)&lt;/li&gt;
-    &lt;li&gt;Caches （缓存）&lt;/li&gt;
-    &lt;li&gt;Gateways （网关）&lt;/li&gt;
-    &lt;li&gt;CTunnels （隧道）&lt;/li&gt;
-    &lt;li&gt;Agents （agent代理）&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;H2&amp;gt;&amp;lt;A&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;NAME=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;drills&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/A&amp;gt;&lt;/span&gt;Drills&lt;span class=&quot;nt&quot;&gt;&amp;lt;/H2&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;P&amp;gt;&lt;/span&gt;Joe&amp;#39;s Hardware has a complete line of cordless and corded drills,
+as well as the latest in plutonium-powered atomic drills, for those
+big around the house jobs.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/P&amp;gt;&lt;/span&gt; ...
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/BODY&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/HTML&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;/readingnotes/HTTP%20definition01/&quot;&gt;《HTTP权威指南》Note1-Overview of HTTP&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on November 30, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;/readingnotes/HTTP%20Resource/&quot;&gt;《HTTP权威指南》Note2-URLs and Resources&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on December 01, 2014.&lt;/p&gt;</content>
+</entry>
+
+
+  
+
+<entry>
+  <title type="html"><![CDATA[《HTTP权威指南》Note2-URLs and Resources]]></title>
+  <link rel="alternate" type="text/html" href="/readingnotes/HTTP%20Http%20Message/" />
+  <id>/readingnotes/HTTP Http Message</id>
+  <published>2014-12-01T00:00:00+08:00</published>
+  <updated>2014-12-01T00:00:00+08:00</updated>
+  <author>
+    <name>Quinn Chen</name>
+    <uri></uri>
+    <email>chenhuazhaoao@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;URLs(Uniform resource locators)是互联网资源的标准化名称&lt;/p&gt;
+
+&lt;h2 id=&quot;navigating-the-internets-resources&quot;&gt;Navigating the Internet’s Resources&lt;/h2&gt;
+
+&lt;p&gt;像上一篇博客&lt;a href=&quot;http://leaking.github.io/readingnotes/HTTP%20definition01/&quot;&gt;“《HTTP权威指南》Note1-Overview of HTTP”&lt;/a&gt;中提到的，URLs只是URI的一个子集，另一个子集是URN，URL强调资源的位置，URN抢到资源的名称，当某个资源在互联网的位置发生改变，旧的URL将不能再访问该资源，而URN则依然可以。由于URN还未普及，我们一般默认URL就是URI。&lt;/p&gt;
+
+&lt;p&gt;URL有统一的格式：scheme://server location/path&lt;/p&gt;
+
+&lt;p&gt;URL被应用于除了HTTP之外的其他协议，比如FTP，电子邮件等等。URL是众多网络协议的访问点（原文是access point，翻译有点怪）。&lt;/p&gt;
+
+&lt;h2 id=&quot;url-syntax&quot;&gt;URL Syntax&lt;/h2&gt;
+
+&lt;p&gt;URL的语法格式（详细）如下&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;scheme&amp;gt;&lt;/span&gt;://&lt;span class=&quot;nt&quot;&gt;&amp;lt;user&amp;gt;&lt;/span&gt;:&lt;span class=&quot;nt&quot;&gt;&amp;lt;password&amp;gt;&lt;/span&gt;@&lt;span class=&quot;nt&quot;&gt;&amp;lt;host&amp;gt;&lt;/span&gt;:&lt;span class=&quot;nt&quot;&gt;&amp;lt;port&amp;gt;&lt;/span&gt;/&lt;span class=&quot;nt&quot;&gt;&amp;lt;path&amp;gt;&lt;/span&gt;;&lt;span class=&quot;nt&quot;&gt;&amp;lt;params&amp;gt;&lt;/span&gt;?&lt;span class=&quot;nt&quot;&gt;&amp;lt;query&amp;gt;&lt;/span&gt;#&lt;span class=&quot;nt&quot;&gt;&amp;lt;frag&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;一般没有哪个URL同时拥有以上9个部分，一般用于scheme，host，path.
+接下来讲解以详细语法格式中的9个组成部分。&lt;/p&gt;
+
+&lt;h3 id=&quot;schemes-what-protocol-to-use&quot;&gt;Schemes: What Protocol to Use&lt;/h3&gt;
+
+&lt;p&gt;scheme一般表示访问某个资源是通过哪种协议。它不区分大小写，用冒号:隔开后面的字段，所以
+HTTP://等同于http://&lt;/p&gt;
+
+&lt;h3 id=&quot;hosts-and-ports&quot;&gt;Hosts and Ports&lt;/h3&gt;
+
+&lt;p&gt;host和port指定你得通过互联网中哪台主机的哪个端口获取某个资源。&lt;/p&gt;
+
+&lt;h3 id=&quot;usernames-and-passwords&quot;&gt;Usernames and Passwords&lt;/h3&gt;
+
+&lt;p&gt;用户名和密码，一般运用于FTP协议，举几个例子，如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;ftp://ftp.prep.ai.mit.edu/pub/gnu
+ftp://anonymous@ftp.prep.ai.mit.edu/pub/gnu
+ftp://anonymous:my_passwd@ftp.prep.ai.mit.edu/pub/gnu
+http://joe:joespasswd@www.joes-hardware.com/sales_info.txt&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;第一个URL中，没有账户名也没有密码，则默认插入“anonymous”作为账号，而密码，也会插入默认值，不同浏览器的默认密码不同，IE是“IEUser”，Netscape Navigator 是 “mozilla”。
+第二个URL中，有账号，则只需要自动插入默认密码。
+第三个和第四个URL中，拥有账号也有密码。&lt;/p&gt;
+
+&lt;p&gt;通常账号密码通过“@”字符与后续的URL组成部分分隔开，而账号密码之间则用冒号”:”分开。&lt;/p&gt;
+
+&lt;h3 id=&quot;paths&quot;&gt;Paths&lt;/h3&gt;
+
+&lt;p&gt;path是指你需要到某个主机的哪个位置获取资源，&lt;/p&gt;
+
+&lt;p&gt;path中的每一级，都可以有自己的参数（Each path segment can have its own params component）&lt;/p&gt;
+
+&lt;h2 id=&quot;parameters&quot;&gt;Parameters&lt;/h2&gt;
+
+&lt;p&gt;还记得参数Parameters放在哪个位置吗？再看看URL的完整格式，它与path之间用分号“;”隔开。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;scheme&amp;gt;&lt;/span&gt;://&lt;span class=&quot;nt&quot;&gt;&amp;lt;user&amp;gt;&lt;/span&gt;:&lt;span class=&quot;nt&quot;&gt;&amp;lt;password&amp;gt;&lt;/span&gt;@&lt;span class=&quot;nt&quot;&gt;&amp;lt;host&amp;gt;&lt;/span&gt;:&lt;span class=&quot;nt&quot;&gt;&amp;lt;port&amp;gt;&lt;/span&gt;/&lt;span class=&quot;nt&quot;&gt;&amp;lt;path&amp;gt;&lt;/span&gt;;&lt;span class=&quot;nt&quot;&gt;&amp;lt;params&amp;gt;&lt;/span&gt;?&lt;span class=&quot;nt&quot;&gt;&amp;lt;query&amp;gt;&lt;/span&gt;#&lt;span class=&quot;nt&quot;&gt;&amp;lt;frag&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;参数都以键值对的方式出现，如下例子&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;ftp://prep.ai.mit.edu/pub/gnu;type=d&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;向前面提到的，path的各个级别都可以有自己的参数，如下&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;http://www.joes-hardware.com/hammers;sale=false/index.html;graphics=true&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;路径在hammers级别有参数sale，值为false，路径在index.html有参数graphics，其值为true&lt;/p&gt;
+
+&lt;h3 id=&quot;query-strings&quot;&gt;Query Strings&lt;/h3&gt;
+
+&lt;p&gt;Query Strings的例子如下，不大理解，这个和get方法后面的参数不是一样吗&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;http://www.joes-hardware.com/inventory-check.cgi?item=12731&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;fragments&quot;&gt;Fragments&lt;/h3&gt;
+
+&lt;p&gt;这个概念是指从服务器获取某个对象，显示在浏览器之后，直接滚动显示到某个片段。&lt;/p&gt;
+
+&lt;p&gt;注意，该语法不会使服务器只返回某个对象的片段，服务器仍然返回整个对象，只是浏览器默认滚动到某个片段的位置。&lt;/p&gt;
+
+&lt;p&gt;如下语句&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;http://www.joes-hardware.com/tools.html#drills&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;该网页www.joes-hardware.com/tools.html的源代码为：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;HTML&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;HEAD&amp;gt;&amp;lt;TITLE&amp;gt;&lt;/span&gt;Joe&amp;#39;s Tools&lt;span class=&quot;nt&quot;&gt;&amp;lt;/TITLE&amp;gt;&amp;lt;/HEAD&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;BODY&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;H1&amp;gt;&lt;/span&gt;Tools Page&lt;span class=&quot;nt&quot;&gt;&amp;lt;/H1&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;H2&amp;gt;&lt;/span&gt;Hammers&lt;span class=&quot;nt&quot;&gt;&amp;lt;/H2&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;P&amp;gt;&lt;/span&gt;Joe&amp;#39;s Hardware Online has the largest selection of 
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;A&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;HREF=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;./hammers.html&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;hammers&lt;span class=&quot;nt&quot;&gt;&amp;lt;/A&amp;gt;&lt;/span&gt; on the earth.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/P&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;H2&amp;gt;&amp;lt;A&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;NAME=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;drills&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/A&amp;gt;&lt;/span&gt;Drills&lt;span class=&quot;nt&quot;&gt;&amp;lt;/H2&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;P&amp;gt;&lt;/span&gt;Joe&amp;#39;s Hardware has a complete line of cordless and corded drills,
+as well as the latest in plutonium-powered atomic drills, for those
+big around the house jobs.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/P&amp;gt;&lt;/span&gt; ...
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/BODY&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/HTML&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/readingnotes/HTTP%20Http%20Message/&quot;&gt;《HTTP权威指南》Note2-URLs and Resources&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on December 01, 2014.&lt;/p&gt;</content>
 </entry>
 
 

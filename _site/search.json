@@ -1,6 +1,24 @@
 [
 	
 		{
+		  "title"      : "【自定义View】IOS风格的滑动开关",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/(customView)SlideSwitch/",
+		  "date"       : "2015-03-09 00:00:00 +0800",
+		  "shortdate"  : "March 09, 2015"
+		} ,
+	
+		{
+		  "title"      : "【自定义View】为什么重写onMeasure()以及怎么重写",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/(customView)onMeasure/",
+		  "date"       : "2015-03-08 00:00:00 +0800",
+		  "shortdate"  : "March 08, 2015"
+		} ,
+	
+		{
 		  "title"      : "《HTTP权威指南》Chapter11-Client Identification and Cookies",
 		  "category"   : "",
       "tags"       : "readingnotes",
@@ -10,12 +28,12 @@
 		} ,
 	
 		{
-		  "title"      : "【译】Intents and Intent Filters",
+		  "title"      : "【译】Processes and Threads",
 		  "category"   : "",
-      "tags"       : "android, xmpp, and IM",
-		  "url"        : "/android/(translate)Intents%20and%20Intent%20Filters/",
-		  "date"       : "2015-01-14 00:00:00 +0800",
-		  "shortdate"  : "January 14, 2015"
+      "tags"       : "android",
+		  "url"        : "/android/(translate)ProcessesAndThreads/",
+		  "date"       : "2015-01-31 00:00:00 +0800",
+		  "shortdate"  : "January 31, 2015"
 		} ,
 	
 		{
@@ -64,12 +82,21 @@
 		} ,
 	
 		{
-		  "title"      : "《HTTP权威指南》Note1-Overview of HTTP",
+		  "title"      : "《HTTP权威指南》Note2-URLs and Resources",
 		  "category"   : "",
       "tags"       : "readingnotes",
-		  "url"        : "/readingnotes/HTTP%20definition01/",
-		  "date"       : "2014-11-30 00:00:00 +0800",
-		  "shortdate"  : "November 30, 2014"
+		  "url"        : "/readingnotes/HTTP%20Resource/",
+		  "date"       : "2014-12-01 00:00:00 +0800",
+		  "shortdate"  : "December 01, 2014"
+		} ,
+	
+		{
+		  "title"      : "《HTTP权威指南》Note2-URLs and Resources",
+		  "category"   : "",
+      "tags"       : "readingnotes",
+		  "url"        : "/readingnotes/HTTP%20Http%20Message/",
+		  "date"       : "2014-12-01 00:00:00 +0800",
+		  "shortdate"  : "December 01, 2014"
 		} ,
 	
 		{

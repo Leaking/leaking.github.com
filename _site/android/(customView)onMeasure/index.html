@@ -1,0 +1,414 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>【自定义View】为什么重写onMeasure()以及怎么重写 &#8211; My Stupid Blog</title>
+<meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta name="keywords" content="android">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="【自定义View】为什么重写onMeasure()以及怎么重写">
+<meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【自定义View】为什么重写onMeasure()以及怎么重写">
+<meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta property="og:url" content="/android/(customView)onMeasure/">
+<meta property="og:site_name" content="My Stupid Blog">
+
+
+
+
+
+<link rel="canonical" href="/android/(customView)onMeasure/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<script src="//use.edgefonts.net/source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9;source-code-pro:n4,n7;volkhov.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+      
+		    
+		        
+		    
+		    <li><a href="/home/" >Home</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/js/" >JS</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/android/" >Android</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/tools/" >Tools</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/readingnotes/" >ReadingNotes</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/reflection/" >Reflection</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/about/" >About</a></li>
+		  
+        <li class="dosearch"><i class="fa fa-search"></i> Search</li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	
+		<div class="wrap">
+			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
+		</div>
+	
+</header><!-- /.masthead -->
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="【自定义View】为什么重写onMeasure()以及怎么重写" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"><a href="/tags/#android" title="Pages tagged android">android</a></span>
+        
+          <h1 class="entry-title">【自定义View】为什么重写onMeasure()以及怎么重写</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+        
+          <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
+        <span class="entry-date date published"><time datetime="2015-03-08T00:00:00+08:00"><i class="fa fa-calendar-o"></i> March 08, 2015</time></span>
+        
+        
+        
+        <span class="social-share-twitter">
+          <a href="https://twitter.com/intent/tweet?hashtags=android&text=【自定义View】为什么重写onMeasure()以及怎么重写&url=/android/(customView)onMeasure/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+        </span>
+        <span class="social-share-facebook">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/android/(customView)onMeasure/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+        </span>
+        <span class="social-share-googleplus">
+          <a href="https://plus.google.com/share?url=/android/(customView)onMeasure/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+        </span>
+        <!-- /.social-share -->
+        
+        <div class="google-ads" style="margin-top:40px; text-align:center;">
+  <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- 160x600 ad -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:160px;height:600px"
+       data-ad-client=""
+       data-ad-slot=""></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div><!-- /.google-ads --><!-- /.google-ads -->
+      </footer>
+      <div class="entry-content">
+        <p>这两天在看关于android自定义组件的知识，刚开始查阅了很多资料，依然觉得对onMeasure()方法的理解不够透彻，后来大致知道onMeasure怎么用了之后，又很好奇为什么需要去实现onMeasure()这个方法。</p>
+
+<p>这篇文章主要记录两个问题，</p>
+
+<ul>
+  <li>自定义组件时什么情况下需要实现onMeasure()</li>
+  <li>怎么实现onMeasure()方法</li>
+</ul>
+
+<h1 id="onmeasure">为什么需要实现onMeasure()方法</h1>
+
+<p>我们看以下例子，我们自己定义一个View，很简单，只是继承View类。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyView</span> <span class="kd">extends</span> <span class="n">View</span> <span class="o">{</span>  
+  
+    <span class="kd">public</span> <span class="nf">MyView</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">AttributeSet</span> <span class="n">attrs</span><span class="o">,</span> <span class="kt">int</span> <span class="n">defStyleAttr</span><span class="o">)</span> <span class="o">{</span>  
+        <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">attrs</span><span class="o">,</span> <span class="n">defStyleAttr</span><span class="o">);</span>  
+        <span class="c1">// TODO Auto-generated constructor stub  </span>
+    <span class="o">}</span>  
+  
+    <span class="kd">public</span> <span class="nf">MyView</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">AttributeSet</span> <span class="n">attrs</span><span class="o">)</span> <span class="o">{</span>  
+        <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">attrs</span><span class="o">);</span>  
+        <span class="c1">// TODO Auto-generated constructor stub  </span>
+    <span class="o">}</span>  
+  
+    <span class="kd">public</span> <span class="nf">MyView</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>  
+        <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>  
+        <span class="c1">// TODO Auto-generated constructor stub  </span>
+    <span class="o">}</span>  
+      
+    <span class="nd">@Override</span>  
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onMeasure</span><span class="o">(</span><span class="kt">int</span> <span class="n">widthMeasureSpec</span><span class="o">,</span> <span class="kt">int</span> <span class="n">heightMeasureSpec</span><span class="o">)</span> <span class="o">{</span>  
+        <span class="c1">// TODO Auto-generated method stub  </span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onMeasure</span><span class="o">(</span><span class="n">widthMeasureSpec</span><span class="o">,</span> <span class="n">heightMeasureSpec</span><span class="o">);</span>  
+    <span class="o">}</span>  
+<span class="o">}</span></code></pre></div>
+
+<p>然后在布局文件中定义如下布局:</p>
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;LinearLayout</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>  
+    <span class="na">xmlns:tools=</span><span class="s">&quot;http://schemas.android.com/tools&quot;</span>  
+    <span class="na">xmlns:MyView=</span><span class="s">&quot;http://schemas.android.com/apk/res/com.notes.notes_onmeasure&quot;</span>  
+    <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>  
+    <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span>  
+    <span class="na">android:orientation=</span><span class="s">&quot;vertical&quot;</span>  
+    <span class="na">android:padding=</span><span class="s">&quot;@dimen/activity_vertical_margin&quot;</span>  
+    <span class="na">tools:context=</span><span class="s">&quot;com.notes.notes_onmeasure.EasyActivity&quot;</span> <span class="nt">&gt;</span>  
+  
+      
+      
+    <span class="nt">&lt;com.notes.notes_onmeasure.MyView</span>  
+        <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>  
+        <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>  
+        <span class="na">android:background=</span><span class="s">&quot;#78787878&quot;</span> <span class="nt">/&gt;</span>  
+  
+    <span class="nt">&lt;TextView</span>  
+        <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>  
+        <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>  
+        <span class="na">android:text=</span><span class="s">&quot;能看到我吗？&quot;</span> <span class="nt">/&gt;</span>  
+  
+<span class="nt">&lt;/LinearLayout&gt;</span></code></pre></div>
+
+<p>结果显示如</p>
+
+<figure>
+  <img src="/images/onMeasure.jpg" alt="search screenshot" width="200" height="200" />
+  <figcaption>效果图</figcaption>
+</figure>
+
+<p>当MyView的宽和高设置为match_parent时，MyView会填充整个界面是毋庸置疑的，当将其宽和高设置为某个确定值时，MyView的大小也会按这个确定的值显示。但是上面的例子中，我们把MyView的宽和高设置为wrap_content，它依然填充整个界面。问题就出在这里，所以我们需要重写onMeasure()方法控制其大小。其它继承于View的组件，如Button，TextView，它们都已经通过重写onMeasuer()方法。</p>
+
+<h1 id="onmeasure-1">怎么重写onMeasure()方法</h1>
+
+<p>android中，每个View的大小，不仅取决于自身，而且也受父视图的影响，可以参考我的另一篇文章</p>
+
+<p>而onMeasure()是在父视图计算子视图大小时被调用的，其中的细节就不在此详细讲述了，我们暂时只需要这一点即可。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onMeasure</span><span class="o">(</span><span class="kt">int</span> <span class="n">widthMeasureSpec</span><span class="o">,</span> <span class="kt">int</span> <span class="n">heightMeasureSpec</span><span class="o">)</span> <span class="o">{</span>  
+   <span class="c1">//,,,  </span>
+<span class="o">}</span></code></pre></div>
+
+<p>onMeasure()方法有两个参数，这两个参数就是父视图发过来给子视图的限制条件。我们直接来重写上面的MyView中的onMeasure()方法，通过一个例子了解onMeasure()方法怎么实现。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>  
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onMeasure</span><span class="o">(</span><span class="kt">int</span> <span class="n">widthMeasureSpec</span><span class="o">,</span> <span class="kt">int</span> <span class="n">heightMeasureSpec</span><span class="o">)</span> <span class="o">{</span>  
+        <span class="c1">// TODO Auto-generated method stub  </span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onMeasure</span><span class="o">(</span><span class="n">widthMeasureSpec</span><span class="o">,</span> <span class="n">heightMeasureSpec</span><span class="o">);</span>  
+        <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="n">measureDimension</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="n">widthMeasureSpec</span><span class="o">);</span>  
+        <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">measureDimension</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="n">heightMeasureSpec</span><span class="o">);</span>  
+        <span class="n">setMeasuredDimension</span><span class="o">(</span><span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">);</span>  
+    <span class="o">}</span>  
+  
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">measureDimension</span><span class="o">(</span><span class="kt">int</span> <span class="n">defaultSize</span><span class="o">,</span> <span class="kt">int</span> <span class="n">measureSpec</span><span class="o">){</span>  
+        <span class="kt">int</span> <span class="n">result</span><span class="o">;</span>  
+          
+        <span class="kt">int</span> <span class="n">specMode</span> <span class="o">=</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">getMode</span><span class="o">(</span><span class="n">measureSpec</span><span class="o">);</span>  
+        <span class="kt">int</span> <span class="n">specSize</span> <span class="o">=</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">getSize</span><span class="o">(</span><span class="n">measureSpec</span><span class="o">);</span>  
+          
+        <span class="k">if</span><span class="o">(</span><span class="n">specMode</span> <span class="o">==</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">EXACTLY</span><span class="o">){</span>  
+            <span class="n">result</span> <span class="o">=</span> <span class="n">specSize</span><span class="o">;</span>  
+        <span class="o">}</span><span class="k">else</span><span class="o">{</span>  
+            <span class="n">result</span> <span class="o">=</span> <span class="n">defaultSize</span><span class="o">;</span>   <span class="c1">//UNSPECIFIED  </span>
+            <span class="k">if</span><span class="o">(</span><span class="n">specMode</span> <span class="o">==</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">AT_MOST</span><span class="o">){</span>  
+                <span class="n">result</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">result</span><span class="o">,</span> <span class="n">specSize</span><span class="o">);</span>  
+            <span class="o">}</span>  
+        <span class="o">}</span>  
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>  
+    <span class="o">}</span></code></pre></div>
+
+<p>重写onMeasure()方法时，必须最后调用setMeasureDimension()方法，否则会报错。然后我们最终setMeasureDimension()的width和height是怎么计算得到的呢？</p>
+
+<p>首先我们解析widthMeasureSpec获得两个数据，一个是父视图希望子视图的大小是多少，一个是关于大小的模式，这两个数据分别通过以下两句代码获得</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">int</span> <span class="n">specMode</span> <span class="o">=</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">getMode</span><span class="o">(</span><span class="n">measureSpec</span><span class="o">);</span>  
+<span class="kt">int</span> <span class="n">specSize</span> <span class="o">=</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">getSize</span><span class="o">(</span><span class="n">measureSpec</span><span class="o">);</span></code></pre></div>
+
+<p>MeasureSpec.getMode()方法返回的结果有三种：</p>
+
+<ul>
+  <li><strong>UNSPECIFIED</strong>：父结点对子结点的大小没有任何要求。</li>
+  <li><strong>EXACTLY</strong>:  父结点要求其子节点的大小指定为某个确切的值。其子节点以及其他子孙结点都需要适应该大小。   </li>
+  <li><strong>AT MOST</strong>：父结点要求其子节点的大小不能超过某个最大值，其子节点以及其他子孙结点的大小都需要小于这个值</li>
+</ul>
+
+
+        <nav class="pagination" role="navigation">
+          
+            <a href="/readingnotes/HTTP-cookies/" class="btn" title="《HTTP权威指南》Chapter11-Client Identification and Cookies">Previous</a>
+          
+          
+            <a href="/android/(customView)SlideSwitch/" class="btn" title="【自定义View】IOS风格的滑动开关">Next</a>
+          
+        </nav><!-- /.pagination -->
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+  </article>
+</div><!-- /#main -->
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chenhuazhao020'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    
+
+<span>&copy; 2015 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
+<div class="social-icons">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+  <a href="/feed.xml" title="Atom/RSS feed"><i class="fa fa-rss-square fa-2x"></i></a>
+</div><!-- /.social-icons -->
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: '/search.json',
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+  
+	        
+
+</body>
+</html>

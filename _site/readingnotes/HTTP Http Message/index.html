@@ -5,14 +5,14 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>《HTTP权威指南》Note1-Overview of HTTP &#8211; My Stupid Blog</title>
+<title>《HTTP权威指南》Note2-URLs and Resources &#8211; My Stupid Blog</title>
 <meta name="description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
 <meta name="keywords" content="readingnotes">
 
 
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="《HTTP权威指南》Note1-Overview of HTTP">
+<meta name="twitter:title" content="《HTTP权威指南》Note2-URLs and Resources">
 <meta name="twitter:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
 
 
@@ -23,16 +23,16 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《HTTP权威指南》Note1-Overview of HTTP">
+<meta property="og:title" content="《HTTP权威指南》Note2-URLs and Resources">
 <meta property="og:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
-<meta property="og:url" content="/readingnotes/HTTP%20definition/">
+<meta property="og:url" content="/readingnotes/HTTP%20Http%20Message/">
 <meta property="og:site_name" content="My Stupid Blog">
 
 
 
 
 
-<link rel="canonical" href="/readingnotes/HTTP%20definition/">
+<link rel="canonical" href="/readingnotes/HTTP%20Http%20Message/">
 <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
 
 
@@ -146,12 +146,12 @@
 
 <div id="main" role="main">
   <article class="hentry">
-    <img src="/images/http_definitive_guide.jpg" class="entry-feature-image" alt="《HTTP权威指南》Note1-Overview of HTTP" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <img src="/images/http_definitive_guide.jpg" class="entry-feature-image" alt="《HTTP权威指南》Note2-URLs and Resources" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
     <div class="entry-wrapper">
       <header class="entry-header">
         <span class="entry-tags"><a href="/tags/#readingnotes" title="Pages tagged readingnotes">readingnotes</a></span>
         
-          <h1 class="entry-title">《HTTP权威指南》Note1-Overview of HTTP</h1>
+          <h1 class="entry-title">《HTTP权威指南》Note2-URLs and Resources</h1>
         
       </header>
       <footer class="entry-meta">
@@ -161,18 +161,18 @@
           <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
         
         <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
-        <span class="entry-date date published"><time datetime="2014-11-30T00:00:00+08:00"><i class="fa fa-calendar-o"></i> November 30, 2014</time></span>
+        <span class="entry-date date published"><time datetime="2014-12-01T00:00:00+08:00"><i class="fa fa-calendar-o"></i> December 01, 2014</time></span>
         
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=readingnotes&text=《HTTP权威指南》Note1-Overview%20of%20HTTP&url=/readingnotes/HTTP%20definition/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=readingnotes&text=《HTTP权威指南》Note2-URLs%20and%20Resources&url=/readingnotes/HTTP%20Http%20Message/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
-          <a href="https://www.facebook.com/sharer/sharer.php?u=/readingnotes/HTTP%20definition/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/readingnotes/HTTP%20Http%20Message/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
         </span>
         <span class="social-share-googleplus">
-          <a href="https://plus.google.com/share?url=/readingnotes/HTTP%20definition/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+          <a href="https://plus.google.com/share?url=/readingnotes/HTTP%20Http%20Message/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
         </span>
         <!-- /.social-share -->
         
@@ -189,157 +189,119 @@
 </div><!-- /.google-ads --><!-- /.google-ads -->
       </footer>
       <div class="entry-content">
-        <h2 id="http-the-internets-multimedia-courier">HTTP: The Internet’s Multimedia Courier</h2>
+        <p>URLs(Uniform resource locators)是互联网资源的标准化名称</p>
 
-<p>首先，HTTP的全称为：Hypertext Transfer Protocol。属于可靠数据传输协议</p>
+<h2 id="navigating-the-internets-resources">Navigating the Internet’s Resources</h2>
 
-<h2 id="web-clients-and-servers">Web Clients and Servers</h2>
+<p>像上一篇博客<a href="http://leaking.github.io/readingnotes/HTTP%20definition01/">“《HTTP权威指南》Note1-Overview of HTTP”</a>中提到的，URLs只是URI的一个子集，另一个子集是URN，URL强调资源的位置，URN抢到资源的名称，当某个资源在互联网的位置发生改变，旧的URL将不能再访问该资源，而URN则依然可以。由于URN还未普及，我们一般默认URL就是URI。</p>
 
-<p>服务器存储某些web内容，客户端向服务器发送一个http request请求某个对象（可能为文档，图片等等），
-若请求成功，服务器将返回一个http response，其中包含该对象，对象的内容长度，对象的类型等等信息。</p>
+<p>URL有统一的格式：scheme://server location/path</p>
 
-<p>最常见的HTTP客户端是浏览器</p>
+<p>URL被应用于除了HTTP之外的其他协议，比如FTP，电子邮件等等。URL是众多网络协议的访问点（原文是access point，翻译有点怪）。</p>
 
-<h2 id="resources">Resources</h2>
+<h2 id="url-syntax">URL Syntax</h2>
 
-<p>服务器上web内容都是资源，包括文件，图片等等。网关和搜索引擎也是资源（这一句不大懂）
-关于资源，主要有两个知识点，一个是媒体类型，一个是URI，如下</p>
+<p>URL的语法格式（详细）如下</p>
 
-<h3 id="media-types">Media Types</h3>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;scheme&gt;</span>://<span class="nt">&lt;user&gt;</span>:<span class="nt">&lt;password&gt;</span>@<span class="nt">&lt;host&gt;</span>:<span class="nt">&lt;port&gt;</span>/<span class="nt">&lt;path&gt;</span>;<span class="nt">&lt;params&gt;</span>?<span class="nt">&lt;query&gt;</span>#<span class="nt">&lt;frag&gt;</span></code></pre></div>
 
-<p>服务器传输给客户端的对象可能是文本文件，图片等各种类型，HTTP协议通过MINE type来标记各种数据类型，客户端根据传输对象的数据类型，选择接收、显示该对象的方式。</p>
+<p>一般没有哪个URL同时拥有以上9个部分，一般用于scheme，host，path.
+接下来讲解以详细语法格式中的9个组成部分。</p>
 
-<p>如下图</p>
-<figure>
-  <img src="/images/http_overview01.jpg" alt="search screenshot" />
-  <figcaption>Mine type其实就是平时见到的Content-type</figcaption>
-</figure>
+<h3 id="schemes-what-protocol-to-use">Schemes: What Protocol to Use</h3>
 
-<p>Mine type的文本标记方式为 “类型/子类型”，如下几种常见情况</p>
+<p>scheme一般表示访问某个资源是通过哪种协议。它不区分大小写，用冒号:隔开后面的字段，所以
+HTTP://等同于http://</p>
 
-<blockquote>
-  <ul>
-    <li>html文本类型：text/html</li>
-    <li>ASCLL文本：text/plain</li>
-    <li>jpeg图片：image/jpeg</li>
-    <li>gif图片：image/gif</li>
-  </ul>
-</blockquote>
+<h3 id="hosts-and-ports">Hosts and Ports</h3>
 
-<h3 id="uris">URIs</h3>
+<p>host和port指定你得通过互联网中哪台主机的哪个端口获取某个资源。</p>
 
-<p>URI:uniform resource identifier,URI标记着所有资源在互联网上的位置</p>
+<h3 id="usernames-and-passwords">Usernames and Passwords</h3>
 
-<p>URIs有两种，一种是URLs，一种是URNs</p>
+<p>用户名和密码，一般运用于FTP协议，举几个例子，如下：</p>
 
-<h4 id="urls">URLs</h4>
+<div class="highlight"><pre><code class="language-html" data-lang="html">ftp://ftp.prep.ai.mit.edu/pub/gnu
+ftp://anonymous@ftp.prep.ai.mit.edu/pub/gnu
+ftp://anonymous:my_passwd@ftp.prep.ai.mit.edu/pub/gnu
+http://joe:joespasswd@www.joes-hardware.com/sales_info.txt</code></pre></div>
 
-<p>URL: uniform resource locator,平常说的URI基本默认就是URL。</p>
+<p>第一个URL中，没有账户名也没有密码，则默认插入“anonymous”作为账号，而密码，也会插入默认值，不同浏览器的默认密码不同，IE是“IEUser”，Netscape Navigator 是 “mozilla”。
+第二个URL中，有账号，则只需要自动插入默认密码。
+第三个和第四个URL中，拥有账号也有密码。</p>
 
-<figure>
-  <img src="/images/httpoverview02.jpg" alt="search screenshot" />
-  <figcaption>URL的解析</figcaption>
-</figure>
+<p>通常账号密码通过“@”字符与后续的URL组成部分分隔开，而账号密码之间则用冒号”:”分开。</p>
 
-<p>从上图可以得知，URL一般遵循一种标准格式，这种格式包括三部分</p>
+<h3 id="paths">Paths</h3>
 
-<blockquote>
-  <ul>
-    <li>scheme：经常是 HTTP 协议 (http://)</li>
-    <li>主机地址：比如上面的 www.joes-hardware.com</li>
-    <li>指定某个资源：比如上面的 /specials/saw-blade.gif</li>
-  </ul>
-</blockquote>
+<p>path是指你需要到某个主机的哪个位置获取资源，</p>
 
-<h4 id="urns">URNs</h4>
+<p>path中的每一级，都可以有自己的参数（Each path segment can have its own params component）</p>
 
-<p>URN:uniform resource name URN的用途是使客户端只要获取URN，无论资源的位置在哪里，都能获取到资源。URN的技术还未成熟，没有普及，所以目前URI基本都是默认为URL</p>
+<h2 id="parameters">Parameters</h2>
 
-<h2 id="transactions">Transactions（事务）</h2>
+<p>还记得参数Parameters放在哪个位置吗？再看看URL的完整格式，它与path之间用分号“;”隔开。</p>
 
-<figure>
-  &lt;img src="/images/httpoverview03.jpg alt="search screenshot"&gt;
-  <figcaption>HTTP事务</figcaption>
-</figure>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;scheme&gt;</span>://<span class="nt">&lt;user&gt;</span>:<span class="nt">&lt;password&gt;</span>@<span class="nt">&lt;host&gt;</span>:<span class="nt">&lt;port&gt;</span>/<span class="nt">&lt;path&gt;</span>;<span class="nt">&lt;params&gt;</span>?<span class="nt">&lt;query&gt;</span>#<span class="nt">&lt;frag&gt;</span></code></pre></div>
 
-<p>一个HTTP事务是由一个HTTP请求命令和一个HTTP相应结果组成的，这种通信是具有HTTP报文的格式化数据块实现的。</p>
+<p>参数都以键值对的方式出现，如下例子</p>
 
-<figure>
-  <img src="/images/httpoverview03.jpg" alt="search screenshot" />
-  <figcaption>事务</figcaption>
-</figure>
+<div class="highlight"><pre><code class="language-html" data-lang="html">ftp://prep.ai.mit.edu/pub/gnu;type=d</code></pre></div>
 
-<p>客户端完成一个任务可能不仅仅只有一个事务。加载一个图片浏览的页面，需要多个事务，首先是加载页面框架的事务，然后是获取各个图片的事务。</p>
+<p>向前面提到的，path的各个级别都可以有自己的参数，如下</p>
 
-<h3 id="methods">Methods</h3>
+<div class="highlight"><pre><code class="language-html" data-lang="html">http://www.joes-hardware.com/hammers;sale=false/index.html;graphics=true</code></pre></div>
 
-<p>HTTP 支持集中请求命令，这种请求命令也称为请求方法，这些方法告知服务器应该执行什么操作，常见方法如下如</p>
+<p>路径在hammers级别有参数sale，值为false，路径在index.html有参数graphics，其值为true</p>
 
-<figure>
-  <img src="/images/httpoverview04.jpg" alt="search screenshot" />
-  <figcaption>HTTP请求方法</figcaption>
-</figure>
-<p>### 状态码</p>
+<h3 id="query-strings">Query Strings</h3>
 
-<p>HTTP响应报文都会携带一个状态码，并带有一个解释状态码的文本。</p>
+<p>Query Strings的例子如下，不大理解，这个和get方法后面的参数不是一样吗</p>
 
-<h2 id="messages">Messages（报文）</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html">http://www.joes-hardware.com/inventory-check.cgi?item=12731</code></pre></div>
 
-<p>报文有两种，一种是请求报文，一种是请求报文，两者格式基本相同。</p>
+<h3 id="fragments">Fragments</h3>
 
-<figure>
-  <img src="/images/httpoverview05.jpg" alt="search screenshot" />
-  <figcaption>HTTP报文格式</figcaption>
-</figure>
+<p>这个概念是指从服务器获取某个对象，显示在浏览器之后，直接滚动显示到某个片段。</p>
 
-<p>HTTP报文包含三个部分：</p>
+<p>注意，该语法不会使服务器只返回某个对象的片段，服务器仍然返回整个对象，只是浏览器默认滚动到某个片段的位置。</p>
 
-<blockquote>
-  <ul>
-    <li>起始行（start line）：如上图，请求报文的起始行包括“方法+资源+HTTP版本”
- 而响应报文中则保罗“HTTP版本+状态码及其解释文本”</li>
-    <li>首部（header）：起始行之后跟随的是首部，首部每行都是一个键值对，键和值用双引号:分开。
-   <strong>首部的最后是一个空行</strong></li>
-    <li>主体（body）：起始行和首部都是纯文本的格式，而主体则为二进制数据，可以是文本，图片等。</li>
-  </ul>
-</blockquote>
+<p>如下语句</p>
 
-<h2 id="connections">Connections</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html">http://www.joes-hardware.com/tools.html#drills</code></pre></div>
 
-<p>HTTP基于TCP连接，TCP是可靠传输协议，前者是应用层协议，后者是传输层协议</p>
+<p>该网页www.joes-hardware.com/tools.html的源代码为：</p>
 
-<figure>
-  <img src="/images/httpoverview07.jpg" alt="search screenshot" />
-  <figcaption>HTTP基于TCP协议</figcaption>
-</figure>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;HTML&gt;</span>
 
-<h2 id="protocol-versions">Protocol Versions</h2>
+<span class="nt">&lt;HEAD&gt;&lt;TITLE&gt;</span>Joe&#39;s Tools<span class="nt">&lt;/TITLE&gt;&lt;/HEAD&gt;</span>
 
-<p>目前推荐使用的HTTP版本是1.1，还存在其他0.9，1.0等版本</p>
+<span class="nt">&lt;BODY&gt;</span>
 
-<h2 id="architectural-components-of-the-webweb">Architectural Components of the Web（Web的结构组件）</h2>
+<span class="nt">&lt;H1&gt;</span>Tools Page<span class="nt">&lt;/H1&gt;</span>
 
-<p>上文讲到的HTTP客户端和HTTP服务器都是属于HTTP应用程序</p>
+<span class="nt">&lt;H2&gt;</span>Hammers<span class="nt">&lt;/H2&gt;</span>
 
-<p>还有其他一些重要的HTTP应用程序（比较难理解）</p>
+<span class="nt">&lt;P&gt;</span>Joe&#39;s Hardware Online has the largest selection of 
+<span class="nt">&lt;A</span> <span class="na">HREF=</span><span class="s">&quot;./hammers.html&quot;</span><span class="nt">&gt;</span>hammers<span class="nt">&lt;/A&gt;</span> on the earth.<span class="nt">&lt;/P&gt;</span>
 
-<blockquote>
-  <ul>
-    <li>Proxies (代理)</li>
-    <li>Caches （缓存）</li>
-    <li>Gateways （网关）</li>
-    <li>CTunnels （隧道）</li>
-    <li>Agents （agent代理）</li>
-  </ul>
-</blockquote>
+<span class="nt">&lt;H2&gt;&lt;A</span> <span class="na">NAME=</span><span class="s">drills</span><span class="nt">&gt;&lt;/A&gt;</span>Drills<span class="nt">&lt;/H2&gt;</span>
+
+<span class="nt">&lt;P&gt;</span>Joe&#39;s Hardware has a complete line of cordless and corded drills,
+as well as the latest in plutonium-powered atomic drills, for those
+big around the house jobs.<span class="nt">&lt;/P&gt;</span> ...
+
+<span class="nt">&lt;/BODY&gt;</span>
+
+<span class="nt">&lt;/HTML&gt;</span></code></pre></div>
 
 
         <nav class="pagination" role="navigation">
           
-            <a href="/js/.Object%20Type,%20Function%20Type/" class="btn" title="《JS高级程序设计》Note3-Object Type, Function Type">Previous</a>
+            <a href="/readingnotes/HTTP%20definition/" class="btn" title="《HTTP权威指南》Note1-Overview of HTTP">Previous</a>
           
           
-            <a href="/readingnotes/HTTP%20Http%20Message/" class="btn" title="《HTTP权威指南》Note2-URLs and Resources">Next</a>
+            <a href="/readingnotes/HTTP%20Resource/" class="btn" title="《HTTP权威指南》Note2-URLs and Resources">Next</a>
           
         </nav><!-- /.pagination -->
         
