@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-03-31T01:09:09+08:00</updated>
+<updated>2015-04-08T20:49:12+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -931,88 +931,6 @@ User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)&lt;/p&gt;
   
 
 <entry>
-  <title type="html"><![CDATA[进入2015年了]]></title>
-  <link rel="alternate" type="text/html" href="/reflection/new-year/" />
-  <id>/reflection/new-year</id>
-  <published>2015-01-01T00:00:00+08:00</published>
-  <updated>2015-01-01T00:00:00+08:00</updated>
-  <author>
-    <name>Quinn Chen</name>
-    <uri></uri>
-    <email>chenhuazhaoao@gmail.com</email>
-  </author>
-  <content type="html">&lt;h2 id=&quot;section&quot;&gt;过去的2014&lt;/h2&gt;
-
-&lt;p&gt;小时候觉得2007，2008，2009，2010这些关于年份的数字都是一个印记，每个印记对应一段很长的时间，现在这些数字就像一个站牌，这一站很快过，下一站也很快到来。&lt;/p&gt;
-
-&lt;p&gt;还是想用流水账的方式&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;1月&lt;/strong&gt;，考研，3号4号2天在中大海珠区结束了我的考研之路。顺便开始学android，回家&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;2月&lt;/strong&gt;：过年小学同学会，十周年，总体来说聚会很成功，见到很多人。20号出考研出成绩，数学很低分，挂了，24号签了第一份工作。其实没觉得读研不好，挺向往，但是错过了那样的时机，把这样的梦想以另一个方式在未来实现吧。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;3月&lt;/strong&gt;：考试进入毕业前的最后阶段，开始写毕业设计，玩英雄联盟。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;4月&lt;/strong&gt;：写毕业设计&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;5月&lt;/strong&gt;：毕业照，毕业答辩，领毕业证，路考再一次挂了。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;6月&lt;/strong&gt;：找地方租房子，月底离校，离校前第一次喝醉，和几个老乡。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;7月&lt;/strong&gt;：回家办户口迁移，入职，开始入职培训，认识很多北方的同事。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;8月&lt;/strong&gt;：入职培训&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;9月&lt;/strong&gt;：中秋节的时候培训结束，在原本的团队呆了一周，换组，不做web，转去做android。回大学城，百感交集&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;10月&lt;/strong&gt;：房屋银行跑了，从小区的9楼搬到30楼。上班，做爱加加&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;11月&lt;/strong&gt;：回广州考路考，终于过了，那天很开心。疯狂加班一个月，做爱加加&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;12月&lt;/strong&gt;：做爱加加，发布版本，内侧，虽然用户不多，但是做这个产品从头到尾学习到很多。&lt;/p&gt;
-
-&lt;p&gt;技术上&lt;/p&gt;
-
-&lt;p&gt;开始做了android，并且发现大学写的那些代码太小儿科，太弱了，包括毕业设计。&lt;/p&gt;
-
-&lt;p&gt;有一点做了好的开始，开始写自己的个人博客，以及折腾自己github，刚起步，被star一次，fork两次，需加油。&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/images/githubcontribute.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;github&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;发布了一个完全自己一个人写的app，内侧阶段。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;2015写给自己的话&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;1&lt;/strong&gt;，愤怒是向外界表明自己的边界的方式，生气并不是罪恶。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;2&lt;/strong&gt;，面对诱惑时，内心把抗衡的双方描述一下。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;3&lt;/strong&gt;，一线城市，生活成本高，但是机会也多，生活成本总是会那样自己的支出，可是机会，你有相应的努力争取吗。不要让你抓住的机会对不起你在这个城市的生活成本。要不，其实就是在花着一线城市的钱，却只看得见抓得住二线城市也有的机会。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;4&lt;/strong&gt;，互联网真的火了，屌丝逆袭很难，但是机会也来了。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;5&lt;/strong&gt;，多学习，多阅读，多看各种书，纪录片。让你的知识高于你的学历出身。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;6&lt;/strong&gt;，不要一时想这做很多事，那样自己会乱，就像女朋友买衣服自己挑选到差点奔溃，要有按部就班的准备，很多东西，要有坚持，和持久战的心理预期。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;7&lt;/strong&gt;，做一个知道人脉关系重要的程序猿。&lt;/p&gt;
-
-&lt;p&gt;9，学会自控，学习呼吸，反思，冥想。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-2&quot;&gt;2015几个小计划&lt;/h2&gt;
-
-&lt;p&gt;就这样&lt;/p&gt;
-
-  &lt;p&gt;&lt;a href=&quot;/reflection/new-year/&quot;&gt;进入2015年了&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on January 01, 2015.&lt;/p&gt;</content>
-</entry>
-
-
-  
-
-<entry>
   <title type="html"><![CDATA[【译】Fragment]]></title>
   <link rel="alternate" type="text/html" href="/android/(translate)Fragment/" />
   <id>/android/(translate)Fragment</id>
@@ -1151,14 +1069,12 @@ User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)&lt;/p&gt;
   </author>
   <content type="html">&lt;h2 id=&quot;activities&quot;&gt;Activities&lt;/h2&gt;
 
-&lt;p&gt;一个Activity是一个app的组成成分之一，它提供一个可以让用户进行交互的窗口，比如打电话，拍照，发邮件，看地图，每个act
-ivity一般都会有一个充满屏幕的窗口，用户描绘activity的UI。有时，activity拥有的窗口可能小于屏幕大小。&lt;/p&gt;
+&lt;p&gt;一个Activity是一个app的组成成分之一，它提供一个可以让用户进行交互的窗口，比如打电话，拍照，发邮件，看地图，每个activity一般都会有一个充满屏幕的窗口，用户描绘activity的UI。有时，activity拥有的窗口可能小于屏幕大小。&lt;/p&gt;
 
-&lt;p&gt;一个APP一般拥有多个activity，它们之间一般拥有低耦合的关系。通常在APP中都用一个”main activity”,
-当APP启动时这个”main activity”就会首先呈现在用户面前。每个activity都可以启动其它的activity用来进行其它操作。当新的
+&lt;p&gt;一个APP一般拥有多个activity，它们之间一般拥有低耦合的关系。通常在APP中都用一个“main activity”,当APP启动时这个
+“main activity”就会首先呈现在用户面前。每个activity都可以启动其它的activity用来进行其它操作。当新的
 activity被启动，前一个activity将被停止（stopped），当时系统将会报错该被停止的activity到一个堆栈中（back 
-stack），一个新的activity被启动时它将会被push到back stack的顶部并呈现给用户。back stack秉承LIFO（”last in , first 
-out”），所以，当用户在新的activity中操作结束之后，按下返回键，这个activity将会被弹出back 
+stack），一个新的activity被启动时它将会被push到back stack的顶部并呈现给用户。back stack秉承LIFO（“last in , first out”），所以，当用户在新的activity中操作结束之后，按下返回键，这个activity将会被弹出back 
 stack，并且被desrotyed，接下来前一个activity将会重新出现（resume）。关于back stack的文章可以参考&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://developer.android.com/guide/components/tasks-and-back-stack.html&quot;&gt;Tasks and Back Stack&lt;/a&gt;&lt;/p&gt;
@@ -1174,54 +1090,35 @@ stack，并且被desrotyed，接下来前一个activity将会重新出现（resu
 &lt;h2 id=&quot;creating-an-activity&quot;&gt;Creating an Activity&lt;/h2&gt;
 
 &lt;p&gt;为了创建一个activity，你需要创建一个Activity类的自雷（或者直接继承一个现有的Activity的子类）。在你创建的Activity的
-子类中，你需要重写一些生命周期的回调方法，它们将在activity的状态发生改变时被调用，比如create，stop，resume，destro
-y，其中两个最重要的回调方法是：&lt;/p&gt;
+子类中，你需要重写一些生命周期的回调方法，它们将在activity的状态发生改变时被调用，比如create，stop，resume，destroy，其中两个最重要的回调方法是：&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;onCreate()&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;你必须实现这个方法，因为系统创建activity时都会调用这个方法。你需要在这个方法中初始化各个组件，最重要的是，在这个方
-法里你需要调用setContentView()去定义你的activity的UI.&lt;/p&gt;
+&lt;p&gt;你必须实现这个方法，因为系统创建activity时都会调用这个方法。你需要在这个方法中初始化各个组件，最重要的是，在这个方法里你需要调用setContentView()去定义你的activity的UI.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;onPause()&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;当用户离开当前activity时首先都会调用这个方法（注意
-，无论以什么姿势离开，都会先调用这个方法），所以，你可以再这里提
-交一些需要保存的修改，因为用户可能不会再回来这个ac
-tivity。&lt;/p&gt;
+&lt;p&gt;当用户离开当前activity时首先都会调用这个方法（注意，无论以什么姿势离开，都会先调用这个方法），所以，你可以再这里提交一些需要保存的修改，因为用户可能不会再回来这个activity。&lt;/p&gt;
 
-&lt;p&gt;当activity进行切换或者发生预料之外的中断，你可以使
-用其他几个生命周期的回调方法来提供一个流畅的用户体
-验，后面讲详细
-介绍这些回调方法。&lt;/p&gt;
+&lt;p&gt;当activity进行切换或者发生预料之外的中断，你可以使用其他几个生命周期的回调方法来提供一个流畅的用户体验，后面讲详细介绍这些回调方法。&lt;/p&gt;
 
 &lt;h2 id=&quot;implementing-a-user-interface&quot;&gt;Implementing a user interface&lt;/h2&gt;
 
-&lt;p&gt;activity的UI是通过许多分层的view对象组成的，view对
-象都继承于View类，它们都占据一个正方形区域并且能响
-应用户交互。&lt;/p&gt;
+&lt;p&gt;activity的UI是通过许多分层的view对象组成的，view对象都继承于View类，它们都占据一个正方形区域并且能响应用户交互。&lt;/p&gt;
 
-&lt;p&gt;android提供了很多定制好的view，你可以直接使用它们
-组织你的布局。”Widgets”是其中一种view，它们可以提
-供一些可见并且可交互的元素在屏幕上，比如buttom,
-textview,image。而说到”layout”，它继承于ViewGroup,
-ViewGroup为其子视图（child 
-view）提供一个布局模型，比如linear layout， grid 
-layout，relative layout。另外，你也可以自己自定义
-自己的view或者view group。&lt;/p&gt;
+&lt;p&gt;Android提供了很多定制好的view，你可以直接使用它们组织你的布局。“Widgets”是其中一种view，它们可以提供一些可见并且可交互的元素在屏幕上，比如buttom,textview,image。而说到“layout”，它继承于ViewGroup，ViewGroup为其子视图（child view）提供一个布局模型，比如linear layout， grid layout，relative layout。另外，你也可以自己自定义自己的view或者view group。&lt;/p&gt;
 
-&lt;p&gt;定义布局的最常使用的方式是使用XML布局文件，这样你
-的布局设计就可以独立于activity的代码，然后将你设计
-的布局通过setContentView的方式设置到activity中。当
-然，你也可以在activity代码中插入view到viewGroup中
+&lt;p&gt;定义布局的最常使用的方式是使用XML布局文件，这样你的布局设计就可以独立于activity的代码，然后将你设计
+的布局通过setContentView的方式设置到activity中。当然，你也可以在activity代码中插入view到viewGroup中
 ，然后将你的根布局传递给setContentView().&lt;/p&gt;
 
-&lt;p&gt;关于UI的设计，可以参考&lt;a href=&quot;http://developer.android.com/guide/
-topics/ui/index.html&quot;&gt;User Interface&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;关于UI的设计，可以参考&lt;a href=&quot;http://developer.android.com/guide/topics/ui/index.html&quot;&gt;User Interface&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;declaring-the-activity-in-the-manifest&quot;&gt;Declaring the activity in the manifest&lt;/h2&gt;
 
-&lt;p&gt;为了让系统能得到你的activity，你需要在manifest文件中声明activity.如下：
-在&lt;application&gt;元素中增加一个子元素&lt;activity&gt;&lt;/activity&gt;&lt;/application&gt;&lt;/p&gt;
+&lt;p&gt;为了让系统能得到你的activity，你需要在manifest文件中声明activity.如下：在&lt;application&gt;元素中增加一个子元素&lt;/application&gt;&lt;/p&gt;
+&lt;activity&gt;
+
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;manifest&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;application&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
@@ -1231,39 +1128,51 @@ topics/ui/index.html&quot;&gt;User Interface&lt;/a&gt;&lt;/p&gt;
   ...
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/manifest &amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;在这个activity元素中，可以增加诸多属性，比如label,icon,name,theme，其中name属性不能随便进行修改，可以阅读以下这篇文章&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://android-developers.blogspot.jp/2011/06/things-that-cannot-change.html&quot;&gt;Things That Cannot Change&lt;/a&gt;&lt;/p&gt;
+在这个activity元素中，可以增加诸多属性，比如label,icon,name,theme，其中name属性不能随便进行修改，可以阅读以下这篇文章
 
-&lt;h2 id=&quot;using-intent-filters&quot;&gt;Using intent filters&lt;/h2&gt;
+[Things That Cannot Change](http://android-developers.blogspot.jp/2011/06/things-that-cannot-change.html)
 
-&lt;p&gt;activty元素可以通过定义intent filter来声明其他app或者其他app 
-component如何启动它。具体可以查看如下这篇文章&lt;/p&gt;
+## Using intent filters
 
-&lt;p&gt;&lt;a href=&quot;https://developer.android.com/guide/components/intents-filters.html&quot;&gt;Intents and Intent Filters&lt;/a&gt;&lt;/p&gt;
+activty元素可以通过定义intent filter来声明其他app或者其他app component如何启动它。具体可以查看如下这篇文章
 
-&lt;h2 id=&quot;starting-an-activity&quot;&gt;Starting an Activity&lt;/h2&gt;
 
-&lt;p&gt;通过调用startActivity()并传递给它一个intent对象可以启动另一个activity。Intent可以用来描述你即将启动的activity或者你即将执行的操作。甚至可以启动不同application之间的activity。Intent也可以用于传输少量的数据。&lt;/p&gt;
+[Intents and Intent Filters](https://developer.android.com/guide/components/intents-filters.html)
 
-&lt;p&gt;以下是通过一个activity启动另一个activity的例子&lt;/p&gt;
+
+## Starting an Activity
+
+
+通过调用startActivity()并传递给它一个intent对象可以启动另一个activity。Intent可以用来描述你即将启动的activity或者你即将执行的操作。甚至可以启动不同application之间的activity。Intent也可以用于传输少量的数据。
+
+以下是通过一个activity启动另一个activity的例子
+
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;Intent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SignInActivity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;startActivity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;当你的app要执行一些诸如发邮件，发短信等操作时，你可以启动其它app的activity进行操作，当设备中有多个app中拥有这样的activity，则会弹出一个选择框。当你执行完操作，将返回原本的activity。&lt;/p&gt;
 
-&lt;p&gt;如下是一个发送邮件的操作，&lt;/p&gt;
+当你的app要执行一些诸如发邮件，发短信等操作时，你可以启动其它app的activity进行操作，当设备中有多个app中拥有这样的activity，则会弹出一个选择框。当你执行完操作，将返回原本的activity。
+
+如下是一个发送邮件的操作，
+
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;Intent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ACTION_SEND&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;putExtra&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;EXTRA_EMAIL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recipientArray&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;startActivity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;此处recipientArray是接收方的邮件地址，将自动填充到打开的发送邮件的activity中。&lt;/p&gt;
 
-&lt;h2 id=&quot;starting-an-activity-for-a-result&quot;&gt;Starting an activity for a result&lt;/h2&gt;
+此处recipientArray是接收方的邮件地址，将自动填充到打开的发送邮件的activity中。
 
-&lt;p&gt;这个方面比较熟悉，下面就只是列一个小例子，通过startActivityForResult()获取一个联系人。&lt;/p&gt;
+
+
+
+
+##  Starting an activity for a result
+
+这个方面比较熟悉，下面就只是列一个小例子，通过startActivityForResult()获取一个联系人。
+
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pickContact&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;c1&quot;&gt;// Create an intent to &amp;quot;pick&amp;quot; a contact, as defined by the content provider URI&lt;/span&gt;
@@ -1286,66 +1195,82 @@ component如何启动它。具体可以查看如下这篇文章&lt;/p&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;shutting-down-an-activity&quot;&gt;Shutting Down an Activity&lt;/h2&gt;
 
-&lt;p&gt;终结一个activity可以通过finish()方法，也可以通过finishActivity()
-关闭当前activity以及之前启动的activity（堆栈下面的其他activity）&lt;/p&gt;
 
-&lt;h2 id=&quot;managing-the-activity-lifecycle&quot;&gt;Managing the Activity Lifecycle&lt;/h2&gt;
 
-&lt;p&gt;你在重写各个生命周期方法时，需要先调用其父类的的方法。&lt;/p&gt;
 
-&lt;p&gt;关于生命周期，一般能看到三个循环&lt;/p&gt;
+##  Shutting Down an Activity
 
-&lt;p&gt;&lt;strong&gt;entire lifetime&lt;/strong&gt;
-该循环发生在onCreate()和onDestroy()之间，一些关乎全局的状态(比如布局)需要在onCreate()中创建，而在onDestroy()释放一些持久性的资源。&lt;/p&gt;
+终结一个activity可以通过finish()方法，也可以通过finishActivity()
+关闭当前activity以及之前启动的activity（堆栈下面的其他activity）
 
-&lt;p&gt;比如：你在后台下载数据，你可能在onCreate()中创建下载的线程，并且你需要在onDestroy()停止该线程。&lt;/p&gt;
+##  Managing the Activity Lifecycle
 
-&lt;p&gt;&lt;strong&gt;visible lifetime&lt;/strong&gt;
-该循环发生在onStart()和onStop()之间，在该循环中你始终可以看到该activity并且可以与它交互，onStop是启动其它activity时被调用的。&lt;/p&gt;
 
-&lt;p&gt;比如，你可以再onStart()中注册广播(可能你收到广播就需要更新UI了)，并且在onStop()中注销广播。这样一来，你可能会多次执行onStart()和onStop()方法。&lt;/p&gt;
+你在重写各个生命周期方法时，需要先调用其父类的的方法。
 
-&lt;p&gt;&lt;strong&gt;foreground lifetime&lt;/strong&gt;
-该循环在onResume()和onPause()之间，在这期间，你的activity在所有activity之上，并且拥有用户焦点。一般在以下情况你会跳出这个循环，比如，设备进入睡眠(进入睡眠应该是关闭屏幕了，而不是回到主界面)，或者一个dialog出现了。&lt;/p&gt;
+关于生命周期，一般能看到三个循环
 
-&lt;p&gt;由于这个状态切换很频繁，所以在这两个方法中应该执行一些轻量级的代码，避免状态切换太慢。&lt;/p&gt;
+**entire lifetime**
+该循环发生在onCreate()和onDestroy()之间，一些关乎全局的状态(比如布局)需要在onCreate()中创建，而在onDestroy()释放一些持久性的资源。
 
-&lt;p&gt;生命周期的几个循环如下图&lt;/p&gt;
+比如：你在后台下载数据，你可能在onCreate()中创建下载的线程，并且你需要在onDestroy()停止该线程。
+
+**visible lifetime**
+该循环发生在onStart()和onStop()之间，在该循环中你始终可以看到该activity并且可以与它交互，onStop是启动其它activity时被调用的。
+
+比如，你可以再onStart()中注册广播(可能你收到广播就需要更新UI了)，并且在onStop()中注销广播。这样一来，你可能会多次执行onStart()和onStop()方法。
+
+**foreground lifetime**
+该循环在onResume()和onPause()之间，在这期间，你的activity在所有activity之上，并且拥有用户焦点。一般在以下情况你会跳出这个循环，比如，设备进入睡眠(进入睡眠应该是关闭屏幕了，而不是回到主界面)，或者一个dialog出现了。
+
+由于这个状态切换很频繁，所以在这两个方法中应该执行一些轻量级的代码，避免状态切换太慢。
+
+生命周期的几个循环如下图
 &lt;figure&gt;
   &lt;img src=&quot;/images/activity_lifecycle.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
   &lt;figcaption&gt;生命周期示意图&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;从图中看到，可以中途被杀死的状态有onPause()，onStop()，onDestroy()&lt;/p&gt;
+从图中看到，可以中途被杀死的状态有onPause()，onStop()，onDestroy()
 
-&lt;p&gt;所以，一般我们需要在onPause()中选择保存一些需要保存的数据，当然，阻塞过程不该在onPause()中执行，否则会影响状态切换速度。&lt;/p&gt;
+所以，一般我们需要在onPause()中选择保存一些需要保存的数据，当然，阻塞过程不该在onPause()中执行，否则会影响状态切换速度。
 
-&lt;p&gt;以上其实在任何生命周期的回调方法中，设备环境极度恶劣的情况下，都随时可能被杀死。&lt;/p&gt;
+以上其实在任何生命周期的回调方法中，设备环境极度恶劣的情况下，都随时可能被杀死。
 
-&lt;h2 id=&quot;saving-activity-state&quot;&gt;Saving activity state&lt;/h2&gt;
 
-&lt;p&gt;举个例子，activityA中有一个edittextA，你从activityA跳转到activityB，再按返回键回到activityA，此时edittextA中的内容依然被保存着。但是有时候可能activity可能被强制回收，此时edittextA中的内容将不会被保存。&lt;/p&gt;
 
-&lt;p&gt;上面之所以edittext的内容会被保存，是因为很多组件都默认都会保存其状态，但是你必须给这些组件一个ID值，因为保存其状态时通过键值对保存的。另外，如果你对组件的saveEnabled属性设置为false，则不会有自动保存的功能。&lt;/p&gt;
 
-&lt;p&gt;上面是activity进入后台回来之后依然能恢复UI组件的状态，但是当后台的activity被意外地destroy时，则不会恢复UI状态，则需要通过在 onSaveInstanceState()中保存数据，在onCreate()或者onRestoreInstanceState()中恢复数据的方法来实现保存UI状态。在使用onSaveInstanceState()和onCreate()或者onRestoreInstanceState()方法时，需要先各自调用其父类的方法。&lt;/p&gt;
 
-&lt;p&gt;onSaveInstanceState()是在系统意外回收activity时会被自动调用，但是用户主动finish掉一个activity时(比如按返回键或者调finish())并不会自动调用onSaveInstanceState().&lt;/p&gt;
+## Saving activity state
 
-&lt;h2 id=&quot;handling-configuration-changes&quot;&gt;Handling configuration changes&lt;/h2&gt;
 
-&lt;p&gt;当设备的设置发生改变时，需要使用以上保存状态的方法，因为设备状态改变时，activity不会自动保存数据，它们是被destroy再创建的。比如语言环境变化，横屏竖屏切换。&lt;/p&gt;
+举个例子，activityA中有一个edittextA，你从activityA跳转到activityB，再按返回键回到activityA，此时edittextA中的内容依然被保存着。但是有时候可能activity可能被强制回收，此时edittextA中的内容将不会被保存。
 
-&lt;p&gt;更多的关于运行时的状态变化知识可以参考&lt;/p&gt;
+上面之所以edittext的内容会被保存，是因为很多组件都默认都会保存其状态，但是你必须给这些组件一个ID值，因为保存其状态时通过键值对保存的。另外，如果你对组件的saveEnabled属性设置为false，则不会有自动保存的功能。
 
-&lt;p&gt;&lt;a href=&quot;https://developer.android.com/guide/topics/resources/runtime-changes.html&quot;&gt;Handling Runtime Changes&lt;/a&gt;&lt;/p&gt;
+上面是activity进入后台回来之后依然能恢复UI组件的状态，但是当后台的activity被意外地destroy时，则不会恢复UI状态，则需要通过在 onSaveInstanceState()中保存数据，在onCreate()或者onRestoreInstanceState()中恢复数据的方法来实现保存UI状态。在使用onSaveInstanceState()和onCreate()或者onRestoreInstanceState()方法时，需要先各自调用其父类的方法。
 
-&lt;h2 id=&quot;coordinating-activities&quot;&gt;Coordinating activities&lt;/h2&gt;
+onSaveInstanceState()是在系统意外回收activity时会被自动调用，但是用户主动finish掉一个activity时(比如按返回键或者调finish())并不会自动调用onSaveInstanceState().
 
-&lt;p&gt;前文我们提到，要保存数据，则最好在onPause()中进行，除了因为它是onPause，onStop，onDestroy三个方法中最先被调用的，还有一个原因，activityA调用onPause之后，可能另一个activityB已经启动了（已经调用了onCreate(), onStart()和onResume()）之后，当前activityA才会调用onStop和onDestroy。而如果此时activityB要使用activityA保存在数据库中的数据，则需要activityA在onPause中即时将数据写入数据库。而不是在onStop或者onDestroy中。&lt;/p&gt;
 
+
+## Handling configuration changes
+
+当设备的设置发生改变时，需要使用以上保存状态的方法，因为设备状态改变时，activity不会自动保存数据，它们是被destroy再创建的。比如语言环境变化，横屏竖屏切换。
+
+更多的关于运行时的状态变化知识可以参考
+
+[Handling Runtime Changes](https://developer.android.com/guide/topics/resources/runtime-changes.html)
+
+
+
+## Coordinating activities
+
+
+前文我们提到，要保存数据，则最好在onPause()中进行，除了因为它是onPause，onStop，onDestroy三个方法中最先被调用的，还有一个原因，activityA调用onPause之后，可能另一个activityB已经启动了（已经调用了onCreate(), onStart()和onResume()）之后，当前activityA才会调用onStop和onDestroy。而如果此时activityB要使用activityA保存在数据库中的数据，则需要activityA在onPause中即时将数据写入数据库。而不是在onStop或者onDestroy中。
+
+&lt;/activity&gt;
 
   &lt;p&gt;&lt;a href=&quot;/android/(translate)Activities/&quot;&gt;【译】Activities&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on December 21, 2014.&lt;/p&gt;</content>
 </entry>

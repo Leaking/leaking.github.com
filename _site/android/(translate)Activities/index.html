@@ -191,14 +191,12 @@
       <div class="entry-content">
         <h2 id="activities">Activities</h2>
 
-<p>一个Activity是一个app的组成成分之一，它提供一个可以让用户进行交互的窗口，比如打电话，拍照，发邮件，看地图，每个act
-ivity一般都会有一个充满屏幕的窗口，用户描绘activity的UI。有时，activity拥有的窗口可能小于屏幕大小。</p>
+<p>一个Activity是一个app的组成成分之一，它提供一个可以让用户进行交互的窗口，比如打电话，拍照，发邮件，看地图，每个activity一般都会有一个充满屏幕的窗口，用户描绘activity的UI。有时，activity拥有的窗口可能小于屏幕大小。</p>
 
-<p>一个APP一般拥有多个activity，它们之间一般拥有低耦合的关系。通常在APP中都用一个”main activity”,
-当APP启动时这个”main activity”就会首先呈现在用户面前。每个activity都可以启动其它的activity用来进行其它操作。当新的
+<p>一个APP一般拥有多个activity，它们之间一般拥有低耦合的关系。通常在APP中都用一个“main activity”,当APP启动时这个
+“main activity”就会首先呈现在用户面前。每个activity都可以启动其它的activity用来进行其它操作。当新的
 activity被启动，前一个activity将被停止（stopped），当时系统将会报错该被停止的activity到一个堆栈中（back 
-stack），一个新的activity被启动时它将会被push到back stack的顶部并呈现给用户。back stack秉承LIFO（”last in , first 
-out”），所以，当用户在新的activity中操作结束之后，按下返回键，这个activity将会被弹出back 
+stack），一个新的activity被启动时它将会被push到back stack的顶部并呈现给用户。back stack秉承LIFO（“last in , first out”），所以，当用户在新的activity中操作结束之后，按下返回键，这个activity将会被弹出back 
 stack，并且被desrotyed，接下来前一个activity将会重新出现（resume）。关于back stack的文章可以参考</p>
 
 <p><a href="http://developer.android.com/guide/components/tasks-and-back-stack.html">Tasks and Back Stack</a></p>
@@ -214,54 +212,35 @@ stack，并且被desrotyed，接下来前一个activity将会重新出现（resu
 <h2 id="creating-an-activity">Creating an Activity</h2>
 
 <p>为了创建一个activity，你需要创建一个Activity类的自雷（或者直接继承一个现有的Activity的子类）。在你创建的Activity的
-子类中，你需要重写一些生命周期的回调方法，它们将在activity的状态发生改变时被调用，比如create，stop，resume，destro
-y，其中两个最重要的回调方法是：</p>
+子类中，你需要重写一些生命周期的回调方法，它们将在activity的状态发生改变时被调用，比如create，stop，resume，destroy，其中两个最重要的回调方法是：</p>
 
 <p><strong>onCreate()</strong></p>
 
-<p>你必须实现这个方法，因为系统创建activity时都会调用这个方法。你需要在这个方法中初始化各个组件，最重要的是，在这个方
-法里你需要调用setContentView()去定义你的activity的UI.</p>
+<p>你必须实现这个方法，因为系统创建activity时都会调用这个方法。你需要在这个方法中初始化各个组件，最重要的是，在这个方法里你需要调用setContentView()去定义你的activity的UI.</p>
 
 <p><strong>onPause()</strong></p>
 
-<p>当用户离开当前activity时首先都会调用这个方法（注意
-，无论以什么姿势离开，都会先调用这个方法），所以，你可以再这里提
-交一些需要保存的修改，因为用户可能不会再回来这个ac
-tivity。</p>
+<p>当用户离开当前activity时首先都会调用这个方法（注意，无论以什么姿势离开，都会先调用这个方法），所以，你可以再这里提交一些需要保存的修改，因为用户可能不会再回来这个activity。</p>
 
-<p>当activity进行切换或者发生预料之外的中断，你可以使
-用其他几个生命周期的回调方法来提供一个流畅的用户体
-验，后面讲详细
-介绍这些回调方法。</p>
+<p>当activity进行切换或者发生预料之外的中断，你可以使用其他几个生命周期的回调方法来提供一个流畅的用户体验，后面讲详细介绍这些回调方法。</p>
 
 <h2 id="implementing-a-user-interface">Implementing a user interface</h2>
 
-<p>activity的UI是通过许多分层的view对象组成的，view对
-象都继承于View类，它们都占据一个正方形区域并且能响
-应用户交互。</p>
+<p>activity的UI是通过许多分层的view对象组成的，view对象都继承于View类，它们都占据一个正方形区域并且能响应用户交互。</p>
 
-<p>android提供了很多定制好的view，你可以直接使用它们
-组织你的布局。”Widgets”是其中一种view，它们可以提
-供一些可见并且可交互的元素在屏幕上，比如buttom,
-textview,image。而说到”layout”，它继承于ViewGroup,
-ViewGroup为其子视图（child 
-view）提供一个布局模型，比如linear layout， grid 
-layout，relative layout。另外，你也可以自己自定义
-自己的view或者view group。</p>
+<p>Android提供了很多定制好的view，你可以直接使用它们组织你的布局。“Widgets”是其中一种view，它们可以提供一些可见并且可交互的元素在屏幕上，比如buttom,textview,image。而说到“layout”，它继承于ViewGroup，ViewGroup为其子视图（child view）提供一个布局模型，比如linear layout， grid layout，relative layout。另外，你也可以自己自定义自己的view或者view group。</p>
 
-<p>定义布局的最常使用的方式是使用XML布局文件，这样你
-的布局设计就可以独立于activity的代码，然后将你设计
-的布局通过setContentView的方式设置到activity中。当
-然，你也可以在activity代码中插入view到viewGroup中
+<p>定义布局的最常使用的方式是使用XML布局文件，这样你的布局设计就可以独立于activity的代码，然后将你设计
+的布局通过setContentView的方式设置到activity中。当然，你也可以在activity代码中插入view到viewGroup中
 ，然后将你的根布局传递给setContentView().</p>
 
-<p>关于UI的设计，可以参考<a href="http://developer.android.com/guide/
-topics/ui/index.html">User Interface</a></p>
+<p>关于UI的设计，可以参考<a href="http://developer.android.com/guide/topics/ui/index.html">User Interface</a></p>
 
 <h2 id="declaring-the-activity-in-the-manifest">Declaring the activity in the manifest</h2>
 
-<p>为了让系统能得到你的activity，你需要在manifest文件中声明activity.如下：
-在<application>元素中增加一个子元素<activity></activity></application></p>
+<p>为了让系统能得到你的activity，你需要在manifest文件中声明activity.如下：在<application>元素中增加一个子元素</application></p>
+<activity>
+
 
 <div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;manifest</span> <span class="err">...</span> <span class="nt">&gt;</span>
   <span class="nt">&lt;application</span> <span class="err">...</span> <span class="nt">&gt;</span>
@@ -271,39 +250,51 @@ topics/ui/index.html">User Interface</a></p>
   ...
 <span class="nt">&lt;/manifest &gt;</span></code></pre></div>
 
-<p>在这个activity元素中，可以增加诸多属性，比如label,icon,name,theme，其中name属性不能随便进行修改，可以阅读以下这篇文章</p>
 
-<p><a href="http://android-developers.blogspot.jp/2011/06/things-that-cannot-change.html">Things That Cannot Change</a></p>
+在这个activity元素中，可以增加诸多属性，比如label,icon,name,theme，其中name属性不能随便进行修改，可以阅读以下这篇文章
 
-<h2 id="using-intent-filters">Using intent filters</h2>
+[Things That Cannot Change](http://android-developers.blogspot.jp/2011/06/things-that-cannot-change.html)
 
-<p>activty元素可以通过定义intent filter来声明其他app或者其他app 
-component如何启动它。具体可以查看如下这篇文章</p>
+## Using intent filters
 
-<p><a href="https://developer.android.com/guide/components/intents-filters.html">Intents and Intent Filters</a></p>
+activty元素可以通过定义intent filter来声明其他app或者其他app component如何启动它。具体可以查看如下这篇文章
 
-<h2 id="starting-an-activity">Starting an Activity</h2>
 
-<p>通过调用startActivity()并传递给它一个intent对象可以启动另一个activity。Intent可以用来描述你即将启动的activity或者你即将执行的操作。甚至可以启动不同application之间的activity。Intent也可以用于传输少量的数据。</p>
+[Intents and Intent Filters](https://developer.android.com/guide/components/intents-filters.html)
 
-<p>以下是通过一个activity启动另一个activity的例子</p>
+
+## Starting an Activity
+
+
+通过调用startActivity()并传递给它一个intent对象可以启动另一个activity。Intent可以用来描述你即将启动的activity或者你即将执行的操作。甚至可以启动不同application之间的activity。Intent也可以用于传输少量的数据。
+
+以下是通过一个activity启动另一个activity的例子
+
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">SignInActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span></code></pre></div>
 
-<p>当你的app要执行一些诸如发邮件，发短信等操作时，你可以启动其它app的activity进行操作，当设备中有多个app中拥有这样的activity，则会弹出一个选择框。当你执行完操作，将返回原本的activity。</p>
 
-<p>如下是一个发送邮件的操作，</p>
+当你的app要执行一些诸如发邮件，发短信等操作时，你可以启动其它app的activity进行操作，当设备中有多个app中拥有这样的activity，则会弹出一个选择框。当你执行完操作，将返回原本的activity。
+
+如下是一个发送邮件的操作，
+
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_SEND</span><span class="o">);</span>
 <span class="n">intent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">EXTRA_EMAIL</span><span class="o">,</span> <span class="n">recipientArray</span><span class="o">);</span>
 <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span></code></pre></div>
 
-<p>此处recipientArray是接收方的邮件地址，将自动填充到打开的发送邮件的activity中。</p>
 
-<h2 id="starting-an-activity-for-a-result">Starting an activity for a result</h2>
+此处recipientArray是接收方的邮件地址，将自动填充到打开的发送邮件的activity中。
 
-<p>这个方面比较熟悉，下面就只是列一个小例子，通过startActivityForResult()获取一个联系人。</p>
+
+
+
+
+##  Starting an activity for a result
+
+这个方面比较熟悉，下面就只是列一个小例子，通过startActivityForResult()获取一个联系人。
+
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">pickContact</span><span class="o">()</span> <span class="o">{</span>
     <span class="c1">// Create an intent to &quot;pick&quot; a contact, as defined by the content provider URI</span>
@@ -326,66 +317,82 @@ component如何启动它。具体可以查看如下这篇文章</p>
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-<h2 id="shutting-down-an-activity">Shutting Down an Activity</h2>
 
-<p>终结一个activity可以通过finish()方法，也可以通过finishActivity()
-关闭当前activity以及之前启动的activity（堆栈下面的其他activity）</p>
 
-<h2 id="managing-the-activity-lifecycle">Managing the Activity Lifecycle</h2>
 
-<p>你在重写各个生命周期方法时，需要先调用其父类的的方法。</p>
 
-<p>关于生命周期，一般能看到三个循环</p>
+##  Shutting Down an Activity
 
-<p><strong>entire lifetime</strong>
-该循环发生在onCreate()和onDestroy()之间，一些关乎全局的状态(比如布局)需要在onCreate()中创建，而在onDestroy()释放一些持久性的资源。</p>
+终结一个activity可以通过finish()方法，也可以通过finishActivity()
+关闭当前activity以及之前启动的activity（堆栈下面的其他activity）
 
-<p>比如：你在后台下载数据，你可能在onCreate()中创建下载的线程，并且你需要在onDestroy()停止该线程。</p>
+##  Managing the Activity Lifecycle
 
-<p><strong>visible lifetime</strong>
-该循环发生在onStart()和onStop()之间，在该循环中你始终可以看到该activity并且可以与它交互，onStop是启动其它activity时被调用的。</p>
 
-<p>比如，你可以再onStart()中注册广播(可能你收到广播就需要更新UI了)，并且在onStop()中注销广播。这样一来，你可能会多次执行onStart()和onStop()方法。</p>
+你在重写各个生命周期方法时，需要先调用其父类的的方法。
 
-<p><strong>foreground lifetime</strong>
-该循环在onResume()和onPause()之间，在这期间，你的activity在所有activity之上，并且拥有用户焦点。一般在以下情况你会跳出这个循环，比如，设备进入睡眠(进入睡眠应该是关闭屏幕了，而不是回到主界面)，或者一个dialog出现了。</p>
+关于生命周期，一般能看到三个循环
 
-<p>由于这个状态切换很频繁，所以在这两个方法中应该执行一些轻量级的代码，避免状态切换太慢。</p>
+**entire lifetime**
+该循环发生在onCreate()和onDestroy()之间，一些关乎全局的状态(比如布局)需要在onCreate()中创建，而在onDestroy()释放一些持久性的资源。
 
-<p>生命周期的几个循环如下图</p>
+比如：你在后台下载数据，你可能在onCreate()中创建下载的线程，并且你需要在onDestroy()停止该线程。
+
+**visible lifetime**
+该循环发生在onStart()和onStop()之间，在该循环中你始终可以看到该activity并且可以与它交互，onStop是启动其它activity时被调用的。
+
+比如，你可以再onStart()中注册广播(可能你收到广播就需要更新UI了)，并且在onStop()中注销广播。这样一来，你可能会多次执行onStart()和onStop()方法。
+
+**foreground lifetime**
+该循环在onResume()和onPause()之间，在这期间，你的activity在所有activity之上，并且拥有用户焦点。一般在以下情况你会跳出这个循环，比如，设备进入睡眠(进入睡眠应该是关闭屏幕了，而不是回到主界面)，或者一个dialog出现了。
+
+由于这个状态切换很频繁，所以在这两个方法中应该执行一些轻量级的代码，避免状态切换太慢。
+
+生命周期的几个循环如下图
 <figure>
   <img src="/images/activity_lifecycle.jpg" alt="search screenshot" />
   <figcaption>生命周期示意图</figcaption>
 </figure>
 
-<p>从图中看到，可以中途被杀死的状态有onPause()，onStop()，onDestroy()</p>
+从图中看到，可以中途被杀死的状态有onPause()，onStop()，onDestroy()
 
-<p>所以，一般我们需要在onPause()中选择保存一些需要保存的数据，当然，阻塞过程不该在onPause()中执行，否则会影响状态切换速度。</p>
+所以，一般我们需要在onPause()中选择保存一些需要保存的数据，当然，阻塞过程不该在onPause()中执行，否则会影响状态切换速度。
 
-<p>以上其实在任何生命周期的回调方法中，设备环境极度恶劣的情况下，都随时可能被杀死。</p>
+以上其实在任何生命周期的回调方法中，设备环境极度恶劣的情况下，都随时可能被杀死。
 
-<h2 id="saving-activity-state">Saving activity state</h2>
 
-<p>举个例子，activityA中有一个edittextA，你从activityA跳转到activityB，再按返回键回到activityA，此时edittextA中的内容依然被保存着。但是有时候可能activity可能被强制回收，此时edittextA中的内容将不会被保存。</p>
 
-<p>上面之所以edittext的内容会被保存，是因为很多组件都默认都会保存其状态，但是你必须给这些组件一个ID值，因为保存其状态时通过键值对保存的。另外，如果你对组件的saveEnabled属性设置为false，则不会有自动保存的功能。</p>
 
-<p>上面是activity进入后台回来之后依然能恢复UI组件的状态，但是当后台的activity被意外地destroy时，则不会恢复UI状态，则需要通过在 onSaveInstanceState()中保存数据，在onCreate()或者onRestoreInstanceState()中恢复数据的方法来实现保存UI状态。在使用onSaveInstanceState()和onCreate()或者onRestoreInstanceState()方法时，需要先各自调用其父类的方法。</p>
 
-<p>onSaveInstanceState()是在系统意外回收activity时会被自动调用，但是用户主动finish掉一个activity时(比如按返回键或者调finish())并不会自动调用onSaveInstanceState().</p>
+## Saving activity state
 
-<h2 id="handling-configuration-changes">Handling configuration changes</h2>
 
-<p>当设备的设置发生改变时，需要使用以上保存状态的方法，因为设备状态改变时，activity不会自动保存数据，它们是被destroy再创建的。比如语言环境变化，横屏竖屏切换。</p>
+举个例子，activityA中有一个edittextA，你从activityA跳转到activityB，再按返回键回到activityA，此时edittextA中的内容依然被保存着。但是有时候可能activity可能被强制回收，此时edittextA中的内容将不会被保存。
 
-<p>更多的关于运行时的状态变化知识可以参考</p>
+上面之所以edittext的内容会被保存，是因为很多组件都默认都会保存其状态，但是你必须给这些组件一个ID值，因为保存其状态时通过键值对保存的。另外，如果你对组件的saveEnabled属性设置为false，则不会有自动保存的功能。
 
-<p><a href="https://developer.android.com/guide/topics/resources/runtime-changes.html">Handling Runtime Changes</a></p>
+上面是activity进入后台回来之后依然能恢复UI组件的状态，但是当后台的activity被意外地destroy时，则不会恢复UI状态，则需要通过在 onSaveInstanceState()中保存数据，在onCreate()或者onRestoreInstanceState()中恢复数据的方法来实现保存UI状态。在使用onSaveInstanceState()和onCreate()或者onRestoreInstanceState()方法时，需要先各自调用其父类的方法。
 
-<h2 id="coordinating-activities">Coordinating activities</h2>
+onSaveInstanceState()是在系统意外回收activity时会被自动调用，但是用户主动finish掉一个activity时(比如按返回键或者调finish())并不会自动调用onSaveInstanceState().
 
-<p>前文我们提到，要保存数据，则最好在onPause()中进行，除了因为它是onPause，onStop，onDestroy三个方法中最先被调用的，还有一个原因，activityA调用onPause之后，可能另一个activityB已经启动了（已经调用了onCreate(), onStart()和onResume()）之后，当前activityA才会调用onStop和onDestroy。而如果此时activityB要使用activityA保存在数据库中的数据，则需要activityA在onPause中即时将数据写入数据库。而不是在onStop或者onDestroy中。</p>
 
+
+## Handling configuration changes
+
+当设备的设置发生改变时，需要使用以上保存状态的方法，因为设备状态改变时，activity不会自动保存数据，它们是被destroy再创建的。比如语言环境变化，横屏竖屏切换。
+
+更多的关于运行时的状态变化知识可以参考
+
+[Handling Runtime Changes](https://developer.android.com/guide/topics/resources/runtime-changes.html)
+
+
+
+## Coordinating activities
+
+
+前文我们提到，要保存数据，则最好在onPause()中进行，除了因为它是onPause，onStop，onDestroy三个方法中最先被调用的，还有一个原因，activityA调用onPause之后，可能另一个activityB已经启动了（已经调用了onCreate(), onStart()和onResume()）之后，当前activityA才会调用onStop和onDestroy。而如果此时activityB要使用activityA保存在数据库中的数据，则需要activityA在onPause中即时将数据写入数据库。而不是在onStop或者onDestroy中。
+
+</activity>
 
         <nav class="pagination" role="navigation">
           

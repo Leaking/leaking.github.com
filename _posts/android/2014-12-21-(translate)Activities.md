@@ -18,14 +18,12 @@ share: true
 ## Activities
 
 
-一个Activity是一个app的组成成分之一，它提供一个可以让用户进行交互的窗口，比如打电话，拍照，发邮件，看地图，每个act
-ivity一般都会有一个充满屏幕的窗口，用户描绘activity的UI。有时，activity拥有的窗口可能小于屏幕大小。
+一个Activity是一个app的组成成分之一，它提供一个可以让用户进行交互的窗口，比如打电话，拍照，发邮件，看地图，每个activity一般都会有一个充满屏幕的窗口，用户描绘activity的UI。有时，activity拥有的窗口可能小于屏幕大小。
 
-一个APP一般拥有多个activity，它们之间一般拥有低耦合的关系。通常在APP中都用一个"main activity",
-当APP启动时这个"main activity"就会首先呈现在用户面前。每个activity都可以启动其它的activity用来进行其它操作。当新的
+一个APP一般拥有多个activity，它们之间一般拥有低耦合的关系。通常在APP中都用一个“main activity”,当APP启动时这个
+“main activity”就会首先呈现在用户面前。每个activity都可以启动其它的activity用来进行其它操作。当新的
 activity被启动，前一个activity将被停止（stopped），当时系统将会报错该被停止的activity到一个堆栈中（back 
-stack），一个新的activity被启动时它将会被push到back stack的顶部并呈现给用户。back stack秉承LIFO（"last in , first 
-out"），所以，当用户在新的activity中操作结束之后，按下返回键，这个activity将会被弹出back 
+stack），一个新的activity被启动时它将会被push到back stack的顶部并呈现给用户。back stack秉承LIFO（“last in , first out”），所以，当用户在新的activity中操作结束之后，按下返回键，这个activity将会被弹出back 
 stack，并且被desrotyed，接下来前一个activity将会重新出现（resume）。关于back stack的文章可以参考
 
 [Tasks and Back Stack](http://developer.android.com/guide/components/tasks-and-back-stack.html)
@@ -43,53 +41,33 @@ stack，并且被desrotyed，接下来前一个activity将会重新出现（resu
 ## Creating an Activity
 
 为了创建一个activity，你需要创建一个Activity类的自雷（或者直接继承一个现有的Activity的子类）。在你创建的Activity的
-子类中，你需要重写一些生命周期的回调方法，它们将在activity的状态发生改变时被调用，比如create，stop，resume，destro
-y，其中两个最重要的回调方法是：
+子类中，你需要重写一些生命周期的回调方法，它们将在activity的状态发生改变时被调用，比如create，stop，resume，destroy，其中两个最重要的回调方法是：
 
 **onCreate()**
 
 
-你必须实现这个方法，因为系统创建activity时都会调用这个方法。你需要在这个方法中初始化各个组件，最重要的是，在这个方
-法里你需要调用setContentView()去定义你的activity的UI.
+你必须实现这个方法，因为系统创建activity时都会调用这个方法。你需要在这个方法中初始化各个组件，最重要的是，在这个方法里你需要调用setContentView()去定义你的activity的UI.
 
 
 **onPause()**
 
-当用户离开当前activity时首先都会调用这个方法（注意
-，无论以什么姿势离开，都会先调用这个方法），所以，你可以再这里提
-交一些需要保存的修改，因为用户可能不会再回来这个ac
-tivity。
+当用户离开当前activity时首先都会调用这个方法（注意，无论以什么姿势离开，都会先调用这个方法），所以，你可以再这里提交一些需要保存的修改，因为用户可能不会再回来这个activity。
 
-当activity进行切换或者发生预料之外的中断，你可以使
-用其他几个生命周期的回调方法来提供一个流畅的用户体
-验，后面讲详细
-介绍这些回调方法。
+当activity进行切换或者发生预料之外的中断，你可以使用其他几个生命周期的回调方法来提供一个流畅的用户体验，后面讲详细介绍这些回调方法。
 
 
 ## Implementing a user interface
 
 
-activity的UI是通过许多分层的view对象组成的，view对
-象都继承于View类，它们都占据一个正方形区域并且能响
-应用户交互。
+activity的UI是通过许多分层的view对象组成的，view对象都继承于View类，它们都占据一个正方形区域并且能响应用户交互。
 
-android提供了很多定制好的view，你可以直接使用它们
-组织你的布局。"Widgets"是其中一种view，它们可以提
-供一些可见并且可交互的元素在屏幕上，比如buttom,
-textview,image。而说到"layout"，它继承于ViewGroup,
-ViewGroup为其子视图（child 
-view）提供一个布局模型，比如linear layout， grid 
-layout，relative layout。另外，你也可以自己自定义
-自己的view或者view group。
+Android提供了很多定制好的view，你可以直接使用它们组织你的布局。“Widgets”是其中一种view，它们可以提供一些可见并且可交互的元素在屏幕上，比如buttom,textview,image。而说到“layout”，它继承于ViewGroup，ViewGroup为其子视图（child view）提供一个布局模型，比如linear layout， grid layout，relative layout。另外，你也可以自己自定义自己的view或者view group。
 
-定义布局的最常使用的方式是使用XML布局文件，这样你
-的布局设计就可以独立于activity的代码，然后将你设计
-的布局通过setContentView的方式设置到activity中。当
-然，你也可以在activity代码中插入view到viewGroup中
+定义布局的最常使用的方式是使用XML布局文件，这样你的布局设计就可以独立于activity的代码，然后将你设计
+的布局通过setContentView的方式设置到activity中。当然，你也可以在activity代码中插入view到viewGroup中
 ，然后将你的根布局传递给setContentView().
 
-关于UI的设计，可以参考[User Interface](http://developer.android.com/guide/
-topics/ui/index.html)
+关于UI的设计，可以参考[User Interface](http://developer.android.com/guide/topics/ui/index.html)
 
 
 
@@ -99,8 +77,8 @@ topics/ui/index.html)
 
 
 
-为了让系统能得到你的activity，你需要在manifest文件中声明activity.如下：
-在<application>元素中增加一个子元素<activity>
+为了让系统能得到你的activity，你需要在manifest文件中声明activity.如下：在<application>元素中增加一个子元素
+<activity>
 
 {% highlight xml %}
 
@@ -120,8 +98,7 @@ topics/ui/index.html)
 
 ## Using intent filters
 
-activty元素可以通过定义intent filter来声明其他app或者其他app 
-component如何启动它。具体可以查看如下这篇文章
+activty元素可以通过定义intent filter来声明其他app或者其他app component如何启动它。具体可以查看如下这篇文章
 
 
 [Intents and Intent Filters](https://developer.android.com/guide/components/intents-filters.html)
