@@ -7,15 +7,22 @@
 - title: JS
   url: /js/
 
+
 - title: Android
   url: /android/
+
 
 - title: Git
   url: /git/
 
  
+- title: Python
+  url: /python/
+
+
 - title: Tools
   url: /tools/
+
 
 - title: ReadingNotes
   url: /readingnotes/

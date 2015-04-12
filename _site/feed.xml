@@ -4,13 +4,147 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-04-08T20:49:12+08:00</updated>
+<updated>2015-04-12T23:21:36+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
   <uri>/</uri>
   <email>chenhuazhaoao@gmail.com</email>
 </author>
+
+
+  
+
+<entry>
+  <title type="html"><![CDATA[【Python笔记】列表和元祖]]></title>
+  <link rel="alternate" type="text/html" href="/python/python-note-lists-and-tuples/" />
+  <id>/python/python-note-lists-and-tuples</id>
+  <published>2015-04-12T00:00:00+08:00</published>
+  <updated>2015-04-12T00:00:00+08:00</updated>
+  <author>
+    <name>Quinn Chen</name>
+    <uri></uri>
+    <email>chenhuazhaoao@gmail.com</email>
+  </author>
+  <content type="html">&lt;h1 id=&quot;section&quot;&gt;1,大致介绍&lt;/h1&gt;
+
+&lt;p&gt;Python中有一种数据结构叫容器，容器主要有三种，序列，字典，集合。这里的字典就是其他语言中常见的键值对。&lt;/p&gt;
+
+&lt;p&gt;序列（sequence）。一共有6种序列，其中的两种是列表和元组（list and tuple）。&lt;/p&gt;
+
+&lt;p&gt;列表可以被修改，元组则不能。&lt;/p&gt;
+
+&lt;h5 id=&quot;section-1&quot;&gt;2，序列的常用操作&lt;/h5&gt;
+
+&lt;p&gt;序列可以包含普通类型的数据，也可以包含序列。&lt;/p&gt;
+
+&lt;p&gt;序列常用的操作有，索引，分片，加，乘。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;索引&lt;/h2&gt;
+
+&lt;p&gt;索引用于访问序列单个元素，序列从左到右的索引从0开始递增，从右到左从-1开始递减&lt;/p&gt;
+
+&lt;p&gt;字符串是一种由字符组成的序列，&lt;/p&gt;
+
+&lt;p&gt;关于序列的索引，字符串可以直接在字面值之后，后者一个函数的返回结果之后使用索引，如下&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;Quinn&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;#39;u&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fourth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;raw_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Year: &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Year&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2015&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fourth&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;#39;5&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;分片&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;索引用于访问序列单个元素，分片则是访问多个元素。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;两个索引的分片&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;分片可以由冒号隔开的两个索引实现。如下&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;冒号两侧的两个索引，分别是分片第一个元素的索引，以及分片最后一个元素的索引加1。换句话说，第一个索引的元素包含在分片中，最后一个不包含在分片中。&lt;/p&gt;
+
+&lt;p&gt;两个索引为相等的值，则返回一个空序列。或者左侧索引的元素在右侧索引元素的后面，也返回一个空序列。&lt;/p&gt;
+
+&lt;p&gt;注意这种分片方式无论如何都访问不到最后一个元素，只能通过下面两种。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;一个索引的分片&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;没有索引的分片&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;获取整个序列&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;带步长的分片&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;以上说的分片都是默认步长为1，其实也可以是其他大小，步长的值放在两个索引之后，步长的使用方法如下&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[::&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;注意，如从右往左取切片，步长必须为负数，否则返回切片为空。&lt;/p&gt;
+
+&lt;h1 id=&quot;section-4&quot;&gt;序列相加&lt;/h1&gt;
+
+&lt;p&gt;注意，字符串属于序列，字符串可以和字符串相加，但是字符串不能和列表相加，如下&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;Quinn &amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;Chen&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;#39;Quinn Chen&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;Chen&amp;#39;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Traceback&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;call&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;lt;pyshell#38&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;Chen&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;ne&quot;&gt;TypeError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;can&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;only&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;concatenate&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;str&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;section-5&quot;&gt;序列乘法&lt;/h1&gt;
+
+&lt;p&gt;乘法主要用于重复元素，如下&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;Quinn&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;#39;QuinnQuinnQuinnQuinnQuinn&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/python/python-note-lists-and-tuples/&quot;&gt;【Python笔记】列表和元祖&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on April 12, 2015.&lt;/p&gt;</content>
+</entry>
 
 
   
@@ -1116,9 +1250,7 @@ stack，并且被desrotyed，接下来前一个activity将会重新出现（resu
 
 &lt;h2 id=&quot;declaring-the-activity-in-the-manifest&quot;&gt;Declaring the activity in the manifest&lt;/h2&gt;
 
-&lt;p&gt;为了让系统能得到你的activity，你需要在manifest文件中声明activity.如下：在&lt;application&gt;元素中增加一个子元素&lt;/application&gt;&lt;/p&gt;
-&lt;activity&gt;
-
+&lt;p&gt;为了让系统能得到你的activity，你需要在manifest文件中声明activity.如下：在application元素中增加一个子元素activity&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;manifest&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;application&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
@@ -1128,51 +1260,38 @@ stack，并且被desrotyed，接下来前一个activity将会重新出现（resu
   ...
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/manifest &amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;p&gt;在这个activity元素中，可以增加诸多属性，比如label,icon,name,theme，其中name属性不能随便进行修改，可以阅读以下这篇文章&lt;/p&gt;
 
-在这个activity元素中，可以增加诸多属性，比如label,icon,name,theme，其中name属性不能随便进行修改，可以阅读以下这篇文章
+&lt;p&gt;&lt;a href=&quot;http://android-developers.blogspot.jp/2011/06/things-that-cannot-change.html&quot;&gt;Things That Cannot Change&lt;/a&gt;&lt;/p&gt;
 
-[Things That Cannot Change](http://android-developers.blogspot.jp/2011/06/things-that-cannot-change.html)
+&lt;h2 id=&quot;using-intent-filters&quot;&gt;Using intent filters&lt;/h2&gt;
 
-## Using intent filters
+&lt;p&gt;activty元素可以通过定义intent filter来声明其他app或者其他app component如何启动它。具体可以查看如下这篇文章&lt;/p&gt;
 
-activty元素可以通过定义intent filter来声明其他app或者其他app component如何启动它。具体可以查看如下这篇文章
+&lt;p&gt;&lt;a href=&quot;https://developer.android.com/guide/components/intents-filters.html&quot;&gt;Intents and Intent Filters&lt;/a&gt;&lt;/p&gt;
 
+&lt;h2 id=&quot;starting-an-activity&quot;&gt;Starting an Activity&lt;/h2&gt;
 
-[Intents and Intent Filters](https://developer.android.com/guide/components/intents-filters.html)
+&lt;p&gt;通过调用startActivity()并传递给它一个intent对象可以启动另一个activity。Intent可以用来描述你即将启动的activity或者你即将执行的操作。甚至可以启动不同application之间的activity。Intent也可以用于传输少量的数据。&lt;/p&gt;
 
-
-## Starting an Activity
-
-
-通过调用startActivity()并传递给它一个intent对象可以启动另一个activity。Intent可以用来描述你即将启动的activity或者你即将执行的操作。甚至可以启动不同application之间的activity。Intent也可以用于传输少量的数据。
-
-以下是通过一个activity启动另一个activity的例子
-
+&lt;p&gt;以下是通过一个activity启动另一个activity的例子&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;Intent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SignInActivity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;startActivity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;p&gt;当你的app要执行一些诸如发邮件，发短信等操作时，你可以启动其它app的activity进行操作，当设备中有多个app中拥有这样的activity，则会弹出一个选择框。当你执行完操作，将返回原本的activity。&lt;/p&gt;
 
-当你的app要执行一些诸如发邮件，发短信等操作时，你可以启动其它app的activity进行操作，当设备中有多个app中拥有这样的activity，则会弹出一个选择框。当你执行完操作，将返回原本的activity。
-
-如下是一个发送邮件的操作，
-
+&lt;p&gt;如下是一个发送邮件的操作，&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;Intent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ACTION_SEND&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;putExtra&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;EXTRA_EMAIL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recipientArray&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;startActivity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;p&gt;此处recipientArray是接收方的邮件地址，将自动填充到打开的发送邮件的activity中。&lt;/p&gt;
 
-此处recipientArray是接收方的邮件地址，将自动填充到打开的发送邮件的activity中。
+&lt;h2 id=&quot;starting-an-activity-for-a-result&quot;&gt;Starting an activity for a result&lt;/h2&gt;
 
-
-
-
-
-##  Starting an activity for a result
-
-这个方面比较熟悉，下面就只是列一个小例子，通过startActivityForResult()获取一个联系人。
-
+&lt;p&gt;这个方面比较熟悉，下面就只是列一个小例子，通过startActivityForResult()获取一个联系人。&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pickContact&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;c1&quot;&gt;// Create an intent to &amp;quot;pick&amp;quot; a contact, as defined by the content provider URI&lt;/span&gt;
@@ -1195,82 +1314,66 @@ activty元素可以通过定义intent filter来声明其他app或者其他app co
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;h2 id=&quot;shutting-down-an-activity&quot;&gt;Shutting Down an Activity&lt;/h2&gt;
 
+&lt;p&gt;终结一个activity可以通过finish()方法，也可以通过finishActivity()
+关闭当前activity以及之前启动的activity（堆栈下面的其他activity）&lt;/p&gt;
 
+&lt;h2 id=&quot;managing-the-activity-lifecycle&quot;&gt;Managing the Activity Lifecycle&lt;/h2&gt;
 
+&lt;p&gt;你在重写各个生命周期方法时，需要先调用其父类的的方法。&lt;/p&gt;
 
-##  Shutting Down an Activity
+&lt;p&gt;关于生命周期，一般能看到三个循环&lt;/p&gt;
 
-终结一个activity可以通过finish()方法，也可以通过finishActivity()
-关闭当前activity以及之前启动的activity（堆栈下面的其他activity）
+&lt;p&gt;&lt;strong&gt;entire lifetime&lt;/strong&gt;
+该循环发生在onCreate()和onDestroy()之间，一些关乎全局的状态(比如布局)需要在onCreate()中创建，而在onDestroy()释放一些持久性的资源。&lt;/p&gt;
 
-##  Managing the Activity Lifecycle
+&lt;p&gt;比如：你在后台下载数据，你可能在onCreate()中创建下载的线程，并且你需要在onDestroy()停止该线程。&lt;/p&gt;
 
+&lt;p&gt;&lt;strong&gt;visible lifetime&lt;/strong&gt;
+该循环发生在onStart()和onStop()之间，在该循环中你始终可以看到该activity并且可以与它交互，onStop是启动其它activity时被调用的。&lt;/p&gt;
 
-你在重写各个生命周期方法时，需要先调用其父类的的方法。
+&lt;p&gt;比如，你可以再onStart()中注册广播(可能你收到广播就需要更新UI了)，并且在onStop()中注销广播。这样一来，你可能会多次执行onStart()和onStop()方法。&lt;/p&gt;
 
-关于生命周期，一般能看到三个循环
+&lt;p&gt;&lt;strong&gt;foreground lifetime&lt;/strong&gt;
+该循环在onResume()和onPause()之间，在这期间，你的activity在所有activity之上，并且拥有用户焦点。一般在以下情况你会跳出这个循环，比如，设备进入睡眠(进入睡眠应该是关闭屏幕了，而不是回到主界面)，或者一个dialog出现了。&lt;/p&gt;
 
-**entire lifetime**
-该循环发生在onCreate()和onDestroy()之间，一些关乎全局的状态(比如布局)需要在onCreate()中创建，而在onDestroy()释放一些持久性的资源。
+&lt;p&gt;由于这个状态切换很频繁，所以在这两个方法中应该执行一些轻量级的代码，避免状态切换太慢。&lt;/p&gt;
 
-比如：你在后台下载数据，你可能在onCreate()中创建下载的线程，并且你需要在onDestroy()停止该线程。
-
-**visible lifetime**
-该循环发生在onStart()和onStop()之间，在该循环中你始终可以看到该activity并且可以与它交互，onStop是启动其它activity时被调用的。
-
-比如，你可以再onStart()中注册广播(可能你收到广播就需要更新UI了)，并且在onStop()中注销广播。这样一来，你可能会多次执行onStart()和onStop()方法。
-
-**foreground lifetime**
-该循环在onResume()和onPause()之间，在这期间，你的activity在所有activity之上，并且拥有用户焦点。一般在以下情况你会跳出这个循环，比如，设备进入睡眠(进入睡眠应该是关闭屏幕了，而不是回到主界面)，或者一个dialog出现了。
-
-由于这个状态切换很频繁，所以在这两个方法中应该执行一些轻量级的代码，避免状态切换太慢。
-
-生命周期的几个循环如下图
+&lt;p&gt;生命周期的几个循环如下图&lt;/p&gt;
 &lt;figure&gt;
   &lt;img src=&quot;/images/activity_lifecycle.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
   &lt;figcaption&gt;生命周期示意图&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-从图中看到，可以中途被杀死的状态有onPause()，onStop()，onDestroy()
+&lt;p&gt;从图中看到，可以中途被杀死的状态有onPause()，onStop()，onDestroy()&lt;/p&gt;
 
-所以，一般我们需要在onPause()中选择保存一些需要保存的数据，当然，阻塞过程不该在onPause()中执行，否则会影响状态切换速度。
+&lt;p&gt;所以，一般我们需要在onPause()中选择保存一些需要保存的数据，当然，阻塞过程不该在onPause()中执行，否则会影响状态切换速度。&lt;/p&gt;
 
-以上其实在任何生命周期的回调方法中，设备环境极度恶劣的情况下，都随时可能被杀死。
+&lt;p&gt;以上其实在任何生命周期的回调方法中，设备环境极度恶劣的情况下，都随时可能被杀死。&lt;/p&gt;
 
+&lt;h2 id=&quot;saving-activity-state&quot;&gt;Saving activity state&lt;/h2&gt;
 
+&lt;p&gt;举个例子，activityA中有一个edittextA，你从activityA跳转到activityB，再按返回键回到activityA，此时edittextA中的内容依然被保存着。但是有时候可能activity可能被强制回收，此时edittextA中的内容将不会被保存。&lt;/p&gt;
 
+&lt;p&gt;上面之所以edittext的内容会被保存，是因为很多组件都默认都会保存其状态，但是你必须给这些组件一个ID值，因为保存其状态时通过键值对保存的。另外，如果你对组件的saveEnabled属性设置为false，则不会有自动保存的功能。&lt;/p&gt;
 
+&lt;p&gt;上面是activity进入后台回来之后依然能恢复UI组件的状态，但是当后台的activity被意外地destroy时，则不会恢复UI状态，则需要通过在 onSaveInstanceState()中保存数据，在onCreate()或者onRestoreInstanceState()中恢复数据的方法来实现保存UI状态。在使用onSaveInstanceState()和onCreate()或者onRestoreInstanceState()方法时，需要先各自调用其父类的方法。&lt;/p&gt;
 
-## Saving activity state
+&lt;p&gt;onSaveInstanceState()是在系统意外回收activity时会被自动调用，但是用户主动finish掉一个activity时(比如按返回键或者调finish())并不会自动调用onSaveInstanceState().&lt;/p&gt;
 
+&lt;h2 id=&quot;handling-configuration-changes&quot;&gt;Handling configuration changes&lt;/h2&gt;
 
-举个例子，activityA中有一个edittextA，你从activityA跳转到activityB，再按返回键回到activityA，此时edittextA中的内容依然被保存着。但是有时候可能activity可能被强制回收，此时edittextA中的内容将不会被保存。
+&lt;p&gt;当设备的设置发生改变时，需要使用以上保存状态的方法，因为设备状态改变时，activity不会自动保存数据，它们是被destroy再创建的。比如语言环境变化，横屏竖屏切换。&lt;/p&gt;
 
-上面之所以edittext的内容会被保存，是因为很多组件都默认都会保存其状态，但是你必须给这些组件一个ID值，因为保存其状态时通过键值对保存的。另外，如果你对组件的saveEnabled属性设置为false，则不会有自动保存的功能。
+&lt;p&gt;更多的关于运行时的状态变化知识可以参考&lt;/p&gt;
 
-上面是activity进入后台回来之后依然能恢复UI组件的状态，但是当后台的activity被意外地destroy时，则不会恢复UI状态，则需要通过在 onSaveInstanceState()中保存数据，在onCreate()或者onRestoreInstanceState()中恢复数据的方法来实现保存UI状态。在使用onSaveInstanceState()和onCreate()或者onRestoreInstanceState()方法时，需要先各自调用其父类的方法。
+&lt;p&gt;&lt;a href=&quot;https://developer.android.com/guide/topics/resources/runtime-changes.html&quot;&gt;Handling Runtime Changes&lt;/a&gt;&lt;/p&gt;
 
-onSaveInstanceState()是在系统意外回收activity时会被自动调用，但是用户主动finish掉一个activity时(比如按返回键或者调finish())并不会自动调用onSaveInstanceState().
+&lt;h2 id=&quot;coordinating-activities&quot;&gt;Coordinating activities&lt;/h2&gt;
 
+&lt;p&gt;前文我们提到，要保存数据，则最好在onPause()中进行，除了因为它是onPause，onStop，onDestroy三个方法中最先被调用的，还有一个原因，activityA调用onPause之后，可能另一个activityB已经启动了（已经调用了onCreate(), onStart()和onResume()）之后，当前activityA才会调用onStop和onDestroy。而如果此时activityB要使用activityA保存在数据库中的数据，则需要activityA在onPause中即时将数据写入数据库。而不是在onStop或者onDestroy中。&lt;/p&gt;
 
-
-## Handling configuration changes
-
-当设备的设置发生改变时，需要使用以上保存状态的方法，因为设备状态改变时，activity不会自动保存数据，它们是被destroy再创建的。比如语言环境变化，横屏竖屏切换。
-
-更多的关于运行时的状态变化知识可以参考
-
-[Handling Runtime Changes](https://developer.android.com/guide/topics/resources/runtime-changes.html)
-
-
-
-## Coordinating activities
-
-
-前文我们提到，要保存数据，则最好在onPause()中进行，除了因为它是onPause，onStop，onDestroy三个方法中最先被调用的，还有一个原因，activityA调用onPause之后，可能另一个activityB已经启动了（已经调用了onCreate(), onStart()和onResume()）之后，当前activityA才会调用onStop和onDestroy。而如果此时activityB要使用activityA保存在数据库中的数据，则需要activityA在onPause中即时将数据写入数据库。而不是在onStop或者onDestroy中。
-
-&lt;/activity&gt;
 
   &lt;p&gt;&lt;a href=&quot;/android/(translate)Activities/&quot;&gt;【译】Activities&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on December 21, 2014.&lt;/p&gt;</content>
 </entry>

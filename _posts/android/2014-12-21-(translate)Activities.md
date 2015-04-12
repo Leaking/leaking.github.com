@@ -77,8 +77,7 @@ Android提供了很多定制好的view，你可以直接使用它们组织你的
 
 
 
-为了让系统能得到你的activity，你需要在manifest文件中声明activity.如下：在<application>元素中增加一个子元素
-<activity>
+为了让系统能得到你的activity，你需要在manifest文件中声明activity.如下：在application元素中增加一个子元素activity
 
 {% highlight xml %}
 
