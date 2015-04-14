@@ -202,13 +202,13 @@
 
 <p>列表可以被修改，元组则不能。</p>
 
-<h5 id="section-1">2，序列的常用操作</h5>
+<h1 id="section-1">2，序列的常用操作</h1>
 
 <p>序列可以包含普通类型的数据，也可以包含序列。</p>
 
-<p>序列常用的操作有，索引，分片，加，乘。</p>
+<p>序列常用的操作有，索引，分片，加，乘。长度，最大值，最小值</p>
 
-<h2 id="section-2">索引</h2>
+<h3 id="section-2">索引</h3>
 
 <p>索引用于访问序列单个元素，序列从左到右的索引从0开始递增，从右到左从-1开始递减</p>
 
@@ -223,7 +223,7 @@
 <span class="o">&gt;&gt;&gt;</span> <span class="n">fourth</span>
 <span class="s">&#39;5&#39;</span></code></pre></div>
 
-<h2 id="section-3">分片</h2>
+<h3 id="section-3">分片</h3>
 
 <ul>
   <li>
@@ -284,7 +284,7 @@
 
 <p>注意，如从右往左取切片，步长必须为负数，否则返回切片为空。</p>
 
-<h1 id="section-4">序列相加</h1>
+<h3 id="section-4">序列相加</h3>
 
 <p>注意，字符串属于序列，字符串可以和字符串相加，但是字符串不能和列表相加，如下</p>
 
@@ -299,7 +299,7 @@
     <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;Chen&#39;</span>
 <span class="ne">TypeError</span><span class="p">:</span> <span class="n">can</span> <span class="n">only</span> <span class="n">concatenate</span> <span class="nb">list</span> <span class="p">(</span><span class="ow">not</span> <span class="s">&quot;str&quot;</span><span class="p">)</span> <span class="n">to</span> <span class="nb">list</span></code></pre></div>
 
-<h1 id="section-5">序列乘法</h1>
+<h3 id="section-5">序列乘法</h3>
 
 <p>乘法主要用于重复元素，如下</p>
 
@@ -309,6 +309,88 @@
 <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">42</span><span class="p">]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
 <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">]</span></code></pre></div>
+
+<h3 id="section-6">成员资格</h3>
+
+<p>为了检查一个元素是否存在于某个序列中，可以用in运算符，如下</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;quinn chen&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&#39;q&#39;</span> <span class="ow">in</span> <span class="n">name</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&#39;x&#39;</span> <span class="ow">in</span> <span class="n">name</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&#39;qu&#39;</span> <span class="ow">in</span> <span class="n">name</span>
+<span class="bp">True</span></code></pre></div>
+
+<p>如上，字符串比较特别，自从2.3版本开始，Python开始支持检查多余1个元素的字符串检查成员资格，比如上面的最后一个例子。</p>
+
+<h3 id="section-7">长度，最大值，最小值</h3>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="mi">10</span></code></pre></div>
+
+<p>同理，和len类似的内建函数还有max，和min，相信大家一下子就知道这两个函数的作用。</p>
+
+<h1 id="section-8">3，列表</h1>
+
+<p>列表不同于元祖和字符串，列表能改变内容，而元祖和字符串不能。</p>
+
+<p>这一节讲两部分，首先是list方法，元素赋值，删除元素，分片赋值方法，然后是列表的方法（列表对象的方法）。</p>
+
+<h3 id="list">list方法</h3>
+
+<p>如果想将一个字符串转化为列表，可以这样子做</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;quinn chen&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">name</span>
+<span class="s">&#39;quinn chen&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">]</span></code></pre></div>
+
+<h3 id="section-9">元素赋值</h3>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">namelist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">namelist</span>
+<span class="p">[</span><span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">namelist</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;m&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">namelist</span>
+<span class="p">[</span><span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="s">&#39;m&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">]</span></code></pre></div>
+
+<p>注意，此处元素赋值是对列表进行，而不能直接对字符串进行该操作（因为字符串不能被修改）。</p>
+
+<h3 id="section-10">删除元素</h3>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">namelist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">namelsit</span>
+<span class="p">[</span><span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="s">&#39;m&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">]</span></code></pre></div>
+
+<p>del只能对列表进行操作，不能读字符串进行操作（因为字符串不能被修改）。</p>
+
+<h3 id="section-11">分片赋值</h3>
+
+<p>分片赋值可以用长度相同的分片替代，甚至是长度不同的分片，甚至是长度为0的分片，这样就是删除的效果了，也可以是用长度不为0的分片，替代某个长度为0的分片，这样相当于插入。看如下代码</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">namelist</span>
+<span class="p">[</span><span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="s">&#39;m&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s">&#39;quinn&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">name</span>
+<span class="p">[</span><span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">name</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="o">=</span> <span class="s">&#39;aa&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">name</span>
+<span class="p">[</span><span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">name</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">name</span>
+<span class="p">[</span><span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;man&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">name</span>
+<span class="p">[</span><span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;m&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">name</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;ttt&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">name</span>
+<span class="p">[</span><span class="s">&#39;t&#39;</span><span class="p">,</span> <span class="s">&#39;m&#39;</span><span class="p">,</span> <span class="s">&#39;t&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;t&#39;</span><span class="p">]</span></code></pre></div>
+
+<p>注意，带步长的分片，赋值时，分片长度要对应，不能大于或者小于</p>
+
+<h3 id="section-12">列表方法</h3>
 
 
         <nav class="pagination" role="navigation">
