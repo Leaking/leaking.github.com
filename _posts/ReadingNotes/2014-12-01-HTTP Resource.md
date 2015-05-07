@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 《HTTP权威指南》Note2-URLs and Resources
+title: 《HTTP权威指南》URLs and Resources
 excerpt: "Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more."
 categories: readingnotes
 tags: [readingnotes]
