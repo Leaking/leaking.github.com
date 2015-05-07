@@ -1,12 +1,39 @@
 [
 	
 		{
+		  "title"      : "【Python笔记】字典",
+		  "category"   : "",
+      "tags"       : "sample-post",
+		  "url"        : "/python/python-note-dictionary/",
+		  "date"       : "2015-04-18 00:00:00 +0800",
+		  "shortdate"  : "April 18, 2015"
+		} ,
+	
+		{
 		  "title"      : "【Python笔记】列表和元祖",
 		  "category"   : "",
       "tags"       : "sample-post",
 		  "url"        : "/python/python-note-lists-and-tuples/",
 		  "date"       : "2015-04-12 00:00:00 +0800",
 		  "shortdate"  : "April 12, 2015"
+		} ,
+	
+		{
+		  "title"      : "Android自定义View-------为什么重写onMeasure()以及怎么重写",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/(customView)onMeasure/",
+		  "date"       : "2015-03-31 00:00:00 +0800",
+		  "shortdate"  : "March 31, 2015"
+		} ,
+	
+		{
+		  "title"      : "Android自定义View-------IOS风格的滑动开关",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/(customView)SlideSwitch/",
+		  "date"       : "2015-03-31 00:00:00 +0800",
+		  "shortdate"  : "March 31, 2015"
 		} ,
 	
 		{
@@ -28,7 +55,7 @@
 		} ,
 	
 		{
-		  "title"      : "《HTTP权威指南》Chapter11-Client Identification and Cookies",
+		  "title"      : "《HTTP权威指南》Client Identification and Cookies",
 		  "category"   : "",
       "tags"       : "readingnotes",
 		  "url"        : "/readingnotes/HTTP-cookies/",
@@ -82,7 +109,7 @@
 		} ,
 	
 		{
-		  "title"      : "《HTTP权威指南》Note2-URLs and Resources",
+		  "title"      : "《HTTP权威指南》URLs and Resources",
 		  "category"   : "",
       "tags"       : "readingnotes",
 		  "url"        : "/readingnotes/HTTP%20Resource/",
@@ -91,16 +118,7 @@
 		} ,
 	
 		{
-		  "title"      : "《HTTP权威指南》Note2-URLs and Resources",
-		  "category"   : "",
-      "tags"       : "readingnotes",
-		  "url"        : "/readingnotes/HTTP%20Http%20Message/",
-		  "date"       : "2014-12-01 00:00:00 +0800",
-		  "shortdate"  : "December 01, 2014"
-		} ,
-	
-		{
-		  "title"      : "《HTTP权威指南》Note1-Overview of HTTP",
+		  "title"      : "《HTTP权威指南》Overview of HTTP",
 		  "category"   : "",
       "tags"       : "readingnotes",
 		  "url"        : "/readingnotes/HTTP%20definition/",
