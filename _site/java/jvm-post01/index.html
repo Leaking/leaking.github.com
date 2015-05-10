@@ -5,34 +5,34 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>《HTTP权威指南》Overview of HTTP &#8211; My Stupid Blog</title>
+<title>JVM之Java运行时数据区域 &#8211; My Stupid Blog</title>
 <meta name="description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
-<meta name="keywords" content="readingnotes">
+<meta name="keywords" content="Java">
 
 
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="《HTTP权威指南》Overview of HTTP">
+<meta name="twitter:title" content="JVM之Java运行时数据区域">
 <meta name="twitter:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
 
 
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="/images/http_definitive_guide.jpg">
+<meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《HTTP权威指南》Overview of HTTP">
+<meta property="og:title" content="JVM之Java运行时数据区域">
 <meta property="og:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
-<meta property="og:url" content="/readingnotes/HTTP%20definition/">
+<meta property="og:url" content="/java/jvm-post01/">
 <meta property="og:site_name" content="My Stupid Blog">
 
 
 
 
 
-<link rel="canonical" href="/readingnotes/HTTP%20definition/">
+<link rel="canonical" href="/java/jvm-post01/">
 <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
 
 
@@ -156,12 +156,12 @@
 
 <div id="main" role="main">
   <article class="hentry">
-    <img src="/images/http_definitive_guide.jpg" class="entry-feature-image" alt="《HTTP权威指南》Overview of HTTP" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="JVM之Java运行时数据区域" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
     <div class="entry-wrapper">
       <header class="entry-header">
-        <span class="entry-tags"><a href="/tags/#readingnotes" title="Pages tagged readingnotes">readingnotes</a></span>
+        <span class="entry-tags"><a href="/tags/#Java" title="Pages tagged Java">Java</a></span>
         
-          <h1 class="entry-title">《HTTP权威指南》Overview of HTTP</h1>
+          <h1 class="entry-title">JVM之Java运行时数据区域</h1>
         
       </header>
       <footer class="entry-meta">
@@ -171,18 +171,18 @@
           <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
         
         <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
-        <span class="entry-date date published"><time datetime="2014-11-30T00:00:00+08:00"><i class="fa fa-calendar-o"></i> November 30, 2014</time></span>
+        <span class="entry-date date published"><time datetime="2015-05-10T00:00:00+08:00"><i class="fa fa-calendar-o"></i> May 10, 2015</time></span>
         
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=readingnotes&text=《HTTP权威指南》Overview%20of%20HTTP&url=/readingnotes/HTTP%20definition/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=Java&text=JVM之Java运行时数据区域&url=/java/jvm-post01/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
-          <a href="https://www.facebook.com/sharer/sharer.php?u=/readingnotes/HTTP%20definition/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/java/jvm-post01/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
         </span>
         <span class="social-share-googleplus">
-          <a href="https://plus.google.com/share?url=/readingnotes/HTTP%20definition/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+          <a href="https://plus.google.com/share?url=/java/jvm-post01/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
         </span>
         <!-- /.social-share -->
         
@@ -199,157 +199,106 @@
 </div><!-- /.google-ads --><!-- /.google-ads -->
       </footer>
       <div class="entry-content">
-        <h2 id="http-the-internets-multimedia-courier">HTTP: The Internet’s Multimedia Courier</h2>
-
-<p>首先，HTTP的全称为：Hypertext Transfer Protocol。属于可靠数据传输协议</p>
-
-<h2 id="web-clients-and-servers">Web Clients and Servers</h2>
-
-<p>服务器存储某些web内容，客户端向服务器发送一个http request请求某个对象（可能为文档，图片等等），
-若请求成功，服务器将返回一个http response，其中包含该对象，对象的内容长度，对象的类型等等信息。</p>
-
-<p>最常见的HTTP客户端是浏览器</p>
-
-<h2 id="resources">Resources</h2>
-
-<p>服务器上web内容都是资源，包括文件，图片等等。网关和搜索引擎也是资源（这一句不大懂）
-关于资源，主要有两个知识点，一个是媒体类型，一个是URI，如下</p>
-
-<h3 id="media-types">Media Types</h3>
-
-<p>服务器传输给客户端的对象可能是文本文件，图片等各种类型，HTTP协议通过MINE type来标记各种数据类型，客户端根据传输对象的数据类型，选择接收、显示该对象的方式。</p>
-
-<p>如下图</p>
-<figure>
-  <img src="/images/http_overview01.jpg" alt="search screenshot" />
-  <figcaption>Mine type其实就是平时见到的Content-type</figcaption>
-</figure>
-
-<p>Mine type的文本标记方式为 “类型/子类型”，如下几种常见情况</p>
-
-<blockquote>
-  <ul>
-    <li>html文本类型：text/html</li>
-    <li>ASCLL文本：text/plain</li>
-    <li>jpeg图片：image/jpeg</li>
-    <li>gif图片：image/gif</li>
-  </ul>
-</blockquote>
-
-<h3 id="uris">URIs</h3>
-
-<p>URI:uniform resource identifier,URI标记着所有资源在互联网上的位置</p>
-
-<p>URIs有两种，一种是URLs，一种是URNs</p>
-
-<h4 id="urls">URLs</h4>
-
-<p>URL: uniform resource locator,平常说的URI基本默认就是URL。</p>
+        <p>引言：Java虚拟机在执行Java程序的过程中，会把它管理的内存划分为若干个数据区域。这些区域有各自的特点与用途。以下是简图</p>
 
 <figure>
-  <img src="/images/httpoverview02.jpg" alt="search screenshot" />
-  <figcaption>URL的解析</figcaption>
+  <img src="/images/jvm_1.jpg" alt="search screenshot" />
+  <figcaption>新增加的文件</figcaption>
 </figure>
 
-<p>从上图可以得知，URL一般遵循一种标准格式，这种格式包括三部分</p>
+<h1 id="section">一， 这些数据区域分为两类</h1>
 
-<blockquote>
-  <ul>
-    <li>scheme：经常是 HTTP 协议 (http://)</li>
-    <li>主机地址：比如上面的 www.joes-hardware.com</li>
-    <li>指定某个资源：比如上面的 /specials/saw-blade.gif</li>
-  </ul>
-</blockquote>
+<h4 id="section-1">1，线程隔离的数据区</h4>
 
-<h4 id="urns">URNs</h4>
+<p>这些区域则是依赖用户线程的启动和结束而建立和销毁。</p>
 
-<p>URN:uniform resource name URN的用途是使客户端只要获取URN，无论资源的位置在哪里，都能获取到资源。URN的技术还未成熟，没有普及，所以目前URI基本都是默认为URL</p>
+<p>包括：程序计数器，Java虚拟机栈，本地方法栈</p>
 
-<h2 id="transactions">Transactions（事务）</h2>
+<p>特点：Java垃圾回收机制并不关注这个三个区，因为随着线程的结束，内存自然就随着被回收了</p>
 
-<figure>
-  &lt;img src="/images/httpoverview03.jpg alt="search screenshot"&gt;
-  <figcaption>HTTP事务</figcaption>
-</figure>
+<h4 id="section-2">2，由所有线程共享的数据区</h4>
 
-<p>一个HTTP事务是由一个HTTP请求命令和一个HTTP相应结果组成的，这种通信是具有HTTP报文的格式化数据块实现的。</p>
+<p>这些区域随着虚拟机进程的启动而存在。</p>
 
-<figure>
-  <img src="/images/httpoverview03.jpg" alt="search screenshot" />
-  <figcaption>事务</figcaption>
-</figure>
+<p>包括：方法区，堆</p>
 
-<p>客户端完成一个任务可能不仅仅只有一个事务。加载一个图片浏览的页面，需要多个事务，首先是加载页面框架的事务，然后是获取各个图片的事务。</p>
+<p>特点：Java中的垃圾收集器所关注的就是线程隔离的数据区，即方法区和堆。</p>
 
-<h3 id="methods">Methods</h3>
+<h1 id="jvm">二，JVM运行时五个数据区域的主要特点</h1>
 
-<p>HTTP 支持集中请求命令，这种请求命令也称为请求方法，这些方法告知服务器应该执行什么操作，常见方法如下如</p>
+<h4 id="program-counter-register">1，程序计数器（Program Counter Register）</h4>
 
-<figure>
-  <img src="/images/httpoverview04.jpg" alt="search screenshot" />
-  <figcaption>HTTP请求方法</figcaption>
-</figure>
-<p>### 状态码</p>
+<p>作用：当前线程所执行的字节码的行号指示器</p>
 
-<p>HTTP响应报文都会携带一个状态码，并带有一个解释状态码的文本。</p>
+<p>特点：</p>
 
-<h2 id="messages">Messages（报文）</h2>
+<p>1）每条线程都有一个独立的程序计数器，互不干扰，独立存储，所以我们称它为“”线程私有“的区域。</p>
 
-<p>报文有两种，一种是请求报文，一种是请求报文，两者格式基本相同。</p>
+<p>2）如果线程正在执行一个java方法，程序计数器记录的是正在执行的虚拟机字节码指令的地址，如果正在执行的是native方法，则计数器值为空。</p>
 
-<figure>
-  <img src="/images/httpoverview05.jpg" alt="search screenshot" />
-  <figcaption>HTTP报文格式</figcaption>
-</figure>
+<p>3）程序计数器是唯一一个Java虚拟机中没有规定任何OutOfMemoryError情况的区域。</p>
 
-<p>HTTP报文包含三个部分：</p>
+<h4 id="javajava-virtual-machine-stacks">2，Java虚拟机栈（Java Virtual Machine Stacks）</h4>
 
-<blockquote>
-  <ul>
-    <li>起始行（start line）：如上图，请求报文的起始行包括“方法+资源+HTTP版本”
- 而响应报文中则保罗“HTTP版本+状态码及其解释文本”</li>
-    <li>首部（header）：起始行之后跟随的是首部，首部每行都是一个键值对，键和值用双引号:分开。
-   <strong>首部的最后是一个空行</strong></li>
-    <li>主体（body）：起始行和首部都是纯文本的格式，而主体则为二进制数据，可以是文本，图片等。</li>
-  </ul>
-</blockquote>
+<p>作用：描述Java方法执行的内存模型。每个方法被执行时都会创建一个栈帧，栈帧中存储着这个方法的局部变量表等等相关信息，每个方法的栈帧都进栈放到Java虚拟机栈，栈帧进栈对应着方法开始执行，栈帧出栈对应方法执行结束。</p>
 
-<h2 id="connections">Connections</h2>
+<p>特点：</p>
 
-<p>HTTP基于TCP连接，TCP是可靠传输协议，前者是应用层协议，后者是传输层协议</p>
+<p>1）平时大家把Java内存区分为堆内存（Heap）和栈内存（Stack），这种方法比较粗糙，其实此处的”栈“就是这里的Java虚拟机栈，或者说是虚拟机栈中的局部变量表部分。</p>
 
-<figure>
-  <img src="/images/httpoverview07.jpg" alt="search screenshot" />
-  <figcaption>HTTP基于TCP协议</figcaption>
-</figure>
+<p>2）每个方法的栈帧分配多大的局部变量空间表示在编译期间确定的，在方法运行期间不会改变局部变量表的大小。</p>
 
-<h2 id="protocol-versions">Protocol Versions</h2>
+<p>3）这个区域有两种异常</p>
 
-<p>目前推荐使用的HTTP版本是1.1，还存在其他0.9，1.0等版本</p>
+<p>a，StackOverflowError异常：线程请求的栈深度大于虚拟机所允许的深度（不可以动态扩展）</p>
 
-<h2 id="architectural-components-of-the-webweb">Architectural Components of the Web（Web的结构组件）</h2>
+<p>b，OutOfMemoryError异常：虚拟机栈可以动态扩展，扩展时无法申请到足够的内存。</p>
 
-<p>上文讲到的HTTP客户端和HTTP服务器都是属于HTTP应用程序</p>
+<h4 id="native-method-stacks">3，本地方法栈（Native Method Stacks）</h4>
 
-<p>还有其他一些重要的HTTP应用程序（比较难理解）</p>
+<p>作用：本地方法栈和虚拟机栈所发挥的作用相同,但是针对的是native方法。</p>
 
-<blockquote>
-  <ul>
-    <li>Proxies (代理)</li>
-    <li>Caches （缓存）</li>
-    <li>Gateways （网关）</li>
-    <li>CTunnels （隧道）</li>
-    <li>Agents （agent代理）</li>
-  </ul>
-</blockquote>
+<p>特点：抛出StackOverflowError异常与OutOfMemoryError异常，抛出的原理和虚拟机栈对应的原理相同。</p>
+
+<h4 id="javajava-heap">4，Java堆（Java Heap）</h4>
+
+<p>作用：此内存的唯一目的就是存放对象实例与数组。（但是随着一些新的技术的发展，比如JIT编译器，逐渐出现了栈上分配等等方式）</p>
+
+<p>特点：</p>
+
+<p>1）垃圾收集器管理的主要区域就是Java堆，Java堆是被所有线程共享的一块内存区域，此内存区域的唯一目的是存放对象实例。</p>
+
+<p>2）Java堆是垃圾收集器管理的主要区域，也是我们常说的“GC堆”，现在收集器基本都是采用分代收集算法，所以Java堆中还可以细分为：新生代和老年代。</p>
+
+<p>3）Java堆不一定要处于物理上的连续状态。只需要是逻辑上连续即可。</p>
+
+<p>4）Java堆可以设置为固定大小或者可扩展的。当前主流的虚拟机都是设置为可扩展的（通过-Xmx和-Xms控制），所以一般情况下Java堆抛出的异常是：OutOfMemoryError异常</p>
+
+<h4 id="method-area">5，方法区（Method Area）</h4>
+
+<p>作用：存储已被虚拟机加载的类信息，常量，静态变量等数据</p>
+
+<p>特点：</p>
+
+<p>1）和Java堆类似，方法区在物理上可以不连续，可以选择固定大小或者扩扩展。</p>
+
+<p>2）方法区是Java堆的一个逻辑部分，但是可以不实现垃圾回收，垃圾收集行为在这个区域极少出现。但是还是必须适当地进行垃圾回收，主要是针对其中的常量池。</p>
+
+<h1 id="tips">tips:</h1>
+
+<p>StackOverflowError异常：线程请求的栈深度大于所允许的深度（不可以动态扩展）</p>
+
+<p>OutOfMemoryError异常：某个区域可以动态扩展，扩展时无法申请到足够的内存（可扩展）</p>
+
+<h1 id="section-3">其他</h1>
+
+<p>关于运行时常量池以及直接内存，后续再学习。</p>
 
 
         <nav class="pagination" role="navigation">
           
-            <a href="/js/.Object%20Type,%20Function%20Type/" class="btn" title="《JS高级程序设计》Note3-Object Type, Function Type">Previous</a>
+            <a href="/python/python-note-dictionary/" class="btn" title="【Python笔记】字典">Previous</a>
           
-          
-            <a href="/readingnotes/HTTP%20Resource/" class="btn" title="《HTTP权威指南》URLs and Resources">Next</a>
           
         </nav><!-- /.pagination -->
         

@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "JVM之Java运行时数据区域",
+		  "category"   : "",
+      "tags"       : "Java",
+		  "url"        : "/java/jvm-post01/",
+		  "date"       : "2015-05-10 00:00:00 +0800",
+		  "shortdate"  : "May 10, 2015"
+		} ,
+	
+		{
 		  "title"      : "【Python笔记】字典",
 		  "category"   : "",
       "tags"       : "sample-post",
@@ -57,8 +66,8 @@
 		{
 		  "title"      : "《HTTP权威指南》Client Identification and Cookies",
 		  "category"   : "",
-      "tags"       : "readingnotes",
-		  "url"        : "/readingnotes/HTTP-cookies/",
+      "tags"       : "HTTP",
+		  "url"        : "/http/HTTP-cookies/",
 		  "date"       : "2015-02-03 00:00:00 +0800",
 		  "shortdate"  : "February 03, 2015"
 		} ,

@@ -4,13 +4,126 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-05-07T20:41:59+08:00</updated>
+<updated>2015-05-10T11:33:12+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
   <uri>/</uri>
   <email>chenhuazhaoao@gmail.com</email>
 </author>
+
+
+  
+
+<entry>
+  <title type="html"><![CDATA[JVM之Java运行时数据区域]]></title>
+  <link rel="alternate" type="text/html" href="/java/jvm-post01/" />
+  <id>/java/jvm-post01</id>
+  <published>2015-05-10T00:00:00+08:00</published>
+  <updated>2015-05-10T00:00:00+08:00</updated>
+  <author>
+    <name>Quinn Chen</name>
+    <uri></uri>
+    <email>chenhuazhaoao@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;引言：Java虚拟机在执行Java程序的过程中，会把它管理的内存划分为若干个数据区域。这些区域有各自的特点与用途。以下是简图&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/jvm_1.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;新增加的文件&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;一， 这些数据区域分为两类&lt;/h1&gt;
+
+&lt;h4 id=&quot;section-1&quot;&gt;1，线程隔离的数据区&lt;/h4&gt;
+
+&lt;p&gt;这些区域则是依赖用户线程的启动和结束而建立和销毁。&lt;/p&gt;
+
+&lt;p&gt;包括：程序计数器，Java虚拟机栈，本地方法栈&lt;/p&gt;
+
+&lt;p&gt;特点：Java垃圾回收机制并不关注这个三个区，因为随着线程的结束，内存自然就随着被回收了&lt;/p&gt;
+
+&lt;h4 id=&quot;section-2&quot;&gt;2，由所有线程共享的数据区&lt;/h4&gt;
+
+&lt;p&gt;这些区域随着虚拟机进程的启动而存在。&lt;/p&gt;
+
+&lt;p&gt;包括：方法区，堆&lt;/p&gt;
+
+&lt;p&gt;特点：Java中的垃圾收集器所关注的就是线程隔离的数据区，即方法区和堆。&lt;/p&gt;
+
+&lt;h1 id=&quot;jvm&quot;&gt;二，JVM运行时五个数据区域的主要特点&lt;/h1&gt;
+
+&lt;h4 id=&quot;program-counter-register&quot;&gt;1，程序计数器（Program Counter Register）&lt;/h4&gt;
+
+&lt;p&gt;作用：当前线程所执行的字节码的行号指示器&lt;/p&gt;
+
+&lt;p&gt;特点：&lt;/p&gt;
+
+&lt;p&gt;1）每条线程都有一个独立的程序计数器，互不干扰，独立存储，所以我们称它为“”线程私有“的区域。&lt;/p&gt;
+
+&lt;p&gt;2）如果线程正在执行一个java方法，程序计数器记录的是正在执行的虚拟机字节码指令的地址，如果正在执行的是native方法，则计数器值为空。&lt;/p&gt;
+
+&lt;p&gt;3）程序计数器是唯一一个Java虚拟机中没有规定任何OutOfMemoryError情况的区域。&lt;/p&gt;
+
+&lt;h4 id=&quot;javajava-virtual-machine-stacks&quot;&gt;2，Java虚拟机栈（Java Virtual Machine Stacks）&lt;/h4&gt;
+
+&lt;p&gt;作用：描述Java方法执行的内存模型。每个方法被执行时都会创建一个栈帧，栈帧中存储着这个方法的局部变量表等等相关信息，每个方法的栈帧都进栈放到Java虚拟机栈，栈帧进栈对应着方法开始执行，栈帧出栈对应方法执行结束。&lt;/p&gt;
+
+&lt;p&gt;特点：&lt;/p&gt;
+
+&lt;p&gt;1）平时大家把Java内存区分为堆内存（Heap）和栈内存（Stack），这种方法比较粗糙，其实此处的”栈“就是这里的Java虚拟机栈，或者说是虚拟机栈中的局部变量表部分。&lt;/p&gt;
+
+&lt;p&gt;2）每个方法的栈帧分配多大的局部变量空间表示在编译期间确定的，在方法运行期间不会改变局部变量表的大小。&lt;/p&gt;
+
+&lt;p&gt;3）这个区域有两种异常&lt;/p&gt;
+
+&lt;p&gt;a，StackOverflowError异常：线程请求的栈深度大于虚拟机所允许的深度（不可以动态扩展）&lt;/p&gt;
+
+&lt;p&gt;b，OutOfMemoryError异常：虚拟机栈可以动态扩展，扩展时无法申请到足够的内存。&lt;/p&gt;
+
+&lt;h4 id=&quot;native-method-stacks&quot;&gt;3，本地方法栈（Native Method Stacks）&lt;/h4&gt;
+
+&lt;p&gt;作用：本地方法栈和虚拟机栈所发挥的作用相同,但是针对的是native方法。&lt;/p&gt;
+
+&lt;p&gt;特点：抛出StackOverflowError异常与OutOfMemoryError异常，抛出的原理和虚拟机栈对应的原理相同。&lt;/p&gt;
+
+&lt;h4 id=&quot;javajava-heap&quot;&gt;4，Java堆（Java Heap）&lt;/h4&gt;
+
+&lt;p&gt;作用：此内存的唯一目的就是存放对象实例与数组。（但是随着一些新的技术的发展，比如JIT编译器，逐渐出现了栈上分配等等方式）&lt;/p&gt;
+
+&lt;p&gt;特点：&lt;/p&gt;
+
+&lt;p&gt;1）垃圾收集器管理的主要区域就是Java堆，Java堆是被所有线程共享的一块内存区域，此内存区域的唯一目的是存放对象实例。&lt;/p&gt;
+
+&lt;p&gt;2）Java堆是垃圾收集器管理的主要区域，也是我们常说的“GC堆”，现在收集器基本都是采用分代收集算法，所以Java堆中还可以细分为：新生代和老年代。&lt;/p&gt;
+
+&lt;p&gt;3）Java堆不一定要处于物理上的连续状态。只需要是逻辑上连续即可。&lt;/p&gt;
+
+&lt;p&gt;4）Java堆可以设置为固定大小或者可扩展的。当前主流的虚拟机都是设置为可扩展的（通过-Xmx和-Xms控制），所以一般情况下Java堆抛出的异常是：OutOfMemoryError异常&lt;/p&gt;
+
+&lt;h4 id=&quot;method-area&quot;&gt;5，方法区（Method Area）&lt;/h4&gt;
+
+&lt;p&gt;作用：存储已被虚拟机加载的类信息，常量，静态变量等数据&lt;/p&gt;
+
+&lt;p&gt;特点：&lt;/p&gt;
+
+&lt;p&gt;1）和Java堆类似，方法区在物理上可以不连续，可以选择固定大小或者扩扩展。&lt;/p&gt;
+
+&lt;p&gt;2）方法区是Java堆的一个逻辑部分，但是可以不实现垃圾回收，垃圾收集行为在这个区域极少出现。但是还是必须适当地进行垃圾回收，主要是针对其中的常量池。&lt;/p&gt;
+
+&lt;h1 id=&quot;tips&quot;&gt;tips:&lt;/h1&gt;
+
+&lt;p&gt;StackOverflowError异常：线程请求的栈深度大于所允许的深度（不可以动态扩展）&lt;/p&gt;
+
+&lt;p&gt;OutOfMemoryError异常：某个区域可以动态扩展，扩展时无法申请到足够的内存（可扩展）&lt;/p&gt;
+
+&lt;h1 id=&quot;section-3&quot;&gt;其他&lt;/h1&gt;
+
+&lt;p&gt;关于运行时常量池以及直接内存，后续再学习。&lt;/p&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/java/jvm-post01/&quot;&gt;JVM之Java运行时数据区域&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on May 10, 2015.&lt;/p&gt;</content>
+</entry>
 
 
   
@@ -1162,8 +1275,8 @@
 
 <entry>
   <title type="html"><![CDATA[《HTTP权威指南》Client Identification and Cookies]]></title>
-  <link rel="alternate" type="text/html" href="/readingnotes/HTTP-cookies/" />
-  <id>/readingnotes/HTTP-cookies</id>
+  <link rel="alternate" type="text/html" href="/http/HTTP-cookies/" />
+  <id>/http/HTTP-cookies</id>
   <published>2015-02-03T00:00:00+08:00</published>
   <updated>2015-02-03T00:00:00+08:00</updated>
   <author>
@@ -1226,17 +1339,17 @@ User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)&lt;/p&gt;
     &lt;p&gt;另一种情况就是NAT共享IP&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;HTTP代理和网关使得服务器看到的IP是代理或者网关的IP，而不是客户端的IP。虽然代理可以加上”Client-ip”和”X-forwarded-for”拓展头部—–它们的值为客户端真正的地址。但是很多代理不支持这种拓展头部。&lt;/p&gt;
+    &lt;p&gt;HTTP代理和网关使得服务器看到的IP是代理或者网关的IP，而不是客户端的IP。虽然代理可以加上“Client-ip”和“X-forwarded-for”拓展头部—–它们的值为客户端真正的地址。但是很多代理不支持这种拓展头部。&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;依然有部分情况使用IP地址做用户识别，比如局域网内限制某些IP地址的电话访问某些保密资源。在因特网上则不能采取这种策略了，IP地址很容易i被伪造。&lt;/p&gt;
+&lt;p&gt;依然有部分情况使用IP地址做用户识别，比如局域网内限制某些IP地址的电话访问某些保密资源。在因特网上则不能采取这种策略了，IP地址很容易被伪造。&lt;/p&gt;
 
 &lt;h3 id=&quot;user-login&quot;&gt;User Login&lt;/h3&gt;
 
 &lt;p&gt;与其被动地凭借IP地址猜测用户的身份，服务器不如直接让用户使用账号密码认证登陆。从而验证其身份。&lt;/p&gt;
 
-&lt;p&gt;为了方便，HTTP自带内建的WWW-Authenticate 和 Authorization两个头部，它们可以携带用户信息房网服务器，一旦验证登陆通过，则以后每次请求都带上这个登陆信息。&lt;/p&gt;
+&lt;p&gt;为了方便，HTTP自带内建的WWW-Authenticate 和 Authorization两个头部，它们可以携带用户信息发往服务器，一旦验证登陆通过，则以后每次请求都带上这个登陆信息。&lt;/p&gt;
 
 &lt;p&gt;如果服务器希望用户在访问网页之前登陆，则服务器可以返回一个401的要求登陆的信息给浏览器，然后浏览器会弹出一个登陆窗口，下次请求时就将带上这个登陆信息。如下图：&lt;/p&gt;
 
@@ -1297,7 +1410,7 @@ User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)&lt;/p&gt;
 
 &lt;h2 id=&quot;types-of-cookes&quot;&gt;Types of Cookes&lt;/h2&gt;
 
-&lt;p&gt;session cookies和 持久cookies，这就是常见的两种cookie。前者不是持久的，后者是持久的，会保存到本地。如果设置了Discard参数或者没有设置Expires和Max-Age参数，则代表是session cookies。&lt;/p&gt;
+&lt;p&gt;session cookies和持久cookies，这就是常见的两种cookie。前者不是持久的，后者是持久的，会保存到本地。如果设置了Discard参数或者没有设置Expires和Max-Age参数，则代表是session cookies。&lt;/p&gt;
 
 &lt;h2 id=&quot;how-cookies-work&quot;&gt;How Cookies Work&lt;/h2&gt;
 
@@ -1337,7 +1450,7 @@ User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)&lt;/p&gt;
 &lt;p&gt;Cookie存在安全风险，而且很多网站滥用Set-cookie，甚至第三方营销公司会结合IP地址和Referer header记录用户的浏览习惯。但是作用还是大于风险的。&lt;/p&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;/readingnotes/HTTP-cookies/&quot;&gt;《HTTP权威指南》Client Identification and Cookies&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on February 03, 2015.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;/http/HTTP-cookies/&quot;&gt;《HTTP权威指南》Client Identification and Cookies&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on February 03, 2015.&lt;/p&gt;</content>
 </entry>
 
 
@@ -3351,78 +3464,6 @@ Git将其描述为Untracked files&lt;/p&gt;
 
 
   &lt;p&gt;&lt;a href=&quot;/tools/how-to-build-me/&quot;&gt;Jekyll搭建博客&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on August 29, 2014.&lt;/p&gt;</content>
-</entry>
-
-
-  
-
-<entry>
-  <title type="html"><![CDATA[《JS高级程序设计》Note1-What Is JavaScript?]]></title>
-  <link rel="alternate" type="text/html" href="/js/what-is-js/" />
-  <id>/js/what-is-js</id>
-  <published>2014-08-25T00:00:00+08:00</published>
-  <updated>2014-08-25T00:00:00+08:00</updated>
-  <author>
-    <name>Quinn Chen</name>
-    <uri></uri>
-    <email>chenhuazhaoao@gmail.com</email>
-  </author>
-  <content type="html">&lt;h1 id=&quot;javascript&quot;&gt;第一章 JavaScript简介&lt;/h1&gt;
-
-&lt;p&gt;1.2 JavaScript简史、
-网景推出了Javascript，微软推出了Jscript。后来被某个国际组织统一除了一个标准——-ECMAScript
-1.2 JavaScript实现&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Temp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;JavaScript与ECMAScript经常被混为同一含义。但是事实不然
-JavaScript实现包含以下三种不同组成
-核心（ECMAScript）
-文档对象模型（DOM）
-浏览器对象模型（BOM）&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ready&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;.search-field&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jekyllSearch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-          &lt;span class=&quot;nx&quot;&gt;jsonFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;/search.json&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-          &lt;span class=&quot;nx&quot;&gt;searchResults&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;.search-results&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-          &lt;span class=&quot;nx&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;lt;li&amp;gt;&amp;lt;article&amp;gt;&amp;lt;a href=&amp;quot;{url}&amp;quot;&amp;gt;{title} &amp;lt;span class=&amp;quot;entry-date&amp;quot;&amp;gt;&amp;lt;time datetime=&amp;quot;{date}&amp;quot;&amp;gt;{shortdate}&amp;lt;/time&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/article&amp;gt;&amp;lt;/li&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-          &lt;span class=&quot;nx&quot;&gt;fuzzy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-          &lt;span class=&quot;nx&quot;&gt;noResults&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;lt;p&amp;gt;Nothing found.&amp;lt;/p&amp;gt;&amp;#39;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-
-  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;undefined&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    
-     &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-          &lt;span class=&quot;nx&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;.close-btn&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-          &lt;span class=&quot;nx&quot;&gt;searchform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;.search-form&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-          &lt;span class=&quot;nx&quot;&gt;canvas&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;body&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-          &lt;span class=&quot;nx&quot;&gt;dothis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;.dosearch&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-    
-    &lt;span class=&quot;nx&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;dothis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;.search-wrapper&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;block&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;searchform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toggleClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;active&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;searchform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;input&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;focus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;canvas&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toggleClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;search-overlay&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-    
-      &lt;span class=&quot;nx&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;.search-wrapper&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;removeAttr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;style&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;searchform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toggleClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;active&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;canvas&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;removeClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;search-overlay&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;})(&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-  &lt;p&gt;&lt;a href=&quot;/js/what-is-js/&quot;&gt;《JS高级程序设计》Note1-What Is JavaScript?&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on August 25, 2014.&lt;/p&gt;</content>
 </entry>
 
 </feed>

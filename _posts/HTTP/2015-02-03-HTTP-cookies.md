@@ -2,8 +2,8 @@
 layout: post
 title: 《HTTP权威指南》Client Identification and Cookies
 excerpt: "Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more."
-categories: readingnotes
-tags: [readingnotes]
+categories: HTTP
+tags: [HTTP]
 image:
   feature: http_definitive_guide.jpg
   credit: WeGraphics
@@ -68,10 +68,10 @@ User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)
 
 + 另一种情况就是NAT共享IP
 
-+ HTTP代理和网关使得服务器看到的IP是代理或者网关的IP，而不是客户端的IP。虽然代理可以加上"Client-ip"和"X-forwarded-for"拓展头部-----它们的值为客户端真正的地址。但是很多代理不支持这种拓展头部。
++ HTTP代理和网关使得服务器看到的IP是代理或者网关的IP，而不是客户端的IP。虽然代理可以加上“Client-ip”和“X-forwarded-for”拓展头部-----它们的值为客户端真正的地址。但是很多代理不支持这种拓展头部。
 
 
-依然有部分情况使用IP地址做用户识别，比如局域网内限制某些IP地址的电话访问某些保密资源。在因特网上则不能采取这种策略了，IP地址很容易i被伪造。
+依然有部分情况使用IP地址做用户识别，比如局域网内限制某些IP地址的电话访问某些保密资源。在因特网上则不能采取这种策略了，IP地址很容易被伪造。
 
 
 
@@ -81,7 +81,7 @@ User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)
 
 与其被动地凭借IP地址猜测用户的身份，服务器不如直接让用户使用账号密码认证登陆。从而验证其身份。
 
-为了方便，HTTP自带内建的WWW-Authenticate 和 Authorization两个头部，它们可以携带用户信息房网服务器，一旦验证登陆通过，则以后每次请求都带上这个登陆信息。
+为了方便，HTTP自带内建的WWW-Authenticate 和 Authorization两个头部，它们可以携带用户信息发往服务器，一旦验证登陆通过，则以后每次请求都带上这个登陆信息。
 
 
 如果服务器希望用户在访问网页之前登陆，则服务器可以返回一个401的要求登陆的信息给浏览器，然后浏览器会弹出一个登陆窗口，下次请求时就将带上这个登陆信息。如下图：
@@ -132,7 +132,7 @@ Cookie使得HTTP头部需要重新定义，而且影响了缓存。另外很多�
 
 ## Types of Cookes
 
-session cookies和 持久cookies，这就是常见的两种cookie。前者不是持久的，后者是持久的，会保存到本地。如果设置了Discard参数或者没有设置Expires和Max-Age参数，则代表是session cookies。
+session cookies和持久cookies，这就是常见的两种cookie。前者不是持久的，后者是持久的，会保存到本地。如果设置了Discard参数或者没有设置Expires和Max-Age参数，则代表是session cookies。
 
 ##How Cookies Work
 
