@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "Java集合框架",
+		  "category"   : "",
+      "tags"       : "Java",
+		  "url"        : "/java/javase-collection-01/",
+		  "date"       : "2015-05-14 00:00:00 +0800",
+		  "shortdate"  : "May 14, 2015"
+		} ,
+	
+		{
 		  "title"      : "JVM之Java运行时数据区域",
 		  "category"   : "",
       "tags"       : "Java",
@@ -43,24 +52,6 @@
 		  "url"        : "/android/(customView)SlideSwitch/",
 		  "date"       : "2015-03-31 00:00:00 +0800",
 		  "shortdate"  : "March 31, 2015"
-		} ,
-	
-		{
-		  "title"      : "【自定义View】IOS风格的滑动开关",
-		  "category"   : "",
-      "tags"       : "android",
-		  "url"        : "/android/(customView)SlideSwitch/",
-		  "date"       : "2015-03-09 00:00:00 +0800",
-		  "shortdate"  : "March 09, 2015"
-		} ,
-	
-		{
-		  "title"      : "【自定义View】为什么重写onMeasure()以及怎么重写",
-		  "category"   : "",
-      "tags"       : "android",
-		  "url"        : "/android/(customView)onMeasure/",
-		  "date"       : "2015-03-08 00:00:00 +0800",
-		  "shortdate"  : "March 08, 2015"
 		} ,
 	
 		{

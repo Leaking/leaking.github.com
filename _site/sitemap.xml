@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>/java/javase-collection-01/</loc>
+    <lastmod>2015-05-14T00:00:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>/java/jvm-post01/</loc>
     <lastmod>2015-05-10T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
@@ -29,18 +35,6 @@
   <url>
     <loc>/android/(customView)SlideSwitch/</loc>
     <lastmod>2015-03-31T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>/android/(customView)SlideSwitch/</loc>
-    <lastmod>2015-03-09T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>/android/(customView)onMeasure/</loc>
-    <lastmod>2015-03-08T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
@@ -137,77 +131,84 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2015-05-10T11:33:12+08:00</lastmod>
+    <lastmod>2015-05-14T15:13:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
-    <loc>/git/</loc>
-    <lastmod>2015-05-10T11:33:12+08:00</lastmod>
+    <loc>/android/</loc>
+    <lastmod>2015-05-14T15:13:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/home/</loc>
-    <lastmod>2015-05-10T11:33:12+08:00</lastmod>
+    <lastmod>2015-05-14T15:13:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/about/</loc>
-    <lastmod>2015-05-10T11:33:12+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>/android/</loc>
-    <lastmod>2015-05-10T11:33:12+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2015-05-10T11:33:12+08:00</lastmod>
+    <lastmod>2015-05-14T15:13:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/reflection/</loc>
-    <lastmod>2015-05-10T11:33:12+08:00</lastmod>
+    <lastmod>2015-05-14T15:13:20+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>/git/</loc>
+    <lastmod>2015-05-14T15:13:20+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>/Java/</loc>
+    <lastmod>2015-05-14T15:13:20+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2015-05-14T15:13:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/tools/</loc>
-    <lastmod>2015-05-10T11:33:12+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>/js/</loc>
-    <lastmod>2015-05-10T11:33:12+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>/python/</loc>
-    <lastmod>2015-05-10T11:33:12+08:00</lastmod>
+    <lastmod>2015-05-14T15:13:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>/readingnotes/</loc>
-    <lastmod>2015-05-10T11:33:12+08:00</lastmod>
+    <lastmod>2015-05-14T15:13:20+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>/js/</loc>
+    <lastmod>2015-05-14T15:13:20+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>/python/</loc>
+    <lastmod>2015-05-14T15:13:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

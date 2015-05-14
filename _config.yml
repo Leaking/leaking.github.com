@@ -11,7 +11,7 @@ url:
 # Jekyll configuration
 
 permalink:   /:categories/:title/
-markdown:    kramdown
+markdown:    kramdown  
 highlighter: pygments
 sass:
   sass_dir: _sass
@@ -19,7 +19,7 @@ sass:
 gems:
   - jekyll-sitemap
 
-kramdown:
+kramdown :
   auto_ids: true
   footnote_nr: 2
   entity_output: as_char

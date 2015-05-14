@@ -5,14 +5,14 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>JVM之Java运行时数据区域 &#8211; My Stupid Blog</title>
+<title>Java集合框架 &#8211; My Stupid Blog</title>
 <meta name="description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
 <meta name="keywords" content="Java">
 
 
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="JVM之Java运行时数据区域">
+<meta name="twitter:title" content="Java集合框架">
 <meta name="twitter:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
 
 
@@ -23,16 +23,16 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM之Java运行时数据区域">
+<meta property="og:title" content="Java集合框架">
 <meta property="og:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
-<meta property="og:url" content="/java/jvm-post01/">
+<meta property="og:url" content="/java/javase-collection-01/">
 <meta property="og:site_name" content="My Stupid Blog">
 
 
 
 
 
-<link rel="canonical" href="/java/jvm-post01/">
+<link rel="canonical" href="/java/javase-collection-01/">
 <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
 
 
@@ -156,12 +156,12 @@
 
 <div id="main" role="main">
   <article class="hentry">
-    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="JVM之Java运行时数据区域" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Java集合框架" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
     <div class="entry-wrapper">
       <header class="entry-header">
         <span class="entry-tags"><a href="/tags/#Java" title="Pages tagged Java">Java</a></span>
         
-          <h1 class="entry-title">JVM之Java运行时数据区域</h1>
+          <h1 class="entry-title">Java集合框架</h1>
         
       </header>
       <footer class="entry-meta">
@@ -171,18 +171,18 @@
           <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
         
         <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
-        <span class="entry-date date published"><time datetime="2015-05-10T00:00:00+08:00"><i class="fa fa-calendar-o"></i> May 10, 2015</time></span>
+        <span class="entry-date date published"><time datetime="2015-05-14T00:00:00+08:00"><i class="fa fa-calendar-o"></i> May 14, 2015</time></span>
         
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=Java&text=JVM之Java运行时数据区域&url=/java/jvm-post01/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=Java&text=Java集合框架&url=/java/javase-collection-01/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
-          <a href="https://www.facebook.com/sharer/sharer.php?u=/java/jvm-post01/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/java/javase-collection-01/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
         </span>
         <span class="social-share-googleplus">
-          <a href="https://plus.google.com/share?url=/java/jvm-post01/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+          <a href="https://plus.google.com/share?url=/java/javase-collection-01/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
         </span>
         <!-- /.social-share -->
         
@@ -199,108 +199,133 @@
 </div><!-- /.google-ads --><!-- /.google-ads -->
       </footer>
       <div class="entry-content">
-        <p>引言：Java虚拟机在执行Java程序的过程中，会把它管理的内存划分为若干个数据区域。这些区域有各自的特点与用途。以下是简图</p>
+        <h1 id="section">集合框架概览</h1>
+
+<p>集合框架主要包含三个部分</p>
+
+<ul>
+  <li>接口</li>
+  <li>实现</li>
+  <li>算法，算法指常用的排序，查找等</li>
+</ul>
+
+<h1 id="section-1">接口</h1>
+
+<p>集合框架中包含的接口大致如下图所示</p>
 
 <figure>
-  <img src="/images/jvm_1.jpg" alt="search screenshot" />
-  <figcaption></figcaption>
+  <img src="/images/JCF_interface_tree.jpg" alt="search screenshot" />
+  <figcaption>集合框架接口</figcaption>
 </figure>
 
-<h1 id="section">一， 这些数据区域分为两类</h1>
+<p>下面介绍以上各个接口</p>
 
-<h4 id="section-1">1，线程隔离的数据区</h4>
+<h2 id="collections">Collections</h2>
 
-<p>这些区域则是依赖用户线程的启动和结束而建立和销毁。</p>
+<p>关于Collections接口有以下两个常用点</p>
 
-<p>包括：程序计数器，Java虚拟机栈，本地方法栈</p>
+<ul>
+  <li>遍历</li>
+  <li>对整个集合进行操作</li>
+  <li>数组操作</li>
+</ul>
 
-<p>特点：Java垃圾回收机制并不关注这个三个区，因为随着线程的结束，内存自然就随着被回收了</p>
+<h4 id="section-2">遍历</h4>
 
-<h4 id="section-2">2，由所有线程共享的数据区</h4>
+<p>遍历方式一般由两种</p>
 
-<p>这些区域随着虚拟机进程的启动而存在。</p>
+<ul>
+  <li>for-each</li>
+  <li>iterator</li>
+</ul>
 
-<p>包括：方法区，堆</p>
+<p>1, for-each</p>
 
-<p>特点：Java中的垃圾收集器所关注的就是线程隔离的数据区，即方法区和堆。</p>
+<p>比如：</p>
 
-<h1 id="jvm">二，JVM运行时五个数据区域的主要特点</h1>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">for</span> <span class="o">(</span><span class="n">Object</span> <span class="n">o</span> <span class="o">:</span> <span class="n">collection</span><span class="o">)</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">o</span><span class="o">);</span></code></pre></div>
 
-<h4 id="program-counter-register">1，程序计数器（Program Counter Register）</h4>
+<p>2, Iterator</p>
 
-<p>作用：当前线程所执行的字节码的行号指示器</p>
+<p>先看看Iterator接口的源码</p>
 
-<p>特点：</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Iterator</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kt">boolean</span> <span class="nf">hasNext</span><span class="o">();</span>
+    <span class="n">E</span> <span class="nf">next</span><span class="o">();</span>
+    <span class="kt">void</span> <span class="nf">remove</span><span class="o">();</span> <span class="c1">//optional</span>
+<span class="o">}</span></code></pre></div>
 
-<p>1）每条线程都有一个独立的程序计数器，互不干扰，独立存储，所以我们称它为“”线程私有“的区域。</p>
+<p>hasNext以及next两个方法比较容易理解，需要注意的是remove方法的使用。</p>
 
-<p>2）如果线程正在执行一个java方法，程序计数器记录的是正在执行的虚拟机字节码指令的地址，如果正在执行的是native方法，则计数器值为空。</p>
+<p>每调用一次next只有，才能调用remove，有且只能调用一次。部分Collections的子接口没有实现该方法。另外，for–each遍历方式中，在遍历过程中不能移除集合元素。</p>
 
-<p>3）程序计数器是唯一一个Java虚拟机中没有规定任何OutOfMemoryError情况的区域。</p>
+<p>在遍历过程中，修改集合的唯一方式就是使用Iterator的remove方法。所以要过滤集合中的某些元素，
+可以使用Iterator、如下</p>
 
-<h4 id="javajava-virtual-machine-stacks">2，Java虚拟机栈（Java Virtual Machine Stacks）</h4>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">static</span> <span class="kt">void</span> <span class="nf">filter</span><span class="o">(</span><span class="n">Collection</span><span class="o">&lt;?&gt;</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">Iterator</span><span class="o">&lt;?&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span> <span class="n">it</span><span class="o">.</span><span class="na">hasNext</span><span class="o">();</span> <span class="o">)</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">cond</span><span class="o">(</span><span class="n">it</span><span class="o">.</span><span class="na">next</span><span class="o">()))</span>
+            <span class="n">it</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+<span class="o">}</span></code></pre></div>
 
-<p>作用：描述Java方法执行的内存模型。每个方法被执行时都会创建一个栈帧，栈帧中存储着这个方法的局部变量表等等相关信息，每个方法的栈帧都进栈放到Java虚拟机栈，栈帧进栈对应着方法开始执行，栈帧出栈对应方法执行结束。</p>
+<h4 id="section-3">对整个集合进行操作</h4>
 
-<p>特点：</p>
+<p>常见的方法有如下</p>
 
-<p>1）平时大家把Java内存区分为堆内存（Heap）和栈内存（Stack），这种方法比较粗糙，其实此处的”栈“就是这里的Java虚拟机栈，或者说是虚拟机栈中的局部变量表部分。</p>
+<ul>
+  <li>
+    <p>containsAll — 当前集合是否包含某个集合的所有元素</p>
+  </li>
+  <li>
+    <p>addAll — 将某个集合的所有元素添加到当前集合</p>
+  </li>
+  <li>
+    <p>removeAll — 将当前集合中，出现在某个集合中的元素，都移除掉</p>
+  </li>
+  <li>
+    <p>retainAll — 将当前集合中，没有出现在某个集合中的元素，都移除掉，其实就是取交集</p>
+  </li>
+  <li>
+    <p>clear — 移除所有元素.</p>
+  </li>
+</ul>
 
-<p>2）每个方法的栈帧分配多大的局部变量空间表示在编译期间确定的，在方法运行期间不会改变局部变量表的大小。</p>
+<p>当前集合调用addAll, removeAll, retainAll这三个方法之后，如果当前集合发生变化，则返回true。</p>
 
-<p>3）这个区域有两种异常</p>
+<p>如果要移除集合中元素e，可以这样做</p>
 
-<p>a，StackOverflowError异常：线程请求的栈深度大于虚拟机所允许的深度（不可以动态扩展）</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">c</span><span class="o">.</span><span class="na">removeAll</span><span class="o">(</span><span class="n">Collections</span><span class="o">.</span><span class="na">singleton</span><span class="o">(</span><span class="n">e</span><span class="o">));</span></code></pre></div>
 
-<p>b，OutOfMemoryError异常：虚拟机栈可以动态扩展，扩展时无法申请到足够的内存。</p>
+<p>如果是移除所有为空的元素，则可以</p>
 
-<h4 id="native-method-stacks">3，本地方法栈（Native Method Stacks）</h4>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">c</span><span class="o">.</span><span class="na">removeAll</span><span class="o">(</span><span class="n">Collections</span><span class="o">.</span><span class="na">singleton</span><span class="o">(</span><span class="kc">null</span><span class="o">));</span></code></pre></div>
 
-<p>作用：本地方法栈和虚拟机栈所发挥的作用相同,但是针对的是native方法。</p>
+<p>以上Collections.singleton方法，可以创建一个只包含某个元素的集合。该集合类型时不能修改的Set。</p>
 
-<p>特点：抛出StackOverflowError异常与OutOfMemoryError异常，抛出的原理和虚拟机栈对应的原理相同。</p>
+<h4 id="section-4">数组操作</h4>
 
-<h4 id="javajava-heap">4，Java堆（Java Heap）</h4>
+<p>Collection的数组操作有两个方法</p>
 
-<p>作用：此内存的唯一目的就是存放对象实例与数组。（但是随着一些新的技术的发展，比如JIT编译器，逐渐出现了栈上分配等等方式）</p>
+<ul>
+  <li>public Object[] toArray();</li>
+  <li>public <t> T[] toArray(T[] array);</t></li>
+</ul>
 
-<p>特点：</p>
+<p>前者只能返回Object类型的数组，而且数组不能强制类型转化。如下</p>
 
-<p>1）垃圾收集器管理的主要区域就是Java堆，Java堆是被所有线程共享的一块内存区域，此内存区域的唯一目的是存放对象实例。</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Object</span><span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">toArray</span><span class="o">();</span></code></pre></div>
 
-<p>2）Java堆是垃圾收集器管理的主要区域，也是我们常说的“GC堆”，现在收集器基本都是采用分代收集算法，所以Java堆中还可以细分为：新生代和老年代。</p>
+<p>如果某个集合的元素类型时String，而你想返回一个String类型的数组，则需要用第二种方法。</p>
 
-<p>3）Java堆不一定要处于物理上的连续状态。只需要是逻辑上连续即可。</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span><span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">toArray</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">[</span><span class="n">c</span><span class="o">.</span><span class="na">size</span><span class="o">()]);</span></code></pre></div>
 
-<p>4）Java堆可以设置为固定大小或者可扩展的。当前主流的虚拟机都是设置为可扩展的（通过-Xmx和-Xms控制），所以一般情况下Java堆抛出的异常是：OutOfMemoryError异常</p>
-
-<h4 id="method-area">5，方法区（Method Area）</h4>
-
-<p>作用：存储已被虚拟机加载的类信息，常量，静态变量等数据</p>
-
-<p>特点：</p>
-
-<p>1）和Java堆类似，方法区在物理上可以不连续，可以选择固定大小或者扩扩展。</p>
-
-<p>2）方法区是Java堆的一个逻辑部分，但是可以不实现垃圾回收，垃圾收集行为在这个区域极少出现。但是还是必须适当地进行垃圾回收，主要是针对其中的常量池。</p>
-
-<h1 id="tips">tips:</h1>
-
-<p>StackOverflowError异常：线程请求的栈深度大于所允许的深度（不可以动态扩展）</p>
-
-<p>OutOfMemoryError异常：某个区域可以动态扩展，扩展时无法申请到足够的内存（可扩展）</p>
-
-<h1 id="section-3">其他</h1>
-
-<p>关于运行时常量池以及直接内存，后续再学习。</p>
-
+<p>带参数的toArray方法，参数是一个数组，如果数组的长度大于或者小于当前集合，则会自动调整，所以我们可以直接传进去一个大小和集合一样的数组。</p>
 
         <nav class="pagination" role="navigation">
           
-            <a href="/python/python-note-dictionary/" class="btn" title="【Python笔记】字典">Previous</a>
+            <a href="/java/jvm-post01/" class="btn" title="JVM之Java运行时数据区域">Previous</a>
           
-          
-            <a href="/java/javase-collection-01/" class="btn" title="Java集合框架">Next</a>
           
         </nav><!-- /.pagination -->
         
