@@ -5,14 +5,14 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Java集合框架 &#8211; My Stupid Blog</title>
+<title>Java容器概览 &#8211; My Stupid Blog</title>
 <meta name="description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
 <meta name="keywords" content="Java">
 
 
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="Java集合框架">
+<meta name="twitter:title" content="Java容器概览">
 <meta name="twitter:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
 
 
@@ -23,7 +23,7 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java集合框架">
+<meta property="og:title" content="Java容器概览">
 <meta property="og:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
 <meta property="og:url" content="/java/javase-collection-01/">
 <meta property="og:site_name" content="My Stupid Blog">
@@ -156,12 +156,12 @@
 
 <div id="main" role="main">
   <article class="hentry">
-    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Java集合框架" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Java容器概览" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
     <div class="entry-wrapper">
       <header class="entry-header">
         <span class="entry-tags"><a href="/tags/#Java" title="Pages tagged Java">Java</a></span>
         
-          <h1 class="entry-title">Java集合框架</h1>
+          <h1 class="entry-title">Java容器概览</h1>
         
       </header>
       <footer class="entry-meta">
@@ -176,7 +176,7 @@
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=Java&text=Java集合框架&url=/java/javase-collection-01/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=Java&text=Java容器概览&url=/java/javase-collection-01/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
           <a href="https://www.facebook.com/sharer/sharer.php?u=/java/javase-collection-01/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
@@ -199,17 +199,9 @@
 </div><!-- /.google-ads --><!-- /.google-ads -->
       </footer>
       <div class="entry-content">
-        <h1 id="section">集合框架概览</h1>
+        <p>本文主要讲解一些Java容器类的一些共同特点，比如Iterator等等，然后稍微介绍一些其中的一些实现，比如List,Set。</p>
 
-<p>集合框架主要包含三个部分</p>
-
-<ul>
-  <li>接口</li>
-  <li>实现</li>
-  <li>算法，算法指常用的排序，查找等</li>
-</ul>
-
-<h1 id="section-1">接口</h1>
+<h1 id="section">容器框架概览</h1>
 
 <p>集合框架中包含的接口大致如下图所示</p>
 
@@ -218,11 +210,11 @@
   <figcaption>集合框架接口</figcaption>
 </figure>
 
-<p>下面介绍以上各个接口</p>
+<p>很明显，平时说的容器，其实包含两个大类，一类是继承于Collection，一类是继承自Map，这篇文章主要讲解前者：Collection。</p>
 
-<h2 id="collections">Collections</h2>
+<h1 id="collection">Collection一些共同特点</h1>
 
-<p>关于Collections接口有以下两个常用点</p>
+<p>关于Collection接口有以下常用点</p>
 
 <ul>
   <li>遍历</li>
@@ -230,9 +222,9 @@
   <li>数组操作</li>
 </ul>
 
-<h4 id="section-2">遍历</h4>
+<h4 id="section-1">遍历</h4>
 
-<p>遍历方式一般由两种</p>
+<p>容器遍历方式一般由两种</p>
 
 <ul>
   <li>for-each</li>
@@ -269,9 +261,50 @@
             <span class="n">it</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
 <span class="o">}</span></code></pre></div>
 
-<h4 id="section-3">对整个集合进行操作</h4>
+<p>那么Iterator和Foreach之间是否有什么关系呢？</p>
 
-<p>常见的方法有如下</p>
+<p>容器之所以可以使用Foreach语句，其共同点以及原因是，容器实现了Iterable，而Iterable的源码是</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.util.Iterator</span><span class="o">;</span>
+
+<span class="cm">/** Implementing this interface allows an object to be the target of</span>
+<span class="cm"> *  the &quot;foreach&quot; statement.</span>
+<span class="cm"> * @since 1.5</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Returns an iterator over a set of elements of type T.</span>
+<span class="cm">     * </span>
+<span class="cm">     * @return an Iterator.</span>
+<span class="cm">     */</span>
+    <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">iterator</span><span class="o">();</span>
+<span class="o">}</span></code></pre></div>
+
+<p>看到其中的注释了没：</p>
+
+<blockquote>
+  <p>Implementing this interface allows an object to be the target of the
+“foreach” statement.</p>
+</blockquote>
+
+<p>所以，其实如果我们自定义一个类，让它实现Iterable接口，实现其中的iterator方法让它返回一个Iterator，那么这个类也可以使用于foreach。</p>
+
+<p>而数组之所以可以应用于foreach，其中的原因我还没研究。</p>
+
+<h4 id="section-2">对整个集合进行操作</h4>
+
+<h5 id="section-3">填充容器</h5>
+
+<p>所有容器都有两个构造方法，一个是默认的构造方法，一个是带有一个Collection参数的构造方法，它可以参数Collection其中的元素填充当前容器。（注意哦，这里讲的容器都是Collection以及其子类，不包含Map）</p>
+
+<p>平时填充容器的方式还可以这样：
+1，使用Arrays.asList(）方法生成List，然后再调用Collection的addAll方法将刚生成的List加入。不过得注意一点，Arrays.asList()生成的List底层是一个固定大小的数组，所以不能增删元素，只可以修改元素。
+2，使用Collections的addAll往一个Collection添加多个元素</p>
+
+<p>以上两种方法的灵活之处是，其参数可以接受可变参数，而且这种方式执行更快（Think in java是这样推荐的）。</p>
+
+<h5 id="section-4">容器常用的方法</h5>
 
 <ul>
   <li>
@@ -303,7 +336,14 @@
 
 <p>以上Collections.singleton方法，可以创建一个只包含某个元素的集合。该集合类型时不能修改的Set。</p>
 
-<h4 id="section-4">数组操作</h4>
+<h5 id="section-5">打印容器</h5>
+
+<p>数组的打印，不能直接打印数组对象，也不能打印数组对象的toString()结果，而要使用工具类Arrays的方法
+Arrays.toString</p>
+
+<p>而容器的打印，只需直接打印容器对象即可，因为容器对象都重写了其中的toString方法。</p>
+
+<h4 id="section-6">数组操作</h4>
 
 <p>Collection的数组操作有两个方法</p>
 
@@ -321,6 +361,115 @@
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span><span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">toArray</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">[</span><span class="n">c</span><span class="o">.</span><span class="na">size</span><span class="o">()]);</span></code></pre></div>
 
 <p>带参数的toArray方法，参数是一个数组，如果数组的长度大于或者小于当前集合，则会自动调整，所以我们可以直接传进去一个大小和集合一样的数组。</p>
+
+<h2 id="list-interface">List Interface</h2>
+
+<p>List接口除了实现父接口Collection的部分方法，而且包含其他方法，主要有</p>
+
+<ul>
+  <li>定位（Positional access），主要有get, set, add, addAll, and remove</li>
+  <li>查找，主要有indexOf 和 lastIndexOf</li>
+  <li>Iteration遍历：继承了Iterator</li>
+  <li>区间（Range-view）： 主要有sublist</li>
+</ul>
+
+<p>List接口有两个系统实现的集合类，ArrayList以及LinkedList，前者一般性能比较高，在特定情况下，后者性能比较好，后面再讨论。</p>
+
+<p>以下讲讲上面的四种方法</p>
+
+<p>首先，定位和查找的方法很容易理解和使用，此处就不多说了。</p>
+
+<h4 id="listiterator">ListIterator</h4>
+
+<p>先讲讲Iterator的原理，如下图，terator其实就是每次移动一次下标，下标的概念是两个元素之前的位置。</p>
+
+<figure>
+  <img src="/images/JCF_interface_iterator.jpg" alt="search screenshot" />
+  <figcaption>Iterator的原理</figcaption>
+</figure>
+
+<p>该接口继承于Iterator</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">ListIterator</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span></code></pre></div>
+
+<p>相比Iterator，ListIterator增加了几个方法</p>
+
+<ul>
+  <li>hasPrevious 是否有前一个元素（和hasNext相反）</li>
+  <li>previous 获取前一个元素（和next相反）</li>
+  <li>nextIndex 接下来调用next的话，返回元素的下标值</li>
+  <li>previousIndex 接下来调用previous的话，返回元素的下标值</li>
+  <li>remove 每次调用一次previous或者next之后，只能调用一次remove</li>
+  <li>set 每次调用一次previous或者next之后，只能调用一次set</li>
+  <li>add 在当前游标之前插入元素，不同于上面的方法，可以多次调用。</li>
+</ul>
+
+<h4 id="range-view">区间（Range-view）</h4>
+
+<p>subList(int fromIndex, int toIndex)方法返回一个子序列，子序列和原序列对子元素的修改，会相互影响。</p>
+
+<p>举个例子，以下方法可以删除一个List的若干个元素，并将删除的元素组成的序列返回。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">dealHand</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="n">deck</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">deckSize</span> <span class="o">=</span> <span class="n">deck</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="n">handView</span> <span class="o">=</span> <span class="n">deck</span><span class="o">.</span><span class="na">subList</span><span class="o">(</span><span class="n">deckSize</span> <span class="o">-</span> <span class="n">n</span><span class="o">,</span> <span class="n">deckSize</span><span class="o">);</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="n">hand</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;(</span><span class="n">handView</span><span class="o">);</span>
+    <span class="n">handView</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+    <span class="k">return</span> <span class="n">hand</span><span class="o">;</span>
+<span class="o">}</span></code></pre></div>
+
+<p>tips：对于List的实现类，比如ArrayList，删除元素时，从末尾删除的效率会比从开头删除的效率高。</p>
+
+<h4 id="section-7">序列算法</h4>
+
+<p>先强调一下，Collections是一个辅助类，而Collection才是接口。</p>
+
+<p>Collections中有对List进行一系列算法操作的方法。</p>
+
+<h2 id="list-implementations">List Implementations</h2>
+
+<p>List常见的实现类有ArrayList以及LinkedList.</p>
+
+<p>ArrayList的内部实现是一个数组，LinkedList的实现时一个双向链表。前者方便取值，后者方便增删元素。更多情况下，ArrayList的性能都是比较高的。</p>
+
+<p>List还有一个实现类CopyOnWriteArrayList，另外再讲讲。</p>
+
+<h2 id="set-interface">Set Interface</h2>
+
+<p>Set是一种元素不能重复的集合。常见实现类有三种</p>
+
+<ul>
+  <li>HashSet 遍历顺序是随机的 </li>
+  <li>TreeSet 遍历顺序按照元素大小</li>
+  <li>LinkedHashSet 遍历顺序按照插入元素的次序</li>
+</ul>
+
+<p>举个实用的小例子，如果你想复制一个集合，并去除其中的重复元素，可以这样</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Collection</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">noDups</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;(</span><span class="n">c</span><span class="o">);</span></code></pre></div>
+
+<p>如果除了要去除重复元素，还要排序，可以这样</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Collection</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">noDups</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashSet</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;(</span><span class="n">c</span><span class="o">);</span></code></pre></div>
+
+<p>对Set进行取交集，并集等操作时，如果为了避免影响原先的Set，需要先复制一份Set，如下</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Set</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">union</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;(</span><span class="n">s1</span><span class="o">);</span>
+<span class="n">union</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">s2</span><span class="o">);</span>
+
+<span class="n">Set</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">intersection</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;(</span><span class="n">s1</span><span class="o">);</span>
+<span class="n">intersection</span><span class="o">.</span><span class="na">retainAll</span><span class="o">(</span><span class="n">s2</span><span class="o">);</span>
+
+<span class="n">Set</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">difference</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;(</span><span class="n">s1</span><span class="o">);</span>
+<span class="n">difference</span><span class="o">.</span><span class="na">removeAll</span><span class="o">(</span><span class="n">s2</span><span class="o">);</span></code></pre></div>
+
+<p>先写到这里吧。</p>
+
+<p>参考自：
+1, <a href="http://docs.oracle.com/javase/tutorial/collections/">http://docs.oracle.com/javase/tutorial/collections/</a></p>
+
+<p>2, 《Think in Java》</p>
+
 
         <nav class="pagination" role="navigation">
           

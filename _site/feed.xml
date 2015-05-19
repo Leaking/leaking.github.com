@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-05-14T15:13:20+08:00</updated>
+<updated>2015-05-19T17:32:00+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -16,7 +16,7 @@
   
 
 <entry>
-  <title type="html"><![CDATA[Java集合框架]]></title>
+  <title type="html"><![CDATA[Java容器概览]]></title>
   <link rel="alternate" type="text/html" href="/java/javase-collection-01/" />
   <id>/java/javase-collection-01</id>
   <published>2015-05-14T00:00:00+08:00</published>
@@ -26,17 +26,9 @@
     <uri></uri>
     <email>chenhuazhaoao@gmail.com</email>
   </author>
-  <content type="html">&lt;h1 id=&quot;section&quot;&gt;集合框架概览&lt;/h1&gt;
+  <content type="html">&lt;p&gt;本文主要讲解一些Java容器类的一些共同特点，比如Iterator等等，然后稍微介绍一些其中的一些实现，比如List,Set。&lt;/p&gt;
 
-&lt;p&gt;集合框架主要包含三个部分&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;接口&lt;/li&gt;
-  &lt;li&gt;实现&lt;/li&gt;
-  &lt;li&gt;算法，算法指常用的排序，查找等&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;section-1&quot;&gt;接口&lt;/h1&gt;
+&lt;h1 id=&quot;section&quot;&gt;容器框架概览&lt;/h1&gt;
 
 &lt;p&gt;集合框架中包含的接口大致如下图所示&lt;/p&gt;
 
@@ -45,11 +37,11 @@
   &lt;figcaption&gt;集合框架接口&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;下面介绍以上各个接口&lt;/p&gt;
+&lt;p&gt;很明显，平时说的容器，其实包含两个大类，一类是继承于Collection，一类是继承自Map，这篇文章主要讲解前者：Collection。&lt;/p&gt;
 
-&lt;h2 id=&quot;collections&quot;&gt;Collections&lt;/h2&gt;
+&lt;h1 id=&quot;collection&quot;&gt;Collection一些共同特点&lt;/h1&gt;
 
-&lt;p&gt;关于Collections接口有以下两个常用点&lt;/p&gt;
+&lt;p&gt;关于Collection接口有以下常用点&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;遍历&lt;/li&gt;
@@ -57,9 +49,9 @@
   &lt;li&gt;数组操作&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;section-2&quot;&gt;遍历&lt;/h4&gt;
+&lt;h4 id=&quot;section-1&quot;&gt;遍历&lt;/h4&gt;
 
-&lt;p&gt;遍历方式一般由两种&lt;/p&gt;
+&lt;p&gt;容器遍历方式一般由两种&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;for-each&lt;/li&gt;
@@ -96,9 +88,50 @@
             &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h4 id=&quot;section-3&quot;&gt;对整个集合进行操作&lt;/h4&gt;
+&lt;p&gt;那么Iterator和Foreach之间是否有什么关系呢？&lt;/p&gt;
 
-&lt;p&gt;常见的方法有如下&lt;/p&gt;
+&lt;p&gt;容器之所以可以使用Foreach语句，其共同点以及原因是，容器实现了Iterable，而Iterable的源码是&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.Iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/** Implementing this interface allows an object to be the target of&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; *  the &amp;quot;foreach&amp;quot; statement.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; * @since 1.5&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Iterable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * Returns an iterator over a set of elements of type T.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * &lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * @return an Iterator.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;看到其中的注释了没：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Implementing this interface allows an object to be the target of the
+“foreach” statement.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;所以，其实如果我们自定义一个类，让它实现Iterable接口，实现其中的iterator方法让它返回一个Iterator，那么这个类也可以使用于foreach。&lt;/p&gt;
+
+&lt;p&gt;而数组之所以可以应用于foreach，其中的原因我还没研究。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-2&quot;&gt;对整个集合进行操作&lt;/h4&gt;
+
+&lt;h5 id=&quot;section-3&quot;&gt;填充容器&lt;/h5&gt;
+
+&lt;p&gt;所有容器都有两个构造方法，一个是默认的构造方法，一个是带有一个Collection参数的构造方法，它可以参数Collection其中的元素填充当前容器。（注意哦，这里讲的容器都是Collection以及其子类，不包含Map）&lt;/p&gt;
+
+&lt;p&gt;平时填充容器的方式还可以这样：
+1，使用Arrays.asList(）方法生成List，然后再调用Collection的addAll方法将刚生成的List加入。不过得注意一点，Arrays.asList()生成的List底层是一个固定大小的数组，所以不能增删元素，只可以修改元素。
+2，使用Collections的addAll往一个Collection添加多个元素&lt;/p&gt;
+
+&lt;p&gt;以上两种方法的灵活之处是，其参数可以接受可变参数，而且这种方式执行更快（Think in java是这样推荐的）。&lt;/p&gt;
+
+&lt;h5 id=&quot;section-4&quot;&gt;容器常用的方法&lt;/h5&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -130,7 +163,14 @@
 
 &lt;p&gt;以上Collections.singleton方法，可以创建一个只包含某个元素的集合。该集合类型时不能修改的Set。&lt;/p&gt;
 
-&lt;h4 id=&quot;section-4&quot;&gt;数组操作&lt;/h4&gt;
+&lt;h5 id=&quot;section-5&quot;&gt;打印容器&lt;/h5&gt;
+
+&lt;p&gt;数组的打印，不能直接打印数组对象，也不能打印数组对象的toString()结果，而要使用工具类Arrays的方法
+Arrays.toString&lt;/p&gt;
+
+&lt;p&gt;而容器的打印，只需直接打印容器对象即可，因为容器对象都重写了其中的toString方法。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-6&quot;&gt;数组操作&lt;/h4&gt;
 
 &lt;p&gt;Collection的数组操作有两个方法&lt;/p&gt;
 
@@ -149,7 +189,116 @@
 
 &lt;p&gt;带参数的toArray方法，参数是一个数组，如果数组的长度大于或者小于当前集合，则会自动调整，所以我们可以直接传进去一个大小和集合一样的数组。&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;/java/javase-collection-01/&quot;&gt;Java集合框架&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on May 14, 2015.&lt;/p&gt;</content>
+&lt;h2 id=&quot;list-interface&quot;&gt;List Interface&lt;/h2&gt;
+
+&lt;p&gt;List接口除了实现父接口Collection的部分方法，而且包含其他方法，主要有&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;定位（Positional access），主要有get, set, add, addAll, and remove&lt;/li&gt;
+  &lt;li&gt;查找，主要有indexOf 和 lastIndexOf&lt;/li&gt;
+  &lt;li&gt;Iteration遍历：继承了Iterator&lt;/li&gt;
+  &lt;li&gt;区间（Range-view）： 主要有sublist&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;List接口有两个系统实现的集合类，ArrayList以及LinkedList，前者一般性能比较高，在特定情况下，后者性能比较好，后面再讨论。&lt;/p&gt;
+
+&lt;p&gt;以下讲讲上面的四种方法&lt;/p&gt;
+
+&lt;p&gt;首先，定位和查找的方法很容易理解和使用，此处就不多说了。&lt;/p&gt;
+
+&lt;h4 id=&quot;listiterator&quot;&gt;ListIterator&lt;/h4&gt;
+
+&lt;p&gt;先讲讲Iterator的原理，如下图，terator其实就是每次移动一次下标，下标的概念是两个元素之前的位置。&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/JCF_interface_iterator.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;Iterator的原理&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;该接口继承于Iterator&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ListIterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;相比Iterator，ListIterator增加了几个方法&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;hasPrevious 是否有前一个元素（和hasNext相反）&lt;/li&gt;
+  &lt;li&gt;previous 获取前一个元素（和next相反）&lt;/li&gt;
+  &lt;li&gt;nextIndex 接下来调用next的话，返回元素的下标值&lt;/li&gt;
+  &lt;li&gt;previousIndex 接下来调用previous的话，返回元素的下标值&lt;/li&gt;
+  &lt;li&gt;remove 每次调用一次previous或者next之后，只能调用一次remove&lt;/li&gt;
+  &lt;li&gt;set 每次调用一次previous或者next之后，只能调用一次set&lt;/li&gt;
+  &lt;li&gt;add 在当前游标之前插入元素，不同于上面的方法，可以多次调用。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;range-view&quot;&gt;区间（Range-view）&lt;/h4&gt;
+
+&lt;p&gt;subList(int fromIndex, int toIndex)方法返回一个子序列，子序列和原序列对子元素的修改，会相互影响。&lt;/p&gt;
+
+&lt;p&gt;举个例子，以下方法可以删除一个List的若干个元素，并将删除的元素组成的序列返回。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dealHand&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deck&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deckSize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deck&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;handView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deck&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;subList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deckSize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deckSize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hand&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;handView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;handView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;clear&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hand&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;tips：对于List的实现类，比如ArrayList，删除元素时，从末尾删除的效率会比从开头删除的效率高。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-7&quot;&gt;序列算法&lt;/h4&gt;
+
+&lt;p&gt;先强调一下，Collections是一个辅助类，而Collection才是接口。&lt;/p&gt;
+
+&lt;p&gt;Collections中有对List进行一系列算法操作的方法。&lt;/p&gt;
+
+&lt;h2 id=&quot;list-implementations&quot;&gt;List Implementations&lt;/h2&gt;
+
+&lt;p&gt;List常见的实现类有ArrayList以及LinkedList.&lt;/p&gt;
+
+&lt;p&gt;ArrayList的内部实现是一个数组，LinkedList的实现时一个双向链表。前者方便取值，后者方便增删元素。更多情况下，ArrayList的性能都是比较高的。&lt;/p&gt;
+
+&lt;p&gt;List还有一个实现类CopyOnWriteArrayList，另外再讲讲。&lt;/p&gt;
+
+&lt;h2 id=&quot;set-interface&quot;&gt;Set Interface&lt;/h2&gt;
+
+&lt;p&gt;Set是一种元素不能重复的集合。常见实现类有三种&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;HashSet 遍历顺序是随机的 &lt;/li&gt;
+  &lt;li&gt;TreeSet 遍历顺序按照元素大小&lt;/li&gt;
+  &lt;li&gt;LinkedHashSet 遍历顺序按照插入元素的次序&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;举个实用的小例子，如果你想复制一个集合，并去除其中的重复元素，可以这样&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;Collection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;noDups&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HashSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;如果除了要去除重复元素，还要排序，可以这样&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;Collection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;noDups&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LinkedHashSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;对Set进行取交集，并集等操作时，如果为了避免影响原先的Set，需要先复制一份Set，如下&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;union&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HashSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;union&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intersection&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HashSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;intersection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;retainAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;difference&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HashSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;difference&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;removeAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;先写到这里吧。&lt;/p&gt;
+
+&lt;p&gt;参考自：
+1, &lt;a href=&quot;http://docs.oracle.com/javase/tutorial/collections/&quot;&gt;http://docs.oracle.com/javase/tutorial/collections/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;2, 《Think in Java》&lt;/p&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/java/javase-collection-01/&quot;&gt;Java容器概览&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on May 14, 2015.&lt;/p&gt;</content>
 </entry>
 
 

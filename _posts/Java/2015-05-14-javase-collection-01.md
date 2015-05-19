@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java集合框架01
+title: Java容器概览
 excerpt: "Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more."
 categories: Java
 tags: [Java]
@@ -12,16 +12,12 @@ comments: true
 share: true
 ---
 
-# 集合框架概览
-
-集合框架主要包含三个部分
- 
-+ 接口
-+ 实现
-+ 算法，算法指常用的排序，查找等
+本文主要讲解一些Java容器类的一些共同特点，比如Iterator等等，然后稍微介绍一些其中的一些实现，比如List,Set。
 
 
-# 接口
+
+# 容器框架概览
+
 
 集合框架中包含的接口大致如下图所示
 
@@ -30,13 +26,16 @@ share: true
   <figcaption>集合框架接口</figcaption>
 </figure>
 
+很明显，平时说的容器，其实包含两个大类，一类是继承于Collection，一类是继承自Map，这篇文章主要讲解前者：Collection。
 
 
-下面介绍以上各个接口
-
-## Collections
+# Collection一些共同特点
  
-关于Collections接口有以下两个常用点
+
+
+
+
+关于Collection接口有以下常用点
 
 + 遍历
 + 对整个集合进行操作
@@ -44,7 +43,7 @@ share: true
 
 #### 遍历
 
-遍历方式一般由两种
+容器遍历方式一般由两种
 
 + for-each
 + iterator
@@ -89,9 +88,54 @@ static void filter(Collection<?> c) {
 {% endhighlight %}
 
 
+那么Iterator和Foreach之间是否有什么关系呢？
+
+容器之所以可以使用Foreach语句，其共同点以及原因是，容器实现了Iterable，而Iterable的源码是
+
+
+{% highlight java %}
+import java.util.Iterator;
+
+/** Implementing this interface allows an object to be the target of
+ *  the "foreach" statement.
+ * @since 1.5
+ */
+public interface Iterable<T> {
+
+    /**
+     * Returns an iterator over a set of elements of type T.
+     * 
+     * @return an Iterator.
+     */
+    Iterator<T> iterator();
+}
+{% endhighlight %}
+
+看到其中的注释了没：
+
+> Implementing this interface allows an object to be the target of the
+> "foreach" statement.
+
+所以，其实如果我们自定义一个类，让它实现Iterable接口，实现其中的iterator方法让它返回一个Iterator，那么这个类也可以使用于foreach。
+
+而数组之所以可以应用于foreach，其中的原因我还没研究。
+
+
+
 #### 对整个集合进行操作
 
-常见的方法有如下
+##### 填充容器
+
+所有容器都有两个构造方法，一个是默认的构造方法，一个是带有一个Collection参数的构造方法，它可以参数Collection其中的元素填充当前容器。（注意哦，这里讲的容器都是Collection以及其子类，不包含Map）
+
+平时填充容器的方式还可以这样：
+1，使用Arrays.asList(）方法生成List，然后再调用Collection的addAll方法将刚生成的List加入。不过得注意一点，Arrays.asList()生成的List底层是一个固定大小的数组，所以不能增删元素，只可以修改元素。
+2，使用Collections的addAll往一个Collection添加多个元素
+
+以上两种方法的灵活之处是，其参数可以接受可变参数，而且这种方式执行更快（Think in java是这样推荐的）。
+
+
+##### 容器常用的方法
 
 + containsAll — 当前集合是否包含某个集合的所有元素
 
@@ -119,6 +163,16 @@ c.removeAll(Collections.singleton(null));
 
 以上Collections.singleton方法，可以创建一个只包含某个元素的集合。该集合类型时不能修改的Set。
 
+
+
+##### 打印容器
+
+数组的打印，不能直接打印数组对象，也不能打印数组对象的toString()结果，而要使用工具类Arrays的方法
+Arrays.toString
+
+而容器的打印，只需直接打印容器对象即可，因为容器对象都重写了其中的toString方法。
+
+
 #### 数组操作
 
 Collection的数组操作有两个方法
@@ -140,3 +194,132 @@ String[] a = c.toArray(new String[c.size()]);
 
 
 带参数的toArray方法，参数是一个数组，如果数组的长度大于或者小于当前集合，则会自动调整，所以我们可以直接传进去一个大小和集合一样的数组。
+
+
+
+
+
+## List Interface
+
+List接口除了实现父接口Collection的部分方法，而且包含其他方法，主要有
+
++ 定位（Positional access），主要有get, set, add, addAll, and remove
++ 查找，主要有indexOf 和 lastIndexOf
++ Iteration遍历：继承了Iterator
++ 区间（Range-view）： 主要有sublist
+
+List接口有两个系统实现的集合类，ArrayList以及LinkedList，前者一般性能比较高，在特定情况下，后者性能比较好，后面再讨论。
+
+以下讲讲上面的四种方法
+
+首先，定位和查找的方法很容易理解和使用，此处就不多说了。
+
+#### ListIterator
+
+先讲讲Iterator的原理，如下图，terator其实就是每次移动一次下标，下标的概念是两个元素之前的位置。
+
+<figure>
+  <img src="{{ site.url }}/images/JCF_interface_iterator.jpg" alt="search screenshot">
+  <figcaption>Iterator的原理</figcaption>
+</figure>
+
+
+该接口继承于Iterator
+
+{% highlight java %}
+public interface ListIterator<E> extends Iterator<E> 
+{% endhighlight %}
+
+相比Iterator，ListIterator增加了几个方法
+
++ hasPrevious 是否有前一个元素（和hasNext相反）
++ previous 获取前一个元素（和next相反）
++ nextIndex 接下来调用next的话，返回元素的下标值
++ previousIndex 接下来调用previous的话，返回元素的下标值
++ remove 每次调用一次previous或者next之后，只能调用一次remove
++ set 每次调用一次previous或者next之后，只能调用一次set
++ add 在当前游标之前插入元素，不同于上面的方法，可以多次调用。
+
+
+#### 区间（Range-view）
+
+subList(int fromIndex, int toIndex)方法返回一个子序列，子序列和原序列对子元素的修改，会相互影响。
+
+举个例子，以下方法可以删除一个List的若干个元素，并将删除的元素组成的序列返回。
+
+{% highlight java %}
+public static <E> List<E> dealHand(List<E> deck, int n) {
+    int deckSize = deck.size();
+    List<E> handView = deck.subList(deckSize - n, deckSize);
+    List<E> hand = new ArrayList<E>(handView);
+    handView.clear();
+    return hand;
+}
+{% endhighlight %}
+
+tips：对于List的实现类，比如ArrayList，删除元素时，从末尾删除的效率会比从开头删除的效率高。
+
+#### 序列算法
+
+先强调一下，Collections是一个辅助类，而Collection才是接口。
+
+Collections中有对List进行一系列算法操作的方法。
+
+
+
+## List Implementations
+
+List常见的实现类有ArrayList以及LinkedList.
+
+ArrayList的内部实现是一个数组，LinkedList的实现时一个双向链表。前者方便取值，后者方便增删元素。更多情况下，ArrayList的性能都是比较高的。
+
+List还有一个实现类CopyOnWriteArrayList，另外再讲讲。
+
+
+## Set Interface
+
+Set是一种元素不能重复的集合。常见实现类有三种
+
++ HashSet 遍历顺序是随机的 
++ TreeSet 遍历顺序按照元素大小
++ LinkedHashSet 遍历顺序按照插入元素的次序
+
+举个实用的小例子，如果你想复制一个集合，并去除其中的重复元素，可以这样
+
+{% highlight java %}
+Collection<Type> noDups = new HashSet<Type>(c);
+{% endhighlight %}
+
+如果除了要去除重复元素，还要排序，可以这样
+
+{% highlight java %}
+Collection<Type> noDups = new LinkedHashSet<Type>(c);
+{% endhighlight %}
+
+
+对Set进行取交集，并集等操作时，如果为了避免影响原先的Set，需要先复制一份Set，如下
+
+{% highlight java %}
+Set<Type> union = new HashSet<Type>(s1);
+union.addAll(s2);
+
+Set<Type> intersection = new HashSet<Type>(s1);
+intersection.retainAll(s2);
+
+Set<Type> difference = new HashSet<Type>(s1);
+difference.removeAll(s2);
+{% endhighlight %}
+
+
+先写到这里吧。
+
+参考自：
+1, [http://docs.oracle.com/javase/tutorial/collections/](http://docs.oracle.com/javase/tutorial/collections/)
+
+2, 《Think in Java》
+
+
+
+
+
+
