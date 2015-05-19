@@ -19,11 +19,11 @@ share: true
 # 容器框架概览
 
 
-集合框架中包含的接口大致如下图所示
+容器框架中包含的接口大致如下图所示
 
 <figure>
   <img src="{{ site.url }}/images/JCF_interface_tree.jpg" alt="search screenshot">
-  <figcaption>集合框架接口</figcaption>
+  <figcaption>容器框架接口</figcaption>
 </figure>
 
 很明显，平时说的容器，其实包含两个大类，一类是继承于Collection，一类是继承自Map，这篇文章主要讲解前者：Collection。
@@ -38,7 +38,7 @@ share: true
 关于Collection接口有以下常用点
 
 + 遍历
-+ 对整个集合进行操作
++ 对整个容器进行操作
 + 数组操作
 
 #### 遍历
@@ -74,9 +74,9 @@ public interface Iterator<E> {
 
 hasNext以及next两个方法比较容易理解，需要注意的是remove方法的使用。
 
-每调用一次next只有，才能调用remove，有且只能调用一次。部分Collections的子接口没有实现该方法。另外，for--each遍历方式中，在遍历过程中不能移除集合元素。
+每调用一次next只有，才能调用remove，有且只能调用一次。部分Collections的子接口没有实现该方法。另外，for--each遍历方式中，在遍历过程中不能移除容器元素。
 
-在遍历过程中，修改集合的唯一方式就是使用Iterator的remove方法。所以要过滤集合中的某些元素，
+在遍历过程中，修改容器的唯一方式就是使用Iterator的remove方法。所以要过滤容器中的某些元素，
 可以使用Iterator、如下
 
 {% highlight java %}
@@ -122,7 +122,7 @@ public interface Iterable<T> {
 
 
 
-#### 对整个集合进行操作
+#### 对整个容器进行操作
 
 ##### 填充容器
 
@@ -137,19 +137,19 @@ public interface Iterable<T> {
 
 ##### 容器常用的方法
 
-+ containsAll — 当前集合是否包含某个集合的所有元素
++ containsAll — 当前容器是否包含某个容器的所有元素
 
-+ addAll — 将某个集合的所有元素添加到当前集合
++ addAll — 将某个容器的所有元素添加到当前容器
 
-+ removeAll — 将当前集合中，出现在某个集合中的元素，都移除掉
++ removeAll — 将当前容器中，出现在某个容器中的元素，都移除掉
 
-+ retainAll — 将当前集合中，没有出现在某个集合中的元素，都移除掉，其实就是取交集
++ retainAll — 将当前容器中，没有出现在某个容器中的元素，都移除掉，其实就是取交集
 
 + clear — 移除所有元素.
 
-当前集合调用addAll, removeAll, retainAll这三个方法之后，如果当前集合发生变化，则返回true。
+当前容器调用addAll, removeAll, retainAll这三个方法之后，如果当前容器发生变化，则返回true。
 
-如果要移除集合中元素e，可以这样做
+如果要移除容器中元素e，可以这样做
 
 {% highlight java %}
 c.removeAll(Collections.singleton(e));
@@ -161,7 +161,7 @@ c.removeAll(Collections.singleton(e));
 c.removeAll(Collections.singleton(null));
 {% endhighlight %}
 
-以上Collections.singleton方法，可以创建一个只包含某个元素的集合。该集合类型时不能修改的Set。
+以上Collections.singleton方法，可以创建一个只包含某个元素的容器。该容器类型时不能修改的Set。
 
 
 
@@ -186,14 +186,14 @@ Collection的数组操作有两个方法
 Object[] a = c.toArray();
 {% endhighlight %}
 
-如果某个集合的元素类型时String，而你想返回一个String类型的数组，则需要用第二种方法。
+如果某个容器的元素类型时String，而你想返回一个String类型的数组，则需要用第二种方法。
 
 {% highlight java %}
 String[] a = c.toArray(new String[c.size()]);
 {% endhighlight %}
 
 
-带参数的toArray方法，参数是一个数组，如果数组的长度大于或者小于当前集合，则会自动调整，所以我们可以直接传进去一个大小和集合一样的数组。
+带参数的toArray方法，参数是一个数组，如果数组的长度大于或者小于当前容器，则会自动调整，所以我们可以直接传进去一个大小和容器一样的数组。
 
 
 
@@ -208,7 +208,7 @@ List接口除了实现父接口Collection的部分方法，而且包含其他方
 + Iteration遍历：继承了Iterator
 + 区间（Range-view）： 主要有sublist
 
-List接口有两个系统实现的集合类，ArrayList以及LinkedList，前者一般性能比较高，在特定情况下，后者性能比较好，后面再讨论。
+List接口有两个系统实现的容器类，ArrayList以及LinkedList，前者一般性能比较高，在特定情况下，后者性能比较好，后面再讨论。
 
 以下讲讲上面的四种方法
 
@@ -278,13 +278,13 @@ List还有一个实现类CopyOnWriteArrayList，另外再讲讲。
 
 ## Set Interface
 
-Set是一种元素不能重复的集合。常见实现类有三种
+Set是一种元素不能重复的容器。常见实现类有三种
 
 + HashSet 遍历顺序是随机的 
 + TreeSet 遍历顺序按照元素大小
 + LinkedHashSet 遍历顺序按照插入元素的次序
 
-举个实用的小例子，如果你想复制一个集合，并去除其中的重复元素，可以这样
+举个实用的小例子，如果你想复制一个容器，并去除其中的重复元素，可以这样
 
 {% highlight java %}
 Collection<Type> noDups = new HashSet<Type>(c);

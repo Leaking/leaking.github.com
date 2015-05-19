@@ -203,11 +203,11 @@
 
 <h1 id="section">容器框架概览</h1>
 
-<p>集合框架中包含的接口大致如下图所示</p>
+<p>容器框架中包含的接口大致如下图所示</p>
 
 <figure>
   <img src="/images/JCF_interface_tree.jpg" alt="search screenshot" />
-  <figcaption>集合框架接口</figcaption>
+  <figcaption>容器框架接口</figcaption>
 </figure>
 
 <p>很明显，平时说的容器，其实包含两个大类，一类是继承于Collection，一类是继承自Map，这篇文章主要讲解前者：Collection。</p>
@@ -218,7 +218,7 @@
 
 <ul>
   <li>遍历</li>
-  <li>对整个集合进行操作</li>
+  <li>对整个容器进行操作</li>
   <li>数组操作</li>
 </ul>
 
@@ -250,9 +250,9 @@
 
 <p>hasNext以及next两个方法比较容易理解，需要注意的是remove方法的使用。</p>
 
-<p>每调用一次next只有，才能调用remove，有且只能调用一次。部分Collections的子接口没有实现该方法。另外，for–each遍历方式中，在遍历过程中不能移除集合元素。</p>
+<p>每调用一次next只有，才能调用remove，有且只能调用一次。部分Collections的子接口没有实现该方法。另外，for–each遍历方式中，在遍历过程中不能移除容器元素。</p>
 
-<p>在遍历过程中，修改集合的唯一方式就是使用Iterator的remove方法。所以要过滤集合中的某些元素，
+<p>在遍历过程中，修改容器的唯一方式就是使用Iterator的remove方法。所以要过滤容器中的某些元素，
 可以使用Iterator、如下</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">static</span> <span class="kt">void</span> <span class="nf">filter</span><span class="o">(</span><span class="n">Collection</span><span class="o">&lt;?&gt;</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
@@ -292,7 +292,7 @@
 
 <p>而数组之所以可以应用于foreach，其中的原因我还没研究。</p>
 
-<h4 id="section-2">对整个集合进行操作</h4>
+<h4 id="section-2">对整个容器进行操作</h4>
 
 <h5 id="section-3">填充容器</h5>
 
@@ -308,25 +308,25 @@
 
 <ul>
   <li>
-    <p>containsAll — 当前集合是否包含某个集合的所有元素</p>
+    <p>containsAll — 当前容器是否包含某个容器的所有元素</p>
   </li>
   <li>
-    <p>addAll — 将某个集合的所有元素添加到当前集合</p>
+    <p>addAll — 将某个容器的所有元素添加到当前容器</p>
   </li>
   <li>
-    <p>removeAll — 将当前集合中，出现在某个集合中的元素，都移除掉</p>
+    <p>removeAll — 将当前容器中，出现在某个容器中的元素，都移除掉</p>
   </li>
   <li>
-    <p>retainAll — 将当前集合中，没有出现在某个集合中的元素，都移除掉，其实就是取交集</p>
+    <p>retainAll — 将当前容器中，没有出现在某个容器中的元素，都移除掉，其实就是取交集</p>
   </li>
   <li>
     <p>clear — 移除所有元素.</p>
   </li>
 </ul>
 
-<p>当前集合调用addAll, removeAll, retainAll这三个方法之后，如果当前集合发生变化，则返回true。</p>
+<p>当前容器调用addAll, removeAll, retainAll这三个方法之后，如果当前容器发生变化，则返回true。</p>
 
-<p>如果要移除集合中元素e，可以这样做</p>
+<p>如果要移除容器中元素e，可以这样做</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">c</span><span class="o">.</span><span class="na">removeAll</span><span class="o">(</span><span class="n">Collections</span><span class="o">.</span><span class="na">singleton</span><span class="o">(</span><span class="n">e</span><span class="o">));</span></code></pre></div>
 
@@ -334,7 +334,7 @@
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">c</span><span class="o">.</span><span class="na">removeAll</span><span class="o">(</span><span class="n">Collections</span><span class="o">.</span><span class="na">singleton</span><span class="o">(</span><span class="kc">null</span><span class="o">));</span></code></pre></div>
 
-<p>以上Collections.singleton方法，可以创建一个只包含某个元素的集合。该集合类型时不能修改的Set。</p>
+<p>以上Collections.singleton方法，可以创建一个只包含某个元素的容器。该容器类型时不能修改的Set。</p>
 
 <h5 id="section-5">打印容器</h5>
 
@@ -356,11 +356,11 @@ Arrays.toString</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Object</span><span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">toArray</span><span class="o">();</span></code></pre></div>
 
-<p>如果某个集合的元素类型时String，而你想返回一个String类型的数组，则需要用第二种方法。</p>
+<p>如果某个容器的元素类型时String，而你想返回一个String类型的数组，则需要用第二种方法。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span><span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">toArray</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">[</span><span class="n">c</span><span class="o">.</span><span class="na">size</span><span class="o">()]);</span></code></pre></div>
 
-<p>带参数的toArray方法，参数是一个数组，如果数组的长度大于或者小于当前集合，则会自动调整，所以我们可以直接传进去一个大小和集合一样的数组。</p>
+<p>带参数的toArray方法，参数是一个数组，如果数组的长度大于或者小于当前容器，则会自动调整，所以我们可以直接传进去一个大小和容器一样的数组。</p>
 
 <h2 id="list-interface">List Interface</h2>
 
@@ -373,7 +373,7 @@ Arrays.toString</p>
   <li>区间（Range-view）： 主要有sublist</li>
 </ul>
 
-<p>List接口有两个系统实现的集合类，ArrayList以及LinkedList，前者一般性能比较高，在特定情况下，后者性能比较好，后面再讨论。</p>
+<p>List接口有两个系统实现的容器类，ArrayList以及LinkedList，前者一般性能比较高，在特定情况下，后者性能比较好，后面再讨论。</p>
 
 <p>以下讲讲上面的四种方法</p>
 
@@ -436,7 +436,7 @@ Arrays.toString</p>
 
 <h2 id="set-interface">Set Interface</h2>
 
-<p>Set是一种元素不能重复的集合。常见实现类有三种</p>
+<p>Set是一种元素不能重复的容器。常见实现类有三种</p>
 
 <ul>
   <li>HashSet 遍历顺序是随机的 </li>
@@ -444,7 +444,7 @@ Arrays.toString</p>
   <li>LinkedHashSet 遍历顺序按照插入元素的次序</li>
 </ul>
 
-<p>举个实用的小例子，如果你想复制一个集合，并去除其中的重复元素，可以这样</p>
+<p>举个实用的小例子，如果你想复制一个容器，并去除其中的重复元素，可以这样</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Collection</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">noDups</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;(</span><span class="n">c</span><span class="o">);</span></code></pre></div>
 
