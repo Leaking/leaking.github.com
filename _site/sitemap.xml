@@ -1,217 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
-  
+  <url>
+    <loc>/android/handler-looper/</loc>
+    <lastmod>2015-06-13T00:00:00+08:00</lastmod>
+  </url>
   <url>
     <loc>/java/javase-collection-01/</loc>
     <lastmod>2015-05-14T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/java/jvm-post01/</loc>
     <lastmod>2015-05-10T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/python/python-note-dictionary/</loc>
     <lastmod>2015-04-18T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/python/python-note-lists-and-tuples/</loc>
     <lastmod>2015-04-12T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/android/(customView)onMeasure/</loc>
     <lastmod>2015-03-31T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/android/(customView)SlideSwitch/</loc>
     <lastmod>2015-03-31T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/http/HTTP-cookies/</loc>
     <lastmod>2015-02-03T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/android/(translate)ProcessesAndThreads/</loc>
     <lastmod>2015-01-31T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/android/(translate)Tasks-and-Back-Stack/</loc>
     <lastmod>2015-01-07T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/android/(translate)Fragment/</loc>
     <lastmod>2014-12-25T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/android/(translate)Activities/</loc>
     <lastmod>2014-12-21T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/android/offlineDocs/</loc>
     <lastmod>2014-12-10T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/readingnotes/HTTP%20Resource/</loc>
     <lastmod>2014-12-01T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/readingnotes/HTTP%20definition/</loc>
     <lastmod>2014-11-30T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/js/.Object%20Type,%20Function%20Type/</loc>
     <lastmod>2014-09-14T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/js/.Variables,%20Scope,%20and%20Memory/</loc>
     <lastmod>2014-09-13T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/reflection/first-diary/</loc>
     <lastmod>2014-09-06T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/git/frequent-command-of-git/</loc>
     <lastmod>2014-09-04T06:41:52+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/tools/how-to-build-me/</loc>
     <lastmod>2014-08-29T00:23:53+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/js/what-is-js/</loc>
     <lastmod>2014-08-25T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>/android/xmpp-IM/</loc>
     <lastmod>2014-06-25T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
   </url>
-  
-  
   <url>
     <loc>/</loc>
-    <lastmod>2015-05-19T17:40:55+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
   </url>
-  
   <url>
     <loc>/android/</loc>
-    <lastmod>2015-05-19T17:40:55+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
-  
   <url>
     <loc>/home/</loc>
-    <lastmod>2015-05-19T17:40:55+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
-  
   <url>
     <loc>/about/</loc>
-    <lastmod>2015-05-19T17:40:55+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
-  
   <url>
     <loc>/reflection/</loc>
-    <lastmod>2015-05-19T17:40:55+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
-  
   <url>
     <loc>/git/</loc>
-    <lastmod>2015-05-19T17:40:55+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
-  
   <url>
     <loc>/Java/</loc>
-    <lastmod>2015-05-19T17:40:55+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
-  
   <url>
     <loc>/tags/</loc>
-    <lastmod>2015-05-19T17:40:55+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
-  
   <url>
     <loc>/tools/</loc>
-    <lastmod>2015-05-19T17:40:55+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
-  
   <url>
     <loc>/readingnotes/</loc>
-    <lastmod>2015-05-19T17:40:55+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
-  
   <url>
     <loc>/js/</loc>
-    <lastmod>2015-05-19T17:40:55+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
-  
   <url>
     <loc>/python/</loc>
-    <lastmod>2015-05-19T17:40:55+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
-  
-  
 </urlset>

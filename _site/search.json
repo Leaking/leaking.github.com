@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "浅谈Android中Handler，Looper机制",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/handler-looper/",
+		  "date"       : "2015-06-13 00:00:00 +0800",
+		  "shortdate"  : "June 13, 2015"
+		} ,
+	
+		{
 		  "title"      : "Java容器概览",
 		  "category"   : "",
       "tags"       : "Java",
