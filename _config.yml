@@ -2,7 +2,7 @@
 
 title: My Stupid Blog
 locale: en_US
-description: Fly ahead.
+description: 
 logo: site-logo.png
 search: true
 url: 
@@ -38,7 +38,8 @@ owner:
   disqus-shortname:
   twitter: #username
   facebook: #username
-  github: #Leaking
+  github: Leaking
+  weibo: hereamme
   stackexchange: #http://stackoverflow.com/users/1290235/zil-mike
   linkedin: #username
   instagram: #username
