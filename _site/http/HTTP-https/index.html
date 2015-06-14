@@ -1,0 +1,360 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>《HTTP权威指南》Secure HTTP &#8211; My Stupid Blog</title>
+<meta name="description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
+<meta name="keywords" content="HTTP">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="《HTTP权威指南》Secure HTTP">
+<meta name="twitter:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/http_definitive_guide.jpg">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《HTTP权威指南》Secure HTTP">
+<meta property="og:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
+<meta property="og:url" content="/http/HTTP-https/">
+<meta property="og:site_name" content="My Stupid Blog">
+
+
+
+
+
+<link rel="canonical" href="/http/HTTP-https/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<script src="//use.edgefonts.net/source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9;source-code-pro:n4,n7;volkhov.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+      
+		    
+		        
+		    
+		    <li><a href="/home/" >Home</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/js/" >JS</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/java/" >Java</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/android/" >Android</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/python/" >Python</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/tools/" >Tools</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/readingnotes/" >ReadingNotes</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/reflection/" >Reflection</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/about/" >About</a></li>
+		  
+        <li class="dosearch"><i class="fa fa-search"></i> Search</li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	
+		<div class="wrap">
+			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
+		</div>
+	
+</header><!-- /.masthead -->
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <img src="/images/http_definitive_guide.jpg" class="entry-feature-image" alt="《HTTP权威指南》Secure HTTP" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"><a href="/tags/#HTTP" title="Pages tagged HTTP">HTTP</a></span>
+        
+          <h1 class="entry-title">《HTTP权威指南》Secure HTTP</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+        
+          <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
+        <span class="entry-date date published"><time datetime="2015-06-14T00:00:00+08:00"><i class="fa fa-calendar-o"></i> June 14, 2015</time></span>
+        
+        
+        
+        <span class="social-share-twitter">
+          <a href="https://twitter.com/intent/tweet?hashtags=HTTP&text=《HTTP权威指南》Secure%20HTTP&url=/http/HTTP-https/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+        </span>
+        <span class="social-share-facebook">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/http/HTTP-https/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+        </span>
+        <span class="social-share-googleplus">
+          <a href="https://plus.google.com/share?url=/http/HTTP-https/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+        </span>
+        <!-- /.social-share -->
+        
+        <div class="google-ads" style="margin-top:40px; text-align:center;">
+  <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- 160x600 ad -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:160px;height:600px"
+       data-ad-client=""
+       data-ad-slot=""></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div><!-- /.google-ads --><!-- /.google-ads -->
+      </footer>
+      <div class="entry-content">
+        <h2 id="https">一，Https基础介绍</h2>
+
+<p>https是http的安全形式，由网景公司发明，使用https时，所有http请求和响应数据发送到网络之前，都要进行加密，这部分工作是由SSL/TLS层完成（TLS是SSL的现代替代协议，我们用SSL表示SSL/TLS），SSL/TLS层是介于应用层和TCP层的传输安全层（Transport Layer Security,TLS）。</p>
+
+<figure>
+  <img src="/images/ssl.jpg" alt="search screenshot" />
+  <figcaption> SSL betweens HTTP and TCP</figcaption>
+</figure>
+
+<p>在使用https情况下，http报文未加密前不会发送给TCP层，而是通过安全层进行加密再发送给TCP层。在安全层，发送端和接收端会进行一次SSL握手，检查，交换一些关于证书，密码的信息。</p>
+
+<h2 id="section">二，数字加密</h2>
+
+<p>上面大致讲了https，接下来是和https息息相关的加密概念。</p>
+
+<h4 id="section-1">1，密码</h4>
+
+<p>密码是一种加密算法（加密函数），往其中输入明文，则结果会输出密文。而密码机是能快速运行复杂密码的机器</p>
+
+<h4 id="section-2">2，密钥</h4>
+
+<p>密钥是密码的参数（意义类似于函数的参数），密钥不同，密码的工作方式就不同。密钥越长，编码解码算法（密码）被破解的可能性越低。</p>
+
+<h2 id="section-3">三，对称加密，非对称加密，公开密钥</h2>
+
+<p>这里说的对称加密和非对称加密，区别在于编码和解码的密钥否相同。一般我们只需注意到密钥的安全及其他特点，而不是关注密码，因为密码（加密算法）都是公开的，而且加密解密算法一般都是反函数关系。</p>
+
+<h4 id="section-4">1，对称加密</h4>
+
+<p>顾名思义，对称加密就是编码和解码的密钥匙一样的。常见的对称加密有：DES，3DES，RC2，RC4。密钥更长，更能抵抗得住枚举攻击，标准长度为56的DES已经不够安全。</p>
+
+<p>使用对称加密，发送端和接收端在进行通信之前，需要先共享密钥才能进行通信，而这也是对称加密的缺点之一，而且，如果有n个节点，每个节点要和其他n-1个节点进行通信，总共会产生大概n＊（n－1）个密钥，这将难以管理。</p>
+
+<h4 id="section-5">2，非对称加密，公开密钥</h4>
+
+<p>其实非对称加密和公开密钥可以算是同一个概念，因为非对称加密就是使用公开密钥的。确切地说是公开的加密密钥，而解秘密钥匙保密的。这样一来，所有发送端都可以使用公开的加密密钥进行加密（而无需像对称加密一样，再通信之前先获取一个共享的密钥）。发送报文给接收端，接收端再使用保密的解密密钥获取明文。</p>
+
+<p>非对称加密相比对称加密的一个缺点是，非对称加密算法比对称加密算法慢。</p>
+
+<p>时下常用的非对称加密算法是RSA。另外，注意，平时说的非对称加密和公开密钥算法是一样的。</p>
+
+<h4 id="section-6">3，混合加密</h4>
+
+<p>非对称加密算法（公开密钥加密算法）虽然好用，但是计算速度相比对称加密算法慢，所以我们可以混合这两种算法，先用非对称加密的方式，建立通信，然后在这个通信通道中产生并发送临时的随机对称密钥，然后使用更快对称加密方式处理其余数据。</p>
+
+<p>四，数字签名</p>
+
+<p>数字签名是一种加密的校验和，可以防止报文被篡改。数字签名也是通过加解密算法处理过的。</p>
+
+<p>五，数字证书</p>
+
+<p>数字证书用于代表某个权威机构，目前数字证书还没有一个全球标准，但是有一个大多数证书使用的标准———X.509.v3。</p>
+
+<p>六，常用算法</p>
+
+<p>对称算法：DES，3DES，RC2，RC4，AES</p>
+
+<p>非对称算法：RSA，DSA（Digital Signature Algorithm，数字签名算法），ECC</p>
+
+<p>摘要算法（单向，不可逆）：MD5，SHA-1</p>
+
+
+        <nav class="pagination" role="navigation">
+          
+            <a href="/android/handler-looper/" class="btn" title="浅谈Android中Handler，Looper机制">Previous</a>
+          
+          
+        </nav><!-- /.pagination -->
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+  </article>
+</div><!-- /#main -->
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chenhuazhao020'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    
+
+<span>&copy; 2015 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
+<div class="social-icons">
+	
+	
+	
+	
+	
+	
+	
+	<a href="http://github.com/Leaking" title="Quinn Chen on Github" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+	
+    <a href="http://www.weibo.com/hereamme/" title="Quinn Chen on Weibo" target="_blank"><i class="fa fa-weibo fa-2x"></i></a>
+
+</div><!-- /.social-icons -->
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: '/search.json',
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+  
+	        
+
+</body>
+</html>

@@ -4,13 +4,92 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-06-13T16:41:15+08:00</updated>
+<updated>2015-06-14T16:56:26+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
   <uri>/</uri>
   <email>chenhuazhaoao@gmail.com</email>
 </author>
+
+
+  
+
+<entry>
+  <title type="html"><![CDATA[《HTTP权威指南》Secure HTTP]]></title>
+  <link rel="alternate" type="text/html" href="/http/HTTP-https/" />
+  <id>/http/HTTP-https</id>
+  <published>2015-06-14T00:00:00+08:00</published>
+  <updated>2015-06-14T00:00:00+08:00</updated>
+  <author>
+    <name>Quinn Chen</name>
+    <uri></uri>
+    <email>chenhuazhaoao@gmail.com</email>
+  </author>
+  <content type="html">&lt;h2 id=&quot;https&quot;&gt;一，Https基础介绍&lt;/h2&gt;
+
+&lt;p&gt;https是http的安全形式，由网景公司发明，使用https时，所有http请求和响应数据发送到网络之前，都要进行加密，这部分工作是由SSL/TLS层完成（TLS是SSL的现代替代协议，我们用SSL表示SSL/TLS），SSL/TLS层是介于应用层和TCP层的传输安全层（Transport Layer Security,TLS）。&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/ssl.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt; SSL betweens HTTP and TCP&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;在使用https情况下，http报文未加密前不会发送给TCP层，而是通过安全层进行加密再发送给TCP层。在安全层，发送端和接收端会进行一次SSL握手，检查，交换一些关于证书，密码的信息。&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;二，数字加密&lt;/h2&gt;
+
+&lt;p&gt;上面大致讲了https，接下来是和https息息相关的加密概念。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-1&quot;&gt;1，密码&lt;/h4&gt;
+
+&lt;p&gt;密码是一种加密算法（加密函数），往其中输入明文，则结果会输出密文。而密码机是能快速运行复杂密码的机器&lt;/p&gt;
+
+&lt;h4 id=&quot;section-2&quot;&gt;2，密钥&lt;/h4&gt;
+
+&lt;p&gt;密钥是密码的参数（意义类似于函数的参数），密钥不同，密码的工作方式就不同。密钥越长，编码解码算法（密码）被破解的可能性越低。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;三，对称加密，非对称加密，公开密钥&lt;/h2&gt;
+
+&lt;p&gt;这里说的对称加密和非对称加密，区别在于编码和解码的密钥否相同。一般我们只需注意到密钥的安全及其他特点，而不是关注密码，因为密码（加密算法）都是公开的，而且加密解密算法一般都是反函数关系。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-4&quot;&gt;1，对称加密&lt;/h4&gt;
+
+&lt;p&gt;顾名思义，对称加密就是编码和解码的密钥匙一样的。常见的对称加密有：DES，3DES，RC2，RC4。密钥更长，更能抵抗得住枚举攻击，标准长度为56的DES已经不够安全。&lt;/p&gt;
+
+&lt;p&gt;使用对称加密，发送端和接收端在进行通信之前，需要先共享密钥才能进行通信，而这也是对称加密的缺点之一，而且，如果有n个节点，每个节点要和其他n-1个节点进行通信，总共会产生大概n＊（n－1）个密钥，这将难以管理。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-5&quot;&gt;2，非对称加密，公开密钥&lt;/h4&gt;
+
+&lt;p&gt;其实非对称加密和公开密钥可以算是同一个概念，因为非对称加密就是使用公开密钥的。确切地说是公开的加密密钥，而解秘密钥匙保密的。这样一来，所有发送端都可以使用公开的加密密钥进行加密（而无需像对称加密一样，再通信之前先获取一个共享的密钥）。发送报文给接收端，接收端再使用保密的解密密钥获取明文。&lt;/p&gt;
+
+&lt;p&gt;非对称加密相比对称加密的一个缺点是，非对称加密算法比对称加密算法慢。&lt;/p&gt;
+
+&lt;p&gt;时下常用的非对称加密算法是RSA。另外，注意，平时说的非对称加密和公开密钥算法是一样的。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-6&quot;&gt;3，混合加密&lt;/h4&gt;
+
+&lt;p&gt;非对称加密算法（公开密钥加密算法）虽然好用，但是计算速度相比对称加密算法慢，所以我们可以混合这两种算法，先用非对称加密的方式，建立通信，然后在这个通信通道中产生并发送临时的随机对称密钥，然后使用更快对称加密方式处理其余数据。&lt;/p&gt;
+
+&lt;p&gt;四，数字签名&lt;/p&gt;
+
+&lt;p&gt;数字签名是一种加密的校验和，可以防止报文被篡改。数字签名也是通过加解密算法处理过的。&lt;/p&gt;
+
+&lt;p&gt;五，数字证书&lt;/p&gt;
+
+&lt;p&gt;数字证书用于代表某个权威机构，目前数字证书还没有一个全球标准，但是有一个大多数证书使用的标准———X.509.v3。&lt;/p&gt;
+
+&lt;p&gt;六，常用算法&lt;/p&gt;
+
+&lt;p&gt;对称算法：DES，3DES，RC2，RC4，AES&lt;/p&gt;
+
+&lt;p&gt;非对称算法：RSA，DSA（Digital Signature Algorithm，数字签名算法），ECC&lt;/p&gt;
+
+&lt;p&gt;摘要算法（单向，不可逆）：MD5，SHA-1&lt;/p&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/http/HTTP-https/&quot;&gt;《HTTP权威指南》Secure HTTP&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on June 14, 2015.&lt;/p&gt;</content>
+</entry>
 
 
   
@@ -3547,54 +3626,6 @@ Git将其描述为Untracked files&lt;/p&gt;
 
 
   &lt;p&gt;&lt;a href=&quot;/git/frequent-command-of-git/&quot;&gt;Git常用工作流&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on September 04, 2014.&lt;/p&gt;</content>
-</entry>
-
-
-  
-
-<entry>
-  <title type="html"><![CDATA[Jekyll搭建博客]]></title>
-  <link rel="alternate" type="text/html" href="/tools/how-to-build-me/" />
-  <id>/tools/how-to-build-me</id>
-  <published>2014-08-29T00:23:53+08:00</published>
-  <updated>2014-08-29T00:23:53+08:00</updated>
-  <author>
-    <name>Quinn Chen</name>
-    <uri></uri>
-    <email>chenhuazhaoao@gmail.com</email>
-  </author>
-  <content type="html">&lt;p&gt;终于搭建好了这个博客，记录一下安装过程&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;（必须）安装ruby,Devkit&lt;/li&gt;
-    &lt;li&gt;（必须）安装Jekyll&lt;/li&gt;
-    &lt;li&gt;（非必须）Python，&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;其中安装Jekyll的时候，我总是遇到问题，结果发现问题是天朝的网络在作祟
-先运行如下代码即可&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sources&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;remove&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rubygems&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sources&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ruby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;taobao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sources&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;***&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;CURRENT&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SOURCES&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;***&lt;/span&gt;
-
-&lt;span class=&quot;ss&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ruby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;taobao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# 请确保只有 ruby.taobao.org&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rails&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;以下是我参考的网站，根据这几个网站完全能搞懂如何在Github上搭建博客&lt;/p&gt;
-
-&lt;p&gt;1、&lt;a href=&quot;http://yizeng.me/2013/05/10/setup-jekyll-on-windows/#install-pygments&quot;&gt;http://yizeng.me/2013/05/10/setup-jekyll-on-windows/#install-pygments&lt;/a&gt;
-2、&lt;a href=&quot;http://www.cnblogs.com/hutaoer/archive/2013/02/06/3078873.html&quot;&gt;http://www.cnblogs.com/hutaoer/archive/2013/02/06/3078873.html&lt;/a&gt;
-3、&lt;a href=&quot;http://blog.fens.me/jekyll-bootstarp-github/&quot;&gt;http://blog.fens.me/jekyll-bootstarp-github/&lt;/a&gt;
-4、&lt;a href=&quot;http://www.jekyllbootstrap.com/usage/jekyll-quick-start.html&quot;&gt;http://www.jekyllbootstrap.com/usage/jekyll-quick-start.html&lt;/a&gt;
-5、&lt;a href=&quot;http://ruby.taobao.org/&quot;&gt;http://ruby.taobao.org/&lt;/a&gt;&lt;/p&gt;
-
-
-  &lt;p&gt;&lt;a href=&quot;/tools/how-to-build-me/&quot;&gt;Jekyll搭建博客&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on August 29, 2014.&lt;/p&gt;</content>
 </entry>
 
 </feed>
