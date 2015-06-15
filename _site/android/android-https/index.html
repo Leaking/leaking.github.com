@@ -1,0 +1,682 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Android处理https请求的证书问题 &#8211; My Stupid Blog</title>
+<meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta name="keywords" content="android">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Android处理https请求的证书问题">
+<meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android处理https请求的证书问题">
+<meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta property="og:url" content="/android/android-https/">
+<meta property="og:site_name" content="My Stupid Blog">
+
+
+
+
+
+<link rel="canonical" href="/android/android-https/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<script src="//use.edgefonts.net/source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9;source-code-pro:n4,n7;volkhov.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+      
+		    
+		        
+		    
+		    <li><a href="/home/" >Home</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/js/" >JS</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/java/" >Java</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/android/" >Android</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/python/" >Python</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/tools/" >Tools</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/readingnotes/" >ReadingNotes</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/reflection/" >Reflection</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/about/" >About</a></li>
+		  
+        <li class="dosearch"><i class="fa fa-search"></i> Search</li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	
+		<div class="wrap">
+			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
+		</div>
+	
+</header><!-- /.masthead -->
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Android处理https请求的证书问题" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"><a href="/tags/#android" title="Pages tagged android">android</a></span>
+        
+          <h1 class="entry-title">Android处理https请求的证书问题</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+        
+          <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
+        <span class="entry-date date published"><time datetime="2015-06-15T00:00:00+08:00"><i class="fa fa-calendar-o"></i> June 15, 2015</time></span>
+        
+        
+        
+        <div class="google-ads" style="margin-top:40px; text-align:center;">
+  <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- 160x600 ad -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:160px;height:600px"
+       data-ad-client=""
+       data-ad-slot=""></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div><!-- /.google-ads --><!-- /.google-ads -->
+      </footer>
+      <div class="entry-content">
+        <p>android中对部分站点发送https请求会报错，原因是该站点的证书时自定义的，而非官方的，android手机不信任其证书，为了解决这个问题，一般有两种解决方案</p>
+
+<ul>
+  <li>
+    <p>忽略证书验证</p>
+  </li>
+  <li>
+    <p>下载证书到本地，添加到信任证书列表</p>
+  </li>
+</ul>
+
+<p>在android中我们访问网络一般有两种方式，一种是使用httpURLConnection，一种是使用httpClient。这里先讲前者，然后再讲解后者。顺便会讲解在volley框架中如何使用https。</p>
+
+<h2 id="httpurlconnectionhttps">一，HttpURLConnection访问https站点</h2>
+
+<h3 id="section">1，忽略证书</h3>
+
+<p>如果要忽略证书的验证，我们只需提供一个HostnameVerifier和X509TrustManager的空实现，如下代码</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="lineno"> 1</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestWithoutCA</span><span class="o">()</span> <span class="o">{</span>
+<span class="lineno"> 2</span> 	<span class="k">try</span> <span class="o">{</span>
+<span class="lineno"> 3</span> 
+<span class="lineno"> 4</span> 		<span class="n">SSLContext</span> <span class="n">sc</span> <span class="o">=</span> <span class="n">SSLContext</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&quot;TLS&quot;</span><span class="o">);</span>
+<span class="lineno"> 5</span> 		<span class="n">sc</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="k">new</span> <span class="n">TrustManager</span><span class="o">[]</span> <span class="o">{</span> <span class="k">new</span> <span class="nf">MyTrustManager</span><span class="o">()</span> <span class="o">},</span>
+<span class="lineno"> 6</span> 				<span class="k">new</span> <span class="nf">SecureRandom</span><span class="o">());</span>
+<span class="lineno"> 7</span> 		<span class="n">HttpsURLConnection</span>
+<span class="lineno"> 8</span> 				<span class="o">.</span><span class="na">setDefaultSSLSocketFactory</span><span class="o">(</span><span class="n">sc</span><span class="o">.</span><span class="na">getSocketFactory</span><span class="o">());</span>
+<span class="lineno"> 9</span> 		<span class="n">HttpsURLConnection</span>
+<span class="lineno">10</span> 				<span class="o">.</span><span class="na">setDefaultHostnameVerifier</span><span class="o">(</span><span class="k">new</span> <span class="nf">MyHostnameVerifier</span><span class="o">());</span>
+<span class="lineno">11</span> 
+<span class="lineno">12</span> 		<span class="n">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">URL</span><span class="o">(</span><span class="s">&quot;https://certs.cac.washington.edu/CAtest/&quot;</span><span class="o">);</span>
+<span class="lineno">13</span> 		<span class="n">HttpURLConnection</span> <span class="n">urlConnection</span> <span class="o">=</span> <span class="o">(</span><span class="n">HttpURLConnection</span><span class="o">)</span> <span class="n">url</span>
+<span class="lineno">14</span> 				<span class="o">.</span><span class="na">openConnection</span><span class="o">();</span>
+<span class="lineno">15</span> 
+<span class="lineno">16</span> 		<span class="n">InputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="n">urlConnection</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">();</span>
+<span class="lineno">17</span> 		<span class="c1">// 取得输入流，并使用Reader读取</span>
+<span class="lineno">18</span> 		<span class="n">BufferedReader</span> <span class="n">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">BufferedReader</span><span class="o">(</span>
+<span class="lineno">19</span> 				<span class="k">new</span> <span class="nf">InputStreamReader</span><span class="o">(</span><span class="n">in</span><span class="o">));</span>
+<span class="lineno">20</span> 		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;=============================&quot;</span><span class="o">);</span>
+<span class="lineno">21</span> 		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Contents of get request&quot;</span><span class="o">);</span>
+<span class="lineno">22</span> 		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;=============================&quot;</span><span class="o">);</span>
+<span class="lineno">23</span> 		<span class="n">String</span> <span class="n">lines</span><span class="o">;</span>
+<span class="lineno">24</span> 		<span class="k">while</span> <span class="o">((</span><span class="n">lines</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+<span class="lineno">25</span> 			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">lines</span><span class="o">);</span>
+<span class="lineno">26</span> 		<span class="o">}</span>
+<span class="lineno">27</span> 		<span class="n">reader</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="lineno">28</span> 		<span class="c1">// 断开连接</span>
+<span class="lineno">29</span> 		<span class="n">urlConnection</span><span class="o">.</span><span class="na">disconnect</span><span class="o">();</span>
+<span class="lineno">30</span> 		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;=============================&quot;</span><span class="o">);</span>
+<span class="lineno">31</span> 		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Contents of get request ends&quot;</span><span class="o">);</span>
+<span class="lineno">32</span> 		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;=============================&quot;</span><span class="o">);</span>
+<span class="lineno">33</span> 	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">MalformedURLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+<span class="lineno">34</span> 		<span class="c1">// TODO Auto-generated catch block</span>
+<span class="lineno">35</span> 		<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+<span class="lineno">36</span> 	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+<span class="lineno">37</span> 		<span class="c1">// TODO Auto-generated catch block</span>
+<span class="lineno">38</span> 		<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+<span class="lineno">39</span> 	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchAlgorithmException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+<span class="lineno">40</span> 		<span class="c1">// TODO Auto-generated catch block</span>
+<span class="lineno">41</span> 		<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+<span class="lineno">42</span> 	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">KeyManagementException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+<span class="lineno">43</span> 		<span class="c1">// TODO Auto-generated catch block</span>
+<span class="lineno">44</span> 		<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+<span class="lineno">45</span> 	<span class="o">}</span>
+<span class="lineno">46</span> <span class="o">}</span>
+<span class="lineno">47</span> 
+<span class="lineno">48</span> 
+<span class="lineno">49</span> <span class="kd">private</span> <span class="kd">class</span> <span class="nc">MyHostnameVerifier</span> <span class="kd">implements</span> <span class="n">HostnameVerifier</span> <span class="o">{</span>
+<span class="lineno">50</span> 	<span class="nd">@Override</span>
+<span class="lineno">51</span> 	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">verify</span><span class="o">(</span><span class="n">String</span> <span class="n">hostname</span><span class="o">,</span> <span class="n">SSLSession</span> <span class="n">session</span><span class="o">)</span> <span class="o">{</span>
+<span class="lineno">52</span> 		<span class="c1">// TODO Auto-generated method stub</span>
+<span class="lineno">53</span> 		<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+<span class="lineno">54</span> 	<span class="o">}</span>
+<span class="lineno">55</span> 
+<span class="lineno">56</span> <span class="o">}</span>
+<span class="lineno">57</span> 
+<span class="lineno">58</span> <span class="kd">private</span> <span class="kd">class</span> <span class="nc">MyTrustManager</span> <span class="kd">implements</span> <span class="n">X509TrustManager</span> <span class="o">{</span>
+<span class="lineno">59</span> 	<span class="nd">@Override</span>
+<span class="lineno">60</span> 	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">checkClientTrusted</span><span class="o">(</span><span class="n">X509Certificate</span><span class="o">[]</span> <span class="n">chain</span><span class="o">,</span> <span class="n">String</span> <span class="n">authType</span><span class="o">)</span>
+<span class="lineno">61</span> 			<span class="kd">throws</span> <span class="n">CertificateException</span> <span class="o">{</span>
+<span class="lineno">62</span> 		<span class="c1">// TODO Auto-generated method stub</span>
+<span class="lineno">63</span> 	<span class="o">}</span>
+<span class="lineno">64</span> 
+<span class="lineno">65</span> 	<span class="nd">@Override</span>
+<span class="lineno">66</span> 	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">checkServerTrusted</span><span class="o">(</span><span class="n">X509Certificate</span><span class="o">[]</span> <span class="n">chain</span><span class="o">,</span> <span class="n">String</span> <span class="n">authType</span><span class="o">)</span>
+<span class="lineno">67</span> 
+<span class="lineno">68</span> 	<span class="kd">throws</span> <span class="n">CertificateException</span> <span class="o">{</span>
+<span class="lineno">69</span> 		<span class="c1">// TODO Auto-generated method stub</span>
+<span class="lineno">70</span> 	<span class="o">}</span>
+<span class="lineno">71</span> 
+<span class="lineno">72</span> 	<span class="nd">@Override</span>
+<span class="lineno">73</span> 	<span class="kd">public</span> <span class="n">X509Certificate</span><span class="o">[]</span> <span class="nf">getAcceptedIssuers</span><span class="o">()</span> <span class="o">{</span>
+<span class="lineno">74</span> 		<span class="c1">// TODO Auto-generated method stub</span>
+<span class="lineno">75</span> 		<span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+<span class="lineno">76</span> 	<span class="o">}</span>
+<span class="lineno">77</span> 
+<span class="lineno">78</span> <span class="o">}</span></code></pre></div>
+
+<h3 id="section-1">2，使用证书</h3>
+
+<p>使用证书这部分我是参考于官网：
+<a href="https://developer.android.com/training/articles/security-ssl.html">Security with HTTPS and SSL</a></p>
+
+<p>该代码时访问华盛顿大学的一个网页，证书可以到以下链接下载：</p>
+
+<p><a href="https://www.washington.edu/itconnect/security/ca/load-der.crt">https://www.washington.edu/itconnect/security/ca/load-der.crt</a></p>
+
+<p>代码如下：</p>
+
+<p>注意，此处使用的是HttpsURLConnection，而非HttpURLConnection。</p>
+
+<p>下面的代码，加载证书等等操作，最终都是为了setSSLSocketFactory这一步。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestByHttps</span><span class="o">()</span> <span class="o">{</span>
+	<span class="k">try</span> <span class="o">{</span>
+		
+		<span class="c1">// Load CAs from an InputStream</span>
+		<span class="c1">// (could be from a resource or ByteArrayInputStream or ...)</span>
+
+		<span class="n">CertificateFactory</span> <span class="n">cf</span> <span class="o">=</span> <span class="n">CertificateFactory</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&quot;X.509&quot;</span><span class="o">);</span>
+		<span class="c1">// From</span>
+		<span class="c1">// https://www.washington.edu/itconnect/security/ca/load-der.crt</span>
+		<span class="n">InputStream</span> <span class="n">caInput</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getAssets</span><span class="o">().</span><span class="na">open</span><span class="o">(</span><span class="s">&quot;load_der.crt&quot;</span><span class="o">);</span>
+		<span class="n">Certificate</span> <span class="n">ca</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">ca</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="na">generateCertificate</span><span class="o">(</span><span class="n">caInput</span><span class="o">);</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;ca=&quot;</span>
+					<span class="o">+</span> <span class="o">((</span><span class="n">X509Certificate</span><span class="o">)</span> <span class="n">ca</span><span class="o">).</span><span class="na">getSubjectDN</span><span class="o">());</span>
+		<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+			<span class="n">caInput</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span>
+
+		<span class="c1">// Create a KeyStore containing our trusted CAs</span>
+		<span class="n">String</span> <span class="n">keyStoreType</span> <span class="o">=</span> <span class="n">KeyStore</span><span class="o">.</span><span class="na">getDefaultType</span><span class="o">();</span>
+		<span class="n">KeyStore</span> <span class="n">keyStore</span> <span class="o">=</span> <span class="n">KeyStore</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">keyStoreType</span><span class="o">);</span>
+		<span class="n">keyStore</span><span class="o">.</span><span class="na">load</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+		<span class="n">keyStore</span><span class="o">.</span><span class="na">setCertificateEntry</span><span class="o">(</span><span class="s">&quot;ca&quot;</span><span class="o">,</span> <span class="n">ca</span><span class="o">);</span>
+
+		<span class="c1">// Create a TrustManager that trusts the CAs in our KeyStore</span>
+		<span class="n">String</span> <span class="n">tmfAlgorithm</span> <span class="o">=</span> <span class="n">TrustManagerFactory</span><span class="o">.</span><span class="na">getDefaultAlgorithm</span><span class="o">();</span>
+		<span class="n">TrustManagerFactory</span> <span class="n">tmf</span> <span class="o">=</span> <span class="n">TrustManagerFactory</span>
+				<span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">tmfAlgorithm</span><span class="o">);</span>
+		<span class="n">tmf</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="n">keyStore</span><span class="o">);</span>
+
+		<span class="c1">// Create an SSLContext that uses our TrustManager</span>
+		<span class="n">SSLContext</span> <span class="n">context</span> <span class="o">=</span> <span class="n">SSLContext</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&quot;TLS&quot;</span><span class="o">);</span>
+		<span class="n">context</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="n">tmf</span><span class="o">.</span><span class="na">getTrustManagers</span><span class="o">(),</span> <span class="kc">null</span><span class="o">);</span>
+
+		<span class="n">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">URL</span><span class="o">(</span><span class="s">&quot;https://certs.cac.washington.edu/CAtest/&quot;</span><span class="o">);</span>
+		<span class="n">HttpsURLConnection</span> <span class="n">urlConnection</span> <span class="o">=</span> <span class="o">(</span><span class="n">HttpsURLConnection</span><span class="o">)</span> <span class="n">url</span>
+				<span class="o">.</span><span class="na">openConnection</span><span class="o">();</span>
+
+		<span class="n">urlConnection</span><span class="o">.</span><span class="na">setSSLSocketFactory</span><span class="o">(</span><span class="n">context</span><span class="o">.</span><span class="na">getSocketFactory</span><span class="o">());</span>
+		<span class="n">InputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="n">urlConnection</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">();</span>
+		<span class="c1">// 取得输入流，并使用Reader读取</span>
+		<span class="n">BufferedReader</span> <span class="n">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">BufferedReader</span><span class="o">(</span>
+				<span class="k">new</span> <span class="nf">InputStreamReader</span><span class="o">(</span><span class="n">in</span><span class="o">));</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;=============================&quot;</span><span class="o">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Contents of get request&quot;</span><span class="o">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;=============================&quot;</span><span class="o">);</span>
+		<span class="n">String</span> <span class="n">lines</span><span class="o">;</span>
+		<span class="k">while</span> <span class="o">((</span><span class="n">lines</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">lines</span><span class="o">);</span>
+			<span class="c1">// tv.setText(tv.getText().toString() + lines);</span>
+		<span class="o">}</span>
+		<span class="n">reader</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="c1">// 断开连接</span>
+		<span class="n">urlConnection</span><span class="o">.</span><span class="na">disconnect</span><span class="o">();</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;=============================&quot;</span><span class="o">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Contents of get request ends&quot;</span><span class="o">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;=============================&quot;</span><span class="o">);</span>
+	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">MalformedURLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// TODO Auto-generated catch block</span>
+		<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// TODO Auto-generated catch block</span>
+		<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchAlgorithmException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// TODO Auto-generated catch block</span>
+		<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">KeyManagementException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// TODO Auto-generated catch block</span>
+		<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">KeyStoreException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// TODO Auto-generated catch block</span>
+		<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">CertificateException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// TODO Auto-generated catch block</span>
+		<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<h3 id="volleyhttpurlconnectionhttps">3， Volley中使用HttpURLConnection访问https</h3>
+
+<p>Volley中使用HttpURLConnection访问网络时，是由HurlStack类处理，该类的几个构造方法如下：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">HurlStack</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * @param urlRewriter Rewriter to use for request URLs</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="nf">HurlStack</span><span class="o">(</span><span class="n">UrlRewriter</span> <span class="n">urlRewriter</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">(</span><span class="n">urlRewriter</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * @param urlRewriter Rewriter to use for request URLs</span>
+<span class="cm"> * @param sslSocketFactory SSL factory to use for HTTPS connections</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="nf">HurlStack</span><span class="o">(</span><span class="n">UrlRewriter</span> <span class="n">urlRewriter</span><span class="o">,</span> <span class="n">SSLSocketFactory</span> <span class="n">sslSocketFactory</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">mUrlRewriter</span> <span class="o">=</span> <span class="n">urlRewriter</span><span class="o">;</span>
+    <span class="n">mSslSocketFactory</span> <span class="o">=</span> <span class="n">sslSocketFactory</span><span class="o">;</span>
+<span class="o">}</span></code></pre></div>
+
+<p>打开连接的方法如下，注意其中也有上面提到的的setSSLSocketFactory方法。</p>
+
+<p>结合构造方法以及以下的代码，不难理解，为了访问https，只需奥在构建HurlStack时，传入一个已经设置了证书的SLSocketFactory即可，设置代码和上面的代码类似。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="n">HttpURLConnection</span> <span class="nf">openConnection</span><span class="o">(</span><span class="n">URL</span> <span class="n">url</span><span class="o">,</span> <span class="n">Request</span><span class="o">&lt;?&gt;</span> <span class="n">request</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">HttpURLConnection</span> <span class="n">connection</span> <span class="o">=</span> <span class="n">createConnection</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
+
+    <span class="kt">int</span> <span class="n">timeoutMs</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getTimeoutMs</span><span class="o">();</span>
+    <span class="n">connection</span><span class="o">.</span><span class="na">setConnectTimeout</span><span class="o">(</span><span class="n">timeoutMs</span><span class="o">);</span>
+    <span class="n">connection</span><span class="o">.</span><span class="na">setReadTimeout</span><span class="o">(</span><span class="n">timeoutMs</span><span class="o">);</span>
+    <span class="n">connection</span><span class="o">.</span><span class="na">setUseCaches</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+    <span class="n">connection</span><span class="o">.</span><span class="na">setDoInput</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+    <span class="c1">// use caller-provided custom SslSocketFactory, if any, for HTTPS</span>
+    <span class="k">if</span> <span class="o">(</span><span class="s">&quot;https&quot;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">url</span><span class="o">.</span><span class="na">getProtocol</span><span class="o">())</span> <span class="o">&amp;&amp;</span> <span class="n">mSslSocketFactory</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">((</span><span class="n">HttpsURLConnection</span><span class="o">)</span><span class="n">connection</span><span class="o">).</span><span class="na">setSSLSocketFactory</span><span class="o">(</span><span class="n">mSslSocketFactory</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="k">return</span> <span class="n">connection</span><span class="o">;</span>
+<span class="o">}</span></code></pre></div>
+
+<h2 id="httpclienthttps">二，使用httpClient访问https站点</h2>
+
+<h3 id="section-2">1,忽略证书</h3>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HttpClientHelper</span> <span class="o">{</span>
+ 
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">HttpClient</span> <span class="n">httpClient</span><span class="o">;</span>
+ 
+    <span class="kd">private</span> <span class="nf">HttpClientHelper</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+ 
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">synchronized</span> <span class="n">HttpClient</span> <span class="nf">getHttpClient</span><span class="o">()</span> <span class="o">{</span>
+ 
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="n">httpClient</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// 初始化工作</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">KeyStore</span> <span class="n">trustStore</span> <span class="o">=</span> <span class="n">KeyStore</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">KeyStore</span>
+                        <span class="o">.</span><span class="na">getDefaultType</span><span class="o">());</span>
+                <span class="n">trustStore</span><span class="o">.</span><span class="na">load</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+                <span class="n">SSLSocketFactory</span> <span class="n">sf</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SSLSocketFactoryEx</span><span class="o">(</span><span class="n">trustStore</span><span class="o">);</span>
+                <span class="n">sf</span><span class="o">.</span><span class="na">setHostnameVerifier</span><span class="o">(</span><span class="n">SSLSocketFactory</span><span class="o">.</span><span class="na">ALLOW_ALL_HOSTNAME_VERIFIER</span><span class="o">);</span>  <span class="c1">//允许所有主机的验证</span>
+ 
+                <span class="n">HttpParams</span> <span class="n">params</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">BasicHttpParams</span><span class="o">();</span>
+ 
+                <span class="n">HttpProtocolParams</span><span class="o">.</span><span class="na">setVersion</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="n">HttpVersion</span><span class="o">.</span><span class="na">HTTP_1_1</span><span class="o">);</span>
+                <span class="n">HttpProtocolParams</span><span class="o">.</span><span class="na">setContentCharset</span><span class="o">(</span><span class="n">params</span><span class="o">,</span>
+                        <span class="n">HTTP</span><span class="o">.</span><span class="na">DEFAULT_CONTENT_CHARSET</span><span class="o">);</span>
+                <span class="n">HttpProtocolParams</span><span class="o">.</span><span class="na">setUseExpectContinue</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+ 
+                <span class="c1">// 设置连接管理器的超时</span>
+                <span class="n">ConnManagerParams</span><span class="o">.</span><span class="na">setTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
+                <span class="c1">// 设置连接超时</span>
+                <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setConnectionTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
+                <span class="c1">// 设置socket超时</span>
+                <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setSoTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
+ 
+                <span class="c1">// 设置http https支持</span>
+                <span class="n">SchemeRegistry</span> <span class="n">schReg</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SchemeRegistry</span><span class="o">();</span>
+                <span class="n">schReg</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="k">new</span> <span class="nf">Scheme</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="n">PlainSocketFactory</span>
+                        <span class="o">.</span><span class="na">getSocketFactory</span><span class="o">(),</span> <span class="mi">80</span><span class="o">));</span>
+                <span class="n">schReg</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="k">new</span> <span class="nf">Scheme</span><span class="o">(</span><span class="s">&quot;https&quot;</span><span class="o">,</span> <span class="n">sf</span><span class="o">,</span> <span class="mi">443</span><span class="o">));</span>
+ 
+                <span class="n">ClientConnectionManager</span> <span class="n">conManager</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ThreadSafeClientConnManager</span><span class="o">(</span>
+                        <span class="n">params</span><span class="o">,</span> <span class="n">schReg</span><span class="o">);</span>
+ 
+                <span class="n">httpClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">DefaultHttpClient</span><span class="o">(</span><span class="n">conManager</span><span class="o">,</span> <span class="n">params</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="nf">DefaultHttpClient</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">httpClient</span><span class="o">;</span>
+    <span class="o">}</span>
+ 
+<span class="o">}</span>
+ 
+<span class="kd">class</span> <span class="nc">SSLSocketFactoryEx</span> <span class="kd">extends</span> <span class="n">SSLSocketFactory</span> <span class="o">{</span>
+ 
+    <span class="n">SSLContext</span> <span class="n">sslContext</span> <span class="o">=</span> <span class="n">SSLContext</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&quot;TLS&quot;</span><span class="o">);</span>
+ 
+    <span class="kd">public</span> <span class="nf">SSLSocketFactoryEx</span><span class="o">(</span><span class="n">KeyStore</span> <span class="n">truststore</span><span class="o">)</span>
+            <span class="kd">throws</span> <span class="n">NoSuchAlgorithmException</span><span class="o">,</span> <span class="n">KeyManagementException</span><span class="o">,</span>
+            <span class="n">KeyStoreException</span><span class="o">,</span> <span class="n">UnrecoverableKeyException</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">truststore</span><span class="o">);</span>
+ 
+        <span class="n">TrustManager</span> <span class="n">tm</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">X509TrustManager</span><span class="o">()</span> <span class="o">{</span>
+ 
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">cert</span><span class="o">.</span><span class="na">X509Certificate</span><span class="o">[]</span> <span class="nf">getAcceptedIssuers</span><span class="o">()</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="o">}</span>
+ 
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">checkClientTrusted</span><span class="o">(</span>
+                    <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">cert</span><span class="o">.</span><span class="na">X509Certificate</span><span class="o">[]</span> <span class="n">chain</span><span class="o">,</span> <span class="n">String</span> <span class="n">authType</span><span class="o">)</span>
+                    <span class="kd">throws</span> <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">cert</span><span class="o">.</span><span class="na">CertificateException</span> <span class="o">{</span>
+ 
+            <span class="o">}</span>
+ 
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">checkServerTrusted</span><span class="o">(</span>
+                    <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">cert</span><span class="o">.</span><span class="na">X509Certificate</span><span class="o">[]</span> <span class="n">chain</span><span class="o">,</span> <span class="n">String</span> <span class="n">authType</span><span class="o">)</span>
+                    <span class="kd">throws</span> <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">cert</span><span class="o">.</span><span class="na">CertificateException</span> <span class="o">{</span>
+ 
+            <span class="o">}</span>
+        <span class="o">};</span>
+ 
+        <span class="n">sslContext</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="k">new</span> <span class="n">TrustManager</span><span class="o">[]</span> <span class="o">{</span> <span class="n">tm</span> <span class="o">},</span> <span class="kc">null</span><span class="o">);</span>
+    <span class="o">}</span>
+ 
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Socket</span> <span class="nf">createSocket</span><span class="o">(</span><span class="n">Socket</span> <span class="n">socket</span><span class="o">,</span> <span class="n">String</span> <span class="n">host</span><span class="o">,</span> <span class="kt">int</span> <span class="n">port</span><span class="o">,</span>
+            <span class="kt">boolean</span> <span class="n">autoClose</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">UnknownHostException</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">sslContext</span><span class="o">.</span><span class="na">getSocketFactory</span><span class="o">().</span><span class="na">createSocket</span><span class="o">(</span><span class="n">socket</span><span class="o">,</span> <span class="n">host</span><span class="o">,</span> <span class="n">port</span><span class="o">,</span>
+                <span class="n">autoClose</span><span class="o">);</span>
+    <span class="o">}</span>
+ 
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Socket</span> <span class="nf">createSocket</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">sslContext</span><span class="o">.</span><span class="na">getSocketFactory</span><span class="o">().</span><span class="na">createSocket</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<h3 id="section-3">2,使用证书</h3>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">AssetManager</span> <span class="n">am</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getAssets</span><span class="o">();</span>
+ 
+<span class="n">InputStream</span> <span class="n">ins</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="s">&quot;robusoft.cer&quot;</span><span class="o">);</span>
+
+<span class="k">try</span> <span class="o">{</span>
+
+        <span class="c1">//读取证书</span>
+
+        <span class="n">CertificateFactory</span> <span class="n">cerFactory</span> <span class="o">=</span> <span class="n">CertificateFactory</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&quot;X.509&quot;</span><span class="o">);</span>  <span class="c1">//问1</span>
+
+        <span class="n">Certificate</span> <span class="n">cer</span> <span class="o">=</span> <span class="n">cerFactory</span><span class="o">.</span><span class="na">generateCertificate</span><span class="o">(</span><span class="n">ins</span><span class="o">);</span>
+
+        <span class="c1">//创建一个证书库，并将证书导入证书库</span>
+
+        <span class="n">KeyStore</span> <span class="n">keyStore</span> <span class="o">=</span> <span class="n">KeyStore</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&quot;PKCS12&quot;</span><span class="o">,</span> <span class="s">&quot;BC&quot;</span><span class="o">);</span>   <span class="c1">//问2</span>
+
+        <span class="n">keyStore</span><span class="o">.</span><span class="na">load</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+
+        <span class="n">keyStore</span><span class="o">.</span><span class="na">setCertificateEntry</span><span class="o">(</span><span class="s">&quot;trust&quot;</span><span class="o">,</span> <span class="n">cer</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">keyStore</span><span class="o">;</span>
+
+<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+
+        <span class="n">ins</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="o">}</span>
+
+<span class="c1">//把咱的证书库作为信任证书库</span>
+
+<span class="n">SSLSocketFactory</span> <span class="n">socketFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SSLSocketFactory</span><span class="o">(</span><span class="n">keystore</span><span class="o">);</span>
+
+<span class="n">Scheme</span> <span class="n">sch</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Scheme</span><span class="o">(</span><span class="s">&quot;https&quot;</span><span class="o">,</span> <span class="n">socketFactory</span><span class="o">,</span> <span class="mi">443</span><span class="o">);</span>
+
+<span class="c1">//完工</span>
+
+<span class="n">HttpClient</span> <span class="n">mHttpClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">DefaultHttpClient</span><span class="o">();</span>
+
+<span class="n">mHttpClient</span><span class="o">.</span><span class="na">getConnectionManager</span><span class="o">().</span><span class="na">getSchemeRegistry</span><span class="o">().</span><span class="na">register</span><span class="o">(</span><span class="n">sch</span><span class="o">);</span>
+
+<span class="c1">//接下来这个httpclient就可以用语https请求了。</span></code></pre></div>
+
+<h3 id="volleyhttpclienthttps">3,Volley中使用httpClient访问https</h3>
+
+<p>Volley使用HttpCLient访问网络是借助HttpClientStack类，其中的构造方法不同于HurlStack那么多，而只有一个</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">HttpClientStack</span><span class="o">(</span><span class="n">HttpClient</span> <span class="n">client</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">mClient</span> <span class="o">=</span> <span class="n">client</span><span class="o">;</span>
+<span class="o">}</span></code></pre></div>
+
+<p>很简单，我们只需要在构造HttpClientStack时传入一个已经设置了证书的HttpClient，按照上面讲述的那样设置即可。</p>
+
+
+        <nav class="pagination" role="navigation">
+          
+            <a href="/http/HTTP-https/" class="btn" title="《HTTP权威指南》Secure HTTP">Previous</a>
+          
+          
+        </nav><!-- /.pagination -->
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+  </article>
+</div><!-- /#main -->
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chenhuazhao020'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    
+
+<span>&copy; 2015 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
+<div class="social-icons">
+	
+	
+	
+	
+	
+	
+	
+	<a href="http://github.com/Leaking" title="Quinn Chen on Github" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+	
+    <a href="http://www.weibo.com/hereamme/" title="Quinn Chen on Weibo" target="_blank"><i class="fa fa-weibo fa-2x"></i></a>
+
+</div><!-- /.social-icons -->
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: '/search.json',
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+  
+	        
+
+</body>
+</html>

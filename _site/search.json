@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "Android处理https请求的证书问题",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/android-https/",
+		  "date"       : "2015-06-15 00:00:00 +0800",
+		  "shortdate"  : "June 15, 2015"
+		} ,
+	
+		{
 		  "title"      : "《HTTP权威指南》Secure HTTP",
 		  "category"   : "",
       "tags"       : "HTTP",
