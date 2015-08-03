@@ -1,0 +1,480 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Android AccountManager &#8211; My Stupid Blog</title>
+<meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta name="keywords" content="android">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Android AccountManager">
+<meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android AccountManager">
+<meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta property="og:url" content="/android/android-accountmanager/">
+<meta property="og:site_name" content="My Stupid Blog">
+
+
+
+
+
+<link rel="canonical" href="/android/android-accountmanager/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<script src="//use.edgefonts.net/source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9;source-code-pro:n4,n7;volkhov.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+      
+		    
+		        
+		    
+		    <li><a href="/home/" >Home</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/js/" >JS</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/java/" >Java</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/android/" >Android</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/python/" >Python</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/tools/" >Tools</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/readingnotes/" >ReadingNotes</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/reflection/" >Reflection</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/about/" >About</a></li>
+		  
+        <li class="dosearch"><i class="fa fa-search"></i> Search</li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	
+		<div class="wrap">
+			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
+		</div>
+	
+</header><!-- /.masthead -->
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Android AccountManager" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"><a href="/tags/#android" title="Pages tagged android">android</a></span>
+        
+          <h1 class="entry-title">Android AccountManager</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+        
+          <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
+        <span class="entry-date date published"><time datetime="2015-08-01T00:00:00+08:00"><i class="fa fa-calendar-o"></i> August 01, 2015</time></span>
+        
+        
+        
+        <span class="social-share-twitter">
+          <a href="https://twitter.com/intent/tweet?hashtags=android&text=Android%20AccountManager&url=/android/android-accountmanager/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+        </span>
+        <span class="social-share-facebook">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/android/android-accountmanager/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+        </span>
+        <span class="social-share-googleplus">
+          <a href="https://plus.google.com/share?url=/android/android-accountmanager/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+        </span>
+        <!-- /.social-share -->
+        
+        <div class="google-ads" style="margin-top:40px; text-align:center;">
+  <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- 160x600 ad -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:160px;height:600px"
+       data-ad-client=""
+       data-ad-slot=""></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div><!-- /.google-ads --><!-- /.google-ads -->
+      </footer>
+      <div class="entry-content">
+        <h2 id="section">一，简述</h2>
+
+<p>使用AccountManager的作用在于，你可以使用android自带的账号系统，进一步可以使用账号同步。最直观的特点如下图</p>
+
+<figure class="half">
+  <img src="/images/account1.jpg" alt="search screenshot" />
+   <img src="/images/account2.jpg" alt="search screenshot" />
+  <figcaption></figcaption>
+</figure>
+
+<p>上图中，点击添加帐户，然后选择具体某个应用，接着会跳转到该应用的登陆界面。
+你可以在手机的设置中添加帐号，然后账号信息将保存于此，这里我们一般都是保存token和账号，而不会保存密码，因为越狱过的手机可能使密码泄露。</p>
+
+<p>另外讲到这个token，这是关于OAuth的知识，下面会讲。</p>
+
+<h2 id="oauth">二，OAuth</h2>
+
+<p>首先得分清Authentication（认证）以及Authorization（授权），我们这里要讲的，OAuth关注的，就是Authorization（授权）。</p>
+
+<p>token的作用是授权给第三方应用访问资源，使其不用每次请求都携带账号密码，而只需携带token，另外，通过token可以选择授权哪部分资源的权限。</p>
+
+<h3 id="oauth-1">介绍OAuth中的四个角色</h3>
+
+<ul>
+  <li>
+    <p>资源拥有者（resource owner）</p>
+
+    <p>资源拥有者是拥有对资源进行授权的一方，经常就是永远账号密码的用户</p>
+  </li>
+  <li>
+    <p>资源服务器（resource server）</p>
+
+    <p>资源服务器持有某些资源，负责处理对这些资源的请求以及响应这些请求。</p>
+  </li>
+  <li>
+    <p>客户端（client）</p>
+
+    <p>这里的客户端就是第三方应用，它获得资源拥有者的授权后，就可以去请求某些受保护的资源</p>
+  </li>
+  <li>
+    <p>授权服务器（authorization server）</p>
+
+    <p>授权服务器负责发放token，当然，发放token的前提是客户端已经被授权。</p>
+  </li>
+</ul>
+
+<h3 id="section-1">四个角色的关系</h3>
+
+<figure>
+  <img src="/images/oauth2.png" alt="search screenshot" />
+  <figcaption>OAuth授权流程</figcaption>
+</figure>
+
+<p>(A)  客户端（client）向资源拥有者请求授权</p>
+
+<p>(B)  客户端（client）收到授权许可，</p>
+
+<p>(C)  客户端（client）使用刚刚获得的授权去请求token。（此时你可能需要一次账号密码的登陆认证）</p>
+
+<p>(D)  授权服务器（authorization server）检查客户端的认证请求，成功则返回一个授权的token给客户端。</p>
+
+<p>(E)  客户端（client）使用刚刚获取的token向资源服务器（resource server）请求资源</p>
+
+<p>(F)  资源服务器（resource server）检查token的有效性，有效则返回资源给客户端。</p>
+
+<h2 id="authenticator">三，自定义Authenticator</h2>
+
+<p>如果使用android手机的账号系统，app的启动activity必然不会是登陆界面，而应该直接就是app的主页（我们此处称为MainActivity），</p>
+
+<p>使用android账号系统的app，生成token有两种情况，</p>
+
+<ul>
+  <li>
+    <p>app启动进入MainActivity后请求token，如果获取失败则挑战到LoginActivity，输入账号密码重新请求token。</p>
+  </li>
+  <li>
+    <p>通过设置－&gt;添加帐户的方式，然后跳转到登陆界面。</p>
+  </li>
+</ul>
+
+<p>如果想让你的应用使用android的账号系统，你需要做如下几步</p>
+
+<ul>
+  <li>
+    <p>1，自定义AccountAuthenticator（继承重写AbstractAccountAuthenticator），它负责获取token，以及获取token失败时，跳转到登陆界面</p>
+  </li>
+  <li>
+    <p>2，定义AccountService，它会与你自定义的AccountAuthenticator绑定，主要是为了实现“设置－&gt;添加帐户”可以添加帐户，另外，定义该Service时需要指定一个account-authenticator资源</p>
+  </li>
+  <li>
+    <p>3，定义继承自AccountAuthenticatorActivity的LoginActivity</p>
+  </li>
+</ul>
+
+<p>此处不一一贴出代码，只记录一下需要注意的代码片段</p>
+
+<p>点击“设置－&gt;添加帐户”跳转到登陆界面，是通过自定义AccountAuthenticator中的addAccount方法，如下</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="n">Bundle</span> <span class="nf">addAccount</span><span class="o">(</span><span class="n">AccountAuthenticatorResponse</span> <span class="n">response</span><span class="o">,</span> <span class="n">String</span> <span class="n">accountType</span><span class="o">,</span> <span class="n">String</span> <span class="n">authTokenType</span><span class="o">,</span> <span class="n">String</span><span class="o">[]</span> <span class="n">requiredFeatures</span><span class="o">,</span> <span class="n">Bundle</span> <span class="n">options</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">NetworkErrorException</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">LoginActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="n">intent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">ARG_ACCOUNT_TYPE</span><span class="o">,</span> <span class="n">accountType</span><span class="o">);</span>
+    <span class="n">intent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">ARG_AUTH_TYPE</span><span class="o">,</span> <span class="n">authTokenType</span><span class="o">);</span>
+    <span class="n">intent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">ARG_IS_ADDING_NEW_ACCOUNT</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+    <span class="n">intent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">AccountManager</span><span class="o">.</span><span class="na">KEY_ACCOUNT_AUTHENTICATOR_RESPONSE</span><span class="o">,</span> <span class="n">response</span><span class="o">);</span>
+    <span class="kd">final</span> <span class="n">Bundle</span> <span class="n">bundle</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Bundle</span><span class="o">();</span>
+    <span class="n">bundle</span><span class="o">.</span><span class="na">putParcelable</span><span class="o">(</span><span class="n">AccountManager</span><span class="o">.</span><span class="na">KEY_INTENT</span><span class="o">,</span> <span class="n">intent</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">bundle</span><span class="o">;</span>
+<span class="o">}</span></code></pre></div>
+
+<p>在你的MainActivity中尝试获取token，是通过一下代码实现，注意，请求和结果的返回是异步的，所以该过程不能再UI线程中执行。下面这段代码会触发自定义AccountAuthenticator中的getAuthToken方法的执行（后面会讲）</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">final</span> <span class="n">AccountManagerFuture</span><span class="o">&lt;</span><span class="n">Bundle</span><span class="o">&gt;</span> <span class="n">future</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="na">getAuthToken</span><span class="o">(</span><span class="n">account</span><span class="o">,</span> <span class="n">ACCOUNT_TYPE</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="o">(</span><span class="n">Activity</span><span class="o">)</span><span class="n">context</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+
+      <span class="k">try</span> <span class="o">{</span>
+          <span class="n">Bundle</span> <span class="n">result</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="na">getResult</span><span class="o">();</span>
+          <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="n">AccountManager</span><span class="o">.</span><span class="na">KEY_AUTHTOKEN</span><span class="o">);</span>
+      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">AccountsException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Auth token lookup failed&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+          <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Auth token lookup failed&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+          <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+      <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>上面的代码，MainActivity试图获取本地保存的token时，可能获取成功，成功则直接返回token，也可能获取失败，失败则跳转到登陆界面，登陆界面输入账号密码重新向服务器请求token。该过程由自定义AccountAuthenticator中的getAuthToken方法实现。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="n">Bundle</span> <span class="nf">getAuthToken</span><span class="o">(</span><span class="n">AccountAuthenticatorResponse</span> <span class="n">response</span><span class="o">,</span> <span class="n">Account</span> <span class="n">account</span><span class="o">,</span> <span class="n">String</span> <span class="n">authTokenType</span><span class="o">,</span> <span class="n">Bundle</span> <span class="n">options</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">NetworkErrorException</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="n">AccountManager</span> <span class="n">am</span> <span class="o">=</span> <span class="n">AccountManager</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+    <span class="c1">//第一步：试图获取本地的token</span>
+    <span class="n">String</span> <span class="n">authToken</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="na">peekAuthToken</span><span class="o">(</span><span class="n">account</span><span class="o">,</span> <span class="n">authTokenType</span><span class="o">);</span>
+    <span class="c1">//第二步：获取失败的话，检查是否密码，有的的话直接使用账号密码请求token，这样就不用跳转到登陆界面</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">TextUtils</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">authToken</span><span class="o">))</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="n">String</span> <span class="n">password</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="na">getPassword</span><span class="o">(</span><span class="n">account</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">password</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Github</span> <span class="n">github</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">GithubImpl</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">github</span><span class="o">.</span><span class="na">createToken</span><span class="o">(</span><span class="n">account</span><span class="o">.</span><span class="na">name</span><span class="o">,</span><span class="n">password</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">GithubError</span> <span class="n">githubError</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">githubError</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                <span class="n">authToken</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">AuthError</span> <span class="n">authError</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">authError</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                <span class="n">authToken</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="c1">//第三步：第二步失败了，只能跳转到登陆界面了</span>
+    <span class="k">if</span> <span class="o">(!</span><span class="n">TextUtils</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">authToken</span><span class="o">))</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="n">Bundle</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Bundle</span><span class="o">();</span>
+        <span class="n">result</span><span class="o">.</span><span class="na">putString</span><span class="o">(</span><span class="n">AccountManager</span><span class="o">.</span><span class="na">KEY_ACCOUNT_NAME</span><span class="o">,</span> <span class="n">account</span><span class="o">.</span><span class="na">name</span><span class="o">);</span>
+        <span class="n">result</span><span class="o">.</span><span class="na">putString</span><span class="o">(</span><span class="n">AccountManager</span><span class="o">.</span><span class="na">KEY_ACCOUNT_TYPE</span><span class="o">,</span> <span class="n">account</span><span class="o">.</span><span class="na">type</span><span class="o">);</span>
+        <span class="n">result</span><span class="o">.</span><span class="na">putString</span><span class="o">(</span><span class="n">AccountManager</span><span class="o">.</span><span class="na">KEY_AUTHTOKEN</span><span class="o">,</span> <span class="n">authToken</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">// If we get here, then we couldn&#39;t access the user&#39;s password - so we</span>
+    <span class="c1">// need to re-prompt them for their credentials. We do that by creating</span>
+    <span class="c1">// an intent to display our AuthenticatorActivity.</span>
+    <span class="kd">final</span> <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">LoginActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="n">intent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">AccountManager</span><span class="o">.</span><span class="na">KEY_ACCOUNT_AUTHENTICATOR_RESPONSE</span><span class="o">,</span> <span class="n">response</span><span class="o">);</span>
+    <span class="n">intent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">ARG_ACCOUNT_TYPE</span><span class="o">,</span> <span class="n">account</span><span class="o">.</span><span class="na">type</span><span class="o">);</span>
+    <span class="n">intent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">ARG_AUTH_TYPE</span><span class="o">,</span> <span class="n">authTokenType</span><span class="o">);</span>
+    <span class="kd">final</span> <span class="n">Bundle</span> <span class="n">bundle</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Bundle</span><span class="o">();</span>
+    <span class="n">bundle</span><span class="o">.</span><span class="na">putParcelable</span><span class="o">(</span><span class="n">AccountManager</span><span class="o">.</span><span class="na">KEY_INTENT</span><span class="o">,</span> <span class="n">intent</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">bundle</span><span class="o">;</span>
+<span class="o">}</span></code></pre></div>
+
+<p>参考链接</p>
+
+<p><a href="http://blog.udinic.com/2013/04/24/write-your-own-android-authenticator/">http://blog.udinic.com/2013/04/24/write-your-own-android-authenticator/</a></p>
+
+<p><a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html">http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html</a></p>
+
+<p><a href="http://tools.ietf.org/html/rfc6749">http://tools.ietf.org/html/rfc6749</a></p>
+
+<p>另外，我已经将其应用于我的项目</p>
+
+<p><a href="https://github.com/Leaking/GithubKnife">https://github.com/Leaking/GithubKnife</a></p>
+
+
+        <nav class="pagination" role="navigation">
+          
+            <a href="/android/android-https/" class="btn" title="Android处理https请求的证书问题">Previous</a>
+          
+          
+        </nav><!-- /.pagination -->
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+  </article>
+</div><!-- /#main -->
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chenhuazhao020'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    
+
+<span>&copy; 2015 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
+<div class="social-icons">
+	
+	
+	
+	
+	
+	
+	
+	<a href="http://github.com/Leaking" title="Quinn Chen on Github" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+	
+    <a href="http://www.weibo.com/hereamme/" title="Quinn Chen on Weibo" target="_blank"><i class="fa fa-weibo fa-2x"></i></a>
+
+</div><!-- /.social-icons -->
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: '/search.json',
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+  
+	        
+
+</body>
+</html>

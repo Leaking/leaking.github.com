@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "Android AccountManager",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/android-accountmanager/",
+		  "date"       : "2015-08-01 00:00:00 +0800",
+		  "shortdate"  : "August 01, 2015"
+		} ,
+	
+		{
 		  "title"      : "Android处理https请求的证书问题",
 		  "category"   : "",
       "tags"       : "android",
