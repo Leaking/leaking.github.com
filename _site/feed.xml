@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-08-03T17:47:25+08:00</updated>
+<updated>2015-08-03T21:50:24+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -16,7 +16,7 @@
   
 
 <entry>
-  <title type="html"><![CDATA[Android AccountManager]]></title>
+  <title type="html"><![CDATA[OAuth以及Android自定义Authenticator]]></title>
   <link rel="alternate" type="text/html" href="/android/android-accountmanager/" />
   <id>/android/android-accountmanager</id>
   <published>2015-08-01T00:00:00+08:00</published>
@@ -39,7 +39,7 @@
 &lt;p&gt;上图中，点击添加帐户，然后选择具体某个应用，接着会跳转到该应用的登陆界面。
 你可以在手机的设置中添加帐号，然后账号信息将保存于此，这里我们一般都是保存token和账号，而不会保存密码，因为越狱过的手机可能使密码泄露。&lt;/p&gt;
 
-&lt;p&gt;另外讲到这个token，这是关于OAuth的知识，下面会讲。&lt;/p&gt;
+&lt;p&gt;另外讲到这个token，这是关于OAuth2.0的知识，下面就称呼为OAuth。&lt;/p&gt;
 
 &lt;h2 id=&quot;oauth&quot;&gt;二，OAuth&lt;/h2&gt;
 
@@ -208,7 +208,7 @@
 &lt;p&gt;&lt;a href=&quot;https://github.com/Leaking/GithubKnife&quot;&gt;https://github.com/Leaking/GithubKnife&lt;/a&gt;&lt;/p&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;/android/android-accountmanager/&quot;&gt;Android AccountManager&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on August 01, 2015.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;/android/android-accountmanager/&quot;&gt;OAuth以及Android自定义Authenticator&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on August 01, 2015.&lt;/p&gt;</content>
 </entry>
 
 

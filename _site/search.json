@@ -1,7 +1,7 @@
 [
 	
 		{
-		  "title"      : "Android AccountManager",
+		  "title"      : "OAuth以及Android自定义Authenticator",
 		  "category"   : "",
       "tags"       : "android",
 		  "url"        : "/android/android-accountmanager/",

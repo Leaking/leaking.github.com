@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Android AccountManager"
+title: "OAuth以及Android自定义Authenticator"
 excerpt: "Custom written post descriptions are the way to go... if you're not lazy."
 categories: android
 tags: [android]
@@ -28,7 +28,7 @@ share: true
 上图中，点击添加帐户，然后选择具体某个应用，接着会跳转到该应用的登陆界面。
 你可以在手机的设置中添加帐号，然后账号信息将保存于此，这里我们一般都是保存token和账号，而不会保存密码，因为越狱过的手机可能使密码泄露。
 
-另外讲到这个token，这是关于OAuth的知识，下面会讲。
+另外讲到这个token，这是关于OAuth2.0的知识，下面就称呼为OAuth。
 
 
 
