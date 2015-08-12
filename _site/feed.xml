@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-08-12T11:22:38+08:00</updated>
+<updated>2015-08-12T14:19:33+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -191,9 +191,37 @@
 
 &lt;p&gt;如果你想要提供一张大小为&lt;code&gt;200x200&lt;/code&gt;的照片给&lt;code&gt;xhdpi&lt;/code&gt;的设备, 那相对应的就得提供一张&lt;code&gt;150*150&lt;/code&gt;的照片给&lt;code&gt;hdpi&lt;/code&gt;的设备，提供&lt;code&gt;100*100&lt;/code&gt;给&lt;code&gt;mdpi&lt;/code&gt;，提供&lt;code&gt;75*75&lt;/code&gt;给&lt;code&gt;ldpi&lt;/code&gt;。&lt;/p&gt;
 
+&lt;p&gt;再谈一个问题。大家一般都将图片文件按如下结构放在项目中。&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/dp_img1.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;资源图片文件&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;但是在最新的ADT中新建会见到下面这种结构&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/dp_img2.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;资源图片文件&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;其实很简单，&lt;code&gt;mipmap&lt;/code&gt;是用来放置&lt;code&gt;app&lt;/code&gt;的&lt;code&gt;icon&lt;/code&gt;图标的。其他资源图片文件也可以放在这里面，但是最好还是新建一个&lt;code&gt;drawable&lt;/code&gt;的结构。真相在这个链接&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://developer.android.com/training/multiscreen/screendensities.html&quot;&gt;http://developer.android.com/training/multiscreen/screendensities.html&lt;/a&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;sp&quot;&gt;3. sp&lt;/h2&gt;
 
 &lt;p&gt;sp的全称Scale-independent Pixels，布局文件中对TextView指定字体大小时，都建议使用&lt;code&gt;sp&lt;/code&gt;.&lt;code&gt;sp&lt;/code&gt;与&lt;code&gt;dip&lt;/code&gt;相比多考虑了手机字体大小的偏好设置。而&lt;code&gt;sp&lt;/code&gt;与&lt;code&gt;px&lt;/code&gt;的转化关系，与&lt;code&gt;dp&lt;/code&gt;和&lt;code&gt;px&lt;/code&gt;的转化关系，只是对应的比例参数从&lt;code&gt;density&lt;/code&gt;变成了&lt;code&gt;scaledDensity&lt;/code&gt;原理是一样的。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;4，参考链接&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://developer.android.com/guide/practices/screens_support.html&quot;&gt;http://developer.android.com/guide/practices/screens_support.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://developer.android.com/training/multiscreen/screendensities.html&quot;&gt;http://developer.android.com/training/multiscreen/screendensities.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/yaozhongxiao/archive/2014/07/14/3842908.html&quot;&gt;http://www.cnblogs.com/yaozhongxiao/archive/2014/07/14/3842908.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/a/2025541/1290235&quot;&gt;http://stackoverflow.com/a/2025541/1290235&lt;/a&gt;&lt;/p&gt;
 
 
   &lt;p&gt;&lt;a href=&quot;/android/dip-sp/&quot;&gt;Android中关于显示尺度大小的一切&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on August 04, 2015.&lt;/p&gt;</content>

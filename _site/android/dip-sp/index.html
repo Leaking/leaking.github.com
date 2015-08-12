@@ -364,9 +364,37 @@
 
 <p>如果你想要提供一张大小为<code>200x200</code>的照片给<code>xhdpi</code>的设备, 那相对应的就得提供一张<code>150*150</code>的照片给<code>hdpi</code>的设备，提供<code>100*100</code>给<code>mdpi</code>，提供<code>75*75</code>给<code>ldpi</code>。</p>
 
+<p>再谈一个问题。大家一般都将图片文件按如下结构放在项目中。</p>
+
+<figure>
+  <img src="/images/dp_img1.jpg" alt="search screenshot" />
+  <figcaption>资源图片文件</figcaption>
+</figure>
+
+<p>但是在最新的ADT中新建会见到下面这种结构</p>
+
+<figure>
+  <img src="/images/dp_img2.jpg" alt="search screenshot" />
+  <figcaption>资源图片文件</figcaption>
+</figure>
+
+<p>其实很简单，<code>mipmap</code>是用来放置<code>app</code>的<code>icon</code>图标的。其他资源图片文件也可以放在这里面，但是最好还是新建一个<code>drawable</code>的结构。真相在这个链接</p>
+
+<p><a href="http://developer.android.com/training/multiscreen/screendensities.html">http://developer.android.com/training/multiscreen/screendensities.html</a></p>
+
 <h2 id="sp">3. sp</h2>
 
 <p>sp的全称Scale-independent Pixels，布局文件中对TextView指定字体大小时，都建议使用<code>sp</code>.<code>sp</code>与<code>dip</code>相比多考虑了手机字体大小的偏好设置。而<code>sp</code>与<code>px</code>的转化关系，与<code>dp</code>和<code>px</code>的转化关系，只是对应的比例参数从<code>density</code>变成了<code>scaledDensity</code>原理是一样的。</p>
+
+<h2 id="section-1">4，参考链接</h2>
+
+<p><a href="http://developer.android.com/guide/practices/screens_support.html">http://developer.android.com/guide/practices/screens_support.html</a></p>
+
+<p><a href="http://developer.android.com/training/multiscreen/screendensities.html">http://developer.android.com/training/multiscreen/screendensities.html</a></p>
+
+<p><a href="http://www.cnblogs.com/yaozhongxiao/archive/2014/07/14/3842908.html">http://www.cnblogs.com/yaozhongxiao/archive/2014/07/14/3842908.html</a></p>
+
+<p><a href="http://stackoverflow.com/a/2025541/1290235">http://stackoverflow.com/a/2025541/1290235</a></p>
 
 
         <nav class="pagination" role="navigation">
