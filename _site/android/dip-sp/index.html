@@ -1,0 +1,468 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Android中关于显示尺度大小的一切 &#8211; My Stupid Blog</title>
+<meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta name="keywords" content="android">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Android中关于显示尺度大小的一切">
+<meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android中关于显示尺度大小的一切">
+<meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta property="og:url" content="/android/dip-sp/">
+<meta property="og:site_name" content="My Stupid Blog">
+
+
+
+
+
+<link rel="canonical" href="/android/dip-sp/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<script src="//use.edgefonts.net/source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9;source-code-pro:n4,n7;volkhov.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+      
+		    
+		        
+		    
+		    <li><a href="/home/" >Home</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/js/" >JS</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/java/" >Java</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/android/" >Android</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/python/" >Python</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/tools/" >Tools</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/readingnotes/" >ReadingNotes</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/reflection/" >Reflection</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/about/" >About</a></li>
+		  
+        <li class="dosearch"><i class="fa fa-search"></i> Search</li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	
+		<div class="wrap">
+			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
+		</div>
+	
+</header><!-- /.masthead -->
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Android中关于显示尺度大小的一切" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"><a href="/tags/#android" title="Pages tagged android">android</a></span>
+        
+          <h1 class="entry-title">Android中关于显示尺度大小的一切</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+        
+          <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
+        <span class="entry-date date published"><time datetime="2015-08-04T00:00:00+08:00"><i class="fa fa-calendar-o"></i> August 04, 2015</time></span>
+        
+        
+        
+        <span class="social-share-twitter">
+          <a href="https://twitter.com/intent/tweet?hashtags=android&text=Android中关于显示尺度大小的一切&url=/android/dip-sp/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+        </span>
+        <span class="social-share-facebook">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/android/dip-sp/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+        </span>
+        <span class="social-share-googleplus">
+          <a href="https://plus.google.com/share?url=/android/dip-sp/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+        </span>
+        <!-- /.social-share -->
+        
+        <div class="google-ads" style="margin-top:40px; text-align:center;">
+  <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- 160x600 ad -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:160px;height:600px"
+       data-ad-client=""
+       data-ad-slot=""></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div><!-- /.google-ads --><!-- /.google-ads -->
+      </footer>
+      <div class="entry-content">
+        <h2 id="section">1，一段常见的代码</h2>
+
+<p>关于Android中的大小尺寸，我们可能最常接触的概念就是<code>sp</code>，<code>dip</code>，<code>sp</code>。而最常使用的代码就是px与dip二者的相互转化，以及px与sp之间的相互转化，如下：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
+<span class="cm">     * 将px值转换为dip或dp值，保证尺寸大小不变</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param pxValue</span>
+<span class="cm">     * @param scale</span>
+<span class="cm">     *            （DisplayMetrics类中属性density）</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span> 
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">px2dip</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">pxValue</span><span class="o">)</span> <span class="o">{</span> 
+        <span class="kd">final</span> <span class="kt">float</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">density</span><span class="o">;</span> 
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">pxValue</span> <span class="o">/</span> <span class="n">scale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span> 
+    <span class="o">}</span> 
+   
+    <span class="cm">/**</span>
+<span class="cm">     * 将dip或dp值转换为px值，保证尺寸大小不变</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param dipValue</span>
+<span class="cm">     * @param scale</span>
+<span class="cm">     *            （DisplayMetrics类中属性density）</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span> 
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">dip2px</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">dipValue</span><span class="o">)</span> <span class="o">{</span> 
+        <span class="kd">final</span> <span class="kt">float</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">density</span><span class="o">;</span> 
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">dipValue</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span> 
+    <span class="o">}</span> 
+   
+    <span class="cm">/**</span>
+<span class="cm">     * 将px值转换为sp值，保证文字大小不变</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param pxValue</span>
+<span class="cm">     * @param fontScale</span>
+<span class="cm">     *            （DisplayMetrics类中属性scaledDensity）</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span> 
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">px2sp</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">pxValue</span><span class="o">)</span> <span class="o">{</span> 
+        <span class="kd">final</span> <span class="kt">float</span> <span class="n">fontScale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">scaledDensity</span><span class="o">;</span> 
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">pxValue</span> <span class="o">/</span> <span class="n">fontScale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span> 
+    <span class="o">}</span> 
+   
+    <span class="cm">/**</span>
+<span class="cm">     * 将sp值转换为px值，保证文字大小不变</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param spValue</span>
+<span class="cm">     * @param fontScale</span>
+<span class="cm">     *            （DisplayMetrics类中属性scaledDensity）</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span> 
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">sp2px</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">spValue</span><span class="o">)</span> <span class="o">{</span> 
+        <span class="kd">final</span> <span class="kt">float</span> <span class="n">fontScale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">scaledDensity</span><span class="o">;</span> 
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">spValue</span> <span class="o">*</span> <span class="n">fontScale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span> 
+    <span class="o">}</span></code></pre></div>
+
+<p>对于大多对android开发人员都很熟悉上面的代码，如果你不认识，那也没关系，接下来从各个基础概念讲起。</p>
+
+<h1 id="pxdip">2，px，dip的关系</h1>
+
+<p><code>px</code>，像素，英文简称<code>pixel</code>，简写自<code>picture element</code>，像很多文章中所说，我们理解像素是图片中的一个点。Android开发中，在Java代码中写的大小都是px为单位。</p>
+
+<p><code>dip</code> ，全称<code>Density-independent Pixels</code>。只要在布局中文件使用到大小，距离，官方都推荐使用<code>dip</code>，一般我们对<code>dip</code>和<code>dp</code>不做区别。<code>dip</code>这个单位是为了使同样数量的px在不同手机上的显示效果，显然<code>1 dip</code>是<code>1 px</code>某种对应关系转化过来的。这种转化上面的代码已经有了，但是其原理是什么呢？这就得引出另一个概念<code>dpi（dots per inch)</code></p>
+
+<p><code>dpi</code>，官方文档对这个单位的指代是<code>Screen density</code>，即屏幕密度，表示一个物理单位面积内像素点的个数。而在<code>160dpi</code>的设备上，<code>1dip = 1px</code>，在<code>120dpi</code>的设备上，<code>1dip = 0.75px</code>，没错，这就是<code>px</code>和<code>dip</code>对应关系的基础，<code>dpi</code>越大，<code>1dip</code>内就有更多的<code>px</code>。</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th style="text-align: left">dpi类别</th>
+      <th style="text-align: center">dpi大小</th>
+      <th style="text-align: right">px</th>
+      <th style="text-align: right">dp</th>
+      <th style="text-align: right">物理显示大小</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">ldpi</td>
+      <td style="text-align: center">120dpi</td>
+      <td style="text-align: right">120px</td>
+      <td style="text-align: right">160dp</td>
+      <td style="text-align: right">1个单位</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">mdpi</td>
+      <td style="text-align: center">160dpi</td>
+      <td style="text-align: right">160px</td>
+      <td style="text-align: right">160dp</td>
+      <td style="text-align: right">1个单位</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">hdpi</td>
+      <td style="text-align: center">240dpi</td>
+      <td style="text-align: right">240px</td>
+      <td style="text-align: right">160dp</td>
+      <td style="text-align: right">1个单位</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">xhdpi</td>
+      <td style="text-align: center">320dpi</td>
+      <td style="text-align: right">320px</td>
+      <td style="text-align: right">160dp</td>
+      <td style="text-align: right">1个单位</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td style="text-align: left">xxhdpi</td>
+      <td style="text-align: center">480dpi</td>
+      <td style="text-align: right">480px</td>
+      <td style="text-align: right">160dp</td>
+      <td style="text-align: right">1个单位</td>
+    </tr>
+  </tfoot>
+</table>
+
+<p>从上面这个表可以看出，在不同<code>dpi</code>的手机上，相同的的<code>dp</code>可以对应相应的物理大小，从而发挥了适配不同设备的作用。</p>
+
+<p>从上面的对应关系，不难得出如下公式</p>
+
+<blockquote>
+  <p>px = dp * dpi  /  160</p>
+</blockquote>
+
+<p>那么再来看一下上面<code>dp</code>和<code>px</code>的转化代码。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
+<span class="cm"> * 将dip或dp值转换为px值，保证尺寸大小不变</span>
+<span class="cm"> * </span>
+<span class="cm"> * @param dipValue</span>
+<span class="cm"> * @param scale</span>
+<span class="cm"> *            （DisplayMetrics类中属性density）</span>
+<span class="cm"> * @return</span>
+<span class="cm"> */</span> 
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">dip2px</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">dipValue</span><span class="o">)</span> <span class="o">{</span> 
+    <span class="kd">final</span> <span class="kt">float</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">density</span><span class="o">;</span> 
+    <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">dipValue</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span> 
+<span class="o">}</span></code></pre></div>
+
+<p><code>context.getResources().getDisplayMetrics()</code>返回的是一个<code>DisplayMetrics</code>对象，该对象有这么三个成员变量</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">float</span> <span class="n">density</span><span class="o">;</span>
+    
+<span class="kd">public</span> <span class="kt">int</span> <span class="n">densityDpi</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kt">float</span> <span class="n">scaledDensity</span><span class="o">;</span></code></pre></div>
+
+<p><code>densityDpi</code>就是上面的dpi，<code>density</code>是当前设备和默认<code>dpi ＝ 160</code>的比值，比如，对于<code>dpi = 320</code>的设备，<code>densityDpi = 320</code>,<code>density = 2</code>。<code>scaledDensity</code>是和<code>sp</code>有关的参数，下面再讲。</p>
+
+<p>再回头仔细看这段用于单位转化的代码，而刚刚得出的公式是不是一致的，没错，就是一样的，只是多了一个<code>0.5</code>，这个是为了四舍五入而已。到此为止，应该就理解了<code>px</code>和<code>dp</code>之间的关系了。</p>
+
+<p>于是乎，应该也能理解android项目中的图片资源文件，一般我们需要在以下几个文件夹中提供不同大小的图片。</p>
+
+<ul>
+  <li>xhdpi: 2.0</li>
+  <li>hdpi: 1.5</li>
+  <li>mdpi: 1.0 (baseline)</li>
+  <li>ldpi: 0.75</li>
+</ul>
+
+<p>如果你想要提供一张大小为<code>200x200</code>的照片给<code>xhdpi</code>的设备, 那相对应的就得提供一张<code>150*150</code>的照片给<code>hdpi</code>的设备，提供<code>100*100</code>给<code>mdpi</code>，提供<code>75*75</code>给<code>ldpi</code>。</p>
+
+<h2 id="sp">3. sp</h2>
+
+<p>sp的全称Scale-independent Pixels，布局文件中对TextView指定字体大小时，都建议使用<code>sp</code>.<code>sp</code>与<code>dip</code>相比多考虑了手机字体大小的偏好设置。而<code>sp</code>与<code>px</code>的转化关系，与<code>dp</code>和<code>px</code>的转化关系，只是对应的比例参数从<code>density</code>变成了<code>scaledDensity</code>原理是一样的。</p>
+
+
+        <nav class="pagination" role="navigation">
+          
+            <a href="/android/android-accountmanager/" class="btn" title="OAuth以及Android自定义Authenticator">Previous</a>
+          
+          
+        </nav><!-- /.pagination -->
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+  </article>
+</div><!-- /#main -->
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chenhuazhao020'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    
+
+<span>&copy; 2015 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
+<div class="social-icons">
+	
+	
+	
+	
+	
+	
+	
+	<a href="http://github.com/Leaking" title="Quinn Chen on Github" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+	
+    <a href="http://www.weibo.com/hereamme/" title="Quinn Chen on Weibo" target="_blank"><i class="fa fa-weibo fa-2x"></i></a>
+
+</div><!-- /.social-icons -->
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: '/search.json',
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+  
+	        
+
+</body>
+</html>

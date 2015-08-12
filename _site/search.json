@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "Android中关于显示尺度大小的一切",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/dip-sp/",
+		  "date"       : "2015-08-04 00:00:00 +0800",
+		  "shortdate"  : "August 04, 2015"
+		} ,
+	
+		{
 		  "title"      : "OAuth以及Android自定义Authenticator",
 		  "category"   : "",
       "tags"       : "android",

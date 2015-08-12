@@ -110,7 +110,7 @@ tt, code, kbd, samp, pre {
 p,
 li { 
 	code {
-		@include font(12);
+		@include font(19);
 		white-space: nowrap;
 		margin: 0 2px;
 		padding: 0 5px;
@@ -120,6 +120,15 @@ li {
 	}
 }
 pre {
-	@include font(12);
+	@include font(18);
 	overflow-x: auto;
 }
+
+
+
+
+
+
+
+
+
