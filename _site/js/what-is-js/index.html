@@ -5,14 +5,14 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>《JS高级程序设计》Note1-What Is JavaScript? &#8211; My Stupid Blog</title>
+<title>JavaScript简介 &#8211; My Stupid Blog</title>
 <meta name="description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
 <meta name="keywords" content="sample-post">
 
 
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="《JS高级程序设计》Note1-What Is JavaScript?">
+<meta name="twitter:title" content="JavaScript简介">
 <meta name="twitter:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
 
 
@@ -23,7 +23,7 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《JS高级程序设计》Note1-What Is JavaScript?">
+<meta property="og:title" content="JavaScript简介">
 <meta property="og:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
 <meta property="og:url" content="/js/what-is-js/">
 <meta property="og:site_name" content="My Stupid Blog">
@@ -156,12 +156,12 @@
 
 <div id="main" role="main">
   <article class="hentry">
-    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="《JS高级程序设计》Note1-What Is JavaScript?" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="JavaScript简介" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
     <div class="entry-wrapper">
       <header class="entry-header">
         <span class="entry-tags"><a href="/tags/#sample-post" title="Pages tagged sample-post">sample-post</a></span>
         
-          <h1 class="entry-title">《JS高级程序设计》Note1-What Is JavaScript?</h1>
+          <h1 class="entry-title">JavaScript简介</h1>
         
       </header>
       <footer class="entry-meta">
@@ -176,7 +176,7 @@
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=sample-post&text=《JS高级程序设计》Note1-What%20Is%20JavaScript?&url=/js/what-is-js/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=sample-post&text=JavaScript简介&url=/js/what-is-js/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
           <a href="https://www.facebook.com/sharer/sharer.php?u=/js/what-is-js/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
@@ -201,57 +201,21 @@
       <div class="entry-content">
         <h1 id="javascript">第一章 JavaScript简介</h1>
 
-<p>1.2 JavaScript简史、
-网景推出了Javascript，微软推出了Jscript。后来被某个国际组织统一除了一个标准——-ECMAScript
-1.2 JavaScript实现</p>
+<h2 id="javascript-1">JavaScript简史</h2>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Temp</span><span class="o">{</span>
-	<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
-	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getA</span><span class="o">(){</span>
-		<span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">a</span><span class="o">;</span>
-	<span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<p><code>JavaScript</code>的出现，是将部分操作在客户端完成，而不用到服务器完成，比如检查某个字段是否有效。网景推出了<code>Javascript</code>，微软推出了<code>JScript</code>。后来被某个国际组织统一出了一个标准——-<code>ECMAScript</code></p>
 
-<p>JavaScript与ECMAScript经常被混为同一含义。但是事实不然
-JavaScript实现包含以下三种不同组成
-核心（ECMAScript）
-文档对象模型（DOM）
-浏览器对象模型（BOM）</p>
+<h2 id="javascript-2">JavaScript实现</h2>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-  <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.search-field&#39;</span><span class="p">).</span><span class="nx">jekyllSearch</span><span class="p">({</span>
-          <span class="nx">jsonFile</span><span class="o">:</span> <span class="s1">&#39;/search.json&#39;</span><span class="p">,</span>
-          <span class="nx">searchResults</span><span class="o">:</span> <span class="s1">&#39;.search-results&#39;</span><span class="p">,</span>
-          <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;&lt;li&gt;&lt;article&gt;&lt;a href=&quot;{url}&quot;&gt;{title} &lt;span class=&quot;entry-date&quot;&gt;&lt;time datetime=&quot;{date}&quot;&gt;{shortdate}&lt;/time&gt;&lt;/span&gt;&lt;/a&gt;&lt;/article&gt;&lt;/li&gt;&#39;</span><span class="p">,</span>
-          <span class="nx">fuzzy</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-          <span class="nx">noResults</span><span class="o">:</span> <span class="s1">&#39;&lt;p&gt;Nothing found.&lt;/p&gt;&#39;</span>
-        <span class="p">});</span>
-  <span class="p">});</span>
+<p>JavaScript与ECMAScript经常用于表达同一含义。但是事实不然JavaScript实现包含以下三种不同组成：</p>
 
-  <span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">$</span><span class="p">,</span> <span class="nb">window</span><span class="p">,</span> <span class="kc">undefined</span> <span class="p">)</span> <span class="p">{</span>
-    
-     <span class="kd">var</span> <span class="nx">bs</span> <span class="o">=</span> <span class="p">{</span>
-          <span class="nx">close</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.close-btn&quot;</span><span class="p">),</span>
-          <span class="nx">searchform</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.search-form&quot;</span><span class="p">),</span>
-          <span class="nx">canvas</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">),</span>
-          <span class="nx">dothis</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.dosearch&#39;</span><span class="p">)</span>
-      <span class="p">};</span>
-    
-    <span class="nx">bs</span><span class="p">.</span><span class="nx">dothis</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.search-wrapper&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span> <span class="nx">display</span><span class="o">:</span> <span class="s2">&quot;block&quot;</span> <span class="p">});</span>
-      <span class="nx">bs</span><span class="p">.</span><span class="nx">searchform</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">);</span>
-      <span class="nx">bs</span><span class="p">.</span><span class="nx">searchform</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">focus</span><span class="p">();</span>
-      <span class="nx">bs</span><span class="p">.</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s1">&#39;search-overlay&#39;</span><span class="p">);</span>
-    <span class="p">});</span>
-    
-      <span class="nx">bs</span><span class="p">.</span><span class="nx">close</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.search-wrapper&#39;</span><span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s1">&#39;style&#39;</span> <span class="p">);</span>
-        <span class="nx">bs</span><span class="p">.</span><span class="nx">searchform</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">);</span>
-        <span class="nx">bs</span><span class="p">.</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">&#39;search-overlay&#39;</span><span class="p">);</span>
-    <span class="p">});</span>
-  <span class="p">})(</span> <span class="nx">jQuery</span><span class="p">,</span> <span class="nb">window</span> <span class="p">);</span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span></code></pre></div>
+<ul>
+  <li>核心（ECMAScript）</li>
+  <li>文档对象模型（DOM）</li>
+  <li>浏览器对象模型（BOM）</li>
+</ul>
+
+<p><img src="/images/js_1.jpg" alt="Smithsonian Image" class="pull-right" /></p>
 
 
         <nav class="pagination" role="navigation">
