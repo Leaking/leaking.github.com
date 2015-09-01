@@ -15,7 +15,7 @@ share: true
 ---
 
 
-大致翻译一下，记录笔记。原文地址[Processes and Threads](http://developer.android.com/tools/docs/docs/guide/components/processes-and-threads.html)
+原文地址[Processes and Threads](http://developer.android.com/tools/docs/docs/guide/components/processes-and-threads.html)
 
 # Processes and Threads
 
