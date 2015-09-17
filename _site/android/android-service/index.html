@@ -1,0 +1,543 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>【译】Service &#8211; My Stupid Blog</title>
+<meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta name="keywords" content="android">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="【译】Service">
+<meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】Service">
+<meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta property="og:url" content="/android/android-service/">
+<meta property="og:site_name" content="My Stupid Blog">
+
+
+
+
+
+<link rel="canonical" href="/android/android-service/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<!--
+<script src="//use.edgefonts.net/source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9;source-code-pro:n4,n7;volkhov.js"></script>
+-->
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+      
+		    
+		        
+		    
+		    <li><a href="/home/" >Home</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/js/" >JS</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/java/" >Java</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/android/" >Android</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/python/" >Python</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/tools/" >Tools</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/readingnotes/" >ReadingNotes</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/reflection/" >Reflection</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/about/" >About</a></li>
+		  
+        <li class="dosearch"><i class="fa fa-search"></i> Search</li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	
+		<div class="wrap">
+			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
+		</div>
+	
+</header><!-- /.masthead -->
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="【译】Service" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"><a href="/tags/#android" title="Pages tagged android">android</a></span>
+        
+          <h1 class="entry-title">【译】Service</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+        
+          <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
+        <span class="entry-date date published"><time datetime="2015-09-17T00:00:00+08:00"><i class="fa fa-calendar-o"></i> September 17, 2015</time></span>
+        
+        
+        
+        <span class="social-share-twitter">
+          <a href="https://twitter.com/intent/tweet?hashtags=android&text=【译】Service&url=/android/android-service/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+        </span>
+        <span class="social-share-facebook">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/android/android-service/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+        </span>
+        <span class="social-share-googleplus">
+          <a href="https://plus.google.com/share?url=/android/android-service/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+        </span>
+        <!-- /.social-share -->
+        
+        <div class="google-ads" style="margin-top:40px; text-align:center;">
+  <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- 160x600 ad -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:160px;height:600px"
+       data-ad-client=""
+       data-ad-slot=""></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div><!-- /.google-ads --><!-- /.google-ads -->
+      </footer>
+      <div class="entry-content">
+        <p>本文作为阅读官方文档笔记/翻译，原文地址</p>
+
+<p><a href="http://developer.android.com/guide/components/services.html">http://developer.android.com/guide/components/services.html</a></p>
+
+<p>​Service是四大组件（component）之一，它可以负责在后台执行耗时的任务。Service还可以实现跨进程通信（IPC）。Service按照启动方式，可以分为两种形式，分别是<code>started</code>以及<code>bound</code>。这篇篇文章主要介绍前者</p>
+
+<h2 id="started">Started</h2>
+
+<p>一个service可以被其他应用组件（比如activity）通过<code>started</code>方式启动，这种方式通过调用应用组件的<code>startService()</code>方法。一旦service被启动，它将一直运行，即使启动这个service的组件被销毁了，甚至整个app退出了，这种情况，service往往是被销毁了但是会重新生成。通过“started”方式启动的service，往往只是执行一种操作，而与调用者没有更多的交互通信，比如可以在这种service中执行上传，下载的任务，任务完成后，service需要被终止或者自我终止。</p>
+
+<h2 id="bound">Bound</h2>
+
+<p>一个service可以被其他应用组件（比如activity）通过<code>bound</code>的方式启动，这种方式通过调用应用组件的<code>bindService()</code>方法，这种方式的启动service提供一种<code>client-server</code>形式的接口，使service和启动service的组件可以进行通信，另外还可以进行跨进程调用（IPC）。通过<code>bound</code>方式启动的service，只有在被绑定的状态下才会运行。另外，一个service可以被多个组件绑定，当所有组件解除绑定后，service也将会被销毁。</p>
+
+<h1 id="the-basics">The Basics</h1>
+
+<p>启动service，你需要创建一个继承自service的类，或者继承现有service实现类，比如IntentService。</p>
+
+<p>service可以通过以上<code>started</code>或<code>bound</code>两种方式启动，也可以同时使用以上两种方式。然后重写service部分重要的回调方法。最重要的回调方法有如下几个</p>
+
+<ul>
+  <li>
+    <p>onStartCommand():
+当通过startService()的方式启动service时，这个方法就将被调用，并且service将被一直执行下去，任务完成后，你最好调用stopSelf()或者stopService()停止该service。通过bound方式启动service时不需要重写这个方法。</p>
+  </li>
+  <li>
+    <p>onBind():
+通过bindService()方式启动service，你需要在onBind()返回一个IBinder实例，如果不想绑定service，那么这个方法返回null即可。</p>
+  </li>
+  <li>
+    <p>onCreate():
+这个方法会在service被首次创建时执行，它在onStartCommand()以及onBind()之前执行，当service是被重启的，或者已经被启动过，那么方法将不会被执行。这个方法适合执行一些初始化的事件。</p>
+  </li>
+  <li>
+    <p>onDestroy():
+当service被销毁，你应该在这里回收资源，比如thread，监听器，广播接受者等等。</p>
+  </li>
+</ul>
+
+<p>service在系统资源很紧张的情况下会被回收，但是如果service绑定着一个处于前台的<code>activity</code>，那么它被回收的概率会降低，如果一个service被声明为<code>foreground</code>的，那么被回收的概率基本为0.</p>
+
+<p>通过<code>startService</code>方式启动的<code>service</code>，虽然可能会被回收，但是也会被重启，所以我们应该处理这个重启的流程，另外，service的重启和<code>onStartCommand()</code>的返回值有紧密的关系，这一点后面会提及。</p>
+
+<h1 id="manifestservice">在manifest中声明service</h1>
+
+<p>声明方式如下</p>
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;manifest</span> <span class="err">...</span> <span class="nt">&gt;</span>
+  ...
+  <span class="nt">&lt;application</span> <span class="err">...</span> <span class="nt">&gt;</span>
+      <span class="nt">&lt;service</span> <span class="na">android:name=</span><span class="s">&quot;.ExampleService&quot;</span> <span class="nt">/&gt;</span>
+      ...
+  <span class="nt">&lt;/application&gt;</span>
+<span class="nt">&lt;/manifest&gt;</span></code></pre></div>
+
+<p>关于声明service时的<code>android:enabled="true"</code>和<code>android:exported="true"</code>两个属性，这里不描述。接下来讲述启动<code>service</code>。</p>
+
+<h1 id="creating-a-started-service">Creating a Started Service</h1>
+
+<p>一个<code>started</code>方式启动的<code>service</code>，通过调用<code>startService()</code>，然后会执行<code>onStartCommand()</code>方法。调用<code>startService</code>时可以传入一个<code>Intent</code>，这个<code>Intent</code>会被传递到<code>onStartCommand()</code>方法，所以可以借助这个<code>Intent</code>传递数据给<code>service</code>。</p>
+
+<p><code>started</code>方式启动的<code>service</code>会一直在后台运行，所以当<code>service</code>的任务执行完之后，需要处理好销毁回收工作，它可以通过调用<code>stopSelf()</code>自我关闭，也可以是其他组件调用<code>stopService()</code>来终止<code>service</code>。</p>
+
+<p>这里将的’service’会在后台一直运行，是指启动<code>service</code>的组件被销毁了甚至整个app退出了，<code>service</code>可以自动重启，</p>
+
+<blockquote>
+  <p><code>service</code>默认情况下，会在声明的<code>application</code>的进程的<code>main thread</code>上运行。所以如果在<code>service</code>
+中执行阻塞性的任务，需要启动一个线程。</p>
+</blockquote>
+
+<p>建立<code>service</code>时，你可以继承自<code>Service</code>和<code>IntentService</code></p>
+
+<ul>
+  <li>
+    <p>Service： <code>service</code>如果继承自这个类，那么执行阻塞任务时，需要另外启动线程。</p>
+  </li>
+  <li>
+    <p>IntentService：这个类是对<code>service</code>类的封装，它处理了启动线程的流程，你只需要将你的阻塞任务放在<code> onHandleIntent()</code>方法中即可。这个类可以处理同时发起的多个请求，并在所有请求处理完之后自动销毁<code>service</code>，然后如果继续发起请求，则将再次启动<code>service</code>，这里说的发起请求，就是<code>startService()</code>方法启动<code>service</code>。</p>
+  </li>
+</ul>
+
+<p>其实IntentService的源码很短，可以看一下</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">IntentService</span> <span class="kd">extends</span> <span class="n">Service</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">volatile</span> <span class="n">Looper</span> <span class="n">mServiceLooper</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">volatile</span> <span class="n">ServiceHandler</span> <span class="n">mServiceHandler</span><span class="o">;</span> 
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">mName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">mRedelivery</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">ServiceHandler</span> <span class="kd">extends</span> <span class="n">Handler</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="nf">ServiceHandler</span><span class="o">(</span><span class="n">Looper</span> <span class="n">looper</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">(</span><span class="n">looper</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handleMessage</span><span class="o">(</span><span class="n">Message</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">onHandleIntent</span><span class="o">((</span><span class="n">Intent</span><span class="o">)</span><span class="n">msg</span><span class="o">.</span><span class="na">obj</span><span class="o">);</span>
+            <span class="n">stopSelf</span><span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">arg1</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Creates an IntentService.  Invoked by your subclass&#39;s constructor.</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param name Used to name the worker thread, important only for debugging.</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">IntentService</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">();</span>
+        <span class="n">mName</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Sets intent redelivery preferences.  Usually called from the constructor</span>
+<span class="cm">     * with your preferred semantics.</span>
+<span class="cm">     *</span>
+<span class="cm">     * &lt;p&gt;If enabled is true,</span>
+<span class="cm">     * {@link #onStartCommand(Intent, int, int)} will return</span>
+<span class="cm">     * {@link Service#START_REDELIVER_INTENT}, so if this process dies before</span>
+<span class="cm">     * {@link #onHandleIntent(Intent)} returns, the process will be restarted</span>
+<span class="cm">     * and the intent redelivered.  If multiple Intents have been sent, only</span>
+<span class="cm">     * the most recent one is guaranteed to be redelivered.</span>
+<span class="cm">     *</span>
+<span class="cm">     * &lt;p&gt;If enabled is false (the default),</span>
+<span class="cm">     * {@link #onStartCommand(Intent, int, int)} will return</span>
+<span class="cm">     * {@link Service#START_NOT_STICKY}, and if the process dies, the Intent</span>
+<span class="cm">     * dies along with it.</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setIntentRedelivery</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">enabled</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mRedelivery</span> <span class="o">=</span> <span class="n">enabled</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// TODO: It would be nice to have an option to hold a partial wakelock</span>
+        <span class="c1">// during processing, and to have a static startService(Context, Intent)</span>
+        <span class="c1">// method that would launch the service &amp; hand off a wakelock.</span>
+
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">();</span>
+        <span class="c1">// HandlerThread使得一个普通的Thread变成一个looper线程，然后在其绑定的handler中可以不断处理任务</span>
+        <span class="n">HandlerThread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HandlerThread</span><span class="o">(</span><span class="s">&quot;IntentService[&quot;</span> <span class="o">+</span> <span class="n">mName</span> <span class="o">+</span> <span class="s">&quot;]&quot;</span><span class="o">);</span>
+        <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+
+        <span class="n">mServiceLooper</span> <span class="o">=</span> <span class="n">thread</span><span class="o">.</span><span class="na">getLooper</span><span class="o">();</span>
+        <span class="n">mServiceHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ServiceHandler</span><span class="o">(</span><span class="n">mServiceLooper</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">,</span> <span class="kt">int</span> <span class="n">startId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Message</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">mServiceHandler</span><span class="o">.</span><span class="na">obtainMessage</span><span class="o">();</span>
+        <span class="n">msg</span><span class="o">.</span><span class="na">arg1</span> <span class="o">=</span> <span class="n">startId</span><span class="o">;</span>
+        <span class="n">msg</span><span class="o">.</span><span class="na">obj</span> <span class="o">=</span> <span class="n">intent</span><span class="o">;</span>
+        <span class="n">mServiceHandler</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * You should not override this method for your IntentService. Instead,</span>
+<span class="cm">     * override {@link #onHandleIntent}, which the system calls when the IntentService</span>
+<span class="cm">     * receives a start request.</span>
+<span class="cm">     * @see android.app.Service#onStartCommand</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">onStartCommand</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="o">,</span> <span class="kt">int</span> <span class="n">startId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">,</span> <span class="n">startId</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">mRedelivery</span> <span class="o">?</span> <span class="n">START_REDELIVER_INTENT</span> <span class="o">:</span> <span class="n">START_NOT_STICKY</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onDestroy</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">mServiceLooper</span><span class="o">.</span><span class="na">quit</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Unless you provide binding for your service, you don&#39;t need to implement this</span>
+<span class="cm">     * method, because the default implementation returns null. </span>
+<span class="cm">     * @see android.app.Service#onBind</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">IBinder</span> <span class="nf">onBind</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * This method is invoked on the worker thread with a request to process.</span>
+<span class="cm">     * Only one Intent is processed at a time, but the processing happens on a</span>
+<span class="cm">     * worker thread that runs independently from other application logic.</span>
+<span class="cm">     * So, if this code takes a long time, it will hold up other requests to</span>
+<span class="cm">     * the same IntentService, but it will not hold up anything else.</span>
+<span class="cm">     * When all requests have been handled, the IntentService stops itself,</span>
+<span class="cm">     * so you should not call {@link #stopSelf}.</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param intent The value passed to {@link</span>
+<span class="cm">     *               android.content.Context#startService(Intent)}.</span>
+<span class="cm">     */</span>
+    <span class="kd">protected</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">onHandleIntent</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">);</span>
+<span class="o">}</span></code></pre></div>
+
+<p>从以上代码可以看出IntnetService主要是借助HandlerThread，将线程编程可以不断处理任务的looper线程。然后你可以不断往IntentService发送请求，知道所有请求处理完毕，IntentService才会被销毁。</p>
+
+<p>在以上代码的<code>Handler</code>中，我们可以看到处理任务的最后一行代码<code>stopSelf(msg.arg1);</code>，这里<code>msg.arg1</code>就是<code>onStartCommand</code>中的<code>startid</code>,当新的请求来临，这个<code>startid</code>会被更新，只有’msg.arg1’是最新的<code>startid</code>时，才会销毁<code>service</code>，所以避免了有新请求没被处理时，<code>service</code>就被销毁，同时，当所有请求被处理完后，<code>service</code>就被销毁.IntentService的微妙之处就在这里。</p>
+
+<p>如果你启动一个<code>service</code>，而且执行的任务不需要同时启动多个线程一起执行，那么使用I<code>ntentService</code>是最方便的。同理，如果你需要在<code>service</code>中启动多个线程同时执行任务，那么就只能使用<code>Service</code>类了。这时你要做的事情就放在<code>Service</code>类中的<code>onStartCommand()</code>方法。</p>
+
+<p><code>onStartCommand()</code>方法的返回值觉得了’service’被销毁后如何重建，它的返回值及对应功能如下：</p>
+
+<p>＊ START_NOT_STICKY：不重建<code>service</code>。</p>
+
+<p>＊ START_STICKY：重建’service’，但是不保存<code>Intent</code>，调用<code>onStartCommand()</code>。</p>
+
+<p>＊ START_REDELIVER_INTENT：重建’service’，保存<code>Intent</code>，调用<code>onStartCommand()</code>。</p>
+
+<p>以上的解析是不考虑有pending intents的情况，</p>
+
+<p>＃ Starting a Service</p>
+
+<p>通过’started’方式启动service很简单，如下</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">HelloService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">startService</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span></code></pre></div>
+
+<p>传入数据可以借用<code>intent</code>，返回结果可以借用广播的机制。</p>
+
+<p>＃ Running a Service in the Foreground</p>
+
+<p>这种方式启动service，将会弹出一个不能关闭的通知，这种需求经常见于音乐播放器，你可以借助这个通知，在上面做一些操作，比如音乐播放器的下一首，暂停等等。</p>
+
+<p>为了实现这个功能，可以在onStartCommand()中执行如下代码</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Notification</span> <span class="n">notification</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Notification</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">icon</span><span class="o">,</span> <span class="n">getText</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">ticker_text</span><span class="o">),</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">());</span>
+<span class="n">Intent</span> <span class="n">notificationIntent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">ExampleActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">PendingIntent</span> <span class="n">pendingIntent</span> <span class="o">=</span> <span class="n">PendingIntent</span><span class="o">.</span><span class="na">getActivity</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">notificationIntent</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="n">notification</span><span class="o">.</span><span class="na">setLatestEventInfo</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">getText</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">notification_title</span><span class="o">),</span>
+        <span class="n">getText</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">notification_message</span><span class="o">),</span> <span class="n">pendingIntent</span><span class="o">);</span>
+<span class="n">startForeground</span><span class="o">(</span><span class="n">ONGOING_NOTIFICATION_ID</span><span class="o">,</span> <span class="n">notification</span><span class="o">);</span></code></pre></div>
+
+<h1 id="managing-the-lifecycle-of-a-service">Managing the Lifecycle of a Service</h1>
+
+<figure>
+  <img src="/images/service_lifecycle.png" alt="search screenshot" />
+  <figcaption>Service生命周期</figcaption>
+</figure>
+
+
+        <nav class="pagination" role="navigation">
+          
+            <a href="/android/dip-sp/" class="btn" title="Android中关于显示尺度大小的一切">Previous</a>
+          
+          
+        </nav><!-- /.pagination -->
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+  </article>
+</div><!-- /#main -->
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chenhuazhao020'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    
+
+<span>&copy; 2015 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
+<div class="social-icons">
+	
+	
+	
+	
+	
+	
+	
+	<a href="http://github.com/Leaking" title="Quinn Chen on Github" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+	
+    <a href="http://www.weibo.com/hereamme/" title="Quinn Chen on Weibo" target="_blank"><i class="fa fa-weibo fa-2x"></i></a>
+
+</div><!-- /.social-icons -->
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: '/search.json',
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+
+  
+	        
+
+</body>
+</html>
