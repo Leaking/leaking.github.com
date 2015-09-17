@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-09-17T17:07:31+08:00</updated>
+<updated>2015-09-17T17:18:45+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -232,13 +232,13 @@
 
 &lt;p&gt;＊ START_NOT_STICKY：不重建&lt;code&gt;service&lt;/code&gt;。&lt;/p&gt;
 
-&lt;p&gt;＊ START_STICKY：重建’service’，但是不保存&lt;code&gt;Intent&lt;/code&gt;，调用&lt;code&gt;onStartCommand()&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;＊ START_STICKY：重建&lt;code&gt;service&lt;/code&gt;，但是不保存&lt;code&gt;Intent&lt;/code&gt;，调用&lt;code&gt;onStartCommand()&lt;/code&gt;。&lt;/p&gt;
 
-&lt;p&gt;＊ START_REDELIVER_INTENT：重建’service’，保存&lt;code&gt;Intent&lt;/code&gt;，调用&lt;code&gt;onStartCommand()&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;＊ START_REDELIVER_INTENT：重建’&lt;code&gt;service&lt;/code&gt;，保存&lt;code&gt;Intent&lt;/code&gt;，调用&lt;code&gt;onStartCommand()&lt;/code&gt;。&lt;/p&gt;
 
 &lt;p&gt;以上的解析是不考虑有pending intents的情况，&lt;/p&gt;
 
-&lt;p&gt;＃ Starting a Service&lt;/p&gt;
+&lt;h1 id=&quot;starting-a-service&quot;&gt;Starting a Service&lt;/h1&gt;
 
 &lt;p&gt;通过’started’方式启动service很简单，如下&lt;/p&gt;
 
@@ -247,7 +247,7 @@
 
 &lt;p&gt;传入数据可以借用&lt;code&gt;intent&lt;/code&gt;，返回结果可以借用广播的机制。&lt;/p&gt;
 
-&lt;p&gt;＃ Running a Service in the Foreground&lt;/p&gt;
+&lt;h1 id=&quot;running-a-service-in-the-foreground&quot;&gt;Running a Service in the Foreground&lt;/h1&gt;
 
 &lt;p&gt;这种方式启动service，将会弹出一个不能关闭的通知，这种需求经常见于音乐播放器，你可以借助这个通知，在上面做一些操作，比如音乐播放器的下一首，暂停等等。&lt;/p&gt;
 

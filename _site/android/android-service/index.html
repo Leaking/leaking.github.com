@@ -406,13 +406,13 @@
 
 <p>＊ START_NOT_STICKY：不重建<code>service</code>。</p>
 
-<p>＊ START_STICKY：重建’service’，但是不保存<code>Intent</code>，调用<code>onStartCommand()</code>。</p>
+<p>＊ START_STICKY：重建<code>service</code>，但是不保存<code>Intent</code>，调用<code>onStartCommand()</code>。</p>
 
-<p>＊ START_REDELIVER_INTENT：重建’service’，保存<code>Intent</code>，调用<code>onStartCommand()</code>。</p>
+<p>＊ START_REDELIVER_INTENT：重建’<code>service</code>，保存<code>Intent</code>，调用<code>onStartCommand()</code>。</p>
 
 <p>以上的解析是不考虑有pending intents的情况，</p>
 
-<p>＃ Starting a Service</p>
+<h1 id="starting-a-service">Starting a Service</h1>
 
 <p>通过’started’方式启动service很简单，如下</p>
 
@@ -421,7 +421,7 @@
 
 <p>传入数据可以借用<code>intent</code>，返回结果可以借用广播的机制。</p>
 
-<p>＃ Running a Service in the Foreground</p>
+<h1 id="running-a-service-in-the-foreground">Running a Service in the Foreground</h1>
 
 <p>这种方式启动service，将会弹出一个不能关闭的通知，这种需求经常见于音乐播放器，你可以借助这个通知，在上面做一些操作，比如音乐播放器的下一首，暂停等等。</p>
 

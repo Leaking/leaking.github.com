@@ -226,14 +226,14 @@ public abstract class IntentService extends Service {
 
  ＊ START_NOT_STICKY：不重建`service`。
 
- ＊ START_STICKY：重建'service'，但是不保存`Intent`，调用`onStartCommand()`。
+ ＊ START_STICKY：重建`service`，但是不保存`Intent`，调用`onStartCommand()`。
 
- ＊ START_REDELIVER_INTENT：重建'service'，保存`Intent`，调用`onStartCommand()`。
+ ＊ START_REDELIVER_INTENT：重建'`service`，保存`Intent`，调用`onStartCommand()`。
 
  以上的解析是不考虑有pending intents的情况，
 
 
-＃ Starting a Service
+# Starting a Service
 
 通过'started'方式启动service很简单，如下
 
@@ -248,7 +248,7 @@ startService(intent);
 传入数据可以借用`intent`，返回结果可以借用广播的机制。
 
 
-＃ Running a Service in the Foreground
+# Running a Service in the Foreground
 
 这种方式启动service，将会弹出一个不能关闭的通知，这种需求经常见于音乐播放器，你可以借助这个通知，在上面做一些操作，比如音乐播放器的下一首，暂停等等。
 
