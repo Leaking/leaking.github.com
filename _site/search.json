@@ -46,7 +46,7 @@
 		} ,
 	
 		{
-		  "title"      : "浅谈Android中Handler，Looper机制",
+		  "title"      : "详解Android中Handler，Looper",
 		  "category"   : "",
       "tags"       : "android",
 		  "url"        : "/android/handler-looper/",
