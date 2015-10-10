@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "详解Android中Handler，Looper"
+title: "详解Android中的Handler和Looper，Message"
 excerpt: "Custom written post descriptions are the way to go... if you're not lazy."
 categories: android
 tags: [android]
@@ -14,14 +14,15 @@ comments: true
 share: true
 ---
 
-学习Android时，在请求网络数据或者进行其他耗时操作时，大家都懂得使用`Handler`结合`Thread`去进行耗时操作，并将获得的结果呈现到UI上。而其中的原理就涉及`Looper`，`Handler`，`Message`，`MessageQuene`的关系，其实对于这个知识点，基本从学android开始每个人就看到来自四面八方的资料，我自己之前也写过博客记录其中的原理，但是依然不够详细，连自己回头看都觉得没法完全看懂。今天决定再来一发，努力把这个知识点讲得再简单而且全面。
+学习Android时，在请求网络数据或者进行其他耗时操作时，大家都懂得使用`Handler`结合`Thread`去进行耗时操作，并将获得的结果呈现到UI上。而其中的原理就涉及`Looper`，`Handler`，`Message`，`MessageQuene`的关系，其实对于这个知识点，基本从学android开始,每个人就看到来自四面八方的资料，我自己之前也写过博客记录其中的原理，但是依然不够详细，连自己回头看都觉得没法完全看懂。今天决定再来一发，努力把这个知识点讲得简单，详细。
+
 
 
 ## Looper是什么
 
-普通的线程`Thread`一般在执行完任务之后就停止执行其他操作了。如果有这样的场景，有断断续续的任务来临（可能没隔10秒，20秒来一个新任务），需要交付给某个线程去执行，那么普通的线程就无法满足这样的需求。而Looper的作用此时就体现了，它可以使你的线程满足这样的场景，Looper可以使普通的线程获得轮询的功能，它能去轮询是否有新任务来临，如果有新任务，则去处理这新的任务，任务执行完后，继续去轮询新的任务。以上就是Looper存在的作用。
+首先我们得先了解`Looper`是什么，普通的线程`Thread`一般在执行完当前任务之后就停止执行其他操作了。如果有这样的场景：有断断续续的任务来临（可能没隔10秒，20秒来一个新任务），这些任务都是交付给某个线程去执行，那么普通的线程就无法满足这样的需求。而`Looper`的作用此时就体现了，它可以使你的线程满足这样的场景，`Looper`可以使普通的线程获得轮询的功能，它执行完一个任务后，将轮询是否有新任务来临，如果有新任务，则去处理新的任务，任务执行完后，继续去轮询新的任务。以上就是Looper存在的作用。
 
-这里先大致列出一个简单的例子，也是在网上到处可见的例子，这个例子其实就来自于Looper的源码注释里。如下：
+这里先大致列出一个简单的例子，也是在网上到处可见的例子，这个例子其实就来自于`Looper`的源码注释里。如下：
 
 
 {% highlight java %}
@@ -45,7 +46,7 @@ class LooperThread extends Thread {
 {% endhighlight %}
 
 
-如上，调用`Looper.prepare();`和`Looper.loop();`之后，当前线程才能变成轮询线程了，我们可以通过`mHandler`的引用，调用其`sendMessage`方法就可以不断往该线程发送任务。另外，如果你是在其他线程中持有上面的`mHandler`，在其他线程中往当前线程发送任务，那么你就能实现跨线程通信了。有没有觉得这个场景很熟悉，没错，就是平时我们从执行网络操作的工作线程中，往UI线程中发送消息的场景。
+如上，调用`Looper.prepare();`和`Looper.loop();`之后，当前线程才能变成轮询线程了，我们可以通过`mHandler`的引用，调用其`sendMessage()`方法就可以不断往该线程发送任务。另外，如果你是在其他线程中持有上面的`mHandler`，在其他线程中往当前线程发送任务，那么你就能实现跨线程通信了。有没有觉得这个场景很熟悉，没错，就是平时我们从执行网络操作的工作线程中，往UI线程中发送消息的场景。
 
 这里只是举个最简单的例子，不过已经涵盖了最重要的思想。但是看到这里还是可能看不懂的，放心，后面会讲解Looper的源码。
 
@@ -63,56 +64,56 @@ class LooperThread extends Thread {
 {% highlight java %}
 
 
-    // sThreadLocal.get() will return null unless you've called prepare().
-    static final ThreadLocal<Looper> sThreadLocal = new ThreadLocal<Looper>();
-    private static Looper sMainLooper;  // guarded by Looper.class
+// sThreadLocal.get() will return null unless you've called prepare().
+static final ThreadLocal<Looper> sThreadLocal = new ThreadLocal<Looper>();
+private static Looper sMainLooper;  // guarded by Looper.class
 
-    final MessageQueue mQueue;
-    final Thread mThread;
+final MessageQueue mQueue;
+final Thread mThread;
 
-    private Printer mLogging;
+private Printer mLogging;
 
 {% endhighlight %}
 
 这里需要注意的变量有三个`sThreadLocal`,`sMainLooper`,`mQueue`。
 
-+ sThreadLocal：借助ThreadLocal类使得每个线程都只对应一个Looper对象（除了UI线程的Looper）。ThreadLocal类的原理这里不展开，大家只需要知道它使得多个线程可以持有同个对象相互独立的引用即可。
++ sThreadLocal：借助`ThreadLocal`类使得每个线程都只对应一个Looper对象（除了UI线程的Looper）。ThreadLocal类的原理这里不展开，大家只需要知道它使得多个线程可以持有同个对象相互独立的引用即可。
 
-+ mQueue：任务队列，Looper从这个任务队列中轮询取出任务
++ mQueue：任务队列，`Looper`从这个任务队列中轮询取出任务
 
-+ sMainLooper：UI线程的Looper。
++ sMainLooper：UI线程的`Looper`。
 
 接下来看看两个比较重要的方法`prepare()`和`loop()`，首先是`prepare()`方法，如下：
 
 {% highlight java %}
 
 
-    /** Initialize the current thread as a looper.
-      * This gives you a chance to create handlers that then reference
-      * this looper, before actually starting the loop. Be sure to call
-      * {@link #loop()} after calling this method, and end it by calling
-      * {@link #quit()}.
-      */
-    public static void prepare() {
-        prepare(true);
-    }
+/** Initialize the current thread as a looper.
+  * This gives you a chance to create handlers that then reference
+  * this looper, before actually starting the loop. Be sure to call
+  * {@link #loop()} after calling this method, and end it by calling
+  * {@link #quit()}.
+  */
+public static void prepare() {
+    prepare(true);
+}
 
-    private static void prepare(boolean quitAllowed) {
-        if (sThreadLocal.get() != null) {
-            throw new RuntimeException("Only one Looper may be created per thread");
-        }
-        sThreadLocal.set(new Looper(quitAllowed));
+private static void prepare(boolean quitAllowed) {
+    if (sThreadLocal.get() != null) {
+        throw new RuntimeException("Only one Looper may be created per thread");
     }
+    sThreadLocal.set(new Looper(quitAllowed));
+}
 
-    private Looper(boolean quitAllowed) {
-        mQueue = new MessageQueue(quitAllowed);
-        mThread = Thread.currentThread();
-    }
+private Looper(boolean quitAllowed) {
+    mQueue = new MessageQueue(quitAllowed);
+    mThread = Thread.currentThread();
+}
 
 {% endhighlight %}
 
 
-这个方法比较简单，主要是新建一个Looper对象，存放在`ThreadLocal`变量中，并初始化消息队列`MessageQueue`.
+这个方法比较简单，主要是新建一个`Looper`对象，存放在`ThreadLocal`变量中，并初始化消息队列`MessageQueue`.
 
 接下来再看看`loop()`方法
 
@@ -120,70 +121,70 @@ class LooperThread extends Thread {
 {% highlight java %}
 
 
-    /**
-     * Run the message queue in this thread. Be sure to call
-     * {@link #quit()} to end the loop.
-     */
-    public static void loop() {
-        final Looper me = myLooper();
-        if (me == null) {
-            throw new RuntimeException("No Looper; Looper.prepare() wasn't called on this thread.");
-        }
-        final MessageQueue queue = me.mQueue;
-
-        // Make sure the identity of this thread is that of the local process,
-        // and keep track of what that identity token actually is.
-        Binder.clearCallingIdentity();
-        final long ident = Binder.clearCallingIdentity();
-
-        for (;;) {
-            Message msg = queue.next(); // might block
-            if (msg == null) {
-                // No message indicates that the message queue is quitting.
-                return;
-            }
-
-            // This must be in a local variable, in case a UI event sets the logger
-            Printer logging = me.mLogging;
-            if (logging != null) {
-                logging.println(">>>>> Dispatching to " + msg.target + " " +
-                        msg.callback + ": " + msg.what);
-            }
-
-            msg.target.dispatchMessage(msg);//查看Message的源码可以看到，它持有一个handler引用，
-            //Handler对象的dispatchMessage方法可以将消息最终传递到我们经常看到的handlerMessage的回调方法中。
-
-            if (logging != null) {
-                logging.println("<<<<< Finished to " + msg.target + " " + msg.callback);
-            }
-
-            // Make sure that during the course of dispatching the
-            // identity of the thread wasn't corrupted.
-            final long newIdent = Binder.clearCallingIdentity();
-            if (ident != newIdent) {
-                Log.wtf(TAG, "Thread identity changed from 0x"
-                        + Long.toHexString(ident) + " to 0x"
-                        + Long.toHexString(newIdent) + " while dispatching to "
-                        + msg.target.getClass().getName() + " "
-                        + msg.callback + " what=" + msg.what);
-            }
-
-            msg.recycleUnchecked();
-        }
+/**
+ * Run the message queue in this thread. Be sure to call
+ * {@link #quit()} to end the loop.
+ */
+public static void loop() {
+    final Looper me = myLooper();
+    if (me == null) {
+        throw new RuntimeException("No Looper; Looper.prepare() wasn't called on this thread.");
     }
+    final MessageQueue queue = me.mQueue;
 
-    /**
-     * Return the Looper object associated with the current thread.  Returns
-     * null if the calling thread is not associated with a Looper.
-     */
-    public static @Nullable Looper myLooper() {
-        return sThreadLocal.get();
+    // Make sure the identity of this thread is that of the local process,
+    // and keep track of what that identity token actually is.
+    Binder.clearCallingIdentity();
+    final long ident = Binder.clearCallingIdentity();
+
+    for (;;) {
+        Message msg = queue.next(); // might block
+        if (msg == null) {
+            // No message indicates that the message queue is quitting.
+            return;
+        }
+
+        // This must be in a local variable, in case a UI event sets the logger
+        Printer logging = me.mLogging;
+        if (logging != null) {
+            logging.println(">>>>> Dispatching to " + msg.target + " " +
+                    msg.callback + ": " + msg.what);
+        }
+
+        msg.target.dispatchMessage(msg);//查看Message的源码可以看到，它持有一个handler引用，
+        //Handler对象的dispatchMessage方法可以将消息最终传递到我们经常看到的handlerMessage的回调方法中。
+
+        if (logging != null) {
+            logging.println("<<<<< Finished to " + msg.target + " " + msg.callback);
+        }
+
+        // Make sure that during the course of dispatching the
+        // identity of the thread wasn't corrupted.
+        final long newIdent = Binder.clearCallingIdentity();
+        if (ident != newIdent) {
+            Log.wtf(TAG, "Thread identity changed from 0x"
+                    + Long.toHexString(ident) + " to 0x"
+                    + Long.toHexString(newIdent) + " while dispatching to "
+                    + msg.target.getClass().getName() + " "
+                    + msg.callback + " what=" + msg.what);
+        }
+
+        msg.recycleUnchecked();
     }
+}
+
+/**
+ * Return the Looper object associated with the current thread.  Returns
+ * null if the calling thread is not associated with a Looper.
+ */
+public static @Nullable Looper myLooper() {
+    return sThreadLocal.get();
+}
 
 {% endhighlight %}
 
 
-这个方法主要是获取保存在`ThreadLocal`中的`Looper`，然后获取`Looper`对象中的消息队列`queue`,并在一个`for循环`中轮询消息队列，拿出消息`Message`并进行处理，处理消息的关键代码是这一句`msg.target.dispatchMessage(msg);`，消息对象`Message`中持有一个`Handler`引用，而`Handler`的`dispatchMessage(Message m)`方法将消息最终传递到我们平时经常重写的`handleMessage(Message m)`方法。接下来讲解'Message'，'Handler'的源码。
+这个方法主要是获取保存在`ThreadLocal`中的`Looper`，然后获取`Looper`对象中的消息队列`queue`,并在一个`for`循环中轮询消息队列，拿出消息`Message`并进行处理，处理消息的关键代码是这一句`msg.target.dispatchMessage(msg);`，消息对象`Message`中持有一个`Handler`引用，而`Handler`的`dispatchMessage(Message m)`方法将消息最终传递到我们平时经常重写的`handleMessage(Message m)`方法。接下来讲解`Message`，`Handler`的源码。
 
 ## Handler原理
 
@@ -263,7 +264,7 @@ final Callback mCallback;
  + sendMessageAtTime(Message, long)
  + sendMessageDelayed(Message, long)
 
- 其实上面6个方法，分为`post`和`sendMessage`两种，每种都有三个发送消息的方式，不难发现一一对应。那么，为什么`post`发送的是一个`Runnable`对象，而'sendMessage'发送的是一个`Message`对象。
+ 其实上面6个方法，分为`post`和`sendMessage`两种，每种都有三个发送消息的方式，不难发现一一对应。那么，为什么`post`发送的是一个`Runnable`对象，而`sendMessage`发送的是一个`Message`对象。
 
 {% highlight java %}
 

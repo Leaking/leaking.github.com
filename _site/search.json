@@ -46,7 +46,7 @@
 		} ,
 	
 		{
-		  "title"      : "详解Android中Handler，Looper",
+		  "title"      : "详解Android中的Handler和Looper，Message",
 		  "category"   : "",
       "tags"       : "android",
 		  "url"        : "/android/handler-looper/",

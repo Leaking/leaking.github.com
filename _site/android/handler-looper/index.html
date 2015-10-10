@@ -5,14 +5,14 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>详解Android中Handler，Looper &#8211; My Stupid Blog</title>
+<title>详解Android中的Handler和Looper，Message &#8211; My Stupid Blog</title>
 <meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 <meta name="keywords" content="android">
 
 
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="详解Android中Handler，Looper">
+<meta name="twitter:title" content="详解Android中的Handler和Looper，Message">
 <meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 
 
@@ -23,7 +23,7 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="详解Android中Handler，Looper">
+<meta property="og:title" content="详解Android中的Handler和Looper，Message">
 <meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 <meta property="og:url" content="/android/handler-looper/">
 <meta property="og:site_name" content="My Stupid Blog">
@@ -157,12 +157,12 @@
 
 <div id="main" role="main">
   <article class="hentry">
-    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="详解Android中Handler，Looper" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="详解Android中的Handler和Looper，Message" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
     <div class="entry-wrapper">
       <header class="entry-header">
         <span class="entry-tags"><a href="/tags/#android" title="Pages tagged android">android</a></span>
         
-          <h1 class="entry-title">详解Android中Handler，Looper</h1>
+          <h1 class="entry-title">详解Android中的Handler和Looper，Message</h1>
         
       </header>
       <footer class="entry-meta">
@@ -177,7 +177,7 @@
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=android&text=详解Android中Handler，Looper&url=/android/handler-looper/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=android&text=详解Android中的Handler和Looper，Message&url=/android/handler-looper/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
           <a href="https://www.facebook.com/sharer/sharer.php?u=/android/handler-looper/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
@@ -200,13 +200,13 @@
 </div><!-- /.google-ads --><!-- /.google-ads -->
       </footer>
       <div class="entry-content">
-        <p>学习Android时，在请求网络数据或者进行其他耗时操作时，大家都懂得使用<code>Handler</code>结合<code>Thread</code>去进行耗时操作，并将获得的结果呈现到UI上。而其中的原理就涉及<code>Looper</code>，<code>Handler</code>，<code>Message</code>，<code>MessageQuene</code>的关系，其实对于这个知识点，基本从学android开始每个人就看到来自四面八方的资料，我自己之前也写过博客记录其中的原理，但是依然不够详细，连自己回头看都觉得没法完全看懂。今天决定再来一发，努力把这个知识点讲得再简单而且全面。</p>
+        <p>学习Android时，在请求网络数据或者进行其他耗时操作时，大家都懂得使用<code>Handler</code>结合<code>Thread</code>去进行耗时操作，并将获得的结果呈现到UI上。而其中的原理就涉及<code>Looper</code>，<code>Handler</code>，<code>Message</code>，<code>MessageQuene</code>的关系，其实对于这个知识点，基本从学android开始,每个人就看到来自四面八方的资料，我自己之前也写过博客记录其中的原理，但是依然不够详细，连自己回头看都觉得没法完全看懂。今天决定再来一发，努力把这个知识点讲得简单，详细。</p>
 
 <h2 id="looper">Looper是什么</h2>
 
-<p>普通的线程<code>Thread</code>一般在执行完任务之后就停止执行其他操作了。如果有这样的场景，有断断续续的任务来临（可能没隔10秒，20秒来一个新任务），需要交付给某个线程去执行，那么普通的线程就无法满足这样的需求。而Looper的作用此时就体现了，它可以使你的线程满足这样的场景，Looper可以使普通的线程获得轮询的功能，它能去轮询是否有新任务来临，如果有新任务，则去处理这新的任务，任务执行完后，继续去轮询新的任务。以上就是Looper存在的作用。</p>
+<p>首先我们得先了解<code>Looper</code>是什么，普通的线程<code>Thread</code>一般在执行完当前任务之后就停止执行其他操作了。如果有这样的场景：有断断续续的任务来临（可能没隔10秒，20秒来一个新任务），这些任务都是交付给某个线程去执行，那么普通的线程就无法满足这样的需求。而<code>Looper</code>的作用此时就体现了，它可以使你的线程满足这样的场景，<code>Looper</code>可以使普通的线程获得轮询的功能，它执行完一个任务后，将轮询是否有新任务来临，如果有新任务，则去处理新的任务，任务执行完后，继续去轮询新的任务。以上就是Looper存在的作用。</p>
 
-<p>这里先大致列出一个简单的例子，也是在网上到处可见的例子，这个例子其实就来自于Looper的源码注释里。如下：</p>
+<p>这里先大致列出一个简单的例子，也是在网上到处可见的例子，这个例子其实就来自于<code>Looper</code>的源码注释里。如下：</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">LooperThread</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
       <span class="kd">public</span> <span class="n">Handler</span> <span class="n">mHandler</span><span class="o">;</span>
@@ -224,7 +224,7 @@
       <span class="o">}</span>
   <span class="o">}</span></code></pre></div>
 
-<p>如上，调用<code>Looper.prepare();</code>和<code>Looper.loop();</code>之后，当前线程才能变成轮询线程了，我们可以通过<code>mHandler</code>的引用，调用其<code>sendMessage</code>方法就可以不断往该线程发送任务。另外，如果你是在其他线程中持有上面的<code>mHandler</code>，在其他线程中往当前线程发送任务，那么你就能实现跨线程通信了。有没有觉得这个场景很熟悉，没错，就是平时我们从执行网络操作的工作线程中，往UI线程中发送消息的场景。</p>
+<p>如上，调用<code>Looper.prepare();</code>和<code>Looper.loop();</code>之后，当前线程才能变成轮询线程了，我们可以通过<code>mHandler</code>的引用，调用其<code>sendMessage()</code>方法就可以不断往该线程发送任务。另外，如果你是在其他线程中持有上面的<code>mHandler</code>，在其他线程中往当前线程发送任务，那么你就能实现跨线程通信了。有没有觉得这个场景很熟悉，没错，就是平时我们从执行网络操作的工作线程中，往UI线程中发送消息的场景。</p>
 
 <p>这里只是举个最简单的例子，不过已经涵盖了最重要的思想。但是看到这里还是可能看不懂的，放心，后面会讲解Looper的源码。</p>
 
@@ -235,117 +235,117 @@
 <p>先来打开<code>Looper</code>的源码看看，可以看到它有如下成员变量</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// sThreadLocal.get() will return null unless you&#39;ve called prepare().</span>
-    <span class="kd">static</span> <span class="kd">final</span> <span class="n">ThreadLocal</span><span class="o">&lt;</span><span class="n">Looper</span><span class="o">&gt;</span> <span class="n">sThreadLocal</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ThreadLocal</span><span class="o">&lt;</span><span class="n">Looper</span><span class="o">&gt;();</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Looper</span> <span class="n">sMainLooper</span><span class="o">;</span>  <span class="c1">// guarded by Looper.class</span>
+<span class="kd">static</span> <span class="kd">final</span> <span class="n">ThreadLocal</span><span class="o">&lt;</span><span class="n">Looper</span><span class="o">&gt;</span> <span class="n">sThreadLocal</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ThreadLocal</span><span class="o">&lt;</span><span class="n">Looper</span><span class="o">&gt;();</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="n">Looper</span> <span class="n">sMainLooper</span><span class="o">;</span>  <span class="c1">// guarded by Looper.class</span>
 
-    <span class="kd">final</span> <span class="n">MessageQueue</span> <span class="n">mQueue</span><span class="o">;</span>
-    <span class="kd">final</span> <span class="n">Thread</span> <span class="n">mThread</span><span class="o">;</span>
+<span class="kd">final</span> <span class="n">MessageQueue</span> <span class="n">mQueue</span><span class="o">;</span>
+<span class="kd">final</span> <span class="n">Thread</span> <span class="n">mThread</span><span class="o">;</span>
 
-    <span class="kd">private</span> <span class="n">Printer</span> <span class="n">mLogging</span><span class="o">;</span></code></pre></div>
+<span class="kd">private</span> <span class="n">Printer</span> <span class="n">mLogging</span><span class="o">;</span></code></pre></div>
 
 <p>这里需要注意的变量有三个<code>sThreadLocal</code>,<code>sMainLooper</code>,<code>mQueue</code>。</p>
 
 <ul>
   <li>
-    <p>sThreadLocal：借助ThreadLocal类使得每个线程都只对应一个Looper对象（除了UI线程的Looper）。ThreadLocal类的原理这里不展开，大家只需要知道它使得多个线程可以持有同个对象相互独立的引用即可。</p>
+    <p>sThreadLocal：借助<code>ThreadLocal</code>类使得每个线程都只对应一个Looper对象（除了UI线程的Looper）。ThreadLocal类的原理这里不展开，大家只需要知道它使得多个线程可以持有同个对象相互独立的引用即可。</p>
   </li>
   <li>
-    <p>mQueue：任务队列，Looper从这个任务队列中轮询取出任务</p>
+    <p>mQueue：任务队列，<code>Looper</code>从这个任务队列中轮询取出任务</p>
   </li>
   <li>
-    <p>sMainLooper：UI线程的Looper。</p>
+    <p>sMainLooper：UI线程的<code>Looper</code>。</p>
   </li>
 </ul>
 
 <p>接下来看看两个比较重要的方法<code>prepare()</code>和<code>loop()</code>，首先是<code>prepare()</code>方法，如下：</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/** Initialize the current thread as a looper.</span>
-<span class="cm">      * This gives you a chance to create handlers that then reference</span>
-<span class="cm">      * this looper, before actually starting the loop. Be sure to call</span>
-<span class="cm">      * {@link #loop()} after calling this method, and end it by calling</span>
-<span class="cm">      * {@link #quit()}.</span>
-<span class="cm">      */</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">prepare</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">prepare</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="cm">  * This gives you a chance to create handlers that then reference</span>
+<span class="cm">  * this looper, before actually starting the loop. Be sure to call</span>
+<span class="cm">  * {@link #loop()} after calling this method, and end it by calling</span>
+<span class="cm">  * {@link #quit()}.</span>
+<span class="cm">  */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">prepare</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">prepare</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">prepare</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">quitAllowed</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">sThreadLocal</span><span class="o">.</span><span class="na">get</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">&quot;Only one Looper may be created per thread&quot;</span><span class="o">);</span>
     <span class="o">}</span>
+    <span class="n">sThreadLocal</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="k">new</span> <span class="nf">Looper</span><span class="o">(</span><span class="n">quitAllowed</span><span class="o">));</span>
+<span class="o">}</span>
 
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">prepare</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">quitAllowed</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">sThreadLocal</span><span class="o">.</span><span class="na">get</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">&quot;Only one Looper may be created per thread&quot;</span><span class="o">);</span>
-        <span class="o">}</span>
-        <span class="n">sThreadLocal</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="k">new</span> <span class="nf">Looper</span><span class="o">(</span><span class="n">quitAllowed</span><span class="o">));</span>
-    <span class="o">}</span>
+<span class="kd">private</span> <span class="nf">Looper</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">quitAllowed</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">mQueue</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MessageQueue</span><span class="o">(</span><span class="n">quitAllowed</span><span class="o">);</span>
+    <span class="n">mThread</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span>
+<span class="o">}</span></code></pre></div>
 
-    <span class="kd">private</span> <span class="nf">Looper</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">quitAllowed</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">mQueue</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MessageQueue</span><span class="o">(</span><span class="n">quitAllowed</span><span class="o">);</span>
-        <span class="n">mThread</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span>
-    <span class="o">}</span></code></pre></div>
-
-<p>这个方法比较简单，主要是新建一个Looper对象，存放在<code>ThreadLocal</code>变量中，并初始化消息队列<code>MessageQueue</code>.</p>
+<p>这个方法比较简单，主要是新建一个<code>Looper</code>对象，存放在<code>ThreadLocal</code>变量中，并初始化消息队列<code>MessageQueue</code>.</p>
 
 <p>接下来再看看<code>loop()</code>方法</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
-<span class="cm">     * Run the message queue in this thread. Be sure to call</span>
-<span class="cm">     * {@link #quit()} to end the loop.</span>
-<span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">loop</span><span class="o">()</span> <span class="o">{</span>
-        <span class="kd">final</span> <span class="n">Looper</span> <span class="n">me</span> <span class="o">=</span> <span class="n">myLooper</span><span class="o">();</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">me</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">&quot;No Looper; Looper.prepare() wasn&#39;t called on this thread.&quot;</span><span class="o">);</span>
-        <span class="o">}</span>
-        <span class="kd">final</span> <span class="n">MessageQueue</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="na">mQueue</span><span class="o">;</span>
-
-        <span class="c1">// Make sure the identity of this thread is that of the local process,</span>
-        <span class="c1">// and keep track of what that identity token actually is.</span>
-        <span class="n">Binder</span><span class="o">.</span><span class="na">clearCallingIdentity</span><span class="o">();</span>
-        <span class="kd">final</span> <span class="kt">long</span> <span class="n">ident</span> <span class="o">=</span> <span class="n">Binder</span><span class="o">.</span><span class="na">clearCallingIdentity</span><span class="o">();</span>
-
-        <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
-            <span class="n">Message</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">next</span><span class="o">();</span> <span class="c1">// might block</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">msg</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                <span class="c1">// No message indicates that the message queue is quitting.</span>
-                <span class="k">return</span><span class="o">;</span>
-            <span class="o">}</span>
-
-            <span class="c1">// This must be in a local variable, in case a UI event sets the logger</span>
-            <span class="n">Printer</span> <span class="n">logging</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="na">mLogging</span><span class="o">;</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">logging</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">logging</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;&gt;&gt;&gt;&gt;&gt; Dispatching to &quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">target</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span>
-                        <span class="n">msg</span><span class="o">.</span><span class="na">callback</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">what</span><span class="o">);</span>
-            <span class="o">}</span>
-
-            <span class="n">msg</span><span class="o">.</span><span class="na">target</span><span class="o">.</span><span class="na">dispatchMessage</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span><span class="c1">//查看Message的源码可以看到，它持有一个handler引用，</span>
-            <span class="c1">//Handler对象的dispatchMessage方法可以将消息最终传递到我们经常看到的handlerMessage的回调方法中。</span>
-
-            <span class="k">if</span> <span class="o">(</span><span class="n">logging</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">logging</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;&lt;&lt;&lt;&lt;&lt; Finished to &quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">target</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">callback</span><span class="o">);</span>
-            <span class="o">}</span>
-
-            <span class="c1">// Make sure that during the course of dispatching the</span>
-            <span class="c1">// identity of the thread wasn&#39;t corrupted.</span>
-            <span class="kd">final</span> <span class="kt">long</span> <span class="n">newIdent</span> <span class="o">=</span> <span class="n">Binder</span><span class="o">.</span><span class="na">clearCallingIdentity</span><span class="o">();</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">ident</span> <span class="o">!=</span> <span class="n">newIdent</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">Log</span><span class="o">.</span><span class="na">wtf</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Thread identity changed from 0x&quot;</span>
-                        <span class="o">+</span> <span class="n">Long</span><span class="o">.</span><span class="na">toHexString</span><span class="o">(</span><span class="n">ident</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot; to 0x&quot;</span>
-                        <span class="o">+</span> <span class="n">Long</span><span class="o">.</span><span class="na">toHexString</span><span class="o">(</span><span class="n">newIdent</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot; while dispatching to &quot;</span>
-                        <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">target</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; &quot;</span>
-                        <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">callback</span> <span class="o">+</span> <span class="s">&quot; what=&quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">what</span><span class="o">);</span>
-            <span class="o">}</span>
-
-            <span class="n">msg</span><span class="o">.</span><span class="na">recycleUnchecked</span><span class="o">();</span>
-        <span class="o">}</span>
+<span class="cm"> * Run the message queue in this thread. Be sure to call</span>
+<span class="cm"> * {@link #quit()} to end the loop.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">loop</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="n">Looper</span> <span class="n">me</span> <span class="o">=</span> <span class="n">myLooper</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">me</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">&quot;No Looper; Looper.prepare() wasn&#39;t called on this thread.&quot;</span><span class="o">);</span>
     <span class="o">}</span>
+    <span class="kd">final</span> <span class="n">MessageQueue</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="na">mQueue</span><span class="o">;</span>
 
-    <span class="cm">/**</span>
-<span class="cm">     * Return the Looper object associated with the current thread.  Returns</span>
-<span class="cm">     * null if the calling thread is not associated with a Looper.</span>
-<span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="nd">@Nullable</span> <span class="n">Looper</span> <span class="nf">myLooper</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">sThreadLocal</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
-    <span class="o">}</span></code></pre></div>
+    <span class="c1">// Make sure the identity of this thread is that of the local process,</span>
+    <span class="c1">// and keep track of what that identity token actually is.</span>
+    <span class="n">Binder</span><span class="o">.</span><span class="na">clearCallingIdentity</span><span class="o">();</span>
+    <span class="kd">final</span> <span class="kt">long</span> <span class="n">ident</span> <span class="o">=</span> <span class="n">Binder</span><span class="o">.</span><span class="na">clearCallingIdentity</span><span class="o">();</span>
 
-<p>这个方法主要是获取保存在<code>ThreadLocal</code>中的<code>Looper</code>，然后获取<code>Looper</code>对象中的消息队列<code>queue</code>,并在一个<code>for循环</code>中轮询消息队列，拿出消息<code>Message</code>并进行处理，处理消息的关键代码是这一句<code>msg.target.dispatchMessage(msg);</code>，消息对象<code>Message</code>中持有一个<code>Handler</code>引用，而<code>Handler</code>的<code>dispatchMessage(Message m)</code>方法将消息最终传递到我们平时经常重写的<code>handleMessage(Message m)</code>方法。接下来讲解’Message’，’Handler’的源码。</p>
+    <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
+        <span class="n">Message</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">next</span><span class="o">();</span> <span class="c1">// might block</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">msg</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// No message indicates that the message queue is quitting.</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">// This must be in a local variable, in case a UI event sets the logger</span>
+        <span class="n">Printer</span> <span class="n">logging</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="na">mLogging</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">logging</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logging</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;&gt;&gt;&gt;&gt;&gt; Dispatching to &quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">target</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span>
+                    <span class="n">msg</span><span class="o">.</span><span class="na">callback</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">what</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="n">msg</span><span class="o">.</span><span class="na">target</span><span class="o">.</span><span class="na">dispatchMessage</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span><span class="c1">//查看Message的源码可以看到，它持有一个handler引用，</span>
+        <span class="c1">//Handler对象的dispatchMessage方法可以将消息最终传递到我们经常看到的handlerMessage的回调方法中。</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">logging</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logging</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;&lt;&lt;&lt;&lt;&lt; Finished to &quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">target</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">callback</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">// Make sure that during the course of dispatching the</span>
+        <span class="c1">// identity of the thread wasn&#39;t corrupted.</span>
+        <span class="kd">final</span> <span class="kt">long</span> <span class="n">newIdent</span> <span class="o">=</span> <span class="n">Binder</span><span class="o">.</span><span class="na">clearCallingIdentity</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">ident</span> <span class="o">!=</span> <span class="n">newIdent</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Log</span><span class="o">.</span><span class="na">wtf</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Thread identity changed from 0x&quot;</span>
+                    <span class="o">+</span> <span class="n">Long</span><span class="o">.</span><span class="na">toHexString</span><span class="o">(</span><span class="n">ident</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot; to 0x&quot;</span>
+                    <span class="o">+</span> <span class="n">Long</span><span class="o">.</span><span class="na">toHexString</span><span class="o">(</span><span class="n">newIdent</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot; while dispatching to &quot;</span>
+                    <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">target</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; &quot;</span>
+                    <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">callback</span> <span class="o">+</span> <span class="s">&quot; what=&quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="o">.</span><span class="na">what</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="n">msg</span><span class="o">.</span><span class="na">recycleUnchecked</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Return the Looper object associated with the current thread.  Returns</span>
+<span class="cm"> * null if the calling thread is not associated with a Looper.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="nd">@Nullable</span> <span class="n">Looper</span> <span class="nf">myLooper</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">sThreadLocal</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+<span class="o">}</span></code></pre></div>
+
+<p>这个方法主要是获取保存在<code>ThreadLocal</code>中的<code>Looper</code>，然后获取<code>Looper</code>对象中的消息队列<code>queue</code>,并在一个<code>for</code>循环中轮询消息队列，拿出消息<code>Message</code>并进行处理，处理消息的关键代码是这一句<code>msg.target.dispatchMessage(msg);</code>，消息对象<code>Message</code>中持有一个<code>Handler</code>引用，而<code>Handler</code>的<code>dispatchMessage(Message m)</code>方法将消息最终传递到我们平时经常重写的<code>handleMessage(Message m)</code>方法。接下来讲解<code>Message</code>，<code>Handler</code>的源码。</p>
 
 <h2 id="handler">Handler原理</h2>
 
@@ -412,7 +412,7 @@
   <li>sendMessageDelayed(Message, long)</li>
 </ul>
 
-<p>其实上面6个方法，分为<code>post</code>和<code>sendMessage</code>两种，每种都有三个发送消息的方式，不难发现一一对应。那么，为什么<code>post</code>发送的是一个<code>Runnable</code>对象，而’sendMessage’发送的是一个<code>Message</code>对象。</p>
+<p>其实上面6个方法，分为<code>post</code>和<code>sendMessage</code>两种，每种都有三个发送消息的方式，不难发现一一对应。那么，为什么<code>post</code>发送的是一个<code>Runnable</code>对象，而<code>sendMessage</code>发送的是一个<code>Message</code>对象。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">final</span> <span class="kt">boolean</span> <span class="nf">post</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">r</span><span class="o">){</span>
    <span class="k">return</span>  <span class="nf">sendMessageDelayed</span><span class="o">(</span><span class="n">getPostMessage</span><span class="o">(</span><span class="n">r</span><span class="o">),</span> <span class="mi">0</span><span class="o">);</span>
