@@ -4,13 +4,100 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-10-10T13:56:22+08:00</updated>
+<updated>2015-10-28T15:57:17+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
   <uri>/</uri>
   <email>chenhuazhaoao@gmail.com</email>
 </author>
+
+
+  
+
+<entry>
+  <title type="html"><![CDATA[Android图片内存管理]]></title>
+  <link rel="alternate" type="text/html" href="/android/bitmap/" />
+  <id>/android/bitmap</id>
+  <published>2015-10-26T00:00:00+08:00</published>
+  <updated>2015-10-26T00:00:00+08:00</updated>
+  <author>
+    <name>Quinn Chen</name>
+    <uri></uri>
+    <email>chenhuazhaoao@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;这两天在整理关于Android中图片的内存管理问题，这里稍微做一下总结,本文主要目的是总结知识点，不会列出详细实现方式，但是会列出从哪里能学习到这些知识点。&lt;/p&gt;
+
+&lt;h1 id=&quot;bitmap&quot;&gt;一、bitmap所占内存大小&lt;/h1&gt;
+
+&lt;p&gt;首先列出一条公式，&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;一张bitmap占用内存 ＝ 长度 ＊ 宽度 ＊ 一个像素占用的内存&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;此处的长度和宽度对应图片像素，而一个像素占用多少内存，这是通过我们平时经常看到的&lt;code&gt;ALPHA_8&lt;/code&gt;，&lt;code&gt;RGB_565&lt;/code&gt;，&lt;code&gt;ARGB_4444&lt;/code&gt;，&lt;code&gt;ARGB_8888&lt;/code&gt;来设置的。这四个值是&lt;code&gt;Bitmap&lt;/code&gt;对象的一个内部枚举类&lt;code&gt;Bitmap.Config&lt;/code&gt;的四个属性，它们各自的特点如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;ALPHA_8&lt;/strong&gt;：一个像素占用一个字节，此处的8是指一个字节的透明度，图片不显示颜色值，只显示透明度，其实这个属性如何应用我还没完全探索明白，后续再研究。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;RGB_565&lt;/strong&gt;：一个像素占用2个字节，此处的565是值三个字节的RGB的三原色，这个值可以应用于无关透明与半透明的图片，可以大大降低图片所占内存。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;RGB_4444&lt;/strong&gt;：一个像素占用2个字节，该属性已经被废弃，其特点和RGB_8888类似，只是降低了图片质量和内存占用，从API=19开始，使用这个值也会默认成使用RGB_8888.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;RGB_8888&lt;/strong&gt;：一个像素占用4个字节,android系统使用该值做为默认值，毋庸置疑，该值是图片质量最高的，也是占用内存最多的。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Bitmap.Config&lt;/code&gt;的设置主要在两个地方使用，一个是&lt;code&gt;Bitmap&lt;/code&gt;的&lt;code&gt;createBitmap&lt;/code&gt;方法&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createBitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Config&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;另一个是&lt;code&gt;BitmapFactory&lt;/code&gt;内部类&lt;code&gt;Option&lt;/code&gt;的&lt;code&gt;inPreferredConfig&lt;/code&gt;属性,平时我们经常使用&lt;code&gt;isSampleSize&lt;/code&gt;属性来压缩图片的像素，其实还可以通过&lt;code&gt;inPreferredConfig&lt;/code&gt;设置每个像素占用几个字节，对于不透明的图片，可以使用&lt;code&gt;RGB_565&lt;/code&gt;减少每个像素占用的内存。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Config&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inPreferredConfig&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ARGB_8888&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;二、图片压缩&lt;/h1&gt;
+
+&lt;p&gt;平时我们都是通过&lt;code&gt;isSampleSize&lt;/code&gt;压缩图片，这个知识点应该是总所周知的。需要注意的是，如上所说，我们同时也可以借助&lt;code&gt;inPreferredConfig&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;listview&quot;&gt;三、listview等控件中并发的问题。&lt;/h1&gt;
+
+&lt;p&gt;当使用&lt;code&gt;viewholder&lt;/code&gt;的模式加载&lt;code&gt;listview&lt;/code&gt;，某些正在下载图片中的&lt;code&gt;view&lt;/code&gt;，可能已经被回收给其他&lt;code&gt;view&lt;/code&gt;复用了，当图片下载完，会使得在新的&lt;code&gt;view&lt;/code&gt;上呈现其他&lt;code&gt;view&lt;/code&gt;的图片，从而导致顺序错乱，为了解决这个并发异步的问题，需要建立&lt;code&gt;url--Imageview--AsyncTask&lt;/code&gt;的一一对应关系，这样就可以完美解决这个问题，这个知识点可以参考以下两篇文章&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html&quot;&gt;http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://developer.android.com/training/displaying-bitmaps/process-bitmap.html&quot;&gt;http://developer.android.com/training/displaying-bitmaps/process-bitmap.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;section-1&quot;&gt;四、图片缓存&lt;/h1&gt;
+
+&lt;p&gt;平时大家都使用LruCache作为内存缓存，DiskLruCache作为本地缓存。此处提一个小技巧，为了避免LruCache跟着&lt;code&gt;Activity&lt;/code&gt;被销毁（比如屏幕旋转），可以将LruCache放在一个设置了&lt;code&gt;setRetainInstance(true)&lt;/code&gt;的没有UI的fragment中。&lt;/p&gt;
+
+&lt;h1 id=&quot;section-2&quot;&gt;五、内存回收以及内存共享&lt;/h1&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;3.0之前&lt;/h2&gt;
+
+&lt;p&gt;3.0之前，&lt;code&gt;Bitmap&lt;/code&gt;对象保存在java堆&lt;code&gt;Dalvik heap&lt;/code&gt;中，而图片像素数据保存在&lt;code&gt;native memory&lt;/code&gt;中，前者有垃圾回收机制可以回收内存，&lt;code&gt;recycle()&lt;/code&gt;方法是针对后者加快回收内存的，所以，在3.0以前，内存的回收推荐使用&lt;code&gt;recycle()&lt;/code&gt;方法。&lt;/p&gt;
+
+&lt;p&gt;单个&lt;code&gt;Bitmap&lt;/code&gt;的使用场景，我们很容易知道何时调用&lt;code&gt;recycle()&lt;/code&gt;方法，而在&lt;code&gt;listview&lt;/code&gt;这种类型的控件中，为了把握&lt;code&gt;Bitmap&lt;/code&gt;被回收的时机，我们可以借助引用计数，使&lt;code&gt;Bitmap&lt;/code&gt;在没有被使用没有被缓存时调用&lt;code&gt;recycle()&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;3.0开始&lt;/h2&gt;
+
+&lt;p&gt;3.0开始，&lt;code&gt;Bitmap&lt;/code&gt;对象和像素数据都保存在java堆&lt;code&gt;Dalvik heap&lt;/code&gt;中，二者的回收都有垃圾回收机制可以负责，所以3.0开始，&lt;code&gt;recycle()&lt;/code&gt;并没有调用的必要性。但是依然有优化内存的方法，我们可以使用 &lt;code&gt;BitmapFactory.Options.inBitmap&lt;/code&gt;属性，该属性可以使得多个&lt;code&gt;Bitmap&lt;/code&gt;对象共用内存，这里说共用内存其实不准确，说&lt;code&gt;复用&lt;/code&gt;可能更准确，其实是一个不被使用的&lt;code&gt;Bitmap&lt;/code&gt;，其内存会被记录起来，后续被应用于其他&lt;code&gt;Bitmap&lt;/code&gt;对象。以下是 &lt;code&gt;BitmapFactory.Options.inBitmap&lt;/code&gt;字段的文档。&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/inBitmap.png&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;从API=19开始，被复用的&lt;code&gt;Bitmap&lt;/code&gt;占用内存大小只要大于新的&lt;code&gt;Bitmap&lt;/code&gt;即可.在API=19之前，新的&lt;code&gt;Bitmap&lt;/code&gt;必须和被复用的&lt;code&gt;Bitmap&lt;/code&gt;占用内存大小一样,而且新的&lt;code&gt;Bitmap&lt;/code&gt;需要&lt;code&gt;jpeg&lt;/code&gt;或者&lt;code&gt;png&lt;/code&gt;格式，&lt;code&gt;isSampleSize&lt;/code&gt;需要等于1，而且&lt;code&gt;inPreferredConfig&lt;/code&gt;也会被复用。&lt;/p&gt;
+
+&lt;h1 id=&quot;section-5&quot;&gt;六、学习资源&lt;/h1&gt;
+
+&lt;p&gt;1，Android官网的&lt;a href=&quot;http://developer.android.com/training/displaying-bitmaps/index.html&quot;&gt;Displaying Bitmaps Efficiently&lt;/a&gt;几篇文章绝对是精华中的精华，以上很多知识点启示网上很多人都有写，但是我相信都是来自阅读这几篇文章。&lt;/p&gt;
+
+&lt;p&gt;2，&lt;a href=&quot;http://developer.android.com/training/displaying-bitmaps/index.html&quot;&gt;Displaying Bitmaps Efficiently&lt;/a&gt;这一系列文章有一个demo叫DisplayingBitmaps，这个demo结合了这几篇文章的所有知识点。&lt;/p&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/android/bitmap/&quot;&gt;Android图片内存管理&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on October 26, 2015.&lt;/p&gt;</content>
+</entry>
 
 
   
@@ -276,7 +363,7 @@
   
 
 <entry>
-  <title type="html"><![CDATA[Android中关于显示尺度大小的一切]]></title>
+  <title type="html"><![CDATA[Android图片适配原理]]></title>
   <link rel="alternate" type="text/html" href="/android/dip-sp/" />
   <id>/android/dip-sp</id>
   <published>2015-08-04T00:00:00+08:00</published>
@@ -288,7 +375,7 @@
   </author>
   <content type="html">&lt;h2 id=&quot;section&quot;&gt;1，一段常见的代码&lt;/h2&gt;
 
-&lt;p&gt;关于Android中的大小尺寸，我们可能最常接触的概念就是&lt;code&gt;sp&lt;/code&gt;，&lt;code&gt;dip&lt;/code&gt;，&lt;code&gt;sp&lt;/code&gt;。而最常使用的代码就是px与dip二者的相互转化，以及px与sp之间的相互转化，如下：&lt;/p&gt;
+&lt;p&gt;关于Android中的大小尺寸，我们可能最常接触的概念就是&lt;code&gt;sp&lt;/code&gt;，&lt;code&gt;dip&lt;/code&gt;，&lt;code&gt;px&lt;/code&gt;。而最常使用的代码就是px与dip二者的相互转化，以及px与sp之间的相互转化，如下：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * 将px值转换为dip或dp值，保证尺寸大小不变&lt;/span&gt;
@@ -346,9 +433,9 @@
 
 &lt;h1 id=&quot;pxdip&quot;&gt;2，px，dip的关系&lt;/h1&gt;
 
-&lt;p&gt;&lt;code&gt;px&lt;/code&gt;，像素，英文简称&lt;code&gt;pixel&lt;/code&gt;，简写自&lt;code&gt;picture element&lt;/code&gt;，像很多文章中所说，我们理解像素是图片中的一个点。Android开发中，在Java代码中写的大小都是px为单位。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;px&lt;/code&gt;，像素，英文简称&lt;code&gt;pixel&lt;/code&gt;，简写自&lt;code&gt;picture element&lt;/code&gt;，像很多文章中所说，像素就是图片中的一个点。&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;dip&lt;/code&gt; ，全称&lt;code&gt;Density-independent Pixels&lt;/code&gt;。只要在布局中文件使用到大小，距离，官方都推荐使用&lt;code&gt;dip&lt;/code&gt;，一般我们对&lt;code&gt;dip&lt;/code&gt;和&lt;code&gt;dp&lt;/code&gt;不做区别。&lt;code&gt;dip&lt;/code&gt;这个单位是为了使同样数量的px在不同手机上的显示效果，显然&lt;code&gt;1 dip&lt;/code&gt;是&lt;code&gt;1 px&lt;/code&gt;某种对应关系转化过来的。这种转化上面的代码已经有了，但是其原理是什么呢？这就得引出另一个概念&lt;code&gt;dpi（dots per inch)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;dip&lt;/code&gt; ，全称&lt;code&gt;Density-independent Pixels&lt;/code&gt;。只要在布局中文件使用到大小，距离，官方都推荐使用&lt;code&gt;dip&lt;/code&gt;（除了字体大小），一般我们对&lt;code&gt;dip&lt;/code&gt;和&lt;code&gt;dp&lt;/code&gt;不做区别。&lt;code&gt;dip&lt;/code&gt;这个单位是为了使同样数量的px在不同手机上的显示效果相同，显然&lt;code&gt;1 dip&lt;/code&gt;是&lt;code&gt;1 px&lt;/code&gt;通过某种对应关系转化过来的。这种转化上面的代码已经有了，但是其原理是什么呢？这就得引出另一个概念&lt;code&gt;dpi（dots per inch)&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;dpi&lt;/code&gt;，官方文档对这个单位的指代是&lt;code&gt;Screen density&lt;/code&gt;，即屏幕密度，表示一个物理单位面积内像素点的个数。而在&lt;code&gt;160dpi&lt;/code&gt;的设备上，&lt;code&gt;1dip = 1px&lt;/code&gt;，在&lt;code&gt;120dpi&lt;/code&gt;的设备上，&lt;code&gt;1dip = 0.75px&lt;/code&gt;，没错，这就是&lt;code&gt;px&lt;/code&gt;和&lt;code&gt;dip&lt;/code&gt;对应关系的基础，&lt;code&gt;dpi&lt;/code&gt;越大，&lt;code&gt;1dip&lt;/code&gt;内就有更多的&lt;code&gt;px&lt;/code&gt;。&lt;/p&gt;
 
@@ -473,7 +560,26 @@
 
 &lt;p&gt;sp的全称Scale-independent Pixels，布局文件中对TextView指定字体大小时，都建议使用&lt;code&gt;sp&lt;/code&gt;.&lt;code&gt;sp&lt;/code&gt;与&lt;code&gt;dip&lt;/code&gt;相比多考虑了手机字体大小的偏好设置。而&lt;code&gt;sp&lt;/code&gt;与&lt;code&gt;px&lt;/code&gt;的转化关系，与&lt;code&gt;dp&lt;/code&gt;和&lt;code&gt;px&lt;/code&gt;的转化关系，只是对应的比例参数从&lt;code&gt;density&lt;/code&gt;变成了&lt;code&gt;scaledDensity&lt;/code&gt;原理是一样的。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;4，参考链接&lt;/h2&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;4。举例&lt;/h2&gt;
+
+&lt;p&gt;这里举个特例，加深理解。&lt;/p&gt;
+
+&lt;p&gt;如果一个hdpi设备，在drawable-hdpi文件夹中没图片，反而在drawable-xhdpi文件夹中存在，那么加载到内存的图片会相比在drawable-hdpi的图片会变小一半，占用内存也会变小（变成四分之一），&lt;/p&gt;
+
+&lt;p&gt;另外，再注意一点，一个&lt;code&gt;ImageView&lt;/code&gt;控件，修改其&lt;code&gt;layout_height&lt;/code&gt;和&lt;code&gt;layout_width&lt;/code&gt;的值，图片显示大小会变化，但是像素，占用内存不会变化。&lt;/p&gt;
+
+&lt;p&gt;下面是我写的一个小demo的截图，可以参考参考，加深理解：&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/bitmap.png&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;这是一个&lt;code&gt;hdpi&lt;/code&gt;的设备，第一幅图加载&lt;code&gt;hdpi&lt;/code&gt;的图片，第二幅图加载&lt;code&gt;xhdpi&lt;/code&gt;的图片，第三幅图加载&lt;code&gt;xhdpi&lt;/code&gt;图片但是指定了长宽。&lt;/p&gt;
+
+&lt;p&gt;此处&lt;code&gt;getWidth&lt;/code&gt;，&lt;code&gt;getHeigth&lt;/code&gt;返回的是图片长宽，单位是像素，单位是&lt;code&gt;px&lt;/code&gt;，而非&lt;code&gt;dip&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;4，参考链接&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://developer.android.com/guide/practices/screens_support.html&quot;&gt;http://developer.android.com/guide/practices/screens_support.html&lt;/a&gt;&lt;/p&gt;
 
@@ -484,7 +590,7 @@
 &lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/a/2025541/1290235&quot;&gt;http://stackoverflow.com/a/2025541/1290235&lt;/a&gt;&lt;/p&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;/android/dip-sp/&quot;&gt;Android中关于显示尺度大小的一切&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on August 04, 2015.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;/android/dip-sp/&quot;&gt;Android图片适配原理&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on August 04, 2015.&lt;/p&gt;</content>
 </entry>
 
 
@@ -4041,168 +4147,6 @@ big around the house jobs.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/P&amp;gt;&lt
 
 
   &lt;p&gt;&lt;a href=&quot;/readingnotes/HTTP%20Resource/&quot;&gt;《HTTP权威指南》URLs and Resources&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on December 01, 2014.&lt;/p&gt;</content>
-</entry>
-
-
-  
-
-<entry>
-  <title type="html"><![CDATA[《HTTP权威指南》Overview of HTTP]]></title>
-  <link rel="alternate" type="text/html" href="/readingnotes/HTTP%20definition/" />
-  <id>/readingnotes/HTTP definition</id>
-  <published>2014-11-30T00:00:00+08:00</published>
-  <updated>2014-11-30T00:00:00+08:00</updated>
-  <author>
-    <name>Quinn Chen</name>
-    <uri></uri>
-    <email>chenhuazhaoao@gmail.com</email>
-  </author>
-  <content type="html">&lt;h2 id=&quot;http-the-internets-multimedia-courier&quot;&gt;HTTP: The Internet’s Multimedia Courier&lt;/h2&gt;
-
-&lt;p&gt;首先，HTTP的全称为：Hypertext Transfer Protocol。属于可靠数据传输协议&lt;/p&gt;
-
-&lt;h2 id=&quot;web-clients-and-servers&quot;&gt;Web Clients and Servers&lt;/h2&gt;
-
-&lt;p&gt;服务器存储某些web内容，客户端向服务器发送一个http request请求某个对象（可能为文档，图片等等），
-若请求成功，服务器将返回一个http response，其中包含该对象，对象的内容长度，对象的类型等等信息。&lt;/p&gt;
-
-&lt;p&gt;最常见的HTTP客户端是浏览器&lt;/p&gt;
-
-&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
-
-&lt;p&gt;服务器上web内容都是资源，包括文件，图片等等。网关和搜索引擎也是资源（这一句不大懂）
-关于资源，主要有两个知识点，一个是媒体类型，一个是URI，如下&lt;/p&gt;
-
-&lt;h3 id=&quot;media-types&quot;&gt;Media Types&lt;/h3&gt;
-
-&lt;p&gt;服务器传输给客户端的对象可能是文本文件，图片等各种类型，HTTP协议通过MINE type来标记各种数据类型，客户端根据传输对象的数据类型，选择接收、显示该对象的方式。&lt;/p&gt;
-
-&lt;p&gt;如下图&lt;/p&gt;
-&lt;figure&gt;
-  &lt;img src=&quot;/images/http_overview01.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;Mine type其实就是平时见到的Content-type&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Mine type的文本标记方式为 “类型/子类型”，如下几种常见情况&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;html文本类型：text/html&lt;/li&gt;
-    &lt;li&gt;ASCLL文本：text/plain&lt;/li&gt;
-    &lt;li&gt;jpeg图片：image/jpeg&lt;/li&gt;
-    &lt;li&gt;gif图片：image/gif&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;uris&quot;&gt;URIs&lt;/h3&gt;
-
-&lt;p&gt;URI:uniform resource identifier,URI标记着所有资源在互联网上的位置&lt;/p&gt;
-
-&lt;p&gt;URIs有两种，一种是URLs，一种是URNs&lt;/p&gt;
-
-&lt;h4 id=&quot;urls&quot;&gt;URLs&lt;/h4&gt;
-
-&lt;p&gt;URL: uniform resource locator,平常说的URI基本默认就是URL。&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/images/httpoverview02.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;URL的解析&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;从上图可以得知，URL一般遵循一种标准格式，这种格式包括三部分&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;scheme：经常是 HTTP 协议 (http://)&lt;/li&gt;
-    &lt;li&gt;主机地址：比如上面的 www.joes-hardware.com&lt;/li&gt;
-    &lt;li&gt;指定某个资源：比如上面的 /specials/saw-blade.gif&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&quot;urns&quot;&gt;URNs&lt;/h4&gt;
-
-&lt;p&gt;URN:uniform resource name URN的用途是使客户端只要获取URN，无论资源的位置在哪里，都能获取到资源。URN的技术还未成熟，没有普及，所以目前URI基本都是默认为URL&lt;/p&gt;
-
-&lt;h2 id=&quot;transactions&quot;&gt;Transactions（事务）&lt;/h2&gt;
-
-&lt;figure&gt;
-  &amp;lt;img src=&quot;/images/httpoverview03.jpg alt=&quot;search screenshot&quot;&amp;gt;
-  &lt;figcaption&gt;HTTP事务&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;一个HTTP事务是由一个HTTP请求命令和一个HTTP相应结果组成的，这种通信是具有HTTP报文的格式化数据块实现的。&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/images/httpoverview03.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;事务&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;客户端完成一个任务可能不仅仅只有一个事务。加载一个图片浏览的页面，需要多个事务，首先是加载页面框架的事务，然后是获取各个图片的事务。&lt;/p&gt;
-
-&lt;h3 id=&quot;methods&quot;&gt;Methods&lt;/h3&gt;
-
-&lt;p&gt;HTTP 支持集中请求命令，这种请求命令也称为请求方法，这些方法告知服务器应该执行什么操作，常见方法如下如&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/images/httpoverview04.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;HTTP请求方法&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;### 状态码&lt;/p&gt;
-
-&lt;p&gt;HTTP响应报文都会携带一个状态码，并带有一个解释状态码的文本。&lt;/p&gt;
-
-&lt;h2 id=&quot;messages&quot;&gt;Messages（报文）&lt;/h2&gt;
-
-&lt;p&gt;报文有两种，一种是请求报文，一种是请求报文，两者格式基本相同。&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/images/httpoverview05.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;HTTP报文格式&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;HTTP报文包含三个部分：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;起始行（start line）：如上图，请求报文的起始行包括“方法+资源+HTTP版本”
- 而响应报文中则保罗“HTTP版本+状态码及其解释文本”&lt;/li&gt;
-    &lt;li&gt;首部（header）：起始行之后跟随的是首部，首部每行都是一个键值对，键和值用双引号:分开。
-   &lt;strong&gt;首部的最后是一个空行&lt;/strong&gt;&lt;/li&gt;
-    &lt;li&gt;主体（body）：起始行和首部都是纯文本的格式，而主体则为二进制数据，可以是文本，图片等。&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;connections&quot;&gt;Connections&lt;/h2&gt;
-
-&lt;p&gt;HTTP基于TCP连接，TCP是可靠传输协议，前者是应用层协议，后者是传输层协议&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/images/httpoverview07.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;HTTP基于TCP协议&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;h2 id=&quot;protocol-versions&quot;&gt;Protocol Versions&lt;/h2&gt;
-
-&lt;p&gt;目前推荐使用的HTTP版本是1.1，还存在其他0.9，1.0等版本&lt;/p&gt;
-
-&lt;h2 id=&quot;architectural-components-of-the-webweb&quot;&gt;Architectural Components of the Web（Web的结构组件）&lt;/h2&gt;
-
-&lt;p&gt;上文讲到的HTTP客户端和HTTP服务器都是属于HTTP应用程序&lt;/p&gt;
-
-&lt;p&gt;还有其他一些重要的HTTP应用程序（比较难理解）&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Proxies (代理)&lt;/li&gt;
-    &lt;li&gt;Caches （缓存）&lt;/li&gt;
-    &lt;li&gt;Gateways （网关）&lt;/li&gt;
-    &lt;li&gt;CTunnels （隧道）&lt;/li&gt;
-    &lt;li&gt;Agents （agent代理）&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-
-  &lt;p&gt;&lt;a href=&quot;/readingnotes/HTTP%20definition/&quot;&gt;《HTTP权威指南》Overview of HTTP&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on November 30, 2014.&lt;/p&gt;</content>
 </entry>
 
 </feed>

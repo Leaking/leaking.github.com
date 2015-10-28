@@ -1,0 +1,370 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Android图片内存管理 &#8211; My Stupid Blog</title>
+<meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta name="keywords" content="android">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Android图片内存管理">
+<meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android图片内存管理">
+<meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta property="og:url" content="/android/bitmap/">
+<meta property="og:site_name" content="My Stupid Blog">
+
+
+
+
+
+<link rel="canonical" href="/android/bitmap/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<!--
+<script src="//use.edgefonts.net/source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9;source-code-pro:n4,n7;volkhov.js"></script>
+-->
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+      
+		    
+		        
+		    
+		    <li><a href="/home/" >Home</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/js/" >JS</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/java/" >Java</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/android/" >Android</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/python/" >Python</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/tools/" >Tools</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/readingnotes/" >ReadingNotes</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/reflection/" >Reflection</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/about/" >About</a></li>
+		  
+        <li class="dosearch"><i class="fa fa-search"></i> Search</li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	
+		<div class="wrap">
+			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
+		</div>
+	
+</header><!-- /.masthead -->
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Android图片内存管理" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"><a href="/tags/#android" title="Pages tagged android">android</a></span>
+        
+          <h1 class="entry-title">Android图片内存管理</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+        
+          <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
+        <span class="entry-date date published"><time datetime="2015-10-26T00:00:00+08:00"><i class="fa fa-calendar-o"></i> October 26, 2015</time></span>
+        
+        
+        
+        <span class="social-share-twitter">
+          <a href="https://twitter.com/intent/tweet?hashtags=android&text=Android图片内存管理&url=/android/bitmap/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+        </span>
+        <span class="social-share-facebook">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/android/bitmap/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+        </span>
+        <span class="social-share-googleplus">
+          <a href="https://plus.google.com/share?url=/android/bitmap/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+        </span>
+        <!-- /.social-share -->
+        
+        <div class="google-ads" style="margin-top:40px; text-align:center;">
+  <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- 160x600 ad -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:160px;height:600px"
+       data-ad-client=""
+       data-ad-slot=""></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div><!-- /.google-ads --><!-- /.google-ads -->
+      </footer>
+      <div class="entry-content">
+        <p>这两天在整理关于Android中图片的内存管理问题，这里稍微做一下总结,本文主要目的是总结知识点，不会列出详细实现方式，但是会列出从哪里能学习到这些知识点。</p>
+
+<h1 id="bitmap">一、bitmap所占内存大小</h1>
+
+<p>首先列出一条公式，</p>
+
+<blockquote>
+  <p>一张bitmap占用内存 ＝ 长度 ＊ 宽度 ＊ 一个像素占用的内存</p>
+</blockquote>
+
+<p>此处的长度和宽度对应图片像素，而一个像素占用多少内存，这是通过我们平时经常看到的<code>ALPHA_8</code>，<code>RGB_565</code>，<code>ARGB_4444</code>，<code>ARGB_8888</code>来设置的。这四个值是<code>Bitmap</code>对象的一个内部枚举类<code>Bitmap.Config</code>的四个属性，它们各自的特点如下：</p>
+
+<p><strong>ALPHA_8</strong>：一个像素占用一个字节，此处的8是指一个字节的透明度，图片不显示颜色值，只显示透明度，其实这个属性如何应用我还没完全探索明白，后续再研究。</p>
+
+<p><strong>RGB_565</strong>：一个像素占用2个字节，此处的565是值三个字节的RGB的三原色，这个值可以应用于无关透明与半透明的图片，可以大大降低图片所占内存。</p>
+
+<p><strong>RGB_4444</strong>：一个像素占用2个字节，该属性已经被废弃，其特点和RGB_8888类似，只是降低了图片质量和内存占用，从API=19开始，使用这个值也会默认成使用RGB_8888.</p>
+
+<p><strong>RGB_8888</strong>：一个像素占用4个字节,android系统使用该值做为默认值，毋庸置疑，该值是图片质量最高的，也是占用内存最多的。</p>
+
+<p><code>Bitmap.Config</code>的设置主要在两个地方使用，一个是<code>Bitmap</code>的<code>createBitmap</code>方法</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="n">Bitmap</span> <span class="nf">createBitmap</span><span class="o">(</span><span class="kt">int</span> <span class="n">width</span><span class="o">,</span> <span class="kt">int</span> <span class="n">height</span><span class="o">,</span> <span class="n">Config</span> <span class="n">config</span><span class="o">)</span></code></pre></div>
+
+<p>另一个是<code>BitmapFactory</code>内部类<code>Option</code>的<code>inPreferredConfig</code>属性,平时我们经常使用<code>isSampleSize</code>属性来压缩图片的像素，其实还可以通过<code>inPreferredConfig</code>设置每个像素占用几个字节，对于不透明的图片，可以使用<code>RGB_565</code>减少每个像素占用的内存。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">Bitmap</span><span class="o">.</span><span class="na">Config</span> <span class="n">inPreferredConfig</span> <span class="o">=</span> <span class="n">Bitmap</span><span class="o">.</span><span class="na">Config</span><span class="o">.</span><span class="na">ARGB_8888</span><span class="o">;</span></code></pre></div>
+
+<h1 id="section">二、图片压缩</h1>
+
+<p>平时我们都是通过<code>isSampleSize</code>压缩图片，这个知识点应该是总所周知的。需要注意的是，如上所说，我们同时也可以借助<code>inPreferredConfig</code>.</p>
+
+<h1 id="listview">三、listview等控件中并发的问题。</h1>
+
+<p>当使用<code>viewholder</code>的模式加载<code>listview</code>，某些正在下载图片中的<code>view</code>，可能已经被回收给其他<code>view</code>复用了，当图片下载完，会使得在新的<code>view</code>上呈现其他<code>view</code>的图片，从而导致顺序错乱，为了解决这个并发异步的问题，需要建立<code>url--Imageview--AsyncTask</code>的一一对应关系，这样就可以完美解决这个问题，这个知识点可以参考以下两篇文章</p>
+
+<p><a href="http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html">http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html</a></p>
+
+<p><a href="http://developer.android.com/training/displaying-bitmaps/process-bitmap.html">http://developer.android.com/training/displaying-bitmaps/process-bitmap.html</a></p>
+
+<h1 id="section-1">四、图片缓存</h1>
+
+<p>平时大家都使用LruCache作为内存缓存，DiskLruCache作为本地缓存。此处提一个小技巧，为了避免LruCache跟着<code>Activity</code>被销毁（比如屏幕旋转），可以将LruCache放在一个设置了<code>setRetainInstance(true)</code>的没有UI的fragment中。</p>
+
+<h1 id="section-2">五、内存回收以及内存共享</h1>
+
+<h2 id="section-3">3.0之前</h2>
+
+<p>3.0之前，<code>Bitmap</code>对象保存在java堆<code>Dalvik heap</code>中，而图片像素数据保存在<code>native memory</code>中，前者有垃圾回收机制可以回收内存，<code>recycle()</code>方法是针对后者加快回收内存的，所以，在3.0以前，内存的回收推荐使用<code>recycle()</code>方法。</p>
+
+<p>单个<code>Bitmap</code>的使用场景，我们很容易知道何时调用<code>recycle()</code>方法，而在<code>listview</code>这种类型的控件中，为了把握<code>Bitmap</code>被回收的时机，我们可以借助引用计数，使<code>Bitmap</code>在没有被使用没有被缓存时调用<code>recycle()</code>。</p>
+
+<h2 id="section-4">3.0开始</h2>
+
+<p>3.0开始，<code>Bitmap</code>对象和像素数据都保存在java堆<code>Dalvik heap</code>中，二者的回收都有垃圾回收机制可以负责，所以3.0开始，<code>recycle()</code>并没有调用的必要性。但是依然有优化内存的方法，我们可以使用 <code>BitmapFactory.Options.inBitmap</code>属性，该属性可以使得多个<code>Bitmap</code>对象共用内存，这里说共用内存其实不准确，说<code>复用</code>可能更准确，其实是一个不被使用的<code>Bitmap</code>，其内存会被记录起来，后续被应用于其他<code>Bitmap</code>对象。以下是 <code>BitmapFactory.Options.inBitmap</code>字段的文档。</p>
+
+<figure>
+  <img src="/images/inBitmap.png" alt="search screenshot" />
+  <figcaption></figcaption>
+</figure>
+
+<p>从API=19开始，被复用的<code>Bitmap</code>占用内存大小只要大于新的<code>Bitmap</code>即可.在API=19之前，新的<code>Bitmap</code>必须和被复用的<code>Bitmap</code>占用内存大小一样,而且新的<code>Bitmap</code>需要<code>jpeg</code>或者<code>png</code>格式，<code>isSampleSize</code>需要等于1，而且<code>inPreferredConfig</code>也会被复用。</p>
+
+<h1 id="section-5">六、学习资源</h1>
+
+<p>1，Android官网的<a href="http://developer.android.com/training/displaying-bitmaps/index.html">Displaying Bitmaps Efficiently</a>几篇文章绝对是精华中的精华，以上很多知识点启示网上很多人都有写，但是我相信都是来自阅读这几篇文章。</p>
+
+<p>2，<a href="http://developer.android.com/training/displaying-bitmaps/index.html">Displaying Bitmaps Efficiently</a>这一系列文章有一个demo叫DisplayingBitmaps，这个demo结合了这几篇文章的所有知识点。</p>
+
+
+        <nav class="pagination" role="navigation">
+          
+            <a href="/android/android-service/" class="btn" title="【译】Service">Previous</a>
+          
+          
+        </nav><!-- /.pagination -->
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+  </article>
+</div><!-- /#main -->
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chenhuazhao020'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    
+
+<span>&copy; 2015 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
+<div class="social-icons">
+	
+	
+	
+	
+	
+	
+	
+	<a href="http://github.com/Leaking" title="Quinn Chen on Github" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+	
+    <a href="http://www.weibo.com/hereamme/" title="Quinn Chen on Weibo" target="_blank"><i class="fa fa-weibo fa-2x"></i></a>
+
+</div><!-- /.social-icons -->
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: '/search.json',
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+
+  
+	        
+
+</body>
+</html>

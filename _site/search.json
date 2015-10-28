@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "Android图片内存管理",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/bitmap/",
+		  "date"       : "2015-10-26 00:00:00 +0800",
+		  "shortdate"  : "October 26, 2015"
+		} ,
+	
+		{
 		  "title"      : "【译】Service",
 		  "category"   : "",
       "tags"       : "android",
@@ -10,7 +19,7 @@
 		} ,
 	
 		{
-		  "title"      : "Android中关于显示尺度大小的一切",
+		  "title"      : "Android图片适配原理",
 		  "category"   : "",
       "tags"       : "android",
 		  "url"        : "/android/dip-sp/",

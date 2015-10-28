@@ -5,14 +5,14 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Android中关于显示尺度大小的一切 &#8211; My Stupid Blog</title>
+<title>Android图片适配原理 &#8211; My Stupid Blog</title>
 <meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 <meta name="keywords" content="android">
 
 
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="Android中关于显示尺度大小的一切">
+<meta name="twitter:title" content="Android图片适配原理">
 <meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 
 
@@ -23,7 +23,7 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android中关于显示尺度大小的一切">
+<meta property="og:title" content="Android图片适配原理">
 <meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 <meta property="og:url" content="/android/dip-sp/">
 <meta property="og:site_name" content="My Stupid Blog">
@@ -157,12 +157,12 @@
 
 <div id="main" role="main">
   <article class="hentry">
-    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Android中关于显示尺度大小的一切" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Android图片适配原理" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
     <div class="entry-wrapper">
       <header class="entry-header">
         <span class="entry-tags"><a href="/tags/#android" title="Pages tagged android">android</a></span>
         
-          <h1 class="entry-title">Android中关于显示尺度大小的一切</h1>
+          <h1 class="entry-title">Android图片适配原理</h1>
         
       </header>
       <footer class="entry-meta">
@@ -177,7 +177,7 @@
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=android&text=Android中关于显示尺度大小的一切&url=/android/dip-sp/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=android&text=Android图片适配原理&url=/android/dip-sp/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
           <a href="https://www.facebook.com/sharer/sharer.php?u=/android/dip-sp/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
@@ -202,7 +202,7 @@
       <div class="entry-content">
         <h2 id="section">1，一段常见的代码</h2>
 
-<p>关于Android中的大小尺寸，我们可能最常接触的概念就是<code>sp</code>，<code>dip</code>，<code>sp</code>。而最常使用的代码就是px与dip二者的相互转化，以及px与sp之间的相互转化，如下：</p>
+<p>关于Android中的大小尺寸，我们可能最常接触的概念就是<code>sp</code>，<code>dip</code>，<code>px</code>。而最常使用的代码就是px与dip二者的相互转化，以及px与sp之间的相互转化，如下：</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
 <span class="cm">     * 将px值转换为dip或dp值，保证尺寸大小不变</span>
@@ -260,9 +260,9 @@
 
 <h1 id="pxdip">2，px，dip的关系</h1>
 
-<p><code>px</code>，像素，英文简称<code>pixel</code>，简写自<code>picture element</code>，像很多文章中所说，我们理解像素是图片中的一个点。Android开发中，在Java代码中写的大小都是px为单位。</p>
+<p><code>px</code>，像素，英文简称<code>pixel</code>，简写自<code>picture element</code>，像很多文章中所说，像素就是图片中的一个点。</p>
 
-<p><code>dip</code> ，全称<code>Density-independent Pixels</code>。只要在布局中文件使用到大小，距离，官方都推荐使用<code>dip</code>，一般我们对<code>dip</code>和<code>dp</code>不做区别。<code>dip</code>这个单位是为了使同样数量的px在不同手机上的显示效果，显然<code>1 dip</code>是<code>1 px</code>某种对应关系转化过来的。这种转化上面的代码已经有了，但是其原理是什么呢？这就得引出另一个概念<code>dpi（dots per inch)</code></p>
+<p><code>dip</code> ，全称<code>Density-independent Pixels</code>。只要在布局中文件使用到大小，距离，官方都推荐使用<code>dip</code>（除了字体大小），一般我们对<code>dip</code>和<code>dp</code>不做区别。<code>dip</code>这个单位是为了使同样数量的px在不同手机上的显示效果相同，显然<code>1 dip</code>是<code>1 px</code>通过某种对应关系转化过来的。这种转化上面的代码已经有了，但是其原理是什么呢？这就得引出另一个概念<code>dpi（dots per inch)</code></p>
 
 <p><code>dpi</code>，官方文档对这个单位的指代是<code>Screen density</code>，即屏幕密度，表示一个物理单位面积内像素点的个数。而在<code>160dpi</code>的设备上，<code>1dip = 1px</code>，在<code>120dpi</code>的设备上，<code>1dip = 0.75px</code>，没错，这就是<code>px</code>和<code>dip</code>对应关系的基础，<code>dpi</code>越大，<code>1dip</code>内就有更多的<code>px</code>。</p>
 
@@ -387,7 +387,26 @@
 
 <p>sp的全称Scale-independent Pixels，布局文件中对TextView指定字体大小时，都建议使用<code>sp</code>.<code>sp</code>与<code>dip</code>相比多考虑了手机字体大小的偏好设置。而<code>sp</code>与<code>px</code>的转化关系，与<code>dp</code>和<code>px</code>的转化关系，只是对应的比例参数从<code>density</code>变成了<code>scaledDensity</code>原理是一样的。</p>
 
-<h2 id="section-1">4，参考链接</h2>
+<h2 id="section-1">4。举例</h2>
+
+<p>这里举个特例，加深理解。</p>
+
+<p>如果一个hdpi设备，在drawable-hdpi文件夹中没图片，反而在drawable-xhdpi文件夹中存在，那么加载到内存的图片会相比在drawable-hdpi的图片会变小一半，占用内存也会变小（变成四分之一），</p>
+
+<p>另外，再注意一点，一个<code>ImageView</code>控件，修改其<code>layout_height</code>和<code>layout_width</code>的值，图片显示大小会变化，但是像素，占用内存不会变化。</p>
+
+<p>下面是我写的一个小demo的截图，可以参考参考，加深理解：</p>
+
+<figure>
+  <img src="/images/bitmap.png" alt="search screenshot" />
+  <figcaption></figcaption>
+</figure>
+
+<p>这是一个<code>hdpi</code>的设备，第一幅图加载<code>hdpi</code>的图片，第二幅图加载<code>xhdpi</code>的图片，第三幅图加载<code>xhdpi</code>图片但是指定了长宽。</p>
+
+<p>此处<code>getWidth</code>，<code>getHeigth</code>返回的是图片长宽，单位是像素，单位是<code>px</code>，而非<code>dip</code>。</p>
+
+<h2 id="section-2">4，参考链接</h2>
 
 <p><a href="http://developer.android.com/guide/practices/screens_support.html">http://developer.android.com/guide/practices/screens_support.html</a></p>
 
