@@ -242,7 +242,177 @@
 
 <h1 id="section-1">四、图片缓存</h1>
 
-<p>平时大家都使用LruCache作为内存缓存，DiskLruCache作为本地缓存。此处提一个小技巧，为了避免LruCache跟着<code>Activity</code>被销毁（比如屏幕旋转），可以将LruCache放在一个设置了<code>setRetainInstance(true)</code>的没有UI的fragment中。</p>
+<p>平时大家都使用LruCache作为内存缓存，DiskLruCache作为本地缓存。前者可以在UI线程进行，后者则不可以，并且后者得考虑并发的问题，因为可能DiskLruCache初始化还没完成，已经有线程准备去操作DiskLruCache了。所以需要做类似如下操作：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="n">DiskLruCache</span> <span class="n">mDiskLruCache</span><span class="o">;</span>
+<span class="kd">private</span> <span class="kd">final</span> <span class="n">Object</span> <span class="n">mDiskCacheLock</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Object</span><span class="o">();</span>
+<span class="kd">private</span> <span class="kt">boolean</span> <span class="n">mDiskCacheStarting</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">DISK_CACHE_SIZE</span> <span class="o">=</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">10</span><span class="o">;</span> <span class="c1">// 10MB</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">DISK_CACHE_SUBDIR</span> <span class="o">=</span> <span class="s">&quot;thumbnails&quot;</span><span class="o">;</span>
+
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+    <span class="o">...</span>
+    <span class="c1">// Initialize memory cache</span>
+    <span class="o">...</span>
+    <span class="c1">// Initialize disk cache on background thread</span>
+    <span class="n">File</span> <span class="n">cacheDir</span> <span class="o">=</span> <span class="n">getDiskCacheDir</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">DISK_CACHE_SUBDIR</span><span class="o">);</span>
+    <span class="k">new</span> <span class="nf">InitDiskCacheTask</span><span class="o">().</span><span class="na">execute</span><span class="o">(</span><span class="n">cacheDir</span><span class="o">);</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">InitDiskCacheTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">File</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">Void</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="n">Void</span> <span class="nf">doInBackground</span><span class="o">(</span><span class="n">File</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">synchronized</span> <span class="o">(</span><span class="n">mDiskCacheLock</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">File</span> <span class="n">cacheDir</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+            <span class="n">mDiskLruCache</span> <span class="o">=</span> <span class="n">DiskLruCache</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="n">cacheDir</span><span class="o">,</span> <span class="n">DISK_CACHE_SIZE</span><span class="o">);</span>
+            <span class="n">mDiskCacheStarting</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Finished initialization</span>
+            <span class="n">mDiskCacheLock</span><span class="o">.</span><span class="na">notifyAll</span><span class="o">();</span> <span class="c1">// Wake any waiting threads</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">BitmapWorkerTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">Bitmap</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="o">...</span>
+    <span class="c1">// Decode image in background.</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="n">Bitmap</span> <span class="nf">doInBackground</span><span class="o">(</span><span class="n">Integer</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="n">String</span> <span class="n">imageKey</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+
+        <span class="c1">// Check disk cache in background thread</span>
+        <span class="n">Bitmap</span> <span class="n">bitmap</span> <span class="o">=</span> <span class="n">getBitmapFromDiskCache</span><span class="o">(</span><span class="n">imageKey</span><span class="o">);</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">bitmap</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// Not found in disk cache</span>
+            <span class="c1">// Process as normal</span>
+            <span class="kd">final</span> <span class="n">Bitmap</span> <span class="n">bitmap</span> <span class="o">=</span> <span class="n">decodeSampledBitmapFromResource</span><span class="o">(</span>
+                    <span class="n">getResources</span><span class="o">(),</span> <span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">));</span>
+        <span class="o">}</span>
+
+        <span class="c1">// Add final bitmap to caches</span>
+        <span class="n">addBitmapToCache</span><span class="o">(</span><span class="n">imageKey</span><span class="o">,</span> <span class="n">bitmap</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">bitmap</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addBitmapToCache</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="n">Bitmap</span> <span class="n">bitmap</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// Add to memory cache as before</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">getBitmapFromMemCache</span><span class="o">(</span><span class="n">key</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mMemoryCache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">bitmap</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Also add to disk cache</span>
+    <span class="kd">synchronized</span> <span class="o">(</span><span class="n">mDiskCacheLock</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">mDiskLruCache</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">mDiskLruCache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">mDiskLruCache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">bitmap</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="n">Bitmap</span> <span class="nf">getBitmapFromDiskCache</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">synchronized</span> <span class="o">(</span><span class="n">mDiskCacheLock</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Wait while disk cache is started from background thread</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">mDiskCacheStarting</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">mDiskCacheLock</span><span class="o">.</span><span class="na">wait</span><span class="o">();</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{}</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">mDiskLruCache</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">mDiskLruCache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// Creates a unique subdirectory of the designated app cache directory. Tries to use external</span>
+<span class="c1">// but if not mounted, falls back on internal storage.</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="n">File</span> <span class="nf">getDiskCacheDir</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">String</span> <span class="n">uniqueName</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// Check if media is mounted or storage is built-in, if so, try and use external cache dir</span>
+    <span class="c1">// otherwise use internal cache dir</span>
+    <span class="kd">final</span> <span class="n">String</span> <span class="n">cachePath</span> <span class="o">=</span>
+            <span class="n">Environment</span><span class="o">.</span><span class="na">MEDIA_MOUNTED</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">Environment</span><span class="o">.</span><span class="na">getExternalStorageState</span><span class="o">())</span> <span class="o">||</span>
+                    <span class="o">!</span><span class="n">isExternalStorageRemovable</span><span class="o">()</span> <span class="o">?</span> <span class="n">getExternalCacheDir</span><span class="o">(</span><span class="n">context</span><span class="o">).</span><span class="na">getPath</span><span class="o">()</span> <span class="o">:</span>
+                            <span class="n">context</span><span class="o">.</span><span class="na">getCacheDir</span><span class="o">().</span><span class="na">getPath</span><span class="o">();</span>
+
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">cachePath</span> <span class="o">+</span> <span class="n">File</span><span class="o">.</span><span class="na">separator</span> <span class="o">+</span> <span class="n">uniqueName</span><span class="o">);</span>
+<span class="o">}</span></code></pre></div>
+
+<p>此处提一个小技巧，为了避免LruCache跟着<code>Activity</code>被销毁（比如屏幕旋转），可以将LruCache放在一个设置了<code>setRetainInstance(true)</code>的没有UI的fragment中。以下代码片段来自于<a href="http://developer.android.com/training/displaying-bitmaps/index.html">Displaying Bitmaps Efficiently</a>几篇文章中的例子DisplayingBitmaps，其中借助<code>RetainFragment</code>保存<code>ImageCache</code>对象，<code>ImageCache</code>对象不只持有LruCache，还有DiskLruCache。</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="n">ImageCache</span> <span class="nf">getInstance</span><span class="o">(</span>
+            <span class="n">FragmentManager</span> <span class="n">fragmentManager</span><span class="o">,</span> <span class="n">ImageCacheParams</span> <span class="n">cacheParams</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="c1">// Search for, or create an instance of the non-UI RetainFragment</span>
+        <span class="kd">final</span> <span class="n">RetainFragment</span> <span class="n">mRetainFragment</span> <span class="o">=</span> <span class="n">findOrCreateRetainFragment</span><span class="o">(</span><span class="n">fragmentManager</span><span class="o">);</span>
+
+        <span class="c1">// See if we already have an ImageCache stored in RetainFragment</span>
+        <span class="n">ImageCache</span> <span class="n">imageCache</span> <span class="o">=</span> <span class="o">(</span><span class="n">ImageCache</span><span class="o">)</span> <span class="n">mRetainFragment</span><span class="o">.</span><span class="na">getObject</span><span class="o">();</span>
+
+        <span class="c1">// No existing ImageCache, create one and store it in RetainFragment</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">imageCache</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">imageCache</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ImageCache</span><span class="o">(</span><span class="n">cacheParams</span><span class="o">);</span>
+            <span class="n">mRetainFragment</span><span class="o">.</span><span class="na">setObject</span><span class="o">(</span><span class="n">imageCache</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">imageCache</span><span class="o">;</span>
+ <span class="o">}</span>
+
+ <span class="kd">private</span> <span class="kd">static</span> <span class="n">RetainFragment</span> <span class="nf">findOrCreateRetainFragment</span><span class="o">(</span><span class="n">FragmentManager</span> <span class="n">fm</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="c1">// Check to see if we have retained the worker fragment.</span>
+        <span class="n">RetainFragment</span> <span class="n">mRetainFragment</span> <span class="o">=</span> <span class="o">(</span><span class="n">RetainFragment</span><span class="o">)</span> <span class="n">fm</span><span class="o">.</span><span class="na">findFragmentByTag</span><span class="o">(</span><span class="n">TAG</span><span class="o">);</span>
+
+        <span class="c1">// If not retained (or first time running), we need to create and add it.</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">mRetainFragment</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">mRetainFragment</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">RetainFragment</span><span class="o">();</span>
+            <span class="n">fm</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="n">mRetainFragment</span><span class="o">,</span> <span class="n">TAG</span><span class="o">).</span><span class="na">commitAllowingStateLoss</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">mRetainFragment</span><span class="o">;</span>
+
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * A simple non-UI Fragment that stores a single Object and is retained over configuration</span>
+<span class="cm">     * changes. It will be used to retain the ImageCache object.</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">RetainFragment</span> <span class="kd">extends</span> <span class="n">Fragment</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">Object</span> <span class="n">mObject</span><span class="o">;</span>
+
+        <span class="cm">/**</span>
+<span class="cm">         * Empty constructor as per the Fragment documentation</span>
+<span class="cm">         */</span>
+        <span class="kd">public</span> <span class="nf">RetainFragment</span><span class="o">()</span> <span class="o">{}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+
+            <span class="c1">// Make sure this Fragment is retained over a configuration change</span>
+            <span class="n">setRetainInstance</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="cm">/**</span>
+<span class="cm">         * Store a single object in this Fragment.</span>
+<span class="cm">         *</span>
+<span class="cm">         * @param object The object to store</span>
+<span class="cm">         */</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setObject</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">mObject</span> <span class="o">=</span> <span class="n">object</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="cm">/**</span>
+<span class="cm">         * Get the stored object.</span>
+<span class="cm">         *</span>
+<span class="cm">         * @return The stored object</span>
+<span class="cm">         */</span>
+        <span class="kd">public</span> <span class="n">Object</span> <span class="nf">getObject</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">mObject</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></pre></div>
 
 <h1 id="section-2">五、内存回收以及内存共享</h1>
 
@@ -274,6 +444,8 @@
           
             <a href="/android/android-service/" class="btn" title="【译】Service">Previous</a>
           
+          
+            <a href="/android/ant/" class="btn" title="使用Ant进行Android多渠道打包">Next</a>
           
         </nav><!-- /.pagination -->
         

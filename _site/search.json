@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "使用Ant进行Android多渠道打包",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/ant/",
+		  "date"       : "2015-10-27 00:00:00 +0800",
+		  "shortdate"  : "October 27, 2015"
+		} ,
+	
+		{
 		  "title"      : "Android图片内存管理",
 		  "category"   : "",
       "tags"       : "android",

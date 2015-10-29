@@ -4,13 +4,47 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-10-28T15:57:17+08:00</updated>
+<updated>2015-10-29T10:37:00+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
   <uri>/</uri>
   <email>chenhuazhaoao@gmail.com</email>
 </author>
+
+
+  
+
+<entry>
+  <title type="html"><![CDATA[使用Ant进行Android多渠道打包]]></title>
+  <link rel="alternate" type="text/html" href="/android/ant/" />
+  <id>/android/ant</id>
+  <published>2015-10-27T00:00:00+08:00</published>
+  <updated>2015-10-27T00:00:00+08:00</updated>
+  <author>
+    <name>Quinn Chen</name>
+    <uri></uri>
+    <email>chenhuazhaoao@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;Ant是一款构建工具，再通过一些技巧，还能实现多渠道打包。&lt;/p&gt;
+
+&lt;p&gt;先介绍何谓多渠道打包，我们发布一款app到不同的应用市场，不同的应用市场下载量活跃度等等可能存在差异，我们为了统计这种差异，需要为不同的应用市场打不同的安装包apk，这些apk的区别仅限于一个标记，这个标记自我描述当前apk是哪个应用市场的。通常我们将上述的标记记录在&lt;code&gt;Androidmanifest.xml&lt;/code&gt;中文件中，然后在打包时写入不同的值。这就是所谓的多渠道打包。&lt;/p&gt;
+
+&lt;p&gt;大概的介绍了多渠道打包的概念后，我们先从基础学起，介绍Ant的配置，基础应用，以及多渠道打包的配置。&lt;/p&gt;
+
+&lt;h1 id=&quot;ant&quot;&gt;Ant配置&lt;/h1&gt;
+
+&lt;p&gt;首先&lt;a href=&quot;http://ant.apache.org/&quot;&gt;下载Ant&lt;/a&gt;，Ant不需要安装，只需解压，然后添加环境变量即可。&lt;/p&gt;
+
+&lt;p&gt;我使用的机器时Mac，&lt;/p&gt;
+
+&lt;h1 id=&quot;ant-1&quot;&gt;Ant打包&lt;/h1&gt;
+
+&lt;h1 id=&quot;ant-2&quot;&gt;Ant多渠道打包&lt;/h1&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/android/ant/&quot;&gt;使用Ant进行Android多渠道打包&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on October 27, 2015.&lt;/p&gt;</content>
+</entry>
 
 
   
@@ -68,7 +102,177 @@
 
 &lt;h1 id=&quot;section-1&quot;&gt;四、图片缓存&lt;/h1&gt;
 
-&lt;p&gt;平时大家都使用LruCache作为内存缓存，DiskLruCache作为本地缓存。此处提一个小技巧，为了避免LruCache跟着&lt;code&gt;Activity&lt;/code&gt;被销毁（比如屏幕旋转），可以将LruCache放在一个设置了&lt;code&gt;setRetainInstance(true)&lt;/code&gt;的没有UI的fragment中。&lt;/p&gt;
+&lt;p&gt;平时大家都使用LruCache作为内存缓存，DiskLruCache作为本地缓存。前者可以在UI线程进行，后者则不可以，并且后者得考虑并发的问题，因为可能DiskLruCache初始化还没完成，已经有线程准备去操作DiskLruCache了。所以需要做类似如下操作：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DiskLruCache&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mDiskLruCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mDiskCacheLock&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mDiskCacheStarting&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DISK_CACHE_SIZE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 10MB&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DISK_CACHE_SUBDIR&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;thumbnails&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Bundle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Initialize memory cache&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Initialize disk cache on background thread&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cacheDir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getDiskCacheDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DISK_CACHE_SUBDIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;InitDiskCacheTask&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cacheDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;InitDiskCacheTask&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AsyncTask&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;doInBackground&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;synchronized&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mDiskCacheLock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cacheDir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;mDiskLruCache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DiskLruCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cacheDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DISK_CACHE_SIZE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;mDiskCacheStarting&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Finished initialization&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;mDiskCacheLock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;notifyAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Wake any waiting threads&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;BitmapWorkerTask&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AsyncTask&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Decode image in background.&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;doInBackground&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;imageKey&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;valueOf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]);&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// Check disk cache in background thread&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitmap&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getBitmapFromDiskCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imageKey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bitmap&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Not found in disk cache&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;// Process as normal&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitmap&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;decodeSampledBitmapFromResource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;getResources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// Add final bitmap to caches&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;addBitmapToCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imageKey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;addBitmapToCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Add to memory cache as before&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getBitmapFromMemCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;mMemoryCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Also add to disk cache&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;synchronized&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mDiskCacheLock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mDiskLruCache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mDiskLruCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;mDiskLruCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getBitmapFromDiskCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;synchronized&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mDiskCacheLock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Wait while disk cache is started from background thread&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mDiskCacheStarting&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;mDiskCacheLock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;wait&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;InterruptedException&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mDiskLruCache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mDiskLruCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Creates a unique subdirectory of the designated app cache directory. Tries to use external&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// but if not mounted, falls back on internal storage.&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getDiskCacheDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uniqueName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Check if media is mounted or storage is built-in, if so, try and use external cache dir&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// otherwise use internal cache dir&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cachePath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;Environment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MEDIA_MOUNTED&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Environment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getExternalStorageState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt;
+                    &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isExternalStorageRemovable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getExternalCacheDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getPath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+                            &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getCacheDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getPath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cachePath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;separator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uniqueName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;此处提一个小技巧，为了避免LruCache跟着&lt;code&gt;Activity&lt;/code&gt;被销毁（比如屏幕旋转），可以将LruCache放在一个设置了&lt;code&gt;setRetainInstance(true)&lt;/code&gt;的没有UI的fragment中。以下代码片段来自于&lt;a href=&quot;http://developer.android.com/training/displaying-bitmaps/index.html&quot;&gt;Displaying Bitmaps Efficiently&lt;/a&gt;几篇文章中的例子DisplayingBitmaps，其中借助&lt;code&gt;RetainFragment&lt;/code&gt;保存&lt;code&gt;ImageCache&lt;/code&gt;对象，&lt;code&gt;ImageCache&lt;/code&gt;对象不只持有LruCache，还有DiskLruCache。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ImageCache&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;FragmentManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fragmentManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ImageCacheParams&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cacheParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// Search for, or create an instance of the non-UI RetainFragment&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RetainFragment&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mRetainFragment&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findOrCreateRetainFragment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fragmentManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// See if we already have an ImageCache stored in RetainFragment&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ImageCache&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;imageCache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ImageCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mRetainFragment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// No existing ImageCache, create one and store it in RetainFragment&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imageCache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;imageCache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ImageCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cacheParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;mRetainFragment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imageCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;imageCache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+ &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RetainFragment&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findOrCreateRetainFragment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FragmentManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// Check to see if we have retained the worker fragment.&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;RetainFragment&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mRetainFragment&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RetainFragment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findFragmentByTag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TAG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// If not retained (or first time running), we need to create and add it.&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mRetainFragment&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;mRetainFragment&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;RetainFragment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;fm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;beginTransaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mRetainFragment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;commitAllowingStateLoss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mRetainFragment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * A simple non-UI Fragment that stores a single Object and is retained over configuration&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     * changes. It will be used to retain the ImageCache object.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RetainFragment&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Fragment&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * Empty constructor as per the Fragment documentation&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         */&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;RetainFragment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
+
+        &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Bundle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+            &lt;span class=&quot;c1&quot;&gt;// Make sure this Fragment is retained over a configuration change&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;setRetainInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * Store a single object in this Fragment.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         *&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * @param object The object to store&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         */&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;mObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * Get the stored object.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         *&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * @return The stored object&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         */&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;section-2&quot;&gt;五、内存回收以及内存共享&lt;/h1&gt;
 
@@ -4023,130 +4227,6 @@ stack&lt;/code&gt;，并且被&lt;code&gt;desrotyed&lt;/code&gt;，接下来前�
 
 
   &lt;p&gt;&lt;a href=&quot;/android/offlineDocs/&quot;&gt;安卓离线文档&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on December 10, 2014.&lt;/p&gt;</content>
-</entry>
-
-
-  
-
-<entry>
-  <title type="html"><![CDATA[《HTTP权威指南》URLs and Resources]]></title>
-  <link rel="alternate" type="text/html" href="/readingnotes/HTTP%20Resource/" />
-  <id>/readingnotes/HTTP Resource</id>
-  <published>2014-12-01T00:00:00+08:00</published>
-  <updated>2014-12-01T00:00:00+08:00</updated>
-  <author>
-    <name>Quinn Chen</name>
-    <uri></uri>
-    <email>chenhuazhaoao@gmail.com</email>
-  </author>
-  <content type="html">&lt;p&gt;URLs(Uniform resource locators)是互联网资源的标准化名称&lt;/p&gt;
-
-&lt;h2 id=&quot;navigating-the-internets-resources&quot;&gt;Navigating the Internet’s Resources&lt;/h2&gt;
-
-&lt;p&gt;像上一篇博客&lt;a href=&quot;http://leaking.github.io/readingnotes/HTTP%20definition01/&quot;&gt;“《HTTP权威指南》Note1-Overview of HTTP”&lt;/a&gt;中提到的，URLs只是URI的一个子集，另一个子集是URN，URL强调资源的位置，URN抢到资源的名称，当某个资源在互联网的位置发生改变，旧的URL将不能再访问该资源，而URN则依然可以。由于URN还未普及，我们一般默认URL就是URI。&lt;/p&gt;
-
-&lt;p&gt;URL有统一的格式：scheme://server location/path&lt;/p&gt;
-
-&lt;p&gt;URL被应用于除了HTTP之外的其他协议，比如FTP，电子邮件等等。URL是众多网络协议的访问点（原文是access point，翻译有点怪）。&lt;/p&gt;
-
-&lt;h2 id=&quot;url-syntax&quot;&gt;URL Syntax&lt;/h2&gt;
-
-&lt;p&gt;URL的语法格式（详细）如下&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;scheme&amp;gt;&lt;/span&gt;://&lt;span class=&quot;nt&quot;&gt;&amp;lt;user&amp;gt;&lt;/span&gt;:&lt;span class=&quot;nt&quot;&gt;&amp;lt;password&amp;gt;&lt;/span&gt;@&lt;span class=&quot;nt&quot;&gt;&amp;lt;host&amp;gt;&lt;/span&gt;:&lt;span class=&quot;nt&quot;&gt;&amp;lt;port&amp;gt;&lt;/span&gt;/&lt;span class=&quot;nt&quot;&gt;&amp;lt;path&amp;gt;&lt;/span&gt;;&lt;span class=&quot;nt&quot;&gt;&amp;lt;params&amp;gt;&lt;/span&gt;?&lt;span class=&quot;nt&quot;&gt;&amp;lt;query&amp;gt;&lt;/span&gt;#&lt;span class=&quot;nt&quot;&gt;&amp;lt;frag&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;一般没有哪个URL同时拥有以上9个部分，一般用于scheme，host，path.
-接下来讲解以详细语法格式中的9个组成部分。&lt;/p&gt;
-
-&lt;h3 id=&quot;schemes-what-protocol-to-use&quot;&gt;Schemes: What Protocol to Use&lt;/h3&gt;
-
-&lt;p&gt;scheme一般表示访问某个资源是通过哪种协议。它不区分大小写，用冒号:隔开后面的字段，所以
-HTTP://等同于http://&lt;/p&gt;
-
-&lt;h3 id=&quot;hosts-and-ports&quot;&gt;Hosts and Ports&lt;/h3&gt;
-
-&lt;p&gt;host和port指定你得通过互联网中哪台主机的哪个端口获取某个资源。&lt;/p&gt;
-
-&lt;h3 id=&quot;usernames-and-passwords&quot;&gt;Usernames and Passwords&lt;/h3&gt;
-
-&lt;p&gt;用户名和密码，一般运用于FTP协议，举几个例子，如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;ftp://ftp.prep.ai.mit.edu/pub/gnu
-ftp://anonymous@ftp.prep.ai.mit.edu/pub/gnu
-ftp://anonymous:my_passwd@ftp.prep.ai.mit.edu/pub/gnu
-http://joe:joespasswd@www.joes-hardware.com/sales_info.txt&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;第一个URL中，没有账户名也没有密码，则默认插入“anonymous”作为账号，而密码，也会插入默认值，不同浏览器的默认密码不同，IE是“IEUser”，Netscape Navigator 是 “mozilla”。
-第二个URL中，有账号，则只需要自动插入默认密码。
-第三个和第四个URL中，拥有账号也有密码。&lt;/p&gt;
-
-&lt;p&gt;通常账号密码通过“@”字符与后续的URL组成部分分隔开，而账号密码之间则用冒号”:”分开。&lt;/p&gt;
-
-&lt;h3 id=&quot;paths&quot;&gt;Paths&lt;/h3&gt;
-
-&lt;p&gt;path是指你需要到某个主机的哪个位置获取资源，&lt;/p&gt;
-
-&lt;p&gt;path中的每一级，都可以有自己的参数（Each path segment can have its own params component）&lt;/p&gt;
-
-&lt;h2 id=&quot;parameters&quot;&gt;Parameters&lt;/h2&gt;
-
-&lt;p&gt;还记得参数Parameters放在哪个位置吗？再看看URL的完整格式，它与path之间用分号“;”隔开。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;scheme&amp;gt;&lt;/span&gt;://&lt;span class=&quot;nt&quot;&gt;&amp;lt;user&amp;gt;&lt;/span&gt;:&lt;span class=&quot;nt&quot;&gt;&amp;lt;password&amp;gt;&lt;/span&gt;@&lt;span class=&quot;nt&quot;&gt;&amp;lt;host&amp;gt;&lt;/span&gt;:&lt;span class=&quot;nt&quot;&gt;&amp;lt;port&amp;gt;&lt;/span&gt;/&lt;span class=&quot;nt&quot;&gt;&amp;lt;path&amp;gt;&lt;/span&gt;;&lt;span class=&quot;nt&quot;&gt;&amp;lt;params&amp;gt;&lt;/span&gt;?&lt;span class=&quot;nt&quot;&gt;&amp;lt;query&amp;gt;&lt;/span&gt;#&lt;span class=&quot;nt&quot;&gt;&amp;lt;frag&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;参数都以键值对的方式出现，如下例子&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;ftp://prep.ai.mit.edu/pub/gnu;type=d&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;向前面提到的，path的各个级别都可以有自己的参数，如下&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;http://www.joes-hardware.com/hammers;sale=false/index.html;graphics=true&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;路径在hammers级别有参数sale，值为false，路径在index.html有参数graphics，其值为true&lt;/p&gt;
-
-&lt;h3 id=&quot;query-strings&quot;&gt;Query Strings&lt;/h3&gt;
-
-&lt;p&gt;Query Strings的例子如下，不大理解，这个和get方法后面的参数不是一样吗&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;http://www.joes-hardware.com/inventory-check.cgi?item=12731&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;fragments&quot;&gt;Fragments&lt;/h3&gt;
-
-&lt;p&gt;这个概念是指从服务器获取某个对象，显示在浏览器之后，直接滚动显示到某个片段。&lt;/p&gt;
-
-&lt;p&gt;注意，该语法不会使服务器只返回某个对象的片段，服务器仍然返回整个对象，只是浏览器默认滚动到某个片段的位置。&lt;/p&gt;
-
-&lt;p&gt;如下语句&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;http://www.joes-hardware.com/tools.html#drills&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;该网页www.joes-hardware.com/tools.html的源代码为：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;HTML&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;HEAD&amp;gt;&amp;lt;TITLE&amp;gt;&lt;/span&gt;Joe&amp;#39;s Tools&lt;span class=&quot;nt&quot;&gt;&amp;lt;/TITLE&amp;gt;&amp;lt;/HEAD&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;BODY&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;H1&amp;gt;&lt;/span&gt;Tools Page&lt;span class=&quot;nt&quot;&gt;&amp;lt;/H1&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;H2&amp;gt;&lt;/span&gt;Hammers&lt;span class=&quot;nt&quot;&gt;&amp;lt;/H2&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;P&amp;gt;&lt;/span&gt;Joe&amp;#39;s Hardware Online has the largest selection of 
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;A&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;HREF=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;./hammers.html&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;hammers&lt;span class=&quot;nt&quot;&gt;&amp;lt;/A&amp;gt;&lt;/span&gt; on the earth.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/P&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;H2&amp;gt;&amp;lt;A&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;NAME=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;drills&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/A&amp;gt;&lt;/span&gt;Drills&lt;span class=&quot;nt&quot;&gt;&amp;lt;/H2&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;P&amp;gt;&lt;/span&gt;Joe&amp;#39;s Hardware has a complete line of cordless and corded drills,
-as well as the latest in plutonium-powered atomic drills, for those
-big around the house jobs.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/P&amp;gt;&lt;/span&gt; ...
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/BODY&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/HTML&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-  &lt;p&gt;&lt;a href=&quot;/readingnotes/HTTP%20Resource/&quot;&gt;《HTTP权威指南》URLs and Resources&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on December 01, 2014.&lt;/p&gt;</content>
 </entry>
 
 </feed>
