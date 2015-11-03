@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "Thread总结",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/Thread/",
+		  "date"       : "2015-11-01 00:00:00 +0800",
+		  "shortdate"  : "November 01, 2015"
+		} ,
+	
+		{
 		  "title"      : "Android图片内存管理",
 		  "category"   : "",
       "tags"       : "android",
