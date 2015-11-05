@@ -5,14 +5,14 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Thread总结 &#8211; My Stupid Blog</title>
+<title>Thread常用方法 &#8211; My Stupid Blog</title>
 <meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 <meta name="keywords" content="android">
 
 
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="Thread总结">
+<meta name="twitter:title" content="Thread常用方法">
 <meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 
 
@@ -23,7 +23,7 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Thread总结">
+<meta property="og:title" content="Thread常用方法">
 <meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 <meta property="og:url" content="/android/Thread/">
 <meta property="og:site_name" content="My Stupid Blog">
@@ -157,12 +157,12 @@
 
 <div id="main" role="main">
   <article class="hentry">
-    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Thread总结" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Thread常用方法" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
     <div class="entry-wrapper">
       <header class="entry-header">
         <span class="entry-tags"><a href="/tags/#android" title="Pages tagged android">android</a></span>
         
-          <h1 class="entry-title">Thread总结</h1>
+          <h1 class="entry-title">Thread常用方法</h1>
         
       </header>
       <footer class="entry-meta">
@@ -177,7 +177,7 @@
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=android&text=Thread总结&url=/android/Thread/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=android&text=Thread常用方法&url=/android/Thread/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
           <a href="https://www.facebook.com/sharer/sharer.php?u=/android/Thread/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
@@ -205,12 +205,12 @@
 <p>Thread类在线程的生命周期中，常见的方法有：</p>
 
 <ul>
-  <li>wait,notify,notifyall</li>
+  <li>wait, notify, notifyall</li>
   <li>sleep, interrupt</li>
-  <li>yield,join</li>
+  <li>yield, join</li>
 </ul>
 
-<h1 id="waitnotifynotifyall">一、wait,notify,notifyall的使用</h1>
+<h1 id="waitnotifynotifyall">一、wait，notify，notifyall的使用</h1>
 
 <p>这三个方法都是被定义在Object类中，它们主要应用于线程间交换对象锁的状态，先从一个例子入手吧，看完例子再解释其原理，这是一个<code>生产者－消费者</code>案例。</p>
 
@@ -347,7 +347,9 @@
 <span class="nl">Consumed:</span> <span class="mi">7</span>
 <span class="n">Queue</span> <span class="n">is</span> <span class="n">empty</span> <span class="n">Consumer</span> <span class="n">is</span> <span class="n">waiting</span> <span class="o">,</span> <span class="nl">size:</span> <span class="mi">0</span></code></pre></div>
 
-<p>再稍微做个总结，一般按如下代码调用<code>wait</code>方法</p>
+<p>从上面的例子可以看出，生产者和消费者两个异步线程可以借助<code>wait</code>和<code>notify</code>很好地进行通信。</p>
+
+<p>接下来再稍微做个总结，我们一般按如下代码调用<code>wait</code>方法</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">synchronized</span><span class="o">(</span> <span class="n">lockObject</span> <span class="o">)</span>
 <span class="o">{</span>
@@ -361,29 +363,34 @@
 
 <p>如上将<code>wait</code>方法放到<code>while</code>循环中，其中的好处有很多说法，不过有一种我比较赞同，就是当其他恶意线程想<code>notify</code>这个线程时会失败，因为如果该恶意线程没有翻转此处<code>condition</code>的状态的话。</p>
 
-<p>按照如下代码调用<code>notify</code>方法活着<code>notifyall</code>方法</p>
+<p>另外，我们一般按照如下代码调用<code>notify</code>方法或者<code>notifyall</code>方法</p>
 
-<p>synchronized(lockObject)
-{
-    //establish_the_condition;</p>
-
-<pre><code>lockObject.notify();
-//lockObject.notifyAll();
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">synchronized</span><span class="o">(</span><span class="n">lockObject</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="c1">//establish_the_condition;</span>
  
-//any additional code if needed }
-</code></pre>
-
-<h1 id="sleepinterrupt">二、sleep,interrupt的使用</h1>
-
-<p><code>sleep</code>方法我们再熟悉不过，平时见到的很多Java例子都喜欢借助这个方法，调用方式大致如下：</p>
-
-<pre><code>  try {
-     Thread.sleep(2000);
-  } catch (InterruptedException x) {
-     //interrupttd by other thread
+    <span class="n">lockObject</span><span class="o">.</span><span class="na">notify</span><span class="o">();</span>
+    <span class="c1">//lockObject.notifyAll();</span>
      
-  }
-</code></pre>
+    <span class="c1">//any additional code if needed</span>
+<span class="o">}</span></code></pre></div>
+
+<h1 id="sleepinterrupt">二、sleep，interrupt的使用</h1>
+
+<p><code>sleep</code>方法我们再熟悉不过，平时见到的很多Java例子都喜欢借助这个方法，</p>
+
+<p>该方法的签名如下：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sleep</span><span class="o">(</span><span class="kt">long</span> <span class="n">time</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span></code></pre></div>
+
+<p>调用方式大致如下：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">try</span> <span class="o">{</span>
+   <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">2000</span><span class="o">);</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+   <span class="c1">//interrupttd by other thread</span>
+   
+<span class="o">}</span></code></pre></div>
 
 <p><code>sleep</code>方法属于Thread的静态方法，<code>interrupt</code>属于线程对象的方法，不是静态方法。当在其他线程中调用了上 面例子中的线程的<code>interrupt</code>，则上述代码会进入<code>InterruptedException</code>异常捕获中。到这里，发现没有，这就起到了线程交互的目的了，你只要把你将要做的事情放在异常处理的代码里就行了。</p>
 
@@ -393,26 +400,157 @@
 
 <p><strong>调用</strong></p>
 
-<p><code>sleep</code>: 通过当前线程调用
-<code>wait</code>: 通过Object对象调用</p>
+<p><code>sleep</code>: 通过当前线程调用</p>
 
-<pre><code>wait(): Call on an object; current thread must synchronize on the lock object.
-sleep(): Call on a Thread; always currently executing thread.
-</code></pre>
+<p><code>wait</code>: 通过Object对象调用</p>
 
 <p><strong>锁</strong></p>
 
-<p><code>sleep</code>: 不会释放对象锁
-<code>wait</code>: 释放对象锁</p>
+<p><code>sleep</code>: 不会释放对象锁</p>
+
+<p><code>wait</code>: 释放对象锁</p>
 
 <p><strong>唤醒</strong></p>
 
-<p><code>sleep</code>: 当<code>sleep</code>的时间过去后才唤醒，或者通过<code>interrupt </code>方法唤醒
-<code>wait</code>: 有人调用了当前对象的<code>notify</code>或者<code>notifyAll</code>.</p>
+<p><code>sleep</code>: 当<code>sleep</code>的时间过去后才唤醒，或者通过<code>interrupt </code>方法唤醒</p>
 
-<h1 id="yieldjoin">三、yield,join</h1>
+<p><code>wait</code>: 有人调用了当前对象的<code>notify</code>或者<code>notifyAll</code>.</p>
+
+<h1 id="yieldjoin">三、yield，join的使用</h1>
+
+<p><code>yield</code>方法是<code>Thread</code>的静态方法，方法声明如下</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kd">native</span> <span class="kt">void</span> <span class="nf">yield</span><span class="o">();</span></code></pre></div>
+
+<p><code>yield</code>方法可以使当前线程让出执行机会，让其他相同优先级或者更高优先级的线程有机会执行。执行完<code>yield</code>方法后的线程将从<code>Running State</code>状态进入<code>Runnable State</code>状态，而非<code>blocked state</code>。与之形成对比的是，<code>sleep</code>方法会使线程进入<code>blocked state</code>状态，而且<code>sleep</code>方法是不仅为所有优先级的线程提供运行机会，包括更低优先级的线程。</p>
+
+<p>请参考下面一个小例子加深对<code>yield</code>方法的理解</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">YieldExample</span>
+<span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+   <span class="o">{</span>
+      <span class="n">Thread</span> <span class="n">producer</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Producer</span><span class="o">();</span>
+      <span class="n">Thread</span> <span class="n">consumer</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Consumer</span><span class="o">();</span>
+       
+      <span class="n">producer</span><span class="o">.</span><span class="na">setPriority</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">MIN_PRIORITY</span><span class="o">);</span> <span class="c1">//Min Priority</span>
+      <span class="n">consumer</span><span class="o">.</span><span class="na">setPriority</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">MAX_PRIORITY</span><span class="o">);</span> <span class="c1">//Max Priority</span>
+       
+      <span class="n">producer</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+      <span class="n">consumer</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+ 
+<span class="kd">class</span> <span class="nc">Producer</span> <span class="kd">extends</span> <span class="n">Thread</span>
+<span class="o">{</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span>
+   <span class="o">{</span>
+      <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+      <span class="o">{</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;I am Producer : Produced Item &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+         <span class="n">Thread</span><span class="o">.</span><span class="na">yield</span><span class="o">();</span>
+      <span class="o">}</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+ 
+<span class="kd">class</span> <span class="nc">Consumer</span> <span class="kd">extends</span> <span class="n">Thread</span>
+<span class="o">{</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span>
+   <span class="o">{</span>
+      <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+      <span class="o">{</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;I am Consumer : Consumed Item &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+         <span class="n">Thread</span><span class="o">.</span><span class="na">yield</span><span class="o">();</span>
+      <span class="o">}</span>
+   <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>注释掉以上两个<code>yield</code>方法，输出如下</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">I</span> <span class="n">am</span> <span class="n">Consumer</span> <span class="o">:</span> <span class="n">Consumed</span> <span class="n">Item</span> <span class="mi">0</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Consumer</span> <span class="o">:</span> <span class="n">Consumed</span> <span class="n">Item</span> <span class="mi">1</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Consumer</span> <span class="o">:</span> <span class="n">Consumed</span> <span class="n">Item</span> <span class="mi">2</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Consumer</span> <span class="o">:</span> <span class="n">Consumed</span> <span class="n">Item</span> <span class="mi">3</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Consumer</span> <span class="o">:</span> <span class="n">Consumed</span> <span class="n">Item</span> <span class="mi">4</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Producer</span> <span class="o">:</span> <span class="n">Produced</span> <span class="n">Item</span> <span class="mi">0</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Producer</span> <span class="o">:</span> <span class="n">Produced</span> <span class="n">Item</span> <span class="mi">1</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Producer</span> <span class="o">:</span> <span class="n">Produced</span> <span class="n">Item</span> <span class="mi">2</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Producer</span> <span class="o">:</span> <span class="n">Produced</span> <span class="n">Item</span> <span class="mi">3</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Producer</span> <span class="o">:</span> <span class="n">Produced</span> <span class="n">Item</span> <span class="mi">4</span></code></pre></div>
+
+<p>执行以上两个<code>yield</code>方法，输出如下</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">I</span> <span class="n">am</span> <span class="n">Producer</span> <span class="o">:</span> <span class="n">Produced</span> <span class="n">Item</span> <span class="mi">0</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Consumer</span> <span class="o">:</span> <span class="n">Consumed</span> <span class="n">Item</span> <span class="mi">0</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Producer</span> <span class="o">:</span> <span class="n">Produced</span> <span class="n">Item</span> <span class="mi">1</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Consumer</span> <span class="o">:</span> <span class="n">Consumed</span> <span class="n">Item</span> <span class="mi">1</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Producer</span> <span class="o">:</span> <span class="n">Produced</span> <span class="n">Item</span> <span class="mi">2</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Consumer</span> <span class="o">:</span> <span class="n">Consumed</span> <span class="n">Item</span> <span class="mi">2</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Producer</span> <span class="o">:</span> <span class="n">Produced</span> <span class="n">Item</span> <span class="mi">3</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Consumer</span> <span class="o">:</span> <span class="n">Consumed</span> <span class="n">Item</span> <span class="mi">3</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Producer</span> <span class="o">:</span> <span class="n">Produced</span> <span class="n">Item</span> <span class="mi">4</span>
+ <span class="n">I</span> <span class="n">am</span> <span class="n">Consumer</span> <span class="o">:</span> <span class="n">Consumed</span> <span class="n">Item</span> <span class="mi">4</span></code></pre></div>
+
+<p>接下来再讲讲<code>join</code>方法，该方法的签名如下：</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//Waits for this thread to die.</span>
+<span class="kd">public</span> <span class="kd">final</span> <span class="kt">void</span> <span class="nf">join</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span></code></pre></div>
+
+<p>如果在B线程中执行A线程的<code>join</code>方法，则B线程会暂停，等待A线程执行完毕。</p>
+
+<p>看如下例子</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">JoinExample</span>
+<span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span>
+   <span class="o">{</span>
+      <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="k">new</span> <span class="nf">Runnable</span><span class="o">()</span>
+         <span class="o">{</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span>
+            <span class="o">{</span>
+               <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;First task started&quot;</span><span class="o">);</span>
+               <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Sleeping for 2 seconds&quot;</span><span class="o">);</span>
+               <span class="k">try</span>
+               <span class="o">{</span>
+                  <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">2000</span><span class="o">);</span>
+               <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span>
+               <span class="o">{</span>
+                  <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+               <span class="o">}</span>
+               <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;First task completed&quot;</span><span class="o">);</span>
+            <span class="o">}</span>
+         <span class="o">});</span>
+      <span class="n">Thread</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="k">new</span> <span class="nf">Runnable</span><span class="o">()</span>
+         <span class="o">{</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span>
+            <span class="o">{</span>
+               <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Second task completed&quot;</span><span class="o">);</span>
+            <span class="o">}</span>
+         <span class="o">});</span>
+      <span class="n">t</span><span class="o">.</span><span class="na">start</span><span class="o">();</span> <span class="c1">// Line 15</span>
+      <span class="n">t</span><span class="o">.</span><span class="na">join</span><span class="o">();</span> <span class="c1">// Line 16</span>
+      <span class="n">t1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+ 
+<span class="nl">Output:</span>
+ 
+<span class="n">First</span> <span class="n">task</span> <span class="n">started</span>
+<span class="n">Sleeping</span> <span class="k">for</span> <span class="mi">2</span> <span class="n">seconds</span>
+<span class="n">First</span> <span class="n">task</span> <span class="n">completed</span>
+<span class="n">Second</span> <span class="n">task</span> <span class="n">completed</span></code></pre></div>
+
+<p><code>join</code>和<code>sleep</code>一样，会因为<code>interrupt</code>抛出<code>InterruptedException</code>，而<code>yield</code>不会。</p>
 
 <h1 id="section">四、参考链接</h1>
+
+<p>近来发现一个不错的网站，总结了很多Java的基础知识：</p>
+
+<p><a href="http://howtodoinjava.com/2015/01/08/how-to-work-with-wait-notify-and-notifyall-in-java/">How to work with wait notify and notifyall</a></p>
+
+<p><a href="http://howtodoinjava.com/2013/03/08/difference-between-sleep-and-wait/">Difference between sleep and wait</a></p>
+
+<p><a href="http://howtodoinjava.com/2014/06/03/difference-between-yield-and-join-in-threads-in-java/">Difference between yield and join</a></p>
 
 
         <nav class="pagination" role="navigation">
