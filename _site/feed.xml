@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-11-14T15:56:25+08:00</updated>
+<updated>2015-11-16T10:49:34+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -2579,7 +2579,7 @@ Arrays.toString&lt;/p&gt;
   
 
 <entry>
-  <title type="html"><![CDATA[JVM之Java运行时数据区域]]></title>
+  <title type="html"><![CDATA[JVM运行时数据区域和垃圾回收]]></title>
   <link rel="alternate" type="text/html" href="/java/jvm-post01/" />
   <id>/java/jvm-post01</id>
   <published>2015-05-10T00:00:00+08:00</published>
@@ -2676,7 +2676,7 @@ Arrays.toString&lt;/p&gt;
 
 &lt;p&gt;程序计数器可以记录当前线程所执行的字节吗的行号，每个线程都有一个程序计数器，这也使得线程切换后能正确恢复现场。&lt;/p&gt;
 
-&lt;h1 id=&quot;section-6&quot;&gt;总结和应用&lt;/h1&gt;
+&lt;h1 id=&quot;new&quot;&gt;二、 关于new一个对象的过程&lt;/h1&gt;
 
 &lt;p&gt;以上我们介绍了5个数据区域，三个是线程隔离的，它们有：Java虚拟机栈，本地方法栈，程序计数器。另外还有两个数据区域是线程共享的，这两个区域是垃圾回收发生的地方，它们分别是：堆，方法区。&lt;/p&gt;
 
@@ -2692,12 +2692,46 @@ Arrays.toString&lt;/p&gt;
 
 &lt;p&gt;方法区保存对象的对象类型，父类，实现的接口等信息。&lt;/p&gt;
 
-&lt;h1 id=&quot;section-7&quot;&gt;对象访问&lt;/h1&gt;
+&lt;h1 id=&quot;section-6&quot;&gt;三、对象访问&lt;/h1&gt;
 
 &lt;p&gt;以上介绍完了各个运行时数据区域的特点和应用场景，接下来介绍一个基本每天都会接触的概念，就是引用类型reference。引用主要用于指向堆中的对象实例的起始地址，其实现方式一般有两种：句柄和直接指针。&lt;/p&gt;
 
+&lt;figure&gt;
+  &lt;img src=&quot;/images/jvm_2.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;句柄&lt;/figcaption&gt;
+&lt;/figure&gt;
 
-  &lt;p&gt;&lt;a href=&quot;/java/jvm-post01/&quot;&gt;JVM之Java运行时数据区域&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on May 10, 2015.&lt;/p&gt;</content>
+&lt;figure&gt;
+  &lt;img src=&quot;/images/jvm_3.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;直接指针&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;这两种方式各有优劣，句柄的好处是当对象由于垃圾回收被移动时，只需要修改句柄中的实例数据指针，而reference本身存储的事稳定的地址，不需要修改。&lt;/p&gt;
+
+&lt;p&gt;直接指针的优点我们很容易看出来，它比句柄方式少了一次指针定位的时间，由于对象访问是很频繁的操作，所以这其中节约的指针定位时间是很可观的。&lt;/p&gt;
+
+&lt;p&gt;目前主流的虚拟机，部分使用了句柄访问对象，也有部分使用直接指针访问对象。&lt;/p&gt;
+
+&lt;h1 id=&quot;section-7&quot;&gt;四、 垃圾回收&lt;/h1&gt;
+
+&lt;p&gt;垃圾回收，英文叫&lt;code&gt;Garbage Collection, GC&lt;/code&gt;，其实垃圾回收在Java语言之前就出现了，最早在Lisp语言中使用。其实垃圾回收是一个自动化的过程，那么学习它的意义何在呢？当遇到内存泄漏的问题时，具备一定垃圾回收的知识将对问题排查起到很大的作用，在Android开发中使用MAT时就会感受到。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-8&quot;&gt;4.1 对象死的证据&lt;/h2&gt;
+
+&lt;p&gt;既然Java堆中存在垃圾回收，那么JVM是根据什么条件判定一个对象是需要被回收的呢？主要有两种方式，引用计数法和根搜索法。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-9&quot;&gt;4.1.1 引用计数法&lt;/h3&gt;
+
+&lt;p&gt;引用计数法存在一个弊端：循环引用。如果对象a和对象b相互持有对方的引用，那么这种情况双方都很难被列入垃圾回收的范围。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-10&quot;&gt;4.1.2 根搜索法&lt;/h3&gt;
+
+&lt;h2 id=&quot;section-11&quot;&gt;4.2 引用的扩展概念&lt;/h2&gt;
+
+&lt;h2 id=&quot;section-12&quot;&gt;4.3 垃圾收集算法&lt;/h2&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/java/jvm-post01/&quot;&gt;JVM运行时数据区域和垃圾回收&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on May 10, 2015.&lt;/p&gt;</content>
 </entry>
 
 
