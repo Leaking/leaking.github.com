@@ -1,15 +1,6 @@
 [
 	
 		{
-		  "title"      : "Jvm Gc",
-		  "category"   : "",
-      "tags"       : "",
-		  "url"        : "/jvm-gc/",
-		  "date"       : "2015-11-13 00:00:00 +0800",
-		  "shortdate"  : "November 13, 2015"
-		} ,
-	
-		{
 		  "title"      : "Thread常用方法",
 		  "category"   : "",
       "tags"       : "android",
