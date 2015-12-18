@@ -4,13 +4,33 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-11-16T10:51:33+08:00</updated>
+<updated>2015-12-18T19:58:57+08:00</updated>
+>>>>>>> dev
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
   <uri>/</uri>
   <email>chenhuazhaoao@gmail.com</email>
 </author>
+
+
+  
+
+<entry>
+  <title type="html"><![CDATA[Jvm Gc]]></title>
+  <link rel="alternate" type="text/html" href="/jvm-gc/" />
+  <id>/jvm-gc</id>
+  <published>2015-11-13T00:00:00+08:00</published>
+  <updated>2015-11-13T00:00:00+08:00</updated>
+  <author>
+    <name>Quinn Chen</name>
+    <uri></uri>
+    <email>chenhuazhaoao@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;,,&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;/jvm-gc/&quot;&gt;Jvm Gc&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on November 13, 2015.&lt;/p&gt;</content>
+</entry>
 
 
   
@@ -2560,7 +2580,7 @@ Arrays.toString&lt;/p&gt;
   
 
 <entry>
-  <title type="html"><![CDATA[JVM之Java运行时数据区域]]></title>
+  <title type="html"><![CDATA[JVM运行时数据区域和垃圾回收]]></title>
   <link rel="alternate" type="text/html" href="/java/jvm-post01/" />
   <id>/java/jvm-post01</id>
   <published>2015-05-10T00:00:00+08:00</published>
@@ -2570,103 +2590,166 @@ Arrays.toString&lt;/p&gt;
     <uri></uri>
     <email>chenhuazhaoao@gmail.com</email>
   </author>
-  <content type="html">&lt;p&gt;引言：Java虚拟机在执行Java程序的过程中，会把它管理的内存划分为若干个数据区域。这些区域有各自的特点与用途。以下是简图&lt;/p&gt;
+  <content type="html">&lt;p&gt;学习JVM对大多人来说，对大多人来说学习曲线都是比较陡的，但是其实也是可以顺藤摸瓜从基础学起，比如从内存分配以及垃圾回收学起，而这一部分，首先涉及到运行时数据区域的概念，这一篇文章先从运行时数据区域开始介绍，然后介绍内存分配和垃圾回收。让我们开始吧！&lt;/p&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;一，运行时数据区域&lt;/h1&gt;
+
+&lt;p&gt;Java虚拟机在执行Java程序的过程中，会把它管理的内存划分为5个数据区域,先直接上图&lt;/p&gt;
 
 &lt;figure&gt;
   &lt;img src=&quot;/images/jvm_1.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
   &lt;figcaption&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;h1 id=&quot;section&quot;&gt;一， 这些数据区域分为两类&lt;/h1&gt;
+&lt;p&gt;我们可以看到右边三个数据区域是属于线程隔离的数据区，随着用户线程启动和结束而建立和销毁。也就是这一部分的内存分配和回收都是会比较准确地执行。而相比之下，左边的线程隔离数据区，则就没那么准确了，虽然也是会自动回收垃圾，但是需要GC（垃圾回收器）进行一些考量和计算。到这里注意到没有，我们平时讲的垃圾回收，其实不是针对所有内存区域的，而是只是针对左边的线程隔离数据区，它们包括&lt;code&gt;方法区&lt;/code&gt;和&lt;code&gt;堆&lt;/code&gt;。接下来从这两个数据区域讲起。&lt;/p&gt;
 
-&lt;h4 id=&quot;section-1&quot;&gt;1，线程隔离的数据区&lt;/h4&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;1.1 由所有线程共享的数据区域&lt;/h2&gt;
 
-&lt;p&gt;这些区域则是依赖用户线程的启动和结束而建立和销毁。&lt;/p&gt;
+&lt;p&gt;这个区域包括&lt;code&gt;堆&lt;/code&gt;和&lt;code&gt;方法区&lt;/code&gt;，&lt;/p&gt;
 
-&lt;p&gt;包括：程序计数器，Java虚拟机栈，本地方法栈&lt;/p&gt;
+&lt;h3 id=&quot;java&quot;&gt;1.1.1 Java堆&lt;/h3&gt;
 
-&lt;p&gt;特点：Java垃圾回收机制并不关注这个三个区，因为随着线程的结束，内存自然就随着被回收了&lt;/p&gt;
+&lt;p&gt;这个区域主要存储对象实例和数组，为了弄清楚对象实例的概念，我们先看看下面这行代码&lt;/p&gt;
 
-&lt;h4 id=&quot;section-2&quot;&gt;2，由所有线程共享的数据区&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;这些区域随着虚拟机进程的启动而存在。&lt;/p&gt;
+&lt;p&gt;此处其实产生了两个对象，一个是引用对象，一个是实例对象，前者就是此处的&lt;code&gt;object&lt;/code&gt;,后者就是此处&lt;code&gt;new Object()&lt;/code&gt;创建的对象，引用对象记录着实例对象的起始地址。而存储位置二者也不同，实例对象存储在堆上，引用对象存储在栈上（关于栈后续会讲解）。&lt;/p&gt;
 
-&lt;p&gt;包括：方法区，堆&lt;/p&gt;
+&lt;p&gt;我们平时说的垃圾回收主要针对的就是堆，所有有时也称堆为&lt;code&gt;GC堆&lt;/code&gt;。&lt;/p&gt;
 
-&lt;p&gt;特点：Java中的垃圾收集器所关注的就是线程隔离的数据区，即方法区和堆。&lt;/p&gt;
+&lt;h3 id=&quot;section-2&quot;&gt;1.1.2 方法区&lt;/h3&gt;
 
-&lt;h1 id=&quot;jvm&quot;&gt;二，JVM运行时五个数据区域的主要特点&lt;/h1&gt;
+&lt;p&gt;方法区用于存储类信息，常量，静态变量，即时编译器编译后的代码，这个区域是出了堆之外的另外一个需要垃圾回收的区域，这个区域的垃圾回收主要是针对常量池和类型的卸载，这个区域虽然也有垃圾回收，但是回收的条件很苛刻，尤其是类型的卸载。&lt;/p&gt;
 
-&lt;h4 id=&quot;program-counter-register&quot;&gt;1，程序计数器（Program Counter Register）&lt;/h4&gt;
+&lt;p&gt;关于常量池，这里做个简单的介绍,介绍一下字符串常量池&lt;/p&gt;
 
-&lt;p&gt;作用：当前线程所执行的字节码的行号指示器&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;常量池&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;特点：&lt;/p&gt;
+&lt;p&gt;String具有不可变性，因为String类时final类型，不可以被修改，那么为什么string需要被设置为final呢？&lt;/p&gt;
 
-&lt;p&gt;1）每条线程都有一个独立的程序计数器，互不干扰，独立存储，所以我们称它为“”线程私有“的区域。&lt;/p&gt;
+&lt;p&gt;JVM在内存中留出一块特殊的内存区域，成为“String常量池”，当编译器创建一个字面值的字符串时，比如&lt;code&gt;String s = &quot;abc&quot;&lt;/code&gt;，可以检验池内是否已经存在相同的String字面值，如果找到，则直接让引用指向它，如果没有则创建一个新的字符串再指向它，所以，会有一种情况，多个引用指向同一个常量池中的字面值字符串，任何一个引用改变字符串其他引用页得改变，所以，就得让String具有不可变性。&lt;/p&gt;
 
-&lt;p&gt;2）如果线程正在执行一个java方法，程序计数器记录的是正在执行的虚拟机字节码指令的地址，如果正在执行的是native方法，则计数器值为空。&lt;/p&gt;
+&lt;p&gt;然后，我们需要分清以下这个概念，关于字符串，内存中有两个不同的部分，一个是字符串常量池，一个是堆。&lt;/p&gt;
 
-&lt;p&gt;3）程序计数器是唯一一个Java虚拟机中没有规定任何OutOfMemoryError情况的区域。&lt;/p&gt;
+&lt;p&gt;假设目前字符串常量池中没有“abc”，那么&lt;/p&gt;
 
-&lt;h4 id=&quot;javajava-virtual-machine-stacks&quot;&gt;2，Java虚拟机栈（Java Virtual Machine Stacks）&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;abc&amp;quot;&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;//将创建一个对象，一个引用&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;作用：描述Java方法执行的内存模型。每个方法被执行时都会创建一个栈帧，栈帧中存储着这个方法的局部变量表等等相关信息，每个方法的栈帧都进栈放到Java虚拟机栈，栈帧进栈对应着方法开始执行，栈帧出栈对应方法执行结束。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;abc&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//将创建两个对象，一个引用&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;特点：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;abc&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;intern&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//将创建一个对象，一个引用&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;1）平时大家把Java内存区分为堆内存（Heap）和栈内存（Stack），这种方法比较粗糙，其实此处的”栈“就是这里的Java虚拟机栈，或者说是虚拟机栈中的局部变量表部分。&lt;/p&gt;
+&lt;p&gt;第一行代码只创建了一个字符串对象放在常量池中，但是第二行代码为什么就创建了两个对象呢？&lt;/p&gt;
 
-&lt;p&gt;2）每个方法的栈帧分配多大的局部变量空间表示在编译期间确定的，在方法运行期间不会改变局部变量表的大小。&lt;/p&gt;
+&lt;p&gt;因为使用了&lt;code&gt;new&lt;/code&gt;关键字，所以Java将在堆中创建一个新的String对象，并且引用变量s将引用它。此外，字面值“abc”将被放入常量池，所以也就有了两个对象，一个在堆中，一个在String常量池。&lt;/p&gt;
 
-&lt;p&gt;3）这个区域有两种异常&lt;/p&gt;
+&lt;p&gt;另外，关于&lt;code&gt;intern&lt;/code&gt;方法，它只创建一个常量池中的对象。&lt;/p&gt;
 
-&lt;p&gt;a，StackOverflowError异常：线程请求的栈深度大于虚拟机所允许的深度（不可以动态扩展）&lt;/p&gt;
+&lt;p&gt;到此为止，我们介绍完了&lt;code&gt;方法区&lt;/code&gt;和&lt;code&gt;堆&lt;/code&gt;这两个线程共享的数据区域，接下来开始介绍线程隔离数据区域。&lt;/p&gt;
 
-&lt;p&gt;b，OutOfMemoryError异常：虚拟机栈可以动态扩展，扩展时无法申请到足够的内存。&lt;/p&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;1.2 线程隔离数据区域&lt;/h2&gt;
 
-&lt;h4 id=&quot;native-method-stacks&quot;&gt;3，本地方法栈（Native Method Stacks）&lt;/h4&gt;
+&lt;p&gt;一共有三个线程隔离数据区域，它们分别是Java虚拟机栈，本地方法栈，程序计数器&lt;/p&gt;
 
-&lt;p&gt;作用：本地方法栈和虚拟机栈所发挥的作用相同,但是针对的是native方法。&lt;/p&gt;
+&lt;h3 id=&quot;java-1&quot;&gt;1.2.1 Java虚拟机栈&lt;/h3&gt;
 
-&lt;p&gt;特点：抛出StackOverflowError异常与OutOfMemoryError异常，抛出的原理和虚拟机栈对应的原理相同。&lt;/p&gt;
+&lt;p&gt;Java虚拟机栈其实就是我们平时说的栈，我们前面举过的例子，&lt;/p&gt;
 
-&lt;h4 id=&quot;javajava-heap&quot;&gt;4，Java堆（Java Heap）&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;作用：此内存的唯一目的就是存放对象实例与数组。（但是随着一些新的技术的发展，比如JIT编译器，逐渐出现了栈上分配等等方式）&lt;/p&gt;
+&lt;p&gt;此处建立的引用变量&lt;code&gt;object&lt;/code&gt;就存储在栈中。&lt;/p&gt;
 
-&lt;p&gt;特点：&lt;/p&gt;
+&lt;p&gt;Java虚拟机栈描述了Java方法执行的内存模型，每个方法被执行的时候会同时创建一个栈帧，此处栈帧的概念不用细纠，此处只要知道它是描述方法的相关信息的实体即可。&lt;/p&gt;
 
-&lt;p&gt;1）垃圾收集器管理的主要区域就是Java堆，Java堆是被所有线程共享的一块内存区域，此内存区域的唯一目的是存放对象实例。&lt;/p&gt;
+&lt;p&gt;Java虚拟机栈的栈帧存储了各个方法的局部变量表、操作数栈，动态链接，方法出口等信息。每个方法开始执行和结束，对应着栈帧的进栈和出栈。&lt;/p&gt;
 
-&lt;p&gt;2）Java堆是垃圾收集器管理的主要区域，也是我们常说的“GC堆”，现在收集器基本都是采用分代收集算法，所以Java堆中还可以细分为：新生代和老年代。&lt;/p&gt;
+&lt;p&gt;顾名思义，局部变量表就是存储方法中的局部变量，那么它会存储什么局部变量呢？&lt;/p&gt;
 
-&lt;p&gt;3）Java堆不一定要处于物理上的连续状态。只需要是逻辑上连续即可。&lt;/p&gt;
+&lt;p&gt;局部变量表存放了编译期可知的各种基本数据类型，boolean、byte、char、short、int、float、long、double，以及引用类型(reference)，引用类型的概念不同于对象本身，我们可以理解为它是对象的名字或者起始地址。&lt;/p&gt;
 
-&lt;p&gt;4）Java堆可以设置为固定大小或者可扩展的。当前主流的虚拟机都是设置为可扩展的（通过-Xmx和-Xms控制），所以一般情况下Java堆抛出的异常是：OutOfMemoryError异常&lt;/p&gt;
+&lt;h3 id=&quot;section-4&quot;&gt;1.2.2 本地方法栈&lt;/h3&gt;
 
-&lt;h4 id=&quot;method-area&quot;&gt;5，方法区（Method Area）&lt;/h4&gt;
+&lt;p&gt;本地方法栈和Java虚拟机栈的概念比较相似，后者是针对Java方法，前者是针对native方法，我们一般只需要了解到这里即可。&lt;/p&gt;
 
-&lt;p&gt;作用：存储已被虚拟机加载的类信息，常量，静态变量等数据&lt;/p&gt;
+&lt;h3 id=&quot;section-5&quot;&gt;1.2.3 程序计数器&lt;/h3&gt;
 
-&lt;p&gt;特点：&lt;/p&gt;
+&lt;p&gt;学习过汇编语言的人应该都接触过程序计数器，由于在java中我们对它接触甚少，此处就只做一个简单的介绍。&lt;/p&gt;
 
-&lt;p&gt;1）和Java堆类似，方法区在物理上可以不连续，可以选择固定大小或者扩扩展。&lt;/p&gt;
+&lt;p&gt;程序计数器可以记录当前线程所执行的字节吗的行号，每个线程都有一个程序计数器，这也使得线程切换后能正确恢复现场。&lt;/p&gt;
 
-&lt;p&gt;2）方法区是Java堆的一个逻辑部分，但是可以不实现垃圾回收，垃圾收集行为在这个区域极少出现。但是还是必须适当地进行垃圾回收，主要是针对其中的常量池。&lt;/p&gt;
+&lt;h1 id=&quot;new&quot;&gt;二、 关于new一个对象的过程&lt;/h1&gt;
 
-&lt;h1 id=&quot;tips&quot;&gt;tips:&lt;/h1&gt;
+&lt;p&gt;以上我们介绍了5个数据区域，三个是线程隔离的，它们有：Java虚拟机栈，本地方法栈，程序计数器。另外还有两个数据区域是线程共享的，这两个区域是垃圾回收发生的地方，它们分别是：堆，方法区。&lt;/p&gt;
 
-&lt;p&gt;StackOverflowError异常：线程请求的栈深度大于所允许的深度（不可以动态扩展）&lt;/p&gt;
+&lt;p&gt;从上面的介绍我们可以发现，其中程序计数器和本地方法栈两个概念我们只需要知道皮毛即可，平时经常接触的是堆，方法区，Java虚拟机栈，我们接下来举一个例子来囊括这三个知识点，还是上文出现过的例子，如下：&lt;/p&gt;
 
-&lt;p&gt;OutOfMemoryError异常：某个区域可以动态扩展，扩展时无法申请到足够的内存（可扩展）&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h1 id=&quot;section-3&quot;&gt;其他&lt;/h1&gt;
+&lt;p&gt;这一行简单的代码涉及了堆，方法区，Java虚拟机栈三个数据区域，&lt;/p&gt;
 
-&lt;p&gt;关于运行时常量池以及直接内存，后续再学习。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Object object&lt;/code&gt;这部分的语义映射到Java虚拟机栈的本地变量表，做为一个&lt;code&gt;reference&lt;/code&gt;引用类型存在。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;new Object()&lt;/code&gt;这一部分映射到堆中，在堆中描述该对象的数据，另外还需要在堆中还需要保存能查找到该对象类型数据的地址，这些类型数据就是保存方法区中。&lt;/p&gt;
+
+&lt;p&gt;方法区保存对象的对象类型，父类，实现的接口等信息。&lt;/p&gt;
+
+&lt;h1 id=&quot;section-6&quot;&gt;三、对象访问&lt;/h1&gt;
+
+&lt;p&gt;以上介绍完了各个运行时数据区域的特点和应用场景，接下来介绍一个基本每天都会接触的概念，就是引用类型reference。引用主要用于指向堆中的对象实例的起始地址，其实现方式一般有两种：句柄和直接指针。&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/jvm_2.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;句柄&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/jvm_3.jpg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;直接指针&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;这两种方式各有优劣，句柄的好处是当对象由于垃圾回收被移动时，只需要修改句柄中的实例数据指针，而reference本身存储的事稳定的地址，不需要修改。&lt;/p&gt;
+
+&lt;p&gt;直接指针的优点我们很容易看出来，它比句柄方式少了一次指针定位的时间，由于对象访问是很频繁的操作，所以这其中节约的指针定位时间是很可观的。&lt;/p&gt;
+
+&lt;p&gt;目前主流的虚拟机，部分使用了句柄访问对象，也有部分使用直接指针访问对象。&lt;/p&gt;
+
+&lt;h1 id=&quot;section-7&quot;&gt;四、 垃圾回收&lt;/h1&gt;
+
+&lt;p&gt;垃圾回收，英文叫&lt;code&gt;Garbage Collection, GC&lt;/code&gt;，其实垃圾回收在Java语言之前就出现了，最早在Lisp语言中使用。其实垃圾回收是一个自动化的过程，那么学习它的意义何在呢？当遇到内存泄漏的问题时，具备一定垃圾回收的知识将对问题排查起到很大的作用，在Android开发中使用MAT时就会感受到。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-8&quot;&gt;4.1 对象死的证据&lt;/h2&gt;
+
+&lt;p&gt;既然Java堆中存在垃圾回收，那么JVM是根据什么条件判定一个对象是需要被回收的呢？主要有两种方式，引用计数法和根搜索法。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-9&quot;&gt;4.1.1 引用计数法&lt;/h3&gt;
+
+&lt;p&gt;引用计数法存在一个弊端：循环引用。如果对象a和对象b相互持有对方的引用，那么这种情况双方都很难被列入垃圾回收的范围。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-10&quot;&gt;4.1.2 根搜索法&lt;/h3&gt;
+
+&lt;p&gt;根搜索法的思路是通过一系列名为&lt;code&gt;GC Root&lt;/code&gt;，没有引用链到达任何&lt;code&gt;GC Root&lt;/code&gt;的对象，则证明此对象是不可用的，这些对象将被列入回收的范围。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-11&quot;&gt;4.2 引用的扩展概念&lt;/h2&gt;
+
+&lt;p&gt;JDK1.2开始，Java对引用的概念进行了扩充，将引用分为以下四种：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;强引用：Strong Reference，强引用就是我们常见的类似”Object object = new Object()”这类引用，只要强引用存在，永远不会被回收。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;软引用：Soft Reference，软引用描述有用但非必需的对象，软引用只有在即将发生内存溢出前，才会被回收，&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;弱引用：Weak Reference，弱引用关联的对象，只能存活到下一次垃圾回收，下次垃圾到来时，无论内存是否足够，弱引用关联的对象都会被回收。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;虚引用：Phantom Reference，虚引用暂时很少用到，主要用于对象被收集器回收时能收到一个通知。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;/java/jvm-post01/&quot;&gt;JVM之Java运行时数据区域&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on May 10, 2015.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;/java/jvm-post01/&quot;&gt;JVM运行时数据区域和垃圾回收&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on May 10, 2015.&lt;/p&gt;</content>
 </entry>
 
 
@@ -4417,152 +4500,6 @@ stack&lt;/code&gt;，并且被&lt;code&gt;desrotyed&lt;/code&gt;，接下来前�
 
 
   &lt;p&gt;&lt;a href=&quot;/android/(translate)Activities/&quot;&gt;【译】Activities&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on December 21, 2014.&lt;/p&gt;</content>
-</entry>
-
-
-  
-
-<entry>
-  <title type="html"><![CDATA[安卓离线文档]]></title>
-  <link rel="alternate" type="text/html" href="/android/offlineDocs/" />
-  <id>/android/offlineDocs</id>
-  <published>2014-12-10T00:00:00+08:00</published>
-  <updated>2014-12-10T00:00:00+08:00</updated>
-  <author>
-    <name>Quinn Chen</name>
-    <uri></uri>
-    <email>chenhuazhaoao@gmail.com</email>
-  </author>
-  <content type="html">&lt;p&gt;首先，在SDK目录下的doc就是离线的开发文档，但是其中有些语句依然访问挽留过，所以略卡，用一下代码可以让该文档离线访问变快。只需在代码中指定你的SDK路径。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.io.BufferedReader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.io.BufferedWriter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.io.File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.io.FileFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.io.FileNotFoundException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.io.FileReader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.io.FileWriter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.io.IOException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.Map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.UUID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
- 
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AndroidDoc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- 
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANDROID_SDK_HOME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;ANDROID_SDK_HOME&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAG&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;lt;script src=\&amp;quot;http://www.google.com/jsapi\&amp;quot; type=\&amp;quot;text/javascript\&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;androidSDKHome&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
- 
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getenv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;androidSDKHome&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;E:/android/androidsdk/android-sdk_r23.0.5-windows/android-sdk-windows&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;androidSDKHome&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Detected the Android SDK Installation path:&amp;quot;&lt;/span&gt;
-                    &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;androidSDKHome&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;androidSDKHome&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\\docs&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;It will take several minutes, please wait...&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;traverse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;
-                    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Operation Down!!! Now you can visit Android Doc without waiting...&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;
-                    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Please configure the Android SDK Environment variable (ANDROID_SDK_HOME)!&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
-    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     * 遍历Android SDK安装目录下的docs目录&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     * &lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     * @param dir&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;traverse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isDirectory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;files&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;listFiles&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FileFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- 
-                &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-                &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;accept&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;endsWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;.html&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                        &lt;span class=&quot;n&quot;&gt;BufferedReader&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-                        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                            &lt;span class=&quot;n&quot;&gt;reader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;BufferedReader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FileReader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-                            &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-                            &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;readLine&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;trim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equalsIgnoreCase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TAG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                                    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-                                &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-                            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-                        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                            &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printStackTrace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-                        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                            &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                                &lt;span class=&quot;n&quot;&gt;reader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-                            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IOException&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                                &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printStackTrace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-                            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-                        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-                    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isDirectory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-                    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-                    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-                &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;});&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;files&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isDirectory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                    &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Scanning Folder:&amp;quot;&lt;/span&gt;
-                            &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getAbsolutePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
-                    &lt;span class=&quot;n&quot;&gt;traverse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                    &lt;span class=&quot;n&quot;&gt;doChange&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
-    &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     * 注释html中的某行Javascript代码&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     * &lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     * @param file&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     * @return&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;doChange&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Extracting File:&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getAbsolutePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;...&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;desPath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getParent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\\&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UUID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;randomUUID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;.html&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;des&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;desPath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;BufferedReader&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;BufferedWriter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;writer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;des&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;createNewFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;reader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;BufferedReader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FileReader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;writer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;BufferedWriter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FileWriter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;des&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;readLine&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;trim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equalsIgnoreCase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TAG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                    &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;lt;!--&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TAG&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;--&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-                &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;writer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;writer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;flush&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FileNotFoundException&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printStackTrace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IOException&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printStackTrace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;reader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;writer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;des&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;renameTo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IOException&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printStackTrace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-  &lt;p&gt;&lt;a href=&quot;/android/offlineDocs/&quot;&gt;安卓离线文档&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on December 10, 2014.&lt;/p&gt;</content>
 </entry>
 
 </feed>
