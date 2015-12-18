@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2015-11-16T10:49:34+08:00</updated>
+<updated>2015-12-18T19:58:57+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -2726,9 +2726,26 @@ Arrays.toString&lt;/p&gt;
 
 &lt;h3 id=&quot;section-10&quot;&gt;4.1.2 根搜索法&lt;/h3&gt;
 
+&lt;p&gt;根搜索法的思路是通过一系列名为&lt;code&gt;GC Root&lt;/code&gt;，没有引用链到达任何&lt;code&gt;GC Root&lt;/code&gt;的对象，则证明此对象是不可用的，这些对象将被列入回收的范围。&lt;/p&gt;
+
 &lt;h2 id=&quot;section-11&quot;&gt;4.2 引用的扩展概念&lt;/h2&gt;
 
-&lt;h2 id=&quot;section-12&quot;&gt;4.3 垃圾收集算法&lt;/h2&gt;
+&lt;p&gt;JDK1.2开始，Java对引用的概念进行了扩充，将引用分为以下四种：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;强引用：Strong Reference，强引用就是我们常见的类似”Object object = new Object()”这类引用，只要强引用存在，永远不会被回收。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;软引用：Soft Reference，软引用描述有用但非必需的对象，软引用只有在即将发生内存溢出前，才会被回收，&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;弱引用：Weak Reference，弱引用关联的对象，只能存活到下一次垃圾回收，下次垃圾到来时，无论内存是否足够，弱引用关联的对象都会被回收。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;虚引用：Phantom Reference，虚引用暂时很少用到，主要用于对象被收集器回收时能收到一个通知。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
 
   &lt;p&gt;&lt;a href=&quot;/java/jvm-post01/&quot;&gt;JVM运行时数据区域和垃圾回收&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on May 10, 2015.&lt;/p&gt;</content>
