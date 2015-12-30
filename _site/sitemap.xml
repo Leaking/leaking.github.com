@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>/python/last-day-of-2015/</loc>
+    <lastmod>2015-12-30T00:00:00+08:00</lastmod>
+  </url>
+  <url>
     <loc>/android/Thread/</loc>
     <lastmod>2015-11-01T00:00:00+08:00</lastmod>
   </url>
@@ -95,10 +99,6 @@
   <url>
     <loc>/js/.Variables,%20Scope,%20and%20Memory/</loc>
     <lastmod>2014-09-13T00:00:00+08:00</lastmod>
-  </url>
-  <url>
-    <loc>/reflection/first-diary/</loc>
-    <lastmod>2014-09-06T00:00:00+08:00</lastmod>
   </url>
   <url>
     <loc>/git/frequent-command-of-git/</loc>

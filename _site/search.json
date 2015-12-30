@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "Last Day Of My 2015",
+		  "category"   : "",
+      "tags"       : "sample-post",
+		  "url"        : "/python/last-day-of-2015/",
+		  "date"       : "2015-12-30 00:00:00 +0800",
+		  "shortdate"  : "December 30, 2015"
+		} ,
+	
+		{
 		  "title"      : "Thread常用方法",
 		  "category"   : "",
       "tags"       : "android",
@@ -214,15 +223,6 @@
 		  "url"        : "/js/.Variables,%20Scope,%20and%20Memory/",
 		  "date"       : "2014-09-13 00:00:00 +0800",
 		  "shortdate"  : "September 13, 2014"
-		} ,
-	
-		{
-		  "title"      : "工作2个月了",
-		  "category"   : "",
-      "tags"       : "diary",
-		  "url"        : "/reflection/first-diary/",
-		  "date"       : "2014-09-06 00:00:00 +0800",
-		  "shortdate"  : "September 06, 2014"
 		} ,
 	
 		{
