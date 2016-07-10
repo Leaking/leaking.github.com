@@ -1,9 +1,18 @@
 [
 	
 		{
+		  "title"      : "Android 指纹识别",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/Android-Fingerprint/",
+		  "date"       : "2016-04-13 00:00:00 +0800",
+		  "shortdate"  : "April 13, 2016"
+		} ,
+	
+		{
 		  "title"      : "Last Day Of My 2015",
 		  "category"   : "",
-      "tags"       : "sample-post",
+      "tags"       : "",
 		  "url"        : "/reflection/last-day-of-2015/",
 		  "date"       : "2015-12-30 00:00:00 +0800",
 		  "shortdate"  : "December 30, 2015"

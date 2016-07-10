@@ -14,4 +14,12 @@ comments: true
 share: true
 ---
 
-嗯，改天来写指纹识别
+Android从6.0（Marshmallow棉花糖）开始引入指纹解锁。
+
+ 详情待续
+
+[https://github.com/AMykich/Android-Fingerprint-API](https://github.com/AMykich/Android-Fingerprint-API)
+
+[https://github.com/googlesamples/android-FingerprintDialog](https://github.com/googlesamples/android-FingerprintDialog)
+
+
