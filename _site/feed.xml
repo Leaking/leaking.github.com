@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2016-07-31T14:16:27+08:00</updated>
+<updated>2016-07-31T16:36:50+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -16,7 +16,7 @@
   
 
 <entry>
-  <title type="html"><![CDATA[Android 自定义相机]]></title>
+  <title type="html"><![CDATA[Android Camera]]></title>
   <link rel="alternate" type="text/html" href="/android/android-camera/" />
   <id>/android/android-camera</id>
   <published>2016-07-11T00:00:00+08:00</published>
@@ -124,7 +124,7 @@
 &lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/beyond_cn/article/details/12998247&quot;&gt;http://blog.csdn.net/beyond_cn/article/details/12998247&lt;/a&gt;&lt;/p&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;/android/android-camera/&quot;&gt;Android 自定义相机&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on July 11, 2016.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;/android/android-camera/&quot;&gt;Android Camera&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on July 11, 2016.&lt;/p&gt;</content>
 </entry>
 
 

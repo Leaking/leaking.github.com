@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Android 自定义相机"
+title: "Android Camera"
 excerpt: "Custom written post descriptions are the way to go... if you're not lazy."
 categories: android
 tags: [android]
