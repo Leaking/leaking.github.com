@@ -1,0 +1,398 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Android 自定义相机 &#8211; My Stupid Blog</title>
+<meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta name="keywords" content="android">
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Android 自定义相机">
+<meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 自定义相机">
+<meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
+<meta property="og:url" content="/android/android-camera/">
+<meta property="og:site_name" content="My Stupid Blog">
+
+
+
+
+
+<link rel="canonical" href="/android/android-camera/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Stupid Blog Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- Webfonts -->
+<!--
+<script src="//use.edgefonts.net/source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9;source-code-pro:n4,n7;volkhov.js"></script>
+-->
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+      
+		    
+		        
+		    
+		    <li><a href="/home/" >Home</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/js/" >JS</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/java/" >Java</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/android/" >Android</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/git/" >Git</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/python/" >Python</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/tools/" >Tools</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/readingnotes/" >ReadingNotes</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/reflection/" >Reflection</a></li>
+		  
+		    
+		        
+		    
+		    <li><a href="/about/" >About</a></li>
+		  
+        <li class="dosearch"><i class="fa fa-search"></i> Search</li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	
+		<div class="wrap">
+			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
+		</div>
+	
+</header><!-- /.masthead -->
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Android 自定义相机" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"><a href="/tags/#android" title="Pages tagged android">android</a></span>
+        
+          <h1 class="entry-title">Android 自定义相机</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+        
+          <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
+        <span class="entry-date date published"><time datetime="2016-07-11T00:00:00+08:00"><i class="fa fa-calendar-o"></i> July 11, 2016</time></span>
+        
+        
+        
+        <span class="social-share-twitter">
+          <a href="https://twitter.com/intent/tweet?hashtags=android&text=Android%20自定义相机&url=/android/android-camera/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+        </span>
+        <span class="social-share-facebook">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=/android/android-camera/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+        </span>
+        <span class="social-share-googleplus">
+          <a href="https://plus.google.com/share?url=/android/android-camera/" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
+        </span>
+        <!-- /.social-share -->
+        
+        <div class="google-ads" style="margin-top:40px; text-align:center;">
+  <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- 160x600 ad -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:160px;height:600px"
+       data-ad-client=""
+       data-ad-slot=""></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div><!-- /.google-ads --><!-- /.google-ads -->
+      </footer>
+      <div class="entry-content">
+        <p>来T公司公司半年有余了，好久没写东西。</p>
+
+<p>近来在做一个关于Android中Camera的需求，此处做点简要记录。提供给大家参考，避免以后猜到这些坑。</p>
+
+<h1 id="camera">Camera遇到的坑</h1>
+
+<p>Android中Camera主要分5.0以前还有5.0以后，从5.0开始Android支持Camera2，现在项目中这个模块只使用了Camera（你可以理解为Camera1）。</p>
+
+<p>使用Camera基本的API我就不一一列举了，此处只讲经验积累的东西。下文将打开相机预览窗口称为<code>Preview</code>，拍照结果称为<code>Picture</code>。</p>
+
+<ul>
+  <li>
+    <p>首先大多相机打开的方向并不是正常的，需要我们进行处理，你可能最终需要旋转度数为<code>degree</code>（90或180或270）。</p>
+  </li>
+  <li>
+    <p><code>Picture</code>返回的照片也可能不是摆正的，需要旋转上面提到的度数<code>degree</code>.</p>
+  </li>
+  <li>
+    <p>我们可以获得<code>Preview</code>照片进行一些处理，比如二维码扫描或者ROI（感兴趣区域）识别，而<code>Preview</code>也是需要旋转<code>degree</code>角度才摆正.</p>
+  </li>
+  <li>
+    <p>使用相机时，你可以获得<code>Preview</code>和<code>Picture</code>可以支持的大小，但是你最好不要随便选择一个，首先，<code>Preview</code>的宽高比例需要接近你的UI中给相机预览窗口的宽高比，否则会觉得相机中图片被拉高了或者压扁了，你只需要做到比例接近就够了。另外无论是<code>Preview</code>的大小和<code>Picture</code>的大小，都需要考虑内存的情况。另外拍出来的照片大小取决于<code>Picture</code>的分辨率。</p>
+  </li>
+  <li>
+    <p><code>Preview</code>回调的图片byte[]数组，是<code>YUV</code>存储格式的图片信息，我也是第一次见到这个概念，它和RGB一样是用于存储图片的编码格式，它需要通过某种公式转换成RGB，它的优点在于存储空间小，主要原因大概是几个<code>Y</code> 可以共享同一个<code>UV</code>.关于<code>YUV</code>的详细原理这里不拓展。然后如果你在项目中只拿<code>Preview</code>的图片，那么获取图片时有YuvImage相关的API可以使用。如果你是需要将图片信息传到JNI层进行图片处理，那么可能就需要进行进一步转换，转成RGB格式。</p>
+  </li>
+  <li>
+    <p>聚焦，关于聚焦的问题，我们经常使用的方法就是设置一个<code>FOCUS_MODE</code>,然后调用<code>camera.autofocus</code>的方法并且获取聚焦结果的回调，但是需要注意一点的是，并非所有<code>FOCUS_MODE</code>都是可以支持<code>camera.autofocus</code>方法的，比如<code>FOCUS_MODE_CONTINUOUS_VIDEO</code>，所以设置几种<code>FOCUS_MODE</code>时最好看看相关注释。</p>
+  </li>
+</ul>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
+<span class="cm">         * Continuous auto focus mode intended for video recording. The camera</span>
+<span class="cm">         * continuously tries to focus. This is the best choice for video</span>
+<span class="cm">         * recording because the focus changes smoothly . Applications still can</span>
+<span class="cm">         * call {@link #takePicture(Camera.ShutterCallback,</span>
+<span class="cm">         * Camera.PictureCallback, Camera.PictureCallback)} in this mode but the</span>
+<span class="cm">         * subject may not be in focus. Auto focus starts when the parameter is</span>
+<span class="cm">         * set.</span>
+<span class="cm">         *</span>
+<span class="cm">         * &lt;p&gt;Since API level 14, applications can call {@link</span>
+<span class="cm">         * #autoFocus(AutoFocusCallback)} in this mode. The focus callback will</span>
+<span class="cm">         * immediately return with a boolean that indicates whether the focus is</span>
+<span class="cm">         * sharp or not. The focus position is locked after autoFocus call. If</span>
+<span class="cm">         * applications want to resume the continuous focus, cancelAutoFocus</span>
+<span class="cm">         * must be called. Restarting the preview will not resume the continuous</span>
+<span class="cm">         * autofocus. To stop continuous focus, applications should change the</span>
+<span class="cm">         * focus mode to other modes.</span>
+<span class="cm">         *</span>
+<span class="cm">         * @see #FOCUS_MODE_CONTINUOUS_PICTURE</span>
+<span class="cm">         */</span>
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">FOCUS_MODE_CONTINUOUS_VIDEO</span> <span class="o">=</span> <span class="s">&quot;continuous-video&quot;</span><span class="o">;</span></code></pre></div>
+
+<p>另外，如果不是设置自动持续聚焦，而是手动聚焦，我们可以通过检查设备位置变化来调用<code>camera.autofocus</code>。另外有一个小技巧，就是在调用拍照时，先调用<code>camera.autoFocus</code>然后在成功聚焦回调里拍照。当然，对于聚焦失败你应该设置最大的失败次数限制。</p>
+
+<ul>
+  <li>
+    <p>关于crash，<code>camera.autofocus</code>聚焦还有<code>camera.takePicture</code>这两个API都不能持续重复调用，否则会crash，执行完一次聚焦才能执行下一次聚焦，执行完一次拍照才能执行下一次拍照，所以你做好做一个保护，另外，根据官方文档解释，<code>camera.takePicture</code>返回拍照数据后，preview是自动被stop了的，所以你需要重新start一次，否则下次拍照会crash。</p>
+  </li>
+  <li>
+    <p>另外关于<code>setFocusArea</code>，这个模块的概念在于理解其特殊的坐标系，见下图</p>
+  </li>
+</ul>
+
+<figure>
+  <img src="/images/camera_focus_area.png" alt="search screenshot" />
+  <figcaption></figcaption>
+</figure>
+
+<p>这幅图网上到处都有，其实是来自Android开发官网，官网如是解释：左上角永远是(-1000,-1000)，右下角永远是（1000,1000）,这个坐标系最开始看起来有点奇怪，但是仔细一看只是X坐标Y坐标都是偏移缩小了1000而已，另外将X坐标Y坐标的最大值缩放为2000的长度。</p>
+
+<p>那么问题来了，按照上面所说，你的镜头旋转过了，那么你此处的坐标系是否也要旋转呢，答案是不需要，直接拿旋转后的视图计算即可。亲测有效。</p>
+
+<ul>
+  <li>几个有用camera链接</li>
+</ul>
+
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&amp;mid=401454605&amp;idx=1&amp;sn=d5a16f6dc13e7581fec08a4e704cd5d0&amp;scene=1&amp;srcid=070755OBPvgLTborfTSdRBPK&amp;key=77421cf58af4a653bd19893e9cedc5f214e24a9f43d1b6a648950d96ec071465a25b23ef315340e73e13e493193a91ce&amp;ascene=0&amp;uin=Mjk1NzEwNjYxMA%3D%3D&amp;devicetype=iMac15%2C1+OSX+OSX+10.10.4+build(14E46)&amp;version=11020201&amp;pass_ticket=R3QSQ71v43i%2FmEv8zhmbY40zPeaKdZYL1p4zPkxxBDSA4%2BGBnJaKkuXxDe42CW2Q">QQ空间开发团队-Android相机开发那些坑</a></p>
+
+<p><a href="http://blog.csdn.net/yanzi1225627/article/details/33313707">CSDN某博主一系列不错的Camera文章</a></p>
+
+<h1 id="yuv">关于图片格式 YUV</h1>
+
+<p>YUV的存储格式比较特别，一般都是多个Y公用UV，常见如下</p>
+
+<p>I420: YYYYYYYY UU VV    =&gt;YUV420P</p>
+
+<p>YV12: YYYYYYYY VV UU    =&gt;YUV420P</p>
+
+<p>NV12: YYYYYYYY UVUV     =&gt;YUV420SP</p>
+
+<p>NV21: YYYYYYYY VUVU     =&gt;YUV420SP</p>
+
+<p>[<a href="[http://www.cnblogs.com/azraelly/archive/2013/01/01/2841269.html">http://www.cnblogs.com/azraelly/archive/2013/01/01/2841269.html</a></p>
+
+<p><a href="http://blog.csdn.net/beyond_cn/article/details/12998247">http://blog.csdn.net/beyond_cn/article/details/12998247</a></p>
+
+
+        <nav class="pagination" role="navigation">
+          
+            <a href="/android/Android-Fingerprint/" class="btn" title="Android 指纹识别">Previous</a>
+          
+          
+        </nav><!-- /.pagination -->
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+  </article>
+</div><!-- /#main -->
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chenhuazhao020'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    
+
+<span>&copy; 2016 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
+<div class="social-icons">
+	
+	
+	
+	
+	
+	
+	
+	<a href="http://github.com/Leaking" title="Quinn Chen on Github" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+	
+    <a href="http://www.weibo.com/hereamme/" title="Quinn Chen on Weibo" target="_blank"><i class="fa fa-weibo fa-2x"></i></a>
+
+</div><!-- /.social-icons -->
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: '/search.json',
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+  });
+
+  (function( $, window, undefined ) {
+    
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          canvas: $("body"),
+          dothis: $('.dosearch')
+      };
+    
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').css({ display: "block" });
+      bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      bs.canvas.toggleClass('search-overlay');
+    });
+    
+      bs.close.on('click', function() {
+        $('.search-wrapper').removeAttr( 'style' );
+        bs.searchform.toggleClass('active');
+        bs.canvas.removeClass('search-overlay');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+
+  
+	        
+
+</body>
+</html>

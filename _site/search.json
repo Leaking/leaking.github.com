@@ -1,6 +1,15 @@
 [
 	
 		{
+		  "title"      : "Android 自定义相机",
+		  "category"   : "",
+      "tags"       : "android",
+		  "url"        : "/android/android-camera/",
+		  "date"       : "2016-07-11 00:00:00 +0800",
+		  "shortdate"  : "July 11, 2016"
+		} ,
+	
+		{
 		  "title"      : "Android 指纹识别",
 		  "category"   : "",
       "tags"       : "android",

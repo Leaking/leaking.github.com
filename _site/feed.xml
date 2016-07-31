@@ -4,13 +4,128 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2016-07-11T00:11:48+08:00</updated>
+<updated>2016-07-31T14:16:27+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
   <uri>/</uri>
   <email>chenhuazhaoao@gmail.com</email>
 </author>
+
+
+  
+
+<entry>
+  <title type="html"><![CDATA[Android 自定义相机]]></title>
+  <link rel="alternate" type="text/html" href="/android/android-camera/" />
+  <id>/android/android-camera</id>
+  <published>2016-07-11T00:00:00+08:00</published>
+  <updated>2016-07-11T00:00:00+08:00</updated>
+  <author>
+    <name>Quinn Chen</name>
+    <uri></uri>
+    <email>chenhuazhaoao@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;来T公司公司半年有余了，好久没写东西。&lt;/p&gt;
+
+&lt;p&gt;近来在做一个关于Android中Camera的需求，此处做点简要记录。提供给大家参考，避免以后猜到这些坑。&lt;/p&gt;
+
+&lt;h1 id=&quot;camera&quot;&gt;Camera遇到的坑&lt;/h1&gt;
+
+&lt;p&gt;Android中Camera主要分5.0以前还有5.0以后，从5.0开始Android支持Camera2，现在项目中这个模块只使用了Camera（你可以理解为Camera1）。&lt;/p&gt;
+
+&lt;p&gt;使用Camera基本的API我就不一一列举了，此处只讲经验积累的东西。下文将打开相机预览窗口称为&lt;code&gt;Preview&lt;/code&gt;，拍照结果称为&lt;code&gt;Picture&lt;/code&gt;。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;首先大多相机打开的方向并不是正常的，需要我们进行处理，你可能最终需要旋转度数为&lt;code&gt;degree&lt;/code&gt;（90或180或270）。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code&gt;Picture&lt;/code&gt;返回的照片也可能不是摆正的，需要旋转上面提到的度数&lt;code&gt;degree&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;我们可以获得&lt;code&gt;Preview&lt;/code&gt;照片进行一些处理，比如二维码扫描或者ROI（感兴趣区域）识别，而&lt;code&gt;Preview&lt;/code&gt;也是需要旋转&lt;code&gt;degree&lt;/code&gt;角度才摆正.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;使用相机时，你可以获得&lt;code&gt;Preview&lt;/code&gt;和&lt;code&gt;Picture&lt;/code&gt;可以支持的大小，但是你最好不要随便选择一个，首先，&lt;code&gt;Preview&lt;/code&gt;的宽高比例需要接近你的UI中给相机预览窗口的宽高比，否则会觉得相机中图片被拉高了或者压扁了，你只需要做到比例接近就够了。另外无论是&lt;code&gt;Preview&lt;/code&gt;的大小和&lt;code&gt;Picture&lt;/code&gt;的大小，都需要考虑内存的情况。另外拍出来的照片大小取决于&lt;code&gt;Picture&lt;/code&gt;的分辨率。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code&gt;Preview&lt;/code&gt;回调的图片byte[]数组，是&lt;code&gt;YUV&lt;/code&gt;存储格式的图片信息，我也是第一次见到这个概念，它和RGB一样是用于存储图片的编码格式，它需要通过某种公式转换成RGB，它的优点在于存储空间小，主要原因大概是几个&lt;code&gt;Y&lt;/code&gt; 可以共享同一个&lt;code&gt;UV&lt;/code&gt;.关于&lt;code&gt;YUV&lt;/code&gt;的详细原理这里不拓展。然后如果你在项目中只拿&lt;code&gt;Preview&lt;/code&gt;的图片，那么获取图片时有YuvImage相关的API可以使用。如果你是需要将图片信息传到JNI层进行图片处理，那么可能就需要进行进一步转换，转成RGB格式。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;聚焦，关于聚焦的问题，我们经常使用的方法就是设置一个&lt;code&gt;FOCUS_MODE&lt;/code&gt;,然后调用&lt;code&gt;camera.autofocus&lt;/code&gt;的方法并且获取聚焦结果的回调，但是需要注意一点的是，并非所有&lt;code&gt;FOCUS_MODE&lt;/code&gt;都是可以支持&lt;code&gt;camera.autofocus&lt;/code&gt;方法的，比如&lt;code&gt;FOCUS_MODE_CONTINUOUS_VIDEO&lt;/code&gt;，所以设置几种&lt;code&gt;FOCUS_MODE&lt;/code&gt;时最好看看相关注释。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * Continuous auto focus mode intended for video recording. The camera&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * continuously tries to focus. This is the best choice for video&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * recording because the focus changes smoothly . Applications still can&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * call {@link #takePicture(Camera.ShutterCallback,&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * Camera.PictureCallback, Camera.PictureCallback)} in this mode but the&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * subject may not be in focus. Auto focus starts when the parameter is&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * set.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         *&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * &amp;lt;p&amp;gt;Since API level 14, applications can call {@link&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * #autoFocus(AutoFocusCallback)} in this mode. The focus callback will&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * immediately return with a boolean that indicates whether the focus is&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * sharp or not. The focus position is locked after autoFocus call. If&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * applications want to resume the continuous focus, cancelAutoFocus&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * must be called. Restarting the preview will not resume the continuous&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * autofocus. To stop continuous focus, applications should change the&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * focus mode to other modes.&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         *&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         * @see #FOCUS_MODE_CONTINUOUS_PICTURE&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;         */&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FOCUS_MODE_CONTINUOUS_VIDEO&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;continuous-video&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;另外，如果不是设置自动持续聚焦，而是手动聚焦，我们可以通过检查设备位置变化来调用&lt;code&gt;camera.autofocus&lt;/code&gt;。另外有一个小技巧，就是在调用拍照时，先调用&lt;code&gt;camera.autoFocus&lt;/code&gt;然后在成功聚焦回调里拍照。当然，对于聚焦失败你应该设置最大的失败次数限制。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;关于crash，&lt;code&gt;camera.autofocus&lt;/code&gt;聚焦还有&lt;code&gt;camera.takePicture&lt;/code&gt;这两个API都不能持续重复调用，否则会crash，执行完一次聚焦才能执行下一次聚焦，执行完一次拍照才能执行下一次拍照，所以你做好做一个保护，另外，根据官方文档解释，&lt;code&gt;camera.takePicture&lt;/code&gt;返回拍照数据后，preview是自动被stop了的，所以你需要重新start一次，否则下次拍照会crash。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;另外关于&lt;code&gt;setFocusArea&lt;/code&gt;，这个模块的概念在于理解其特殊的坐标系，见下图&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/camera_focus_area.png&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;这幅图网上到处都有，其实是来自Android开发官网，官网如是解释：左上角永远是(-1000,-1000)，右下角永远是（1000,1000）,这个坐标系最开始看起来有点奇怪，但是仔细一看只是X坐标Y坐标都是偏移缩小了1000而已，另外将X坐标Y坐标的最大值缩放为2000的长度。&lt;/p&gt;
+
+&lt;p&gt;那么问题来了，按照上面所说，你的镜头旋转过了，那么你此处的坐标系是否也要旋转呢，答案是不需要，直接拿旋转后的视图计算即可。亲测有效。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;几个有用camera链接&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&amp;amp;mid=401454605&amp;amp;idx=1&amp;amp;sn=d5a16f6dc13e7581fec08a4e704cd5d0&amp;amp;scene=1&amp;amp;srcid=070755OBPvgLTborfTSdRBPK&amp;amp;key=77421cf58af4a653bd19893e9cedc5f214e24a9f43d1b6a648950d96ec071465a25b23ef315340e73e13e493193a91ce&amp;amp;ascene=0&amp;amp;uin=Mjk1NzEwNjYxMA%3D%3D&amp;amp;devicetype=iMac15%2C1+OSX+OSX+10.10.4+build(14E46)&amp;amp;version=11020201&amp;amp;pass_ticket=R3QSQ71v43i%2FmEv8zhmbY40zPeaKdZYL1p4zPkxxBDSA4%2BGBnJaKkuXxDe42CW2Q&quot;&gt;QQ空间开发团队-Android相机开发那些坑&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/yanzi1225627/article/details/33313707&quot;&gt;CSDN某博主一系列不错的Camera文章&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;yuv&quot;&gt;关于图片格式 YUV&lt;/h1&gt;
+
+&lt;p&gt;YUV的存储格式比较特别，一般都是多个Y公用UV，常见如下&lt;/p&gt;
+
+&lt;p&gt;I420: YYYYYYYY UU VV    =&amp;gt;YUV420P&lt;/p&gt;
+
+&lt;p&gt;YV12: YYYYYYYY VV UU    =&amp;gt;YUV420P&lt;/p&gt;
+
+&lt;p&gt;NV12: YYYYYYYY UVUV     =&amp;gt;YUV420SP&lt;/p&gt;
+
+&lt;p&gt;NV21: YYYYYYYY VUVU     =&amp;gt;YUV420SP&lt;/p&gt;
+
+&lt;p&gt;[&lt;a href=&quot;[http://www.cnblogs.com/azraelly/archive/2013/01/01/2841269.html&quot;&gt;http://www.cnblogs.com/azraelly/archive/2013/01/01/2841269.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/beyond_cn/article/details/12998247&quot;&gt;http://blog.csdn.net/beyond_cn/article/details/12998247&lt;/a&gt;&lt;/p&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/android/android-camera/&quot;&gt;Android 自定义相机&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on July 11, 2016.&lt;/p&gt;</content>
+</entry>
 
 
   
@@ -4226,132 +4341,6 @@ User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)&lt;/p&gt;
 
 
   &lt;p&gt;&lt;a href=&quot;/android/(translate)Tasks-and-Back-Stack/&quot;&gt;【译】Tasks and Back Stack&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on January 07, 2015.&lt;/p&gt;</content>
-</entry>
-
-
-  
-
-<entry>
-  <title type="html"><![CDATA[【译】Fragment]]></title>
-  <link rel="alternate" type="text/html" href="/android/(translate)Fragment/" />
-  <id>/android/(translate)Fragment</id>
-  <published>2014-12-25T00:00:00+08:00</published>
-  <updated>2014-12-25T00:00:00+08:00</updated>
-  <author>
-    <name>Quinn Chen</name>
-    <uri></uri>
-    <email>chenhuazhaoao@gmail.com</email>
-  </author>
-  <content type="html">&lt;h2 id=&quot;fragments&quot;&gt;Fragments&lt;/h2&gt;
-
-&lt;p&gt;Fragment属于Activity的一个部分，它能让你在一个activity中建立多屏（muti-pane）。并且一个fragment可以再多个activity中复用。fragment拥有自己的生命周期，自己的输入事件。你可以在activity运行期间动态加入或者移除一个fragment。&lt;/p&gt;
-
-&lt;p&gt;fragment必须嵌入在activity中而且其生命周期直接受宿主activity生命周期的影响。比如一个activity进入paused状态时，其中的所有fragment也会进入paused。当activity进入destroyed，其中的所有fragment也会。在activity运行期间，你可以加入移除fragment，并且可以为它们建立一个back stack，这个back stack由activity维护，这个back stack允许用于按下返回键弹出一个fragment。&lt;/p&gt;
-
-&lt;p&gt;当你将fragment当做布局的一部分，你可以再xml布局文件插入fragment，或者在你的代码中插入。然后，其实你可以使用一个没有UI的fragment，拥有后台线程。&lt;/p&gt;
-
-&lt;h3 id=&quot;design-philosophy&quot;&gt;Design Philosophy&lt;/h3&gt;
-
-&lt;p&gt;利用fragment，你可以更好的处理多屏显示，如下图&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/images/fragments.png&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;fragment的设计原理&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;关于利用fragment适应屏幕旋转，可以参考&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://developer.android.com/guide/practices/tablets-and-handsets.html&quot;&gt;Supporting Tablets and Handsets&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;creating-a-fragment&quot;&gt;Creating a Fragment&lt;/h3&gt;
-
-&lt;p&gt;创建Fragment需要继承Fragment或者其现成的子类。创建一个Fragment和创建一个Activity非常相似，它们拥有很多一样的生命周期回调方法。创建一个Fragment，你至少实现以下几个方法：&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;onCreate()&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;在这个方法里，你需要对一些特殊的数据进行初始化，即时fragment从paused或者stopped恢复过来，这些数据也会保持不变。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;onCreateView()&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;当fragment开始绘制自己的UI时，就会回调这个方法，并且返回一个view对象，当一个fragment不提供UI时（只是跑后台进程），这个方法也可以返回null。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;onPause()&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;和activity的生命周期类似，你需要在fragment中的onPause()保存一些数据（比如写入数据库）。调用onPause时，fragment可能进入后台不可见，也可能被销毁destroy。&lt;/p&gt;
-
-&lt;p&gt;APP至少要实现以上三个方法。另外，其他生命周期的回调方法下文将会讲解。&lt;/p&gt;
-
-&lt;p&gt;平时你需要了解几个常用的Fragment的子类&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;DialogFragment&lt;/strong&gt;
-&lt;strong&gt;ListFragment&lt;/strong&gt;
-&lt;strong&gt;PreferenceFragment&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;adding-a-user-interface&quot;&gt;Adding a user interface&lt;/h2&gt;
-
-&lt;p&gt;Fragment的UI创建在onCreateView()中进行，如下&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ExampleFragment&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Fragment&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onCreateView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LayoutInflater&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inflater&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ViewGroup&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
-                             &lt;span class=&quot;n&quot;&gt;Bundle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;// Inflate the layout for this fragment&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inflater&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;inflate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;layout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;example_fragment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;关于在该方法中使用savedInstanceState下文会详细讲解。&lt;/p&gt;
-
-&lt;p&gt;inflate的第三个参数true或者false，还不大懂。&lt;/p&gt;
-
-&lt;h2 id=&quot;adding-a-fragment-to-an-activity&quot;&gt;Adding a fragment to an activity&lt;/h2&gt;
-
-&lt;p&gt;往activity中添加fragment有两种方法，一种是通过XML文件，一种是通过代码。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Declare the fragment inside the activity’s layout file.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;LinearLayout&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:android=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schemas.android.com/apk/res/android&amp;quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;android:orientation=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;horizontal&amp;quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;fragment&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;android:name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;com.example.news.ArticleListFragment&amp;quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;android:id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;@+id/list&amp;quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;android:layout_weight=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;1&amp;quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;0dp&amp;quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;fragment&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;android:name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;com.example.news.ArticleReaderFragment&amp;quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;android:id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;@+id/viewer&amp;quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;android:layout_weight=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;2&amp;quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;0dp&amp;quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/LinearLayout&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Or, programmatically add the fragment to an existing ViewGroup&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;在activity中动态的加入一个fragment，只需要指定一个fragment所在的viewgroup的ID，具体方法如下：&lt;/p&gt;
-
-&lt;p&gt;首先你需要获得一个FragmentTransaction对象。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;FragmentManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fragmentManager&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getFragmentManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;FragmentTransaction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fragmentTransaction&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fragmentManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;beginTransaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;然后使用add()方法，指定将fragment插入到哪个viewgroup。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;ExampleFragment&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fragment&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ExampleFragment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;fragmentTransaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;fragment_container&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fragment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;fragmentTransaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;add()的第一个参数是fragment将要插入的viewgroup的ID。使用FragmentTransaction之后，你调用commit()方法，FragmentTransaction做出的修改才会起作用。&lt;/p&gt;
-
-&lt;h2 id=&quot;adding-a-fragment-without-a-ui&quot;&gt;Adding a fragment without a UI&lt;/h2&gt;
-
-&lt;p&gt;用一个没有UI的fragment运行后台程序，参考ApiDemo中的FragmentRetainInstance.java&lt;/p&gt;
-
-&lt;h3 id=&quot;managing-fragments&quot;&gt;Managing Fragments&lt;/h3&gt;
-
-
-  &lt;p&gt;&lt;a href=&quot;/android/(translate)Fragment/&quot;&gt;【译】Fragment&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on December 25, 2014.&lt;/p&gt;</content>
 </entry>
 
 </feed>
