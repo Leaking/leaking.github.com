@@ -4,13 +4,94 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2016-07-31T16:38:08+08:00</updated>
+<updated>2016-08-17T15:34:32+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
   <uri>/</uri>
   <email>chenhuazhaoao@gmail.com</email>
 </author>
+
+
+  
+
+<entry>
+  <title type="html"><![CDATA[Android存储的坑]]></title>
+  <link rel="alternate" type="text/html" href="/android/android-storage/" />
+  <id>/android/android-storage</id>
+  <published>2016-08-16T00:00:00+08:00</published>
+  <updated>2016-08-16T00:00:00+08:00</updated>
+  <author>
+    <name>Quinn Chen</name>
+    <uri></uri>
+    <email>chenhuazhaoao@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;一直以来用到Android中关于&lt;code&gt;Sdcard&lt;/code&gt;或者&lt;code&gt;data/data&lt;/code&gt;相关的存储时，以及读写权限问题，难免会有混淆，这里做个总结。&lt;/p&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;总体&lt;/h1&gt;
+
+&lt;p&gt;正所谓&lt;code&gt;no-pic-u-say-jj&lt;/code&gt;，一直以来看很多总结&lt;code&gt;Android&lt;/code&gt;存储的文章，我都很期待有一副图片可以总结以下各种存储。此处简单用画了一份。&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/storage_1.jpeg&quot; alt=&quot;search screenshot&quot; /&gt;
+  &lt;figcaption&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&quot;sdcard&quot;&gt;/sdcard&lt;/h2&gt;
+
+&lt;p&gt;该部分不会随着App删除而删除；其他App（同个手机上的程序）以及用户（操作手机的人）可以访问；需要读写权限；不会计入App大小的计算&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;Environment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getExternalStorageDirectory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sdcard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Environment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getExternalStoragePublicDirectory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Environment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;DIRECTORY_PICTURES&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sdcard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pictures&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;sdcardandroiddatapackage-name&quot;&gt;/sdcard/Android/data/&lt;package-name&gt;&lt;/package-name&gt;&lt;/h2&gt;
+
+&lt;p&gt;该部分的特点在与4.4开始无需读写权限，会随着App删除而删除，会计入App大小计算&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;getExternalFilesDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sdcard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Android&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;package&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;files&lt;/span&gt;
+
+&lt;span class=&quot;nf&quot;&gt;getExternalFilesDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Environment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;DIRECTORY_PICTURES&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sdcard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Android&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;package&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;files&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pictures&lt;/span&gt;
+
+&lt;span class=&quot;nf&quot;&gt;getExternalFilesDirs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;[/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sdcard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Android&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;package&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;files&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;nf&quot;&gt;getExternalCacheDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sdcard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Android&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;package&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;files&lt;/span&gt;
+
+&lt;span class=&quot;nf&quot;&gt;getExternalMediaDirs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;[/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sdcard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Android&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;media&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;package&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;datadatapackage-name&quot;&gt;/data/data/&lt;package-name&gt;&lt;/package-name&gt;&lt;/h2&gt;
+
+&lt;p&gt;无需读写权限，会随着App删除而删除，会计入App大小计算，其他App（同个手机上的程序）以及用户（操作手机的人）不可以访问（除非手机已经root）&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;getFilesDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;package&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;files&lt;/span&gt;
+
+&lt;span class=&quot;nf&quot;&gt;getCacheDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;package&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;
+
+&lt;span class=&quot;nf&quot;&gt;getDir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;custom&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MODE_PRIVATE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;package&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app_custom&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;/android/android-storage/&quot;&gt;Android存储的坑&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on August 16, 2016.&lt;/p&gt;</content>
+</entry>
 
 
   
@@ -4129,218 +4210,6 @@ User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)&lt;/p&gt;
 &lt;p&gt;IPC ，该知识点暂时使用不多，了解有限，以后开发用到了在细读该段落&lt;/p&gt;
 
   &lt;p&gt;&lt;a href=&quot;/android/(translate)ProcessesAndThreads/&quot;&gt;【译】Processes and Threads&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on January 31, 2015.&lt;/p&gt;</content>
-</entry>
-
-
-  
-
-<entry>
-  <title type="html"><![CDATA[【译】Tasks and Back Stack]]></title>
-  <link rel="alternate" type="text/html" href="/android/(translate)Tasks-and-Back-Stack/" />
-  <id>/android/(translate)Tasks-and-Back-Stack</id>
-  <published>2015-01-07T00:00:00+08:00</published>
-  <updated>2015-01-07T00:00:00+08:00</updated>
-  <author>
-    <name>Quinn Chen</name>
-    <uri></uri>
-    <email>chenhuazhaoao@gmail.com</email>
-  </author>
-  <content type="html">&lt;p&gt;tips:&lt;em&gt;该本博客的翻译类似笔记，大多着重意译博主觉得需要记住的知识。&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;总结一下activities和tasks的常见用法&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;当Activity A启动Activity B，Activity A进入stopped的状态，但是系统保持其状态（比如你滚动视图的滚动位置以及表格中填写的数据）。当用户在Activity B中按下返回键，那么Activity A的状态数据将会还原。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;当用户按下home键，当前的activity将会进入stopped状态，该activity所在task也会进入后台，系统保存所有在该task中的activity的状态。当用户在home主页上点击该app的图标，将还原该task的状态，该task回到前台。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;当用户按下返回键，当前的activity被弹出堆栈并且被destroy，前一个activity会被resume。注意，一个被destroy的activity不会保存其状态。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;activity可以被初始化多次，甚至从其他task中初始化。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;saving-activity-state&quot;&gt;Saving Activity State&lt;/h2&gt;
-
-&lt;p&gt;如前面所说，当从activity A中跳转到activity B中，activity A进入stopped状态，但是也可能被系统回收资源而destroy，所以为了预防这种情况，得作用保存数据，还原数据的准备。使用onSaveInstanceState()&lt;/p&gt;
-
-&lt;h2 id=&quot;managing-tasks&quot;&gt;Managing Tasks&lt;/h2&gt;
-
-&lt;p&gt;Android中的Activity和Task的管理基本都是自动化的，但是开发过程中如果想要按照自己的需要操纵Activity和Task，可以使用&lt;activity&gt;标签和为传递给startActivity的intent设置flag属性。&lt;/activity&gt;&lt;/p&gt;
-
-&lt;p&gt;如下，是可以使用的activity标签：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;taskAffinity&lt;/li&gt;
-  &lt;li&gt;launchMode&lt;/li&gt;
-  &lt;li&gt;allowTaskReparenting&lt;/li&gt;
-  &lt;li&gt;clearTaskOnLaunch&lt;/li&gt;
-  &lt;li&gt;alwaysRetainTaskState&lt;/li&gt;
-  &lt;li&gt;finishOnTaskLaunch&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;以下是你经常要使用的flag属性&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;FLAG_ACTIVITY_NEW_TASK&lt;/li&gt;
-  &lt;li&gt;FLAG_ACTIVITY_CLEAR_TOP&lt;/li&gt;
-  &lt;li&gt;FLAG_ACTIVITY_SINGLE_TOP&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;defining-launch-modes&quot;&gt;Defining launch modes&lt;/h2&gt;
-
-&lt;p&gt;Launch modes可以让你控制activity以怎样的方式启动到当前的task中。&lt;/p&gt;
-
-&lt;p&gt;你可以通过以下两种方式定义Launch mode&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;使用manifest file&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;使用Intent flags&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;举个例子，Activity A启动Activity B的时候，如果要定义Activity B的启动方式，可以通过在manifest file中定义Activity B的launch mode，也可以在Activity A启动Activity B时使用的intent中设置flags。如果manifest和intent中的flags中都设置了launch mode，则intent中的flag优先。&lt;/p&gt;
-
-&lt;p&gt;有些launch mode 只能在manifest file中定义，有些只能在intent flags中定义。&lt;/p&gt;
-
-&lt;h1 id=&quot;manifest-file&quot;&gt;使用manifest file&lt;/h1&gt;
-
-&lt;p&gt;可以在manifest file中使用 &lt;code&gt;\&amp;lt;activity\&amp;gt;&lt;/code&gt; 标签的launchMode属性定义launch mode&lt;/p&gt;
-
-&lt;p&gt;launchMode属性可以有四个值&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;standard (默认方式)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;默认情况下，系统通过standard的方式启动一个activity，并且这个activity可以被创建多次，一个task中可以拥有多个该activity的实例。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;singleTop&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;如果某个activity的实例已经处于当前task中的back stack的最上层，则当再次调用该activity时，将不会再次创建一个新的实例，而是将调用栈顶的activity实例的onNewIntent()，并且intent也被传递到onNewIntent()，从而跳转到back stack最上层的实例。如果再创建一个activity时，当前back stack的顶层不是该activity的实例，则按照standard的方式继续创建一个实例&lt;/p&gt;
-
-&lt;p&gt;举个例子：&lt;/p&gt;
-
-&lt;p&gt;一个back stack中拥有A-B-C-D四个activity，其中D处于最顶层。&lt;/p&gt;
-
-&lt;p&gt;如果一个新的创建activityD的intent到来了，如果此时D被设置成”standard”，则新建一个D实例，此时back stack的内容为A-B-C-D-D。&lt;/p&gt;
-
-&lt;p&gt;如果此时D被设置成”singleTop”,则创建Activity D的intent被传递到栈顶的D实例的onNewIntent()方法，于是跳转到栈顶的activityD实例。此时back stack内容是A-B-C-D。此时按下返回键会返回到C，back stack变为A-B-C&lt;/p&gt;
-
-&lt;p&gt;但是，如果实例D中启动一个activity B实例，即时B的启动模式为”signleTop”, back stack 都将变为 A-B-C-D-B.&lt;/p&gt;
-
-&lt;p&gt;此处讲解一下onNewIntent()方法&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/images/onNewIntent.png&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;onNewIntent()&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;onNewIntent()只有在singleTop启动模式发挥作用时才会被调用，并且此时它将会接收到一个intent.举一个例子，还是上面的back stack，其中内容是A-B-C，此时在C中启动一个D，并且传递的一个intent C，此时新建一个D实例，back stack的状态变为A-B-C-D，而且D中收到intent C。我们定义D的启动模式时singleTop，此时在栈顶的D中启动一个activity D实例，并且传递一个intent D 由于D是singleTop的启动模式，所以此时不会创建新的D实例，而只会调用back stack顶端的activity D实例的onNewIntent() 方法，并且将intentD传递给onNewIntenet()。但是这个时候通过getIntent获取到的依然是intent C，
-此时可以利用setIntent()将其更新为intent D。另外，调用完onNewIntent()之后会调用onResume()，你可以在这个时候根据需要刷新界面。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;singleTask&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;与singleTop类似，singleTop中的概念类似“复用”，该复用的前提是：要复用的实例必须处于back stack的顶端。而singleTask也有“复用”的作用，但是复用的前提比较宽松：要复用的实例存在当前task中即可，或者存在后台某个task也可以。&lt;/p&gt;
-
-&lt;p&gt;注意，本文中，讲到的task和back stack都是一样的意思，因为一个task中只有一个bask stack.&lt;/p&gt;
-
-&lt;p&gt;举个例子，back stack 中的内容是A-B-C-D，其中B的启动模式为singleTask，在D中启动一个新的实例B，此时调用堆栈中B实例的onNewIntent()方法，然后back stack就变成A-B，此时C,D都被弹出。&lt;/p&gt;
-
-&lt;p&gt;另一个例子，有两个task，一个是A-B,一个是C-D,其中D被声明为SingleTask，则在B中启动一个D时，第一个task将会变成A-B-C-D&lt;/p&gt;
-
-&lt;p&gt;以上讲的是启动模式为singleTask的activity实例已经存在，可以“复用”的情况。那么当activity实例不存在，则会重新创建一个activity实例，一般情况下，如果是启动同一个应用程序中activity，该新建的activity实例依然会被放到当前task中。而当新启动的activity在manifest的&lt;code&gt;taskAffinity&lt;/code&gt;被声明为另外的task，则该activity会在新的task中被启动。所以singleTask其实经常和taskAffinity一起使用。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;singleInstance&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;singletInstance和singleTask类似，&lt;/p&gt;
-
-&lt;p&gt;当back stack中只有一个声明为singleTask的activity实例时，继续启动其它activity实例，则会继续加到同一个task中。&lt;/p&gt;
-
-&lt;p&gt;当back stack中只有一个声明为singleInstacne的activity实例时，继续启动其它activity实例，则会在一个新的task中创建activity。&lt;/p&gt;
-
-&lt;p&gt;再举一个例子，android的浏览器应用程序中的浏览器activity被定义为singleTask启动模式。所以当你的app试图打开android浏览器时，浏览器的activity不会被放到和你的app的task中，而是重新启动一个task来放置浏览器的activity。或者浏览器已经在后台的某个task中，则直接将该task转到前台呈现给用户。&lt;/p&gt;
-
-&lt;p&gt;当我们在同一个task中或者不同task中启动一个activity，按下返回键都将返回到前一个activity。但是当我们启动一个启动模式为singleTask的activity时，如果该activity有一个实例在某个后台task中，则该后台task被转到前台，此时这个task中的activity将会被放到原本task中上端。比如下图&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/images/singleTask.png&quot; alt=&quot;search screenshot&quot; /&gt;
-  &lt;figcaption&gt;singleTask的特殊back stack示意图&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;如上图所示，当调用到后台task中的Y（Y的启动模式时singleTask），Y所在的整个Task都被放到前台，其中的activity都被放到原本back stack的上端。&lt;/p&gt;
-
-&lt;h1 id=&quot;intent-flags&quot;&gt;使用 intent flags&lt;/h1&gt;
-
-&lt;p&gt;除了manifest file可以定义启动模式，intent flag也可以。如上面提到的，intent flag定义的启动模式会覆盖manifest file中定义的启动模式。 几种常见的intent flag如下&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;FLAG_ACTIVITY_NEW_TASK&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;该intent flag的作用与上文讲到的&lt;code&gt;singleTask&lt;/code&gt;一样&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;FLAG_ACTIVITY_SINGLE_TOP&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;该intent flag与上文讲到的&lt;code&gt;singleTop&lt;/code&gt;一样&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;FLAG_ACTIVITY_CLEAR_TOP&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;如果某个activity已经有一个实例在当前task中，则再次试图创建该activity的实例时，则task中在该activity实例上面的activity都将会被弹出并destroy，使该activity实例处于堆栈顶端，并调用其onNewIntent()&lt;/p&gt;
-
-&lt;p&gt;launchMode中没有一个属性值与FLAG_ACTIVITY_CLEAR_TOP作用一样&lt;/p&gt;
-
-&lt;p&gt;FLAG_ACTIVITY_CLEAR_TOP经常与FLAG_ACTIVITY_NEW_TASK结合使用。它们能跳转到另一个task中某个activity并且响应接收到的intent对象。&lt;/p&gt;
-
-&lt;h2 id=&quot;affinities&quot;&gt;处理 affinities（亲和度）&lt;/h2&gt;
-
-&lt;p&gt;未遇到使用场景，以后再参考文档学习&lt;/p&gt;
-
-&lt;h2 id=&quot;back-stack&quot;&gt;清空 back stack&lt;/h2&gt;
-
-&lt;p&gt;如果用户离开一个task一段比较长的时间，系统会清除task中除了根部activity之外的其他activity。当用户再次回到该task，只能看到根部activity的状态被保存了。系统这样做是因为超出了某个时间长度之后，用户可能已经不要他们之前操作留下的状态，而将重新进行其他的操作。&lt;/p&gt;
-
-&lt;p&gt;以上将的这个系统的特点，可以通过activity的属性进行修改定制&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;alwaysRetainTaskState&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;如果一个task中的根部activity的这个属性被设置为”true”，则上面描述的系统默认设定将不会发挥作用。即时离开了task很长的时间，其中的activity也将被保存状态&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;clearTaskOnLaunch&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;如果task中的根部activity的这个属性被设置为“true”，则无论用户离开task的时间是短还是长，task中根部activity以上的activity都将被清除。这恰恰好和alwaysRetainTaskState相反&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;finishOnTaskLaunch&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;这个属性有点像clearTaskOnLaunch，但是它的作用对象是某个activity，而非整个task。当某个activity的finishOnTaskLaunch属性被设置为“true”，则每当用户离开该task再回来，该activity都将被销毁&lt;/p&gt;
-
-
-  &lt;p&gt;&lt;a href=&quot;/android/(translate)Tasks-and-Back-Stack/&quot;&gt;【译】Tasks and Back Stack&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on January 07, 2015.&lt;/p&gt;</content>
 </entry>
 
 </feed>
