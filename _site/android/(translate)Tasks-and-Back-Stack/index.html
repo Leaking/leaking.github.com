@@ -14,8 +14,8 @@
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="【译】Tasks and Back Stack">
 <meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-
-
+<meta name="twitter:site" content="@chenhuazhaoao">
+<meta name="twitter:creator" content="@chenhuazhaoao">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
@@ -177,7 +177,7 @@
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=android,xmpp,IM&text=【译】Tasks%20and%20Back%20Stack&url=/android/(translate)Tasks-and-Back-Stack/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=android,xmpp,IM&text=【译】Tasks%20and%20Back%20Stack&url=/android/(translate)Tasks-and-Back-Stack/&via=chenhuazhaoao" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
           <a href="https://www.facebook.com/sharer/sharer.php?u=/android/(translate)Tasks-and-Back-Stack/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
@@ -219,11 +219,11 @@
   </li>
 </ol>
 
-<h2 id="saving-activity-state">Saving Activity State</h2>
+<p>##Saving Activity State</p>
 
 <p>如前面所说，当从activity A中跳转到activity B中，activity A进入stopped状态，但是也可能被系统回收资源而destroy，所以为了预防这种情况，得作用保存数据，还原数据的准备。使用onSaveInstanceState()</p>
 
-<h2 id="managing-tasks">Managing Tasks</h2>
+<p>##Managing Tasks</p>
 
 <p>Android中的Activity和Task的管理基本都是自动化的，但是开发过程中如果想要按照自己的需要操纵Activity和Task，可以使用<activity>标签和为传递给startActivity的intent设置flag属性。</activity></p>
 
@@ -246,7 +246,7 @@
   <li>FLAG_ACTIVITY_SINGLE_TOP</li>
 </ul>
 
-<h2 id="defining-launch-modes">Defining launch modes</h2>
+<p>##Defining launch modes#</p>
 
 <p>Launch modes可以让你控制activity以怎样的方式启动到当前的task中。</p>
 
@@ -301,7 +301,7 @@
 </figure>
 
 <blockquote>
-  <p>onNewIntent()只有在singleTop启动模式发挥作用时才会被调用，并且此时它将会接收到一个intent.举一个例子，还是上面的back stack，其中内容是A-B-C，此时在C中启动一个D，并且传递的一个intent C，此时新建一个D实例，back stack的状态变为A-B-C-D，而且D中收到intent C。我们定义D的启动模式时singleTop，此时在栈顶的D中启动一个activity D实例，并且传递一个intent D 由于D是singleTop的启动模式，所以此时不会创建新的D实例，而只会调用back stack顶端的activity D实例的onNewIntent() 方法，并且将intentD传递给onNewIntenet()。但是这个时候通过getIntent获取到的依然是intent C，
+  <p>onNewIntent()只有在singleTop启动模式发挥作用时才会被调用，并且此时它将会接收到一个intent.举一个例子，还是上面的back stack，其中内容是A-B-C，此时在C中启动一个D，并且传递的一个intent C，此时新建一个D实例，back stack的状态变为A-B-C-D，而且D中收到intent C。我们定义D的启动模式时singleTop，此时在栈顶的D中启动一个activity D实例，并且传递一个intent D 由于D是singleTop的启动模式，所以此时不会创建新的D实例，而只会调用back stack顶端的activity D实例的onNewIntent() 方法，并且将intentD传递给onNewIntenet()。但是这个时候通过getIntent获取到的依然是intent C，<br />
 此时可以利用setIntent()将其更新为intent D。另外，调用完onNewIntent()之后会调用onResume()，你可以在这个时候根据需要刷新界面。</p>
 </blockquote>
 
@@ -366,11 +366,11 @@
 
 <p>FLAG_ACTIVITY_CLEAR_TOP经常与FLAG_ACTIVITY_NEW_TASK结合使用。它们能跳转到另一个task中某个activity并且响应接收到的intent对象。</p>
 
-<h2 id="affinities">处理 affinities（亲和度）</h2>
+<p>##处理 affinities（亲和度）</p>
 
 <p>未遇到使用场景，以后再参考文档学习</p>
 
-<h2 id="back-stack">清空 back stack</h2>
+<p>##清空 back stack</p>
 
 <p>如果用户离开一个task一段比较长的时间，系统会清除task中除了根部activity之外的其他activity。当用户再次回到该task，只能看到根部activity的状态被保存了。系统这样做是因为超出了某个时间长度之后，用户可能已经不要他们之前操作留下的状态，而将重新进行其他的操作。</p>
 
@@ -431,7 +431,7 @@
 
 <span>&copy; 2016 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
 <div class="social-icons">
-	
+	<a href="http://twitter.com/chenhuazhaoao" title="Quinn Chen on Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x"></i></a>
 	
 	
 	

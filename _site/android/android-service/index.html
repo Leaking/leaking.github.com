@@ -14,8 +14,8 @@
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="【译】Service">
 <meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-
-
+<meta name="twitter:site" content="@chenhuazhaoao">
+<meta name="twitter:creator" content="@chenhuazhaoao">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
@@ -177,7 +177,7 @@
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=android&text=【译】Service&url=/android/android-service/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=android&text=【译】Service&url=/android/android-service/&via=chenhuazhaoao" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
           <a href="https://www.facebook.com/sharer/sharer.php?u=/android/android-service/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
@@ -222,19 +222,19 @@
 
 <ul>
   <li>
-    <p>onStartCommand():
+    <p>onStartCommand():<br />
 当通过startService()的方式启动service时，这个方法就将被调用，并且service将被一直执行下去，任务完成后，你最好调用stopSelf()或者stopService()停止该service。通过bound方式启动service时不需要重写这个方法。</p>
   </li>
   <li>
-    <p>onBind():
+    <p>onBind():<br />
 通过bindService()方式启动service，你需要在onBind()返回一个IBinder实例，如果不想绑定service，那么这个方法返回null即可。</p>
   </li>
   <li>
-    <p>onCreate():
+    <p>onCreate():<br />
 这个方法会在service被首次创建时执行，它在onStartCommand()以及onBind()之前执行，当service是被重启的，或者已经被启动过，那么方法将不会被执行。这个方法适合执行一些初始化的事件。</p>
   </li>
   <li>
-    <p>onDestroy():
+    <p>onDestroy():<br />
 当service被销毁，你应该在这里回收资源，比如thread，监听器，广播接受者等等。</p>
   </li>
 </ul>
@@ -266,7 +266,7 @@
 <p>这里将的’service’会在后台一直运行，是指启动<code>service</code>的组件被销毁了甚至整个app退出了，<code>service</code>可以自动重启，</p>
 
 <blockquote>
-  <p><code>service</code>默认情况下，会在声明的<code>application</code>的进程的<code>main thread</code>上运行。所以如果在<code>service</code>
+  <p><code>service</code>默认情况下，会在声明的<code>application</code>的进程的<code>main thread</code>上运行。所以如果在<code>service</code><br />
 中执行阻塞性的任务，需要启动一个线程。</p>
 </blockquote>
 
@@ -479,7 +479,7 @@
 
 <span>&copy; 2016 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
 <div class="social-icons">
-	
+	<a href="http://twitter.com/chenhuazhaoao" title="Quinn Chen on Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x"></i></a>
 	
 	
 	

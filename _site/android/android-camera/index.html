@@ -5,17 +5,17 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Android Camera &#8211; My Stupid Blog</title>
+<title>开发Android Camera遇到的问题 &#8211; My Stupid Blog</title>
 <meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 <meta name="keywords" content="android">
 
 
 
 <!-- Twitter Cards -->
-<meta name="twitter:title" content="Android Camera">
+<meta name="twitter:title" content="开发Android Camera遇到的问题">
 <meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-
-
+<meta name="twitter:site" content="@chenhuazhaoao">
+<meta name="twitter:creator" content="@chenhuazhaoao">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
@@ -23,7 +23,7 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android Camera">
+<meta property="og:title" content="开发Android Camera遇到的问题">
 <meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
 <meta property="og:url" content="/android/android-camera/">
 <meta property="og:site_name" content="My Stupid Blog">
@@ -157,12 +157,12 @@
 
 <div id="main" role="main">
   <article class="hentry">
-    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="Android Camera" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="开发Android Camera遇到的问题" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
     <div class="entry-wrapper">
       <header class="entry-header">
         <span class="entry-tags"><a href="/tags/#android" title="Pages tagged android">android</a></span>
         
-          <h1 class="entry-title">Android Camera</h1>
+          <h1 class="entry-title">开发Android Camera遇到的问题</h1>
         
       </header>
       <footer class="entry-meta">
@@ -172,12 +172,12 @@
           <img src="/images/bio-photo.jpg" class="bio-photo" alt="Quinn Chen bio photo"></a>
         
         <span class="author vcard">By <span class="fn">Quinn Chen</span></span>
-        <span class="entry-date date published"><time datetime="2016-07-11T00:00:00+08:00"><i class="fa fa-calendar-o"></i> July 11, 2016</time></span>
+        <span class="entry-date date published"><time datetime="2016-11-01T00:00:00+08:00"><i class="fa fa-calendar-o"></i> November 01, 2016</time></span>
         
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=android&text=Android%20Camera&url=/android/android-camera/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=android&text=开发Android%20Camera遇到的问题&url=/android/android-camera/&via=chenhuazhaoao" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
           <a href="https://www.facebook.com/sharer/sharer.php?u=/android/android-camera/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
@@ -200,69 +200,62 @@
 </div><!-- /.google-ads --><!-- /.google-ads -->
       </footer>
       <div class="entry-content">
-        <p>来T公司公司半年有余了，好久没写东西。</p>
-
-<p>近来在做一个关于Android中Camera的需求，此处做点简要记录。提供给大家参考，避免以后猜到这些坑。</p>
-
-<h1 id="camera">Camera遇到的坑</h1>
+        <p>近来在做一个关于Android中Camera的需求，此处做点简要记录。提供给大家参考，避免以后猜到这些坑。</p>
 
 <p>Android中Camera主要分5.0以前还有5.0以后，从5.0开始Android支持Camera2，现在项目中这个模块只使用了Camera（你可以理解为Camera1）。</p>
 
 <p>使用Camera基本的API我就不一一列举了，此处只讲经验积累的东西。下文将打开相机预览窗口称为<code>Preview</code>，拍照结果称为<code>Picture</code>。</p>
 
-<ul>
-  <li>
-    <p>首先大多相机打开的方向并不是正常的，需要我们进行处理，你可能最终需要旋转度数为<code>degree</code>（90或180或270）。</p>
-  </li>
-  <li>
-    <p><code>Picture</code>返回的照片也可能不是摆正的，需要旋转上面提到的度数<code>degree</code>.</p>
-  </li>
-  <li>
-    <p>我们可以获得<code>Preview</code>照片进行一些处理，比如二维码扫描或者ROI（感兴趣区域）识别，而<code>Preview</code>也是需要旋转<code>degree</code>角度才摆正.</p>
-  </li>
-  <li>
-    <p>使用相机时，你可以获得<code>Preview</code>和<code>Picture</code>可以支持的大小，但是你最好不要随便选择一个，首先，<code>Preview</code>的宽高比例需要接近你的UI中给相机预览窗口的宽高比，否则会觉得相机中图片被拉高了或者压扁了，你只需要做到比例接近就够了。另外无论是<code>Preview</code>的大小和<code>Picture</code>的大小，都需要考虑内存的情况。另外拍出来的照片大小取决于<code>Picture</code>的分辨率。</p>
-  </li>
-  <li>
-    <p><code>Preview</code>回调的图片byte[]数组，是<code>YUV</code>存储格式的图片信息，我也是第一次见到这个概念，它和RGB一样是用于存储图片的编码格式，它需要通过某种公式转换成RGB，它的优点在于存储空间小，主要原因大概是几个<code>Y</code> 可以共享同一个<code>UV</code>.关于<code>YUV</code>的详细原理这里不拓展。然后如果你在项目中只拿<code>Preview</code>的图片，那么获取图片时有YuvImage相关的API可以使用。如果你是需要将图片信息传到JNI层进行图片处理，那么可能就需要进行进一步转换，转成RGB格式。</p>
-  </li>
-  <li>
-    <p>聚焦，关于聚焦的问题，我们经常使用的方法就是设置一个<code>FOCUS_MODE</code>,然后调用<code>camera.autofocus</code>的方法并且获取聚焦结果的回调，但是需要注意一点的是，并非所有<code>FOCUS_MODE</code>都是可以支持<code>camera.autofocus</code>方法的，比如<code>FOCUS_MODE_CONTINUOUS_VIDEO</code>，所以设置几种<code>FOCUS_MODE</code>时最好看看相关注释。</p>
-  </li>
-</ul>
+<h2 id="section">旋转方向、图片大小</h2>
+
+<p>首先大多相机打开的方向并不是正常的，需要我们进行处理，你可能最终需要旋转度数为<code>degree</code>（90或180或270）。</p>
+
+<p><code>Picture</code>返回的照片也可能不是摆正的，需要旋转上面提到的度数<code>degree</code>.</p>
+
+<p>我们可以获得<code>Preview</code>照片进行一些处理，比如二维码扫描或者ROI（感兴趣区域）识别，而<code>Preview</code>也是需要旋转<code>degree</code>角度才摆正.</p>
+
+<p>使用相机时，你可以获得<code>Preview</code>和<code>Picture</code>可以支持的大小，但是你最好不要随便选择一个，首先，<code>Preview</code>的宽高比例需要接近你的UI中给相机预览窗口的宽高比，否则会觉得相机中图片被拉高了或者压扁了，你只需要做到比例接近就够了。另外无论是<code>Preview</code>的大小和<code>Picture</code>的大小，都需要考虑内存的情况。另外拍出来的照片大小取决于<code>Picture</code>的分辨率。</p>
+
+<h2 id="yuv">YUV格式</h2>
+
+<p><code>Preview</code>回调的图片byte[]数组，是<code>YUV</code>存储格式的图片信息，我也是第一次见到这个概念，它和RGB一样是用于存储图片的编码格式，它需要通过某种公式转换成RGB，它的优点在于存储空间小，主要原因大概是几个<code>Y</code> 可以共享同一个<code>UV</code>.关于<code>YUV</code>的详细原理这里不拓展。然后如果你在项目中只拿<code>Preview</code>的图片，那么获取图片时有YuvImage相关的API可以使用。如果你是需要将图片信息传到JNI层进行图片处理，那么可能就需要进行进一步转换，转成RGB格式。而这里我遇到一个性能问题，工作中发现每一张<code>Preview</code>图片处理边缘识别时间特别慢，但是打出native层Opencv处理图片逻辑的耗时又并不是很长，最终发现是在Java层，使用<code>YuvImage</code>将<code>YUV</code>转<code>RGB</code>时相当耗时，基本就比得上<code>native</code>识别边缘的时间，最终发现可以在native层Opencv也有接口支持转<code>YUV</code>的格式，而且效率快很多，基本解决了在低端机器上的效率问题。</p>
+
+<h2 id="section-1">聚焦</h2>
+
+<p>聚焦，关于聚焦的问题，我们经常使用的方法就是设置一个<code>FOCUS_MODE</code>,然后调用<code>camera.autofocus</code>的方法并且获取聚焦结果的回调，但是需要注意一点的是，并非所有<code>FOCUS_MODE</code>都是可以支持<code>camera.autofocus</code>方法的，比如<code>FOCUS_MODE_CONTINUOUS_VIDEO</code>，所以设置几种<code>FOCUS_MODE</code>时最好看看相关注释。比如以下这段:</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
-<span class="cm">         * Continuous auto focus mode intended for video recording. The camera</span>
-<span class="cm">         * continuously tries to focus. This is the best choice for video</span>
-<span class="cm">         * recording because the focus changes smoothly . Applications still can</span>
-<span class="cm">         * call {@link #takePicture(Camera.ShutterCallback,</span>
-<span class="cm">         * Camera.PictureCallback, Camera.PictureCallback)} in this mode but the</span>
-<span class="cm">         * subject may not be in focus. Auto focus starts when the parameter is</span>
-<span class="cm">         * set.</span>
-<span class="cm">         *</span>
-<span class="cm">         * &lt;p&gt;Since API level 14, applications can call {@link</span>
-<span class="cm">         * #autoFocus(AutoFocusCallback)} in this mode. The focus callback will</span>
-<span class="cm">         * immediately return with a boolean that indicates whether the focus is</span>
-<span class="cm">         * sharp or not. The focus position is locked after autoFocus call. If</span>
-<span class="cm">         * applications want to resume the continuous focus, cancelAutoFocus</span>
-<span class="cm">         * must be called. Restarting the preview will not resume the continuous</span>
-<span class="cm">         * autofocus. To stop continuous focus, applications should change the</span>
-<span class="cm">         * focus mode to other modes.</span>
-<span class="cm">         *</span>
-<span class="cm">         * @see #FOCUS_MODE_CONTINUOUS_PICTURE</span>
-<span class="cm">         */</span>
-        <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">FOCUS_MODE_CONTINUOUS_VIDEO</span> <span class="o">=</span> <span class="s">&quot;continuous-video&quot;</span><span class="o">;</span></code></pre></div>
+<span class="cm"> * Continuous auto focus mode intended for video recording. The camera</span>
+<span class="cm"> * continuously tries to focus. This is the best choice for video</span>
+<span class="cm"> * recording because the focus changes smoothly . Applications still can              </span>
+<span class="cm"> * call {@link #takePicture(Camera.ShutterCallback,</span>
+<span class="cm"> * Camera.PictureCallback, Camera.PictureCallback)} in this mode but the</span>
+<span class="cm"> * subject may not be in focus. Auto focus starts when the parameter is</span>
+<span class="cm"> * set.</span>
+<span class="cm"> *</span>
+<span class="cm"> * &lt;p&gt;Since API level 14, applications can call {@link</span>
+<span class="cm"> * #autoFocus(AutoFocusCallback)} in this mode. The focus callback will</span>
+<span class="cm"> * immediately return with a boolean that indicates whether the focus is</span>
+<span class="cm"> * sharp or not. The focus position is locked after autoFocus call. If</span>
+<span class="cm"> * applications want to resume the continuous focus, cancelAutoFocus</span>
+<span class="cm"> * must be called. Restarting the preview will not resume the continuous</span>
+<span class="cm"> * autofocus. To stop continuous focus, applications should change the</span>
+<span class="cm"> * focus mode to other modes.</span>
+<span class="cm"> *</span>
+<span class="cm"> * @see #FOCUS_MODE_CONTINUOUS_PICTURE</span>
+<span class="cm"> */</span>
+ 
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">FOCUS_MODE_CONTINUOUS_VIDEO</span> <span class="o">=</span> <span class="s">&quot;continuous-video&quot;</span><span class="o">;</span></code></pre></div>
 
-<p>另外，如果不是设置自动持续聚焦，而是手动聚焦，我们可以通过检查设备位置变化来调用<code>camera.autofocus</code>。另外有一个小技巧，就是在调用拍照时，先调用<code>camera.autoFocus</code>然后在成功聚焦回调里拍照。当然，对于聚焦失败你应该设置最大的失败次数限制。</p>
+<p>另外有一个小技巧，就是在调用拍照时，先调用<code>camera.autoFocus</code>然后在成功聚焦回调里拍照。当然，对于聚焦失败你应该设置最大的失败次数限制。</p>
 
-<ul>
-  <li>
-    <p>关于crash，<code>camera.autofocus</code>聚焦还有<code>camera.takePicture</code>这两个API都不能持续重复调用，否则会crash，执行完一次聚焦才能执行下一次聚焦，执行完一次拍照才能执行下一次拍照，所以你做好做一个保护，另外，根据官方文档解释，<code>camera.takePicture</code>返回拍照数据后，preview是自动被stop了的，所以你需要重新start一次，否则下次拍照会crash。</p>
-  </li>
-  <li>
-    <p>另外关于<code>setFocusArea</code>，这个模块的概念在于理解其特殊的坐标系，见下图</p>
-  </li>
-</ul>
+<h2 id="crash">关于crash</h2>
+
+<p><code>camera.autofocus</code>聚焦还有<code>camera.takePicture</code>这两个API都不能持续重复调用，否则会crash，执行完一次聚焦才能执行下一次聚焦，执行完一次拍照才能执行下一次拍照，所以你做好做一个保护，另外，根据官方文档解释，<code>camera.takePicture</code>返回拍照数据后，preview是自动被stop了的，所以你需要重新start一次，否则下次拍照会crash。另外，我发现在三星上拍完照preview并没有自动stop。</p>
+
+<h2 id="setfocusarea">setFocusArea</h2>
+
+<p>另外关于<code>setFocusArea</code>，这个模块的概念在于理解其特殊的坐标系，见下图</p>
 
 <figure>
   <img src="/images/camera_focus_area.png" alt="search screenshot" />
@@ -273,37 +266,42 @@
 
 <p>那么问题来了，按照上面所说，你的镜头旋转过了，那么你此处的坐标系是否也要旋转呢，答案是不需要，直接拿旋转后的视图计算即可。亲测有效。</p>
 
-<ul>
-  <li>几个有用camera链接</li>
-</ul>
+<h2 id="camera">关于camera的生命周期</h2>
+
+<p>回头写，，，</p>
+
+<h2 id="previewpicture">preview到picture的坐标转换</h2>
+
+<p>回头写，，，</p>
+
+<h2 id="yuv-1">理解图片格式 YUV</h2>
+
+<p>YUV的存储格式比较特别，一般都是多个Y公用UV，常见如下</p>
+
+<blockquote>
+  <p>I420: YYYYYYYY UU VV    =&gt;  YUV420P<br />
+YV12: YYYYYYYY VV UU    =&gt;  YUV420P<br />
+NV12: YYYYYYYY UVUV     =&gt;  YUV420SP<br />
+NV21: YYYYYYYY VUVU     =&gt;  YUV420SP</p>
+</blockquote>
+
+<p>可参考以下两篇文章</p>
+
+<p>[<a href="http://www.cnblogs.com/azraelly/archive/2013/01/01/2841269.html">http://www.cnblogs.com/azraelly/archive/2013/01/01/2841269.html</a></p>
+
+<p><a href="http://blog.csdn.net/beyond_cn/article/details/12998247">http://blog.csdn.net/beyond_cn/article/details/12998247</a></p>
+
+<h2 id="section-2">几篇有用的文章</h2>
 
 <p><a href="https://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&amp;mid=401454605&amp;idx=1&amp;sn=d5a16f6dc13e7581fec08a4e704cd5d0&amp;scene=1&amp;srcid=070755OBPvgLTborfTSdRBPK&amp;key=77421cf58af4a653bd19893e9cedc5f214e24a9f43d1b6a648950d96ec071465a25b23ef315340e73e13e493193a91ce&amp;ascene=0&amp;uin=Mjk1NzEwNjYxMA%3D%3D&amp;devicetype=iMac15%2C1+OSX+OSX+10.10.4+build(14E46)&amp;version=11020201&amp;pass_ticket=R3QSQ71v43i%2FmEv8zhmbY40zPeaKdZYL1p4zPkxxBDSA4%2BGBnJaKkuXxDe42CW2Q">QQ空间开发团队-Android相机开发那些坑</a></p>
 
 <p><a href="http://blog.csdn.net/yanzi1225627/article/details/33313707">CSDN某博主一系列不错的Camera文章</a></p>
 
-<h1 id="yuv">关于图片格式 YUV</h1>
-
-<p>YUV的存储格式比较特别，一般都是多个Y公用UV，常见如下</p>
-
-<p>I420: YYYYYYYY UU VV    =&gt;YUV420P</p>
-
-<p>YV12: YYYYYYYY VV UU    =&gt;YUV420P</p>
-
-<p>NV12: YYYYYYYY UVUV     =&gt;YUV420SP</p>
-
-<p>NV21: YYYYYYYY VUVU     =&gt;YUV420SP</p>
-
-<p>[<a href="[http://www.cnblogs.com/azraelly/archive/2013/01/01/2841269.html">http://www.cnblogs.com/azraelly/archive/2013/01/01/2841269.html</a></p>
-
-<p><a href="http://blog.csdn.net/beyond_cn/article/details/12998247">http://blog.csdn.net/beyond_cn/article/details/12998247</a></p>
-
 
         <nav class="pagination" role="navigation">
           
-            <a href="/android/Android-Fingerprint/" class="btn" title="Android 指纹识别">Previous</a>
+            <a href="/android/android-storage/" class="btn" title="Android存储的坑">Previous</a>
           
-          
-            <a href="/android/android-storage/" class="btn" title="Android存储的坑">Next</a>
           
         </nav><!-- /.pagination -->
         
@@ -334,7 +332,7 @@
 
 <span>&copy; 2016 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
 <div class="social-icons">
-	
+	<a href="http://twitter.com/chenhuazhaoao" title="Quinn Chen on Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x"></i></a>
 	
 	
 	

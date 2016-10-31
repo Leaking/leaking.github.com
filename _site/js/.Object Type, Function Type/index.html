@@ -14,8 +14,8 @@
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="《JS高级程序设计》Note3-Object Type, Function Type">
 <meta name="twitter:description" content="">
-
-
+<meta name="twitter:site" content="@chenhuazhaoao">
+<meta name="twitter:creator" content="@chenhuazhaoao">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
@@ -177,7 +177,7 @@
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=JS&text=《JS高级程序设计》Note3-Object%20Type,%20Function%20Type&url=/js/.Object%20Type,%20Function%20Type/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=JS&text=《JS高级程序设计》Note3-Object%20Type,%20Function%20Type&url=/js/.Object%20Type,%20Function%20Type/&via=chenhuazhaoao" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
           <a href="https://www.facebook.com/sharer/sharer.php?u=/js/.Object%20Type,%20Function%20Type/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
@@ -268,7 +268,7 @@
 
 <h3 id="section">访问对象的属性</h3>
 
-<p>访问对象的属性可以有两种方式，除了<strong>点表示法</strong>，还可以使用<strong>方括号表示法</strong>。不过属性名应该以字符串的形式放在方括号中
+<p>访问对象的属性可以有两种方式，除了<strong>点表示法</strong>，还可以使用<strong>方括号表示法</strong>。不过属性名应该以字符串的形式放在方括号中<br />
 如下</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">alert</span><span class="p">(</span><span class="nx">person</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]);</span> <span class="c1">//&quot;Nicholas&quot;</span>
@@ -287,7 +287,7 @@
 
 <h1 id="function-type">Function Type</h1>
 
-<p>javascript中的函数也是对象，函数名是指向函数对象的指针，所以，javascript中的重载其实只是
+<p>javascript中的函数也是对象，函数名是指向函数对象的指针，所以，javascript中的重载其实只是<br />
 函数名指向另一个函数而已。</p>
 
 <p>定义函数可以有以下三种方式</p>
@@ -339,7 +339,7 @@
                    
 <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">addSomeNumber</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span> <span class="c1">//300</span></code></pre></div>
 
-<p>我们貌似对addSomeNumber(num)进行了重载，然后进行调用，最后调用到了第二个函数，
+<p>我们貌似对addSomeNumber(num)进行了重载，然后进行调用，最后调用到了第二个函数，<br />
 其实此处没有重载，下面代码等同于上面代码，</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">addSomeNumber</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">num</span><span class="p">){</span>
@@ -378,8 +378,8 @@
 
 <h3 id="functions-as-values">Functions as Values</h3>
 
-<p>函数作为值，可以作为值传入给某个函数，也可以作为某个函数的返回值
-(This means it’s possible not only to pass a function into another
+<p>函数作为值，可以作为值传入给某个函数，也可以作为某个函数的返回值<br />
+(This means it’s possible not only to pass a function into another<br />
 function as an argument but also to return a function as the result of another function.)</p>
 
 <h3 id="pass-a-function-into-another-function">pass a function into another function</h3>
@@ -402,12 +402,12 @@ function as an argument but also to return a function as the result of another f
 <span class="kd">var</span> <span class="nx">result2</span> <span class="o">=</span> <span class="nx">callSomeFunction</span><span class="p">(</span><span class="nx">getGreeting</span><span class="p">,</span> <span class="s2">&quot;Nicholas&quot;</span><span class="p">);</span>
 <span class="nx">alert</span><span class="p">(</span><span class="nx">result2</span><span class="p">);</span> <span class="c1">//&quot;Hello, Nicholas&quot;</span></code></pre></div>
 
-<p>上面代码定义函数callSomeFunction，它能接收2个参数，一个是某个函数指针x，一个是函数x的参数，
+<p>上面代码定义函数callSomeFunction，它能接收2个参数，一个是某个函数指针x，一个是函数x的参数，<br />
 然后在callSomeFunction执行函数x 。</p>
 
 <h3 id="return-a-function-as-the-result-of-another-function">return a function as the result of another function</h3>
 
-<p>以下函数返回结果是一个函数，这个返回函数主要是对object1，object2两个对象的某个属性进行比较。
+<p>以下函数返回结果是一个函数，这个返回函数主要是对object1，object2两个对象的某个属性进行比较。<br />
 该函数常用于数组的排序</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">createComparisonFunction</span><span class="p">(</span><span class="nx">propertyName</span><span class="p">)</span> <span class="p">{</span>
@@ -441,10 +441,10 @@ function as an argument but also to return a function as the result of another f
 
 <p><strong>arguments</strong></p>
 
-<p>arguments 对象代表传递给函数的参数数组，它也是一个对象，它有一个特殊的属性： callee
-callee此处其实也是个函数，但是在javascript中函数也是对象，所以此处也称为属性。
-callee指向拥有arguments对象的对象（ the arguments object
-also has a property named callee, which is a pointer to the function that owns the arguments
+<p>arguments 对象代表传递给函数的参数数组，它也是一个对象，它有一个特殊的属性： callee<br />
+callee此处其实也是个函数，但是在javascript中函数也是对象，所以此处也称为属性。<br />
+callee指向拥有arguments对象的对象（ the arguments object<br />
+also has a property named callee, which is a pointer to the function that owns the arguments<br />
 object）</p>
 
 <p>看如下递归例子</p>
@@ -457,7 +457,7 @@ object）</p>
     <span class="p">}</span>
 <span class="p">}</span></code></pre></div>
 
-<p>当函数指针赋值给另一个变量时，上面函数内部与名字factorial耦合则会出现问题
+<p>当函数指针赋值给另一个变量时，上面函数内部与名字factorial耦合则会出现问题<br />
 为了解决这个问题，可以用如下方式</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">factorial</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
@@ -479,7 +479,7 @@ object）</p>
 
 <p><strong>this</strong></p>
 
-<p>某个全局环境中的函数，它的this指针等同于window
+<p>某个全局环境中的函数，它的this指针等同于window<br />
 某个对象内部的函数的this，它指向这个对象本身。</p>
 
 <p>如下：</p>
@@ -496,7 +496,7 @@ object）</p>
 <span class="nx">o</span><span class="p">.</span><span class="nx">sayColor</span> <span class="o">=</span> <span class="nx">sayColor</span><span class="p">;</span>
 <span class="nx">o</span><span class="p">.</span><span class="nx">sayColor</span><span class="p">();</span> <span class="c1">//&quot;blue&quot;</span></code></pre></div>
 
-<p>ECMAScript还规范化了另一个函数对象的属性：caller。它指向调用当前函数的函数的引用，如果当前函数时在全局作用域中，
+<p>ECMAScript还规范化了另一个函数对象的属性：caller。它指向调用当前函数的函数的引用，如果当前函数时在全局作用域中，<br />
 则它的caller属性为null。如下代码：</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">outer</span><span class="p">(){</span>
@@ -507,7 +507,7 @@ object）</p>
 <span class="p">}</span>
 <span class="nx">outer</span><span class="p">();</span></code></pre></div>
 
-<p>上述代码将在警告框显示outer()函数的源代码
+<p>上述代码将在警告框显示outer()函数的源代码<br />
 为了实现更松散的耦合，可以如下</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">outer</span><span class="p">(){</span>
@@ -520,7 +520,7 @@ object）</p>
 
 <h3 id="function-properties-and-methods">Function Properties and Methods</h3>
 
-<p>Each function has two properties: length and prototype
+<p>Each function has two properties: length and prototype<br />
 .length属性返回函数的参数个数，prototype不在这里讲解。</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">sayName</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
@@ -585,12 +585,12 @@ object）</p>
 <span class="nx">sayColor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">window</span><span class="p">);</span> <span class="c1">//red</span>
 <span class="nx">sayColor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span> <span class="c1">//blue</span></code></pre></div>
 
-<p>Running sayColor.call(o) switches the context of the function such that this points to o, 
+<p>Running sayColor.call(o) switches the context of the function such that this points to o, <br />
 resulting in a display of “blue”.</p>
 
 <p>使用apply() , call() 扩大函数的作用域的好处是，对象与方法不需要有任何耦合关系。</p>
 
-<p>ECMAScript 5 定义了一个bind()方法，The bind() method creates a new 
+<p>ECMAScript 5 定义了一个bind()方法，The bind() method creates a new <br />
 function instance whose this value is bound to the value that was passed into bind()</p>
 
 <p>如下</p>
@@ -644,7 +644,7 @@ function instance whose this value is bound to the value that was passed into bi
 
 <span>&copy; 2016 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
 <div class="social-icons">
-	
+	<a href="http://twitter.com/chenhuazhaoao" title="Quinn Chen on Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x"></i></a>
 	
 	
 	

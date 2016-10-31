@@ -14,8 +14,8 @@
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="【译】Processes and Threads">
 <meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-
-
+<meta name="twitter:site" content="@chenhuazhaoao">
+<meta name="twitter:creator" content="@chenhuazhaoao">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
@@ -177,7 +177,7 @@
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=android&text=【译】Processes%20and%20Threads&url=/android/(translate)ProcessesAndThreads/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=android&text=【译】Processes%20and%20Threads&url=/android/(translate)ProcessesAndThreads/&via=chenhuazhaoao" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
           <a href="https://www.facebook.com/sharer/sharer.php?u=/android/(translate)ProcessesAndThreads/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
@@ -250,7 +250,7 @@
 
 <ol>
   <li>某个activity虽然不是处于前台（foreground），但是依然可见（visible），一般都是因为visible precess执行了onPause方法。举个例子，某个处于前台的activity启动了一个dialog，此时该activity从前台（foreground）转变为可见（visible）。这种可见activity所在进程就是visible precess.</li>
-  <li>某个service与某个visible 或者foreground的activity绑定，则该service所在的进程就是visible precess。
+  <li>某个service与某个visible 或者foreground的activity绑定，则该service所在的进程就是visible precess。<br />
 一般visible precess不会被杀死，除非系统急需回收资源，并且得保持foreground process运行，则就必须杀死visible process。</li>
 </ol>
 
@@ -270,8 +270,8 @@
   <li>Empty process</li>
 </ul>
 
-<p>Empty process中没有任何活跃的组件。这种进程存在的意义就是为了缓存，它们可以改善下次组件的启动时长。系统杀死这种进程一般是为了平衡这些进程中的缓存以及底层kernel缓存。（这句话不大懂，翻译不好）
-当一个进程同时属于以上5种进程中的多种类型，则android系统会将其归类到重要性较高的一种。比如一个进程同时拥有一个service和一个visible的activity，则该进程将被归类到visible process，而不是service process。
+<p>Empty process中没有任何活跃的组件。这种进程存在的意义就是为了缓存，它们可以改善下次组件的启动时长。系统杀死这种进程一般是为了平衡这些进程中的缓存以及底层kernel缓存。（这句话不大懂，翻译不好）<br />
+当一个进程同时属于以上5种进程中的多种类型，则android系统会将其归类到重要性较高的一种。比如一个进程同时拥有一个service和一个visible的activity，则该进程将被归类到visible process，而不是service process。<br />
 另外，一个进程的排序，可能会因为某种依赖关系而上升，比如，进程A中某个组件依赖于进程B中的某个组件，则进程B的重要性排序就不能低于进程A。至少重要性要相同。</p>
 
 <p>如上所述，我们可以知道，运行着service的进程，以及运行着后台activity的进程，前者的重要性排序高于后者。所以需要启动一个耗时操作的activity，这个activity最好启动一个service执行该耗时操作，而不是通过建立一个普通的worker thread。特别是当该耗时操作的时间长于activity的生命周期。比如，一个activity将上传一张图片，可以启动一个service来上传图片，这样，这个service将可以在用户离开activity时仍继续运行。使用service可以保证该耗时操作至少有一个“service process”级别的重要性。无论所在的activity发生了什么。同理，我们最好在broadcast receiver中通过启动一个service执行耗时操作，而不是启动一个thread。</p>
@@ -297,7 +297,7 @@
 
 <h3 id="worker-threads">Worker threads</h3>
 
-<p>如上面所描述的单线程模型，UI的反应不该阻塞UI线程，当你需要执行不是短时间的操作，那么你最好就在单独的线程中执行。
+<p>如上面所描述的单线程模型，UI的反应不该阻塞UI线程，当你需要执行不是短时间的操作，那么你最好就在单独的线程中执行。<br />
 比如，以下在一个点击监听器中下载图片，并将图片显示在imageview中，</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>  
@@ -423,7 +423,7 @@
 
 <span>&copy; 2016 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
 <div class="social-icons">
-	
+	<a href="http://twitter.com/chenhuazhaoao" title="Quinn Chen on Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x"></i></a>
 	
 	
 	

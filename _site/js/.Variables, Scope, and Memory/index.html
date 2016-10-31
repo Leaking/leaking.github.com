@@ -14,8 +14,8 @@
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="《JS高级程序设计》Note2-Variables, Scope, and Memory">
 <meta name="twitter:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
-
-
+<meta name="twitter:site" content="@chenhuazhaoao">
+<meta name="twitter:creator" content="@chenhuazhaoao">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
@@ -177,7 +177,7 @@
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=JS&text=《JS高级程序设计》Note2-Variables,%20Scope,%20and%20Memory&url=/js/.Variables,%20Scope,%20and%20Memory/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=JS&text=《JS高级程序设计》Note2-Variables,%20Scope,%20and%20Memory&url=/js/.Variables,%20Scope,%20and%20Memory/&via=chenhuazhaoao" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
           <a href="https://www.facebook.com/sharer/sharer.php?u=/js/.Variables,%20Scope,%20and%20Memory/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
@@ -202,7 +202,7 @@
       <div class="entry-content">
         <h1 id="working-with-primitive-and-reference-values-in-variables">Working with primitive and reference values in variables</h1>
 
-<p><strong>基本ss类型（primitive values）</strong> 有5种：Undefined, Null, Boolean, Number, and Strin
+<p><strong>基本ss类型（primitive values）</strong> 有5种：Undefined, Null, Boolean, Number, and Strin<br />
 <strong>引用类型（Reference values）</strong> 在操作对象时，是通过引用访问的，而非直接操作对象。</p>
 
 <h3 id="dynamic-properties---">Dynamic Properties   （动态的属性）</h3>
@@ -281,7 +281,7 @@
 <span class="nx">setName</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
 <span class="nx">alert</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">//”Nicholas”</span></code></pre></div>
 
-<p>这样理解，传递近来的obj和person是指向同一个Object对象的两个指针，之所以它们指向同一个对象，是因为赋值的作用
+<p>这样理解，传递近来的obj和person是指向同一个Object对象的两个指针，之所以它们指向同一个对象，是因为赋值的作用<br />
 而当obj被赋予新的对象时，则和person不再指向同一个对象。</p>
 
 <h3 id="determining-type-">Determining Type （检测类型）</h3>
@@ -312,7 +312,7 @@
 
 <p>使用instanceof检测一个基本数据类型是不是Object，始终返回false</p>
 
-<p>使用typeof操作函数时，该操作符返回“function”，
+<p>使用typeof操作函数时，该操作符返回“function”，<br />
 使用typeof操作正则表达式时，部分浏览器返回”function”，部分返回”object”.</p>
 
 <h1 id="execution-context-and-scope-">EXECUTION CONTEXT AND SCOPE （执行环境及作用域）</h1>
@@ -342,8 +342,8 @@
 <span class="c1">//only color is accessible here</span>
 <span class="nx">changeColor</span><span class="p">();</span></code></pre></div>
 
-<p>如下图，
-window ，changeColor()，swapColor()及其各自下方的矩形，代表3个执行环境，
+<p>如下图，<br />
+window ，changeColor()，swapColor()及其各自下方的矩形，代表3个执行环境，<br />
 而其中的树状结构则代表作用域链。</p>
 
 <p><img src="/images/excute.jpg" alt="num1 and num2" /></p>
@@ -400,8 +400,8 @@ window ，changeColor()，swapColor()及其各自下方的矩形，代表3个执
     <span class="k">return</span> <span class="nx">url</span><span class="p">;</span>
 <span class="p">}</span></code></pre></div>
 
-<p>注意两点
-* with语句的功能类似于java中的静态引入，原本你要写location.href，现在只需要写href
+<p>注意两点<br />
+* with语句的功能类似于java中的静态引入，原本你要写location.href，现在只需要写href<br />
 * with块中声明定义的变量，属于包含着with块的作用域中。（外一层可以访问，因为js中没有块作用域的概念）</p>
 
 <h3 id="no-block-level-scopes--">No Block-Level Scopes  （没有块级作用域）</h3>
@@ -450,8 +450,8 @@ window ，changeColor()，swapColor()及其各自下方的矩形，代表3个执
 
 <h1 id="garbage-collection-">GARBAGE COLLECTION （垃圾收集）</h1>
 
-<p>垃圾收集有两种方式，
-* 标记清除，目前主流的方式
+<p>垃圾收集有两种方式，<br />
+* 标记清除，目前主流的方式<br />
 * 引用技术，会有循环引用的隐患</p>
 
         <nav class="pagination" role="navigation">
@@ -490,7 +490,7 @@ window ，changeColor()，swapColor()及其各自下方的矩形，代表3个执
 
 <span>&copy; 2016 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
 <div class="social-icons">
-	
+	<a href="http://twitter.com/chenhuazhaoao" title="Quinn Chen on Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x"></i></a>
 	
 	
 	

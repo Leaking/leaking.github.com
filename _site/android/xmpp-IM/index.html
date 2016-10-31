@@ -14,8 +14,8 @@
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="基于XMPP协议即时通讯工具开发总结">
 <meta name="twitter:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-
-
+<meta name="twitter:site" content="@chenhuazhaoao">
+<meta name="twitter:creator" content="@chenhuazhaoao">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
@@ -177,7 +177,7 @@
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=android,xmpp,IM&text=基于XMPP协议即时通讯工具开发总结&url=/android/xmpp-IM/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=android,xmpp,IM&text=基于XMPP协议即时通讯工具开发总结&url=/android/xmpp-IM/&via=chenhuazhaoao" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
           <a href="https://www.facebook.com/sharer/sharer.php?u=/android/xmpp-IM/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
@@ -201,16 +201,16 @@
       </footer>
       <div class="entry-content">
         <h2 id="section">一、概要</h2>
-<p>转眼毕业了，毕业设计的课题是“基于XMPP协议的通讯工具”，开发平台式android，实现了基本的离线消息，文字聊天，表情聊天，文件传输，语音聊天的功能。
+<p>转眼毕业了，毕业设计的课题是“基于XMPP协议的通讯工具”，开发平台式android，实现了基本的离线消息，文字聊天，表情聊天，文件传输，语音聊天的功能。<br />
 本文主要介绍开发过程中服务器的配置，开发包Asmack的使用，以及其它一些开源包的使用（如表情包）。</p>
 
 <h2 id="xmppopenfire">二、XMPP协议以及Openfire服务器</h2>
 
 <h3 id="xmpp">1，XMPP协议</h3>
 
-<p>何为XMPP协议，简要（不精确）地说：“XMPP一种开源的通讯协议，只要是基于这个协议开发的通讯工具，都可以相互通讯（不同服务器的用户则需要在服务器相互连接的前提下，才能跨服务器通讯）。” 另外XMPP协议以前的名字是Jabber。
-关于XMPP协议的官网，如下（英文为官网，中文为国人翻译的版本）
-<a href="http://xmpp.org/rfcs/rfc3921.html#toc">XMPP官网</a>
+<p>何为XMPP协议，简要（不精确）地说：“XMPP一种开源的通讯协议，只要是基于这个协议开发的通讯工具，都可以相互通讯（不同服务器的用户则需要在服务器相互连接的前提下，才能跨服务器通讯）。” 另外XMPP协议以前的名字是Jabber。<br />
+关于XMPP协议的官网，如下（英文为官网，中文为国人翻译的版本）<br />
+<a href="http://xmpp.org/rfcs/rfc3921.html#toc">XMPP官网</a><br />
 <a href="http://wiki.jabbercn.org/RFC3921#.E4.BA.A4.E6.8D.A2.E5.87.BA.E5.B8.AD.E4.BF.A1.E6.81.AF">XMPP官网中文翻译</a></p>
 
 <h3 id="openfire">2，Openfire服务器</h3>
@@ -225,9 +225,9 @@
 
 <p><a href="http://www.igniterealtime.org/downloads/index.jsp">Spark下载地址：</a></p>
 
-<h2 id="asmack-api">三，Asmack开发包 API的使用</h2>
+<p>##三，Asmack开发包 API的使用</p>
 
-<p>smack是官方给出的xmpp协议在java平台的开发包，而asmack是android平台的xmpp协议开发包
+<p>smack是官方给出的xmpp协议在java平台的开发包，而asmack是android平台的xmpp协议开发包<br />
 <a href="https://github.com/Flowdalic/asmack">Asmack下载官网：</a></p>
 
 <p>smack和Asmack的API基本没有区别，所以可以开发过程可以参照smack的API</p>
@@ -236,16 +236,16 @@
 
 <p><a href="http://www.igniterealtime.org/builds/smack/docs/latest/documentation/index.html">smack(Asmack)使用指导：</a></p>
 
-<h2 id="section-1">四，表情聊天</h2>
-<p>表情聊天使用了开源包Emojicon</p>
+<p>##四，表情聊天<br />
+表情聊天使用了开源包Emojicon</p>
 
 <p><a href="http://rockerhieu.com/">Emojicon官网：</a></p>
 
-<h2 id="section-2">五，版本问题</h2>
+<p>##五，版本问题</p>
 
 <p>开发过程中遇到两个关于版本的问题</p>
 
-<p>1，Openfire 3.9.2开始才支持emoji字符，3.9.1及更旧的版本多不支持emojicon字符
+<p>1，Openfire 3.9.2开始才支持emoji字符，3.9.1及更旧的版本多不支持emojicon字符<br />
 2，不知道为什么部分版本的asmack在文件传输时会出现问题，以下这个版本是我在网上找到的一个可以正常使用的版本</p>
 
 <p><a href="http://download.csdn.net/detail/chziroy/7482381">可以使用的asmack下载地址：</a></p>
@@ -284,7 +284,7 @@
 
 <span>&copy; 2016 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
 <div class="social-icons">
-	
+	<a href="http://twitter.com/chenhuazhaoao" title="Quinn Chen on Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x"></i></a>
 	
 	
 	

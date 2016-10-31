@@ -2,7 +2,7 @@
 
 title: My Stupid Blog
 locale: en_US
-description: 
+description: 我写下的故事，只是时间的灰烬
 logo: site-logo.png
 search: true
 url: 
@@ -12,7 +12,6 @@ url:
 
 permalink:   /:categories/:title/
 markdown:    kramdown  
-# highlighter: rouge
 sass:
   sass_dir: _sass
   style: compressed
@@ -20,11 +19,15 @@ gems:
   - jekyll-sitemap
 
 kramdown :
+  input: GFM
   auto_ids: true
   footnote_nr: 2
   entity_output: as_char
   toc_levels: 1..6
   use_coderay: true
+  syntax_highlighter: rouge
+  coderay:
+    coderay_line_numbers:  nil
 
 include: [".htaccess"]
 exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md", "vendor"]
@@ -36,7 +39,7 @@ owner:
   avatar: bio-photo.jpg
   email: chenhuazhaoao@gmail.com
   disqus-shortname:
-  twitter: #username
+  twitter: chenhuazhaoao
   facebook: #username
   github: Leaking
   weibo: hereamme

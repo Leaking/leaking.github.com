@@ -14,8 +14,8 @@
 <!-- Twitter Cards -->
 <meta name="twitter:title" content="Java容器概览">
 <meta name="twitter:description" content="Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more.">
-
-
+<meta name="twitter:site" content="@chenhuazhaoao">
+<meta name="twitter:creator" content="@chenhuazhaoao">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
@@ -177,7 +177,7 @@
         
         
         <span class="social-share-twitter">
-          <a href="https://twitter.com/intent/tweet?hashtags=Java&text=Java容器概览&url=/java/javase-collection-01/" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+          <a href="https://twitter.com/intent/tweet?hashtags=Java&text=Java容器概览&url=/java/javase-collection-01/&via=chenhuazhaoao" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
         </span>
         <span class="social-share-facebook">
           <a href="https://www.facebook.com/sharer/sharer.php?u=/java/javase-collection-01/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
@@ -253,7 +253,7 @@
 
 <p>每调用一次next只有，才能调用remove，有且只能调用一次。部分Collections的子接口没有实现该方法。另外，for–each遍历方式中，在遍历过程中不能移除容器元素。</p>
 
-<p>在遍历过程中，修改容器的唯一方式就是使用Iterator的remove方法。所以要过滤容器中的某些元素，
+<p>在遍历过程中，修改容器的唯一方式就是使用Iterator的remove方法。所以要过滤容器中的某些元素，<br />
 可以使用Iterator、如下</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">static</span> <span class="kt">void</span> <span class="nf">filter</span><span class="o">(</span><span class="n">Collection</span><span class="o">&lt;?&gt;</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
@@ -285,7 +285,7 @@
 <p>看到其中的注释了没：</p>
 
 <blockquote>
-  <p>Implementing this interface allows an object to be the target of the
+  <p>Implementing this interface allows an object to be the target of the<br />
 “foreach” statement.</p>
 </blockquote>
 
@@ -299,8 +299,8 @@
 
 <p>所有容器都有两个构造方法，一个是默认的构造方法，一个是带有一个Collection参数的构造方法，它可以参数Collection其中的元素填充当前容器。（注意哦，这里讲的容器都是Collection以及其子类，不包含Map）</p>
 
-<p>平时填充容器的方式还可以这样：
-1，使用Arrays.asList(）方法生成List，然后再调用Collection的addAll方法将刚生成的List加入。不过得注意一点，Arrays.asList()生成的List底层是一个固定大小的数组，所以不能增删元素，只可以修改元素。
+<p>平时填充容器的方式还可以这样：<br />
+1，使用Arrays.asList(）方法生成List，然后再调用Collection的addAll方法将刚生成的List加入。不过得注意一点，Arrays.asList()生成的List底层是一个固定大小的数组，所以不能增删元素，只可以修改元素。<br />
 2，使用Collections的addAll往一个Collection添加多个元素</p>
 
 <p>以上两种方法的灵活之处是，其参数可以接受可变参数，而且这种方式执行更快（Think in java是这样推荐的）。</p>
@@ -339,7 +339,7 @@
 
 <h5 id="section-5">打印容器</h5>
 
-<p>数组的打印，不能直接打印数组对象，也不能打印数组对象的toString()结果，而要使用工具类Arrays的方法
+<p>数组的打印，不能直接打印数组对象，也不能打印数组对象的toString()结果，而要使用工具类Arrays的方法<br />
 Arrays.toString</p>
 
 <p>而容器的打印，只需直接打印容器对象即可，因为容器对象都重写了其中的toString方法。</p>
@@ -466,7 +466,7 @@ Arrays.toString</p>
 
 <p>先写到这里吧。</p>
 
-<p>参考自：
+<p>参考自：<br />
 1, <a href="http://docs.oracle.com/javase/tutorial/collections/">http://docs.oracle.com/javase/tutorial/collections/</a></p>
 
 <p>2, 《Think in Java》</p>
@@ -508,7 +508,7 @@ Arrays.toString</p>
 
 <span>&copy; 2016 Quinn Chen. Powered by <a href="http://jekyllrb.com">Jekyll</a> </span>
 <div class="social-icons">
-	
+	<a href="http://twitter.com/chenhuazhaoao" title="Quinn Chen on Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x"></i></a>
 	
 	
 	
