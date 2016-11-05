@@ -43,20 +43,20 @@ token的作用是授权给第三方应用访问资源，使其不用每次请求
 
 + 资源拥有者（resource owner）
 
-  资源拥有者是拥有对资源进行授权的一方，经常就是永远账号密码的用户 
+  资源拥有者是拥有对资源进行授权的一方，经常就是永远账号密码的用户
 
 + 资源服务器（resource server）
 
   资源服务器持有某些资源，负责处理对这些资源的请求以及响应这些请求。
 
 + 客户端（client）
-  
+
   这里的客户端就是第三方应用，它获得资源拥有者的授权后，就可以去请求某些受保护的资源
-  
+
 + 授权服务器（authorization server）
 
   授权服务器负责发放token，当然，发放token的前提是客户端已经被授权。
-  
+
 
 ### 四个角色的关系
 
@@ -213,10 +213,3 @@ public Bundle getAuthToken(AccountAuthenticatorResponse response, Account accoun
 另外，我已经将其应用于我的项目
 
 [https://github.com/Leaking/GithubKnife](https://github.com/Leaking/GithubKnife)
-
-
-
-
-
-
-

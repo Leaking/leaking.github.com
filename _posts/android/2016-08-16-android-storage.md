@@ -14,12 +14,12 @@ comments: true
 share: true
 ---
 
-一直以来用到Android中关于`Sdcard`或者`data/data`相关的存储时，以及读写权限问题，难免会有混淆，这里做个总结。
+一直以来用到Android中关于*Sdcard*或者*data/data*相关的存储时，以及读写权限问题，难免会有混淆，这里做个总结。
 
 
 # 总体
 
-正所谓`no-pic-u-say-jj`，一直以来看很多总结`Android`存储的文章，我都很期待有一副图片可以总结以下各种存储。此处简单画了一份。
+正所谓*no-pic-u-say-jj*，一直以来看很多总结*Android*存储的文章，我都很期待有一副图片可以总结以下各种存储。此处简单画了一份。
 
 <figure>
   <img src="{{ site.url }}/images/storage_1.jpeg" alt="search screenshot">
@@ -94,6 +94,3 @@ getDir("custom", Context.MODE_PRIVATE);
 /data/data/<package-name>/app_custom
 
 {% endhighlight %}
-
-
-
