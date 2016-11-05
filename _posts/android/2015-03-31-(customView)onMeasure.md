@@ -28,22 +28,22 @@ share: true
 
 {% highlight java %}
 public class MyView extends View {  
-  
+
     public MyView(Context context, AttributeSet attrs, int defStyleAttr) {  
         super(context, attrs, defStyleAttr);  
         // TODO Auto-generated constructor stub  
     }  
-  
+
     public MyView(Context context, AttributeSet attrs) {  
         super(context, attrs);  
         // TODO Auto-generated constructor stub  
     }  
-  
+
     public MyView(Context context) {  
         super(context);  
         // TODO Auto-generated constructor stub  
     }  
-      
+
     @Override  
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {  
         // TODO Auto-generated method stub  
@@ -64,19 +64,19 @@ public class MyView extends View {
     android:orientation="vertical"  
     android:padding="@dimen/activity_vertical_margin"  
     tools:context="com.notes.notes_onmeasure.EasyActivity" >  
-  
-      
-      
+
+
+
     <com.notes.notes_onmeasure.MyView  
         android:layout_width="wrap_content"  
         android:layout_height="wrap_content"  
         android:background="#78787878" />  
-  
+
     <TextView  
         android:layout_width="wrap_content"  
         android:layout_height="wrap_content"  
         android:text="能看到我吗？" />  
-  
+
 </LinearLayout>  
 
 {% endhighlight %}
@@ -116,13 +116,13 @@ onMeasure()方法有两个参数，这两个参数就是父视图发过来给子
         int height = measureDimension(200, heightMeasureSpec);  
         setMeasuredDimension(width, height);  
     }  
-  
+
     public int measureDimension(int defaultSize, int measureSpec){  
         int result;  
-          
+
         int specMode = MeasureSpec.getMode(measureSpec);  
         int specSize = MeasureSpec.getSize(measureSpec);  
-          
+
         if(specMode == MeasureSpec.EXACTLY){  
             result = specSize;  
         }else{  
@@ -141,7 +141,7 @@ onMeasure()方法有两个参数，这两个参数就是父视图发过来给子
 
 {% highlight java %}
 int specMode = MeasureSpec.getMode(measureSpec);  
-int specSize = MeasureSpec.getSize(measureSpec); 
+int specSize = MeasureSpec.getSize(measureSpec);
 {% endhighlight %}
 
 MeasureSpec.getMode()方法返回的结果有三种：
@@ -149,4 +149,3 @@ MeasureSpec.getMode()方法返回的结果有三种：
 + **UNSPECIFIED**：父结点对子结点的大小没有任何要求。
 + **EXACTLY**:  父结点要求其子节点的大小指定为某个确切的值。其子节点以及其他子孙结点都需要适应该大小。   
 + **AT MOST**：父结点要求其子节点的大小不能超过某个最大值，其子节点以及其他子孙结点的大小都需要小于这个值
-

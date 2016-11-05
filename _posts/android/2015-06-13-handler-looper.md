@@ -344,8 +344,8 @@ public Object obj; // 用于传递复杂数据
 /*package*/ Bundle data; // 可以用于传递复杂数据，需要借助getter和setter方法
 /*package*/ Handler target; // 指向发送/处理当前Message的Handler
 /*package*/ Runnable callback; // 当使用post方式发送消息时，该参数将被赋值
-  
-                     
+
+
 {% endhighlight %}
 
 
@@ -386,7 +386,7 @@ this.handler = new Handler() {
 
 {% highlight java %}
 
- 
+
   public Handler() {
       this(null, false);
   }
@@ -543,18 +543,3 @@ public static void main(String[] args) {
     }
 
 {% endhighlight %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

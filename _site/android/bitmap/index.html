@@ -210,7 +210,7 @@
   <p>一张bitmap占用内存 ＝ 长度 ＊ 宽度 ＊ 一个像素占用的内存</p>
 </blockquote>
 
-<p>此处的长度和宽度对应图片像素，而一个像素占用多少内存，这是通过我们平时经常看到的<code>ALPHA_8</code>，<code>RGB_565</code>，<code>ARGB_4444</code>，<code>ARGB_8888</code>来设置的。这四个值是<code>Bitmap</code>对象的一个内部枚举类<code>Bitmap.Config</code>的四个属性，它们各自的特点如下：</p>
+<p>此处的长度和宽度对应图片像素，而一个像素占用多少内存，这是通过我们平时经常看到的<em>ALPHA_8</em>，<em>RGB_565</em>，<em>ARGB_4444</em>，<em>ARGB_8888</em>来设置的。这四个值是<em>Bitmap</em>对象的一个内部枚举类<em>Bitmap.Config</em>的四个属性，它们各自的特点如下：</p>
 
 <p><strong>ALPHA_8</strong>：一个像素占用一个字节，此处的8是指一个字节的透明度，图片不显示颜色值，只显示透明度，其实这个属性如何应用我还没完全探索明白，后续再研究。</p>
 
@@ -220,21 +220,21 @@
 
 <p><strong>RGB_8888</strong>：一个像素占用4个字节,android系统使用该值做为默认值，毋庸置疑，该值是图片质量最高的，也是占用内存最多的。</p>
 
-<p><code>Bitmap.Config</code>的设置主要在两个地方使用，一个是<code>Bitmap</code>的<code>createBitmap</code>方法</p>
+<p><em>Bitmap.Config</em>的设置主要在两个地方使用，一个是<em>Bitmap</em>的<em>createBitmap</em>方法</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="n">Bitmap</span> <span class="nf">createBitmap</span><span class="o">(</span><span class="kt">int</span> <span class="n">width</span><span class="o">,</span> <span class="kt">int</span> <span class="n">height</span><span class="o">,</span> <span class="n">Config</span> <span class="n">config</span><span class="o">)</span></code></pre></div>
 
-<p>另一个是<code>BitmapFactory</code>内部类<code>Option</code>的<code>inPreferredConfig</code>属性,平时我们经常使用<code>isSampleSize</code>属性来压缩图片的像素，其实还可以通过<code>inPreferredConfig</code>设置每个像素占用几个字节，对于不透明的图片，可以使用<code>RGB_565</code>减少每个像素占用的内存。</p>
+<p>另一个是<em>BitmapFactory</em>内部类<em>Option</em>的<em>inPreferredConfig</em>属性,平时我们经常使用<em>isSampleSize</em>属性来压缩图片的像素，其实还可以通过<em>inPreferredConfig</em>设置每个像素占用几个字节，对于不透明的图片，可以使用<em>RGB_565</em>减少每个像素占用的内存。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">Bitmap</span><span class="o">.</span><span class="na">Config</span> <span class="n">inPreferredConfig</span> <span class="o">=</span> <span class="n">Bitmap</span><span class="o">.</span><span class="na">Config</span><span class="o">.</span><span class="na">ARGB_8888</span><span class="o">;</span></code></pre></div>
 
 <h1 id="section">二、图片压缩</h1>
 
-<p>平时我们都是通过<code>isSampleSize</code>压缩图片，这个知识点应该是总所周知的。需要注意的是，如上所说，我们同时也可以借助<code>inPreferredConfig</code>.</p>
+<p>平时我们都是通过<em>isSampleSize</em>压缩图片，这个知识点应该是总所周知的。需要注意的是，如上所说，我们同时也可以借助<em>inPreferredConfig</em>.</p>
 
 <h1 id="listview">三、listview等控件中并发的问题。</h1>
 
-<p>当使用<code>viewholder</code>的模式加载<code>listview</code>，某些正在下载图片中的<code>view</code>，可能已经被回收给其他<code>view</code>复用了，当图片下载完，会使得在新的<code>view</code>上呈现其他<code>view</code>的图片，从而导致顺序错乱，为了解决这个并发异步的问题，需要建立<code>url--Imageview--AsyncTask</code>的一一对应关系，这样就可以完美解决这个问题，这个知识点可以参考以下两篇文章</p>
+<p>当使用<em>viewholder</em>的模式加载<em>listview</em>，某些正在下载图片中的<em>view</em>，可能已经被回收给其他<em>view</em>复用了，当图片下载完，会使得在新的<em>view</em>上呈现其他<em>view</em>的图片，从而导致顺序错乱，为了解决这个并发异步的问题，需要建立<em>url–Imageview–AsyncTask</em>的一一对应关系，这样就可以完美解决这个问题，这个知识点可以参考以下两篇文章</p>
 
 <p><a href="http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html">http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html</a></p>
 
@@ -340,7 +340,7 @@
     <span class="k">return</span> <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">cachePath</span> <span class="o">+</span> <span class="n">File</span><span class="o">.</span><span class="na">separator</span> <span class="o">+</span> <span class="n">uniqueName</span><span class="o">);</span>
 <span class="o">}</span></code></pre></div>
 
-<p>此处提一个小技巧，为了避免LruCache跟着<code>Activity</code>被销毁（比如屏幕旋转），可以将LruCache放在一个设置了<code>setRetainInstance(true)</code>的没有UI的fragment中。以下代码片段来自于<a href="http://developer.android.com/training/displaying-bitmaps/index.html">Displaying Bitmaps Efficiently</a>几篇文章中的例子DisplayingBitmaps，其中借助<code>RetainFragment</code>保存<code>ImageCache</code>对象，<code>ImageCache</code>对象不只持有LruCache，还有DiskLruCache。</p>
+<p>此处提一个小技巧，为了避免LruCache跟着<em>Activity</em>被销毁（比如屏幕旋转），可以将LruCache放在一个设置了<em>setRetainInstance(true)</em>的没有UI的fragment中。以下代码片段来自于<a href="http://developer.android.com/training/displaying-bitmaps/index.html">Displaying Bitmaps Efficiently</a>几篇文章中的例子DisplayingBitmaps，其中借助<em>RetainFragment</em>保存<em>ImageCache</em>对象，<em>ImageCache</em>对象不只持有LruCache，还有DiskLruCache。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="n">ImageCache</span> <span class="nf">getInstance</span><span class="o">(</span>
             <span class="n">FragmentManager</span> <span class="n">fragmentManager</span><span class="o">,</span> <span class="n">ImageCacheParams</span> <span class="n">cacheParams</span><span class="o">)</span> <span class="o">{</span>
@@ -418,27 +418,26 @@
 
 <h2 id="section-3">3.0之前</h2>
 
-<p>3.0之前，<code>Bitmap</code>对象保存在java堆<code>Dalvik heap</code>中，而图片像素数据保存在<code>native memory</code>中，前者有垃圾回收机制可以回收内存，<code>recycle()</code>方法是针对后者加快回收内存的，所以，在3.0以前，内存的回收推荐使用<code>recycle()</code>方法。</p>
+<p>3.0之前，<em>Bitmap</em>对象保存在java堆<em>Dalvik heap</em>中，而图片像素数据保存在<em>native memory</em>中，前者有垃圾回收机制可以回收内存，<em>recycle()</em>方法是针对后者加快回收内存的，所以，在3.0以前，内存的回收推荐使用<em>recycle()</em>方法。</p>
 
-<p>单个<code>Bitmap</code>的使用场景，我们很容易知道何时调用<code>recycle()</code>方法，而在<code>listview</code>这种类型的控件中，为了把握<code>Bitmap</code>被回收的时机，我们可以借助引用计数，使<code>Bitmap</code>在没有被使用没有被缓存时调用<code>recycle()</code>。</p>
+<p>单个<em>Bitmap</em>的使用场景，我们很容易知道何时调用<em>recycle()</em>方法，而在<em>listview</em>这种类型的控件中，为了把握<em>Bitmap</em>被回收的时机，我们可以借助引用计数，使<em>Bitmap</em>在没有被使用没有被缓存时调用<em>recycle()</em>。</p>
 
 <h2 id="section-4">3.0开始</h2>
 
-<p>3.0开始，<code>Bitmap</code>对象和像素数据都保存在java堆<code>Dalvik heap</code>中，二者的回收都有垃圾回收机制可以负责，所以3.0开始，<code>recycle()</code>并没有调用的必要性。但是依然有优化内存的方法，我们可以使用 <code>BitmapFactory.Options.inBitmap</code>属性，该属性可以使得多个<code>Bitmap</code>对象共用内存，这里说共用内存其实不准确，说<code>复用</code>可能更准确，其实是一个不被使用的<code>Bitmap</code>，其内存会被记录起来，后续被应用于其他<code>Bitmap</code>对象。以下是 <code>BitmapFactory.Options.inBitmap</code>字段的文档。</p>
+<p>3.0开始，<em>Bitmap</em>对象和像素数据都保存在java堆<em>Dalvik heap</em>中，二者的回收都有垃圾回收机制可以负责，所以3.0开始，<em>recycle()</em>并没有调用的必要性。但是依然有优化内存的方法，我们可以使用 <em>BitmapFactory.Options.inBitmap</em>属性，该属性可以使得多个<em>Bitmap</em>对象共用内存，这里说共用内存其实不准确，说<em>复用</em>可能更准确，其实是一个不被使用的<em>Bitmap</em>，其内存会被记录起来，后续被应用于其他<em>Bitmap</em>对象。以下是 <em>BitmapFactory.Options.inBitmap</em>字段的文档。</p>
 
 <figure>
   <img src="/images/inBitmap.png" alt="search screenshot" />
   <figcaption></figcaption>
 </figure>
 
-<p>从API=19开始，被复用的<code>Bitmap</code>占用内存大小只要大于新的<code>Bitmap</code>即可.在API=19之前，新的<code>Bitmap</code>必须和被复用的<code>Bitmap</code>占用内存大小一样,而且新的<code>Bitmap</code>需要<code>jpeg</code>或者<code>png</code>格式，<code>isSampleSize</code>需要等于1，而且<code>inPreferredConfig</code>也会被复用。</p>
+<p>从API=19开始，被复用的<em>Bitmap</em>占用内存大小只要大于新的<em>Bitmap</em>即可.在API=19之前，新的<em>Bitmap</em>必须和被复用的<em>Bitmap</em>占用内存大小一样,而且新的<em>Bitmap</em>需要<em>jpeg</em>或者<em>png</em>格式，<em>isSampleSize</em>需要等于1，而且<em>inPreferredConfig</em>也会被复用。</p>
 
 <h1 id="section-5">六、学习资源</h1>
 
 <p>1，Android官网的<a href="http://developer.android.com/training/displaying-bitmaps/index.html">Displaying Bitmaps Efficiently</a>几篇文章绝对是精华中的精华，以上很多知识点启示网上很多人都有写，但是我相信都是来自阅读这几篇文章。</p>
 
 <p>2，<a href="http://developer.android.com/training/displaying-bitmaps/index.html">Displaying Bitmaps Efficiently</a>这一系列文章有一个demo叫DisplayingBitmaps，这个demo结合了这几篇文章的所有知识点。</p>
-
 
         <nav class="pagination" role="navigation">
           

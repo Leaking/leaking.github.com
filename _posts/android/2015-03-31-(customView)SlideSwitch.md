@@ -39,7 +39,7 @@ share: true
 {% highlight xml %}
 <?xml version="1.0" encoding="utf-8"?>  
 <resources>  
-  
+
     <declare-styleable name="slideswitch">  
         <attr name="themeColor" format="color" />  
         <attr name="isOpen" format="boolean" />  
@@ -48,7 +48,7 @@ share: true
             <enum name="circle" value="2" />  
         </attr>  
     </declare-styleable>  
-  
+
 </resources>  
 {% endhighlight %}
 
@@ -61,9 +61,9 @@ share: true
 
 {% highlight java %}
 public class SlideSwitch extends View {  
-  
+
     //,,,,,,,省略,,,,,,,,,,  
-      
+
     public SlideSwitch(Context context, AttributeSet attrs, int defStyleAttr) {  
         super(context, attrs, defStyleAttr);  
         listener = null;  
@@ -77,11 +77,11 @@ public class SlideSwitch extends View {
         shape = a.getInt(R.styleable.slideswitch_shape, SHAPE_RECT);  
         a.recycle();  
     }  
-  
+
     public SlideSwitch(Context context, AttributeSet attrs) {  
         this(context, attrs, 0);  
     }  
-  
+
     public SlideSwitch(Context context) {  
         this(context, null);  
     }  
@@ -118,7 +118,7 @@ onDraw()部分比较容易，只需按照onMeasure()中计算出来的参数绘�
     android:orientation="vertical"  
     android:padding="10dip"  
     tools:context="com.example.testlibs.MainActivity" >  
-  
+
     <com.leaking.slideswitch.SlideSwitch  
         android:id="@+id/swit"  
         android:layout_width="150dip"  
@@ -127,7 +127,7 @@ onDraw()部分比较容易，只需按照onMeasure()中计算出来的参数绘�
         slideswitch:shape="rect"  
         slideswitch:themeColor="#ffee3a00" >  
     </com.leaking.slideswitch.SlideSwitch>  
-  
+
 </LinearLayout>  
 {% endhighlight %}
 
@@ -141,29 +141,29 @@ xmlns:随便起名字="http://schemas.android.com/apk/res/你的应用的包名"
 
 {% highlight java %}
 public class MainActivity extends Activity implements SlideListener {  
-  
+
     TextView txt;  
     SlideSwitch slide;  
     SlideSwitch slide2;  
-  
+
     @Override  
     protected void onCreate(Bundle savedInstanceState) {  
         super.onCreate(savedInstanceState);  
         setContentView(R.layout.activity_main);  
         slide = (SlideSwitch) findViewById(R.id.swit);  
         slide2 = (SlideSwitch) findViewById(R.id.swit2);  
-  
+
         slide.setState(false);  
         txt = (TextView) findViewById(R.id.txt);  
         slide.setSlideListener(this);  
     }  
-  
+
     @Override  
     public void open() {  
         // TODO Auto-generated method stub  
         txt.setText(" is opend ");  
     }  
-  
+
     @Override  
     public void close() {  
         // TODO Auto-generated method stub  
@@ -171,4 +171,3 @@ public class MainActivity extends Activity implements SlideListener {
     }  
 }  
 {% endhighlight %}
-

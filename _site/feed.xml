@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2016-11-05T16:44:50+08:00</updated>
+<updated>2016-11-05T18:10:14+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -678,7 +678,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
   &lt;p&gt;一张bitmap占用内存 ＝ 长度 ＊ 宽度 ＊ 一个像素占用的内存&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;此处的长度和宽度对应图片像素，而一个像素占用多少内存，这是通过我们平时经常看到的&lt;code&gt;ALPHA_8&lt;/code&gt;，&lt;code&gt;RGB_565&lt;/code&gt;，&lt;code&gt;ARGB_4444&lt;/code&gt;，&lt;code&gt;ARGB_8888&lt;/code&gt;来设置的。这四个值是&lt;code&gt;Bitmap&lt;/code&gt;对象的一个内部枚举类&lt;code&gt;Bitmap.Config&lt;/code&gt;的四个属性，它们各自的特点如下：&lt;/p&gt;
+&lt;p&gt;此处的长度和宽度对应图片像素，而一个像素占用多少内存，这是通过我们平时经常看到的&lt;em&gt;ALPHA_8&lt;/em&gt;，&lt;em&gt;RGB_565&lt;/em&gt;，&lt;em&gt;ARGB_4444&lt;/em&gt;，&lt;em&gt;ARGB_8888&lt;/em&gt;来设置的。这四个值是&lt;em&gt;Bitmap&lt;/em&gt;对象的一个内部枚举类&lt;em&gt;Bitmap.Config&lt;/em&gt;的四个属性，它们各自的特点如下：&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;ALPHA_8&lt;/strong&gt;：一个像素占用一个字节，此处的8是指一个字节的透明度，图片不显示颜色值，只显示透明度，其实这个属性如何应用我还没完全探索明白，后续再研究。&lt;/p&gt;
 
@@ -688,21 +688,21 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;RGB_8888&lt;/strong&gt;：一个像素占用4个字节,android系统使用该值做为默认值，毋庸置疑，该值是图片质量最高的，也是占用内存最多的。&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;Bitmap.Config&lt;/code&gt;的设置主要在两个地方使用，一个是&lt;code&gt;Bitmap&lt;/code&gt;的&lt;code&gt;createBitmap&lt;/code&gt;方法&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Bitmap.Config&lt;/em&gt;的设置主要在两个地方使用，一个是&lt;em&gt;Bitmap&lt;/em&gt;的&lt;em&gt;createBitmap&lt;/em&gt;方法&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createBitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Config&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;另一个是&lt;code&gt;BitmapFactory&lt;/code&gt;内部类&lt;code&gt;Option&lt;/code&gt;的&lt;code&gt;inPreferredConfig&lt;/code&gt;属性,平时我们经常使用&lt;code&gt;isSampleSize&lt;/code&gt;属性来压缩图片的像素，其实还可以通过&lt;code&gt;inPreferredConfig&lt;/code&gt;设置每个像素占用几个字节，对于不透明的图片，可以使用&lt;code&gt;RGB_565&lt;/code&gt;减少每个像素占用的内存。&lt;/p&gt;
+&lt;p&gt;另一个是&lt;em&gt;BitmapFactory&lt;/em&gt;内部类&lt;em&gt;Option&lt;/em&gt;的&lt;em&gt;inPreferredConfig&lt;/em&gt;属性,平时我们经常使用&lt;em&gt;isSampleSize&lt;/em&gt;属性来压缩图片的像素，其实还可以通过&lt;em&gt;inPreferredConfig&lt;/em&gt;设置每个像素占用几个字节，对于不透明的图片，可以使用&lt;em&gt;RGB_565&lt;/em&gt;减少每个像素占用的内存。&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Config&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inPreferredConfig&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bitmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ARGB_8888&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;section&quot;&gt;二、图片压缩&lt;/h1&gt;
 
-&lt;p&gt;平时我们都是通过&lt;code&gt;isSampleSize&lt;/code&gt;压缩图片，这个知识点应该是总所周知的。需要注意的是，如上所说，我们同时也可以借助&lt;code&gt;inPreferredConfig&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;平时我们都是通过&lt;em&gt;isSampleSize&lt;/em&gt;压缩图片，这个知识点应该是总所周知的。需要注意的是，如上所说，我们同时也可以借助&lt;em&gt;inPreferredConfig&lt;/em&gt;.&lt;/p&gt;
 
 &lt;h1 id=&quot;listview&quot;&gt;三、listview等控件中并发的问题。&lt;/h1&gt;
 
-&lt;p&gt;当使用&lt;code&gt;viewholder&lt;/code&gt;的模式加载&lt;code&gt;listview&lt;/code&gt;，某些正在下载图片中的&lt;code&gt;view&lt;/code&gt;，可能已经被回收给其他&lt;code&gt;view&lt;/code&gt;复用了，当图片下载完，会使得在新的&lt;code&gt;view&lt;/code&gt;上呈现其他&lt;code&gt;view&lt;/code&gt;的图片，从而导致顺序错乱，为了解决这个并发异步的问题，需要建立&lt;code&gt;url--Imageview--AsyncTask&lt;/code&gt;的一一对应关系，这样就可以完美解决这个问题，这个知识点可以参考以下两篇文章&lt;/p&gt;
+&lt;p&gt;当使用&lt;em&gt;viewholder&lt;/em&gt;的模式加载&lt;em&gt;listview&lt;/em&gt;，某些正在下载图片中的&lt;em&gt;view&lt;/em&gt;，可能已经被回收给其他&lt;em&gt;view&lt;/em&gt;复用了，当图片下载完，会使得在新的&lt;em&gt;view&lt;/em&gt;上呈现其他&lt;em&gt;view&lt;/em&gt;的图片，从而导致顺序错乱，为了解决这个并发异步的问题，需要建立&lt;em&gt;url–Imageview–AsyncTask&lt;/em&gt;的一一对应关系，这样就可以完美解决这个问题，这个知识点可以参考以下两篇文章&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html&quot;&gt;http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html&lt;/a&gt;&lt;/p&gt;
 
@@ -808,7 +808,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cachePath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;separator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uniqueName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;此处提一个小技巧，为了避免LruCache跟着&lt;code&gt;Activity&lt;/code&gt;被销毁（比如屏幕旋转），可以将LruCache放在一个设置了&lt;code&gt;setRetainInstance(true)&lt;/code&gt;的没有UI的fragment中。以下代码片段来自于&lt;a href=&quot;http://developer.android.com/training/displaying-bitmaps/index.html&quot;&gt;Displaying Bitmaps Efficiently&lt;/a&gt;几篇文章中的例子DisplayingBitmaps，其中借助&lt;code&gt;RetainFragment&lt;/code&gt;保存&lt;code&gt;ImageCache&lt;/code&gt;对象，&lt;code&gt;ImageCache&lt;/code&gt;对象不只持有LruCache，还有DiskLruCache。&lt;/p&gt;
+&lt;p&gt;此处提一个小技巧，为了避免LruCache跟着&lt;em&gt;Activity&lt;/em&gt;被销毁（比如屏幕旋转），可以将LruCache放在一个设置了&lt;em&gt;setRetainInstance(true)&lt;/em&gt;的没有UI的fragment中。以下代码片段来自于&lt;a href=&quot;http://developer.android.com/training/displaying-bitmaps/index.html&quot;&gt;Displaying Bitmaps Efficiently&lt;/a&gt;几篇文章中的例子DisplayingBitmaps，其中借助&lt;em&gt;RetainFragment&lt;/em&gt;保存&lt;em&gt;ImageCache&lt;/em&gt;对象，&lt;em&gt;ImageCache&lt;/em&gt;对象不只持有LruCache，还有DiskLruCache。&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ImageCache&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;FragmentManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fragmentManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ImageCacheParams&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cacheParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -886,27 +886,26 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
 
 &lt;h2 id=&quot;section-3&quot;&gt;3.0之前&lt;/h2&gt;
 
-&lt;p&gt;3.0之前，&lt;code&gt;Bitmap&lt;/code&gt;对象保存在java堆&lt;code&gt;Dalvik heap&lt;/code&gt;中，而图片像素数据保存在&lt;code&gt;native memory&lt;/code&gt;中，前者有垃圾回收机制可以回收内存，&lt;code&gt;recycle()&lt;/code&gt;方法是针对后者加快回收内存的，所以，在3.0以前，内存的回收推荐使用&lt;code&gt;recycle()&lt;/code&gt;方法。&lt;/p&gt;
+&lt;p&gt;3.0之前，&lt;em&gt;Bitmap&lt;/em&gt;对象保存在java堆&lt;em&gt;Dalvik heap&lt;/em&gt;中，而图片像素数据保存在&lt;em&gt;native memory&lt;/em&gt;中，前者有垃圾回收机制可以回收内存，&lt;em&gt;recycle()&lt;/em&gt;方法是针对后者加快回收内存的，所以，在3.0以前，内存的回收推荐使用&lt;em&gt;recycle()&lt;/em&gt;方法。&lt;/p&gt;
 
-&lt;p&gt;单个&lt;code&gt;Bitmap&lt;/code&gt;的使用场景，我们很容易知道何时调用&lt;code&gt;recycle()&lt;/code&gt;方法，而在&lt;code&gt;listview&lt;/code&gt;这种类型的控件中，为了把握&lt;code&gt;Bitmap&lt;/code&gt;被回收的时机，我们可以借助引用计数，使&lt;code&gt;Bitmap&lt;/code&gt;在没有被使用没有被缓存时调用&lt;code&gt;recycle()&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;单个&lt;em&gt;Bitmap&lt;/em&gt;的使用场景，我们很容易知道何时调用&lt;em&gt;recycle()&lt;/em&gt;方法，而在&lt;em&gt;listview&lt;/em&gt;这种类型的控件中，为了把握&lt;em&gt;Bitmap&lt;/em&gt;被回收的时机，我们可以借助引用计数，使&lt;em&gt;Bitmap&lt;/em&gt;在没有被使用没有被缓存时调用&lt;em&gt;recycle()&lt;/em&gt;。&lt;/p&gt;
 
 &lt;h2 id=&quot;section-4&quot;&gt;3.0开始&lt;/h2&gt;
 
-&lt;p&gt;3.0开始，&lt;code&gt;Bitmap&lt;/code&gt;对象和像素数据都保存在java堆&lt;code&gt;Dalvik heap&lt;/code&gt;中，二者的回收都有垃圾回收机制可以负责，所以3.0开始，&lt;code&gt;recycle()&lt;/code&gt;并没有调用的必要性。但是依然有优化内存的方法，我们可以使用 &lt;code&gt;BitmapFactory.Options.inBitmap&lt;/code&gt;属性，该属性可以使得多个&lt;code&gt;Bitmap&lt;/code&gt;对象共用内存，这里说共用内存其实不准确，说&lt;code&gt;复用&lt;/code&gt;可能更准确，其实是一个不被使用的&lt;code&gt;Bitmap&lt;/code&gt;，其内存会被记录起来，后续被应用于其他&lt;code&gt;Bitmap&lt;/code&gt;对象。以下是 &lt;code&gt;BitmapFactory.Options.inBitmap&lt;/code&gt;字段的文档。&lt;/p&gt;
+&lt;p&gt;3.0开始，&lt;em&gt;Bitmap&lt;/em&gt;对象和像素数据都保存在java堆&lt;em&gt;Dalvik heap&lt;/em&gt;中，二者的回收都有垃圾回收机制可以负责，所以3.0开始，&lt;em&gt;recycle()&lt;/em&gt;并没有调用的必要性。但是依然有优化内存的方法，我们可以使用 &lt;em&gt;BitmapFactory.Options.inBitmap&lt;/em&gt;属性，该属性可以使得多个&lt;em&gt;Bitmap&lt;/em&gt;对象共用内存，这里说共用内存其实不准确，说&lt;em&gt;复用&lt;/em&gt;可能更准确，其实是一个不被使用的&lt;em&gt;Bitmap&lt;/em&gt;，其内存会被记录起来，后续被应用于其他&lt;em&gt;Bitmap&lt;/em&gt;对象。以下是 &lt;em&gt;BitmapFactory.Options.inBitmap&lt;/em&gt;字段的文档。&lt;/p&gt;
 
 &lt;figure&gt;
   &lt;img src=&quot;/images/inBitmap.png&quot; alt=&quot;search screenshot&quot; /&gt;
   &lt;figcaption&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;从API=19开始，被复用的&lt;code&gt;Bitmap&lt;/code&gt;占用内存大小只要大于新的&lt;code&gt;Bitmap&lt;/code&gt;即可.在API=19之前，新的&lt;code&gt;Bitmap&lt;/code&gt;必须和被复用的&lt;code&gt;Bitmap&lt;/code&gt;占用内存大小一样,而且新的&lt;code&gt;Bitmap&lt;/code&gt;需要&lt;code&gt;jpeg&lt;/code&gt;或者&lt;code&gt;png&lt;/code&gt;格式，&lt;code&gt;isSampleSize&lt;/code&gt;需要等于1，而且&lt;code&gt;inPreferredConfig&lt;/code&gt;也会被复用。&lt;/p&gt;
+&lt;p&gt;从API=19开始，被复用的&lt;em&gt;Bitmap&lt;/em&gt;占用内存大小只要大于新的&lt;em&gt;Bitmap&lt;/em&gt;即可.在API=19之前，新的&lt;em&gt;Bitmap&lt;/em&gt;必须和被复用的&lt;em&gt;Bitmap&lt;/em&gt;占用内存大小一样,而且新的&lt;em&gt;Bitmap&lt;/em&gt;需要&lt;em&gt;jpeg&lt;/em&gt;或者&lt;em&gt;png&lt;/em&gt;格式，&lt;em&gt;isSampleSize&lt;/em&gt;需要等于1，而且&lt;em&gt;inPreferredConfig&lt;/em&gt;也会被复用。&lt;/p&gt;
 
 &lt;h1 id=&quot;section-5&quot;&gt;六、学习资源&lt;/h1&gt;
 
 &lt;p&gt;1，Android官网的&lt;a href=&quot;http://developer.android.com/training/displaying-bitmaps/index.html&quot;&gt;Displaying Bitmaps Efficiently&lt;/a&gt;几篇文章绝对是精华中的精华，以上很多知识点启示网上很多人都有写，但是我相信都是来自阅读这几篇文章。&lt;/p&gt;
 
 &lt;p&gt;2，&lt;a href=&quot;http://developer.android.com/training/displaying-bitmaps/index.html&quot;&gt;Displaying Bitmaps Efficiently&lt;/a&gt;这一系列文章有一个demo叫DisplayingBitmaps，这个demo结合了这几篇文章的所有知识点。&lt;/p&gt;
-
 
   &lt;p&gt;&lt;a href=&quot;/android/bitmap/&quot;&gt;Android图片内存管理&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on October 26, 2015.&lt;/p&gt;</content>
 </entry>
@@ -1187,69 +1186,69 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
   </author>
   <content type="html">&lt;h2 id=&quot;section&quot;&gt;1，一段常见的代码&lt;/h2&gt;
 
-&lt;p&gt;关于Android中的大小尺寸，我们可能最常接触的概念就是&lt;code&gt;sp&lt;/code&gt;，&lt;code&gt;dip&lt;/code&gt;，&lt;code&gt;px&lt;/code&gt;。而最常使用的代码就是px与dip二者的相互转化，以及px与sp之间的相互转化，如下：&lt;/p&gt;
+&lt;p&gt;关于Android中的大小尺寸，我们可能最常接触的概念就是&lt;em&gt;sp&lt;/em&gt;，&lt;em&gt;dip&lt;/em&gt;，&lt;em&gt;px&lt;/em&gt;。而最常使用的代码就是px与dip二者的相互转化，以及px与sp之间的相互转化，如下：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * 将px值转换为dip或dp值，保证尺寸大小不变&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     * &lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * @param pxValue&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * @param scale&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     *            （DisplayMetrics类中属性density）&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * @return&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt; 
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;px2dip&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pxValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
-        &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getResources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDisplayMetrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;density&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pxValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt; 
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 
-   
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;px2dip&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pxValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getResources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDisplayMetrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;density&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pxValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
     &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * 将dip或dp值转换为px值，保证尺寸大小不变&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     * &lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * @param dipValue&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * @param scale&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     *            （DisplayMetrics类中属性density）&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * @return&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt; 
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dip2px&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dipValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
-        &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getResources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDisplayMetrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;density&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dipValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt; 
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 
-   
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dip2px&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dipValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getResources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDisplayMetrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;density&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dipValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
     &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * 将px值转换为sp值，保证文字大小不变&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     * &lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * @param pxValue&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * @param fontScale&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     *            （DisplayMetrics类中属性scaledDensity）&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * @return&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt; 
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;px2sp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pxValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
-        &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontScale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getResources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDisplayMetrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;scaledDensity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pxValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontScale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt; 
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 
-   
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;px2sp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pxValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontScale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getResources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDisplayMetrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;scaledDensity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pxValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontScale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
     &lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * 将sp值转换为px值，保证文字大小不变&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     * &lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;     *&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * @param spValue&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * @param fontScale&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     *            （DisplayMetrics类中属性scaledDensity）&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt;     * @return&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt; 
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sp2px&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
-        &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontScale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getResources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDisplayMetrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;scaledDensity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontScale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt; 
+&lt;span class=&quot;cm&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sp2px&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontScale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getResources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDisplayMetrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;scaledDensity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontScale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;对于大多对android开发人员都很熟悉上面的代码，如果你不认识，那也没关系，接下来从各个基础概念讲起。&lt;/p&gt;
 
 &lt;h1 id=&quot;pxdip&quot;&gt;2，px，dip的关系&lt;/h1&gt;
 
-&lt;p&gt;&lt;code&gt;px&lt;/code&gt;，像素，英文简称&lt;code&gt;pixel&lt;/code&gt;，简写自&lt;code&gt;picture element&lt;/code&gt;，像很多文章中所说，像素就是图片中的一个点。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;px&lt;/em&gt;，像素，英文简称&lt;em&gt;pixel&lt;/em&gt;，简写自&lt;em&gt;picture element&lt;/em&gt;，像很多文章中所说，像素就是图片中的一个点。&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;dip&lt;/code&gt; ，全称&lt;code&gt;Density-independent Pixels&lt;/code&gt;。只要在布局中文件使用到大小，距离，官方都推荐使用&lt;code&gt;dip&lt;/code&gt;（除了字体大小），一般我们对&lt;code&gt;dip&lt;/code&gt;和&lt;code&gt;dp&lt;/code&gt;不做区别。&lt;code&gt;dip&lt;/code&gt;这个单位是为了使同样数量的px在不同手机上的显示效果相同，显然&lt;code&gt;1 dip&lt;/code&gt;是&lt;code&gt;1 px&lt;/code&gt;通过某种对应关系转化过来的。这种转化上面的代码已经有了，但是其原理是什么呢？这就得引出另一个概念&lt;code&gt;dpi（dots per inch)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;dip&lt;/em&gt; ，全称&lt;em&gt;Density-independent Pixels&lt;/em&gt;。只要在布局中文件使用到大小，距离，官方都推荐使用&lt;em&gt;dip&lt;/em&gt;（除了字体大小），一般我们对&lt;em&gt;dip&lt;/em&gt;和&lt;em&gt;dp&lt;/em&gt;不做区别。&lt;em&gt;dip&lt;/em&gt;这个单位是为了使同样数量的px在不同手机上的显示效果相同，显然&lt;em&gt;1 dip&lt;/em&gt;是&lt;em&gt;1 px&lt;/em&gt;通过某种对应关系转化过来的。这种转化上面的代码已经有了，但是其原理是什么呢？这就得引出另一个概念&lt;em&gt;dpi（dots per inch)&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;dpi&lt;/code&gt;，官方文档对这个单位的指代是&lt;code&gt;Screen density&lt;/code&gt;，即屏幕密度，表示一个物理单位面积内像素点的个数。而在&lt;code&gt;160dpi&lt;/code&gt;的设备上，&lt;code&gt;1dip = 1px&lt;/code&gt;，在&lt;code&gt;120dpi&lt;/code&gt;的设备上，&lt;code&gt;1dip = 0.75px&lt;/code&gt;，没错，这就是&lt;code&gt;px&lt;/code&gt;和&lt;code&gt;dip&lt;/code&gt;对应关系的基础，&lt;code&gt;dpi&lt;/code&gt;越大，&lt;code&gt;1dip&lt;/code&gt;内就有更多的&lt;code&gt;px&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;dpi&lt;/em&gt;，官方文档对这个单位的指代是&lt;em&gt;Screen density&lt;/em&gt;，即屏幕密度，表示一个物理单位面积内像素点的个数。而在&lt;em&gt;160dpi&lt;/em&gt;的设备上，&lt;em&gt;1dip = 1px&lt;/em&gt;，在&lt;em&gt;120dpi&lt;/em&gt;的设备上，&lt;em&gt;1dip = 0.75px&lt;/em&gt;，没错，这就是&lt;em&gt;px&lt;/em&gt;和&lt;em&gt;dip&lt;/em&gt;对应关系的基础，&lt;em&gt;dpi&lt;/em&gt;越大，&lt;em&gt;1dip&lt;/em&gt;内就有更多的&lt;em&gt;px&lt;/em&gt;。&lt;/p&gt;
 
 &lt;table class=&quot;table&quot;&gt;
   &lt;thead&gt;
@@ -1304,7 +1303,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
   &lt;/tfoot&gt;
 &lt;/table&gt;
 
-&lt;p&gt;从上面这个表可以看出，在不同&lt;code&gt;dpi&lt;/code&gt;的手机上，相同的的&lt;code&gt;dp&lt;/code&gt;可以对应相应的物理大小，从而发挥了适配不同设备的作用。&lt;/p&gt;
+&lt;p&gt;从上面这个表可以看出，在不同&lt;em&gt;dpi&lt;/em&gt;的手机上，相同的的&lt;em&gt;dp&lt;/em&gt;可以对应相应的物理大小，从而发挥了适配不同设备的作用。&lt;/p&gt;
 
 &lt;p&gt;从上面的对应关系，不难得出如下公式&lt;/p&gt;
 
@@ -1312,32 +1311,32 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
   &lt;p&gt;px = dp * dpi  /  160&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;那么再来看一下上面&lt;code&gt;dp&lt;/code&gt;和&lt;code&gt;px&lt;/code&gt;的转化代码。&lt;/p&gt;
+&lt;p&gt;那么再来看一下上面&lt;em&gt;dp&lt;/em&gt;和&lt;em&gt;px&lt;/em&gt;的转化代码。&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * 将dip或dp值转换为px值，保证尺寸大小不变&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * &lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt; *&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * @param dipValue&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * @param scale&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; *            （DisplayMetrics类中属性density）&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * @return&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt; 
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dip2px&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dipValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
-    &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getResources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDisplayMetrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;density&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dipValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt; 
+&lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dip2px&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dipValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getResources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDisplayMetrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;density&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dipValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;code&gt;context.getResources().getDisplayMetrics()&lt;/code&gt;返回的是一个&lt;code&gt;DisplayMetrics&lt;/code&gt;对象，该对象有这么三个成员变量&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;context.getResources().getDisplayMetrics()&lt;/em&gt;返回的是一个&lt;em&gt;DisplayMetrics&lt;/em&gt;对象，该对象有这么三个成员变量&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;density&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    
+
 &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;densityDpi&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 
 &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaledDensity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;code&gt;densityDpi&lt;/code&gt;就是上面的dpi，&lt;code&gt;density&lt;/code&gt;是当前设备和默认&lt;code&gt;dpi ＝ 160&lt;/code&gt;的比值，比如，对于&lt;code&gt;dpi = 320&lt;/code&gt;的设备，&lt;code&gt;densityDpi = 320&lt;/code&gt;,&lt;code&gt;density = 2&lt;/code&gt;。&lt;code&gt;scaledDensity&lt;/code&gt;是和&lt;code&gt;sp&lt;/code&gt;有关的参数，下面再讲。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;densityDpi&lt;/em&gt;就是上面的dpi，&lt;em&gt;density&lt;/em&gt;是当前设备和默认&lt;em&gt;dpi ＝ 160&lt;/em&gt;的比值，比如，对于&lt;em&gt;dpi = 320&lt;/em&gt;的设备，&lt;em&gt;densityDpi = 320&lt;/em&gt;,&lt;em&gt;density = 2&lt;/em&gt;。&lt;em&gt;scaledDensity&lt;/em&gt;是和&lt;em&gt;sp&lt;/em&gt;有关的参数，下面再讲。&lt;/p&gt;
 
-&lt;p&gt;再回头仔细看这段用于单位转化的代码，而刚刚得出的公式是不是一致的，没错，就是一样的，只是多了一个&lt;code&gt;0.5&lt;/code&gt;，这个是为了四舍五入而已。到此为止，应该就理解了&lt;code&gt;px&lt;/code&gt;和&lt;code&gt;dp&lt;/code&gt;之间的关系了。&lt;/p&gt;
+&lt;p&gt;再回头仔细看这段用于单位转化的代码，而刚刚得出的公式是不是一致的，没错，就是一样的，只是多了一个&lt;em&gt;0.5&lt;/em&gt;，这个是为了四舍五入而已。到此为止，应该就理解了&lt;em&gt;px&lt;/em&gt;和&lt;em&gt;dp&lt;/em&gt;之间的关系了。&lt;/p&gt;
 
 &lt;p&gt;于是乎，应该也能理解android项目中的图片资源文件，一般我们需要在以下几个文件夹中提供不同大小的图片。&lt;/p&gt;
 
@@ -1348,7 +1347,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
   &lt;li&gt;ldpi: 0.75&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;如果你想要提供一张大小为&lt;code&gt;200x200&lt;/code&gt;的照片给&lt;code&gt;xhdpi&lt;/code&gt;的设备, 那相对应的就得提供一张&lt;code&gt;150*150&lt;/code&gt;的照片给&lt;code&gt;hdpi&lt;/code&gt;的设备，提供&lt;code&gt;100*100&lt;/code&gt;给&lt;code&gt;mdpi&lt;/code&gt;，提供&lt;code&gt;75*75&lt;/code&gt;给&lt;code&gt;ldpi&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;如果你想要提供一张大小为&lt;em&gt;200x200&lt;/em&gt;的照片给&lt;em&gt;xhdpi&lt;/em&gt;的设备, 那相对应的就得提供一张&lt;em&gt;150&lt;/em&gt;150&lt;em&gt;的照片给&lt;/em&gt;hdpi&lt;em&gt;的设备，提供&lt;/em&gt;100&lt;em&gt;100&lt;/em&gt;给&lt;em&gt;mdpi&lt;/em&gt;，提供&lt;em&gt;75&lt;/em&gt;75&lt;em&gt;给&lt;/em&gt;ldpi*。&lt;/p&gt;
 
 &lt;p&gt;再谈一个问题。大家一般都将图片文件按如下结构放在项目中。&lt;/p&gt;
 
@@ -1364,13 +1363,13 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
   &lt;figcaption&gt;资源图片文件&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;其实很简单，&lt;code&gt;mipmap&lt;/code&gt;是用来放置&lt;code&gt;app&lt;/code&gt;的&lt;code&gt;icon&lt;/code&gt;图标的。其他资源图片文件也可以放在这里面，但是最好还是新建一个&lt;code&gt;drawable&lt;/code&gt;的结构。真相在这个链接&lt;/p&gt;
+&lt;p&gt;其实很简单，&lt;em&gt;mipmap&lt;/em&gt;是用来放置&lt;em&gt;app&lt;/em&gt;的&lt;em&gt;icon&lt;/em&gt;图标的。其他资源图片文件也可以放在这里面，但是最好还是新建一个&lt;em&gt;drawable&lt;/em&gt;的结构。真相在这个链接&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://developer.android.com/training/multiscreen/screendensities.html&quot;&gt;http://developer.android.com/training/multiscreen/screendensities.html&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;sp&quot;&gt;3. sp&lt;/h2&gt;
 
-&lt;p&gt;sp的全称Scale-independent Pixels，布局文件中对TextView指定字体大小时，都建议使用&lt;code&gt;sp&lt;/code&gt;.&lt;code&gt;sp&lt;/code&gt;与&lt;code&gt;dip&lt;/code&gt;相比多考虑了手机字体大小的偏好设置。而&lt;code&gt;sp&lt;/code&gt;与&lt;code&gt;px&lt;/code&gt;的转化关系，与&lt;code&gt;dp&lt;/code&gt;和&lt;code&gt;px&lt;/code&gt;的转化关系，只是对应的比例参数从&lt;code&gt;density&lt;/code&gt;变成了&lt;code&gt;scaledDensity&lt;/code&gt;原理是一样的。&lt;/p&gt;
+&lt;p&gt;sp的全称Scale-independent Pixels，布局文件中对TextView指定字体大小时，都建议使用&lt;em&gt;sp&lt;/em&gt;.&lt;em&gt;sp&lt;/em&gt;与&lt;em&gt;dip&lt;/em&gt;相比多考虑了手机字体大小的偏好设置。而&lt;em&gt;sp&lt;/em&gt;与&lt;em&gt;px&lt;/em&gt;的转化关系，与&lt;em&gt;dp&lt;/em&gt;和&lt;em&gt;px&lt;/em&gt;的转化关系，只是对应的比例参数从&lt;em&gt;density&lt;/em&gt;变成了&lt;em&gt;scaledDensity&lt;/em&gt;原理是一样的。&lt;/p&gt;
 
 &lt;h2 id=&quot;section-1&quot;&gt;4。举例&lt;/h2&gt;
 
@@ -1378,7 +1377,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
 
 &lt;p&gt;如果一个hdpi设备，在drawable-hdpi文件夹中没图片，反而在drawable-xhdpi文件夹中存在，那么加载到内存的图片会相比在drawable-hdpi的图片会变小一半，占用内存也会变小（变成四分之一），&lt;/p&gt;
 
-&lt;p&gt;另外，再注意一点，一个&lt;code&gt;ImageView&lt;/code&gt;控件，修改其&lt;code&gt;layout_height&lt;/code&gt;和&lt;code&gt;layout_width&lt;/code&gt;的值，图片显示大小会变化，但是像素，占用内存不会变化。&lt;/p&gt;
+&lt;p&gt;另外，再注意一点，一个&lt;em&gt;ImageView&lt;/em&gt;控件，修改其&lt;em&gt;layout_height&lt;/em&gt;和&lt;em&gt;layout_width&lt;/em&gt;的值，图片显示大小会变化，但是像素，占用内存不会变化。&lt;/p&gt;
 
 &lt;p&gt;下面是我写的一个小demo的截图，可以参考参考，加深理解：&lt;/p&gt;
 
@@ -1387,9 +1386,9 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
   &lt;figcaption&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;这是一个&lt;code&gt;hdpi&lt;/code&gt;的设备，第一幅图加载&lt;code&gt;hdpi&lt;/code&gt;的图片，第二幅图加载&lt;code&gt;xhdpi&lt;/code&gt;的图片，第三幅图加载&lt;code&gt;xhdpi&lt;/code&gt;图片但是指定了长宽。&lt;/p&gt;
+&lt;p&gt;这是一个&lt;em&gt;hdpi&lt;/em&gt;的设备，第一幅图加载&lt;em&gt;hdpi&lt;/em&gt;的图片，第二幅图加载&lt;em&gt;xhdpi&lt;/em&gt;的图片，第三幅图加载&lt;em&gt;xhdpi&lt;/em&gt;图片但是指定了长宽。&lt;/p&gt;
 
-&lt;p&gt;此处&lt;code&gt;getWidth&lt;/code&gt;，&lt;code&gt;getHeigth&lt;/code&gt;返回的是图片长宽，单位是像素，单位是&lt;code&gt;px&lt;/code&gt;，而非&lt;code&gt;dip&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;此处&lt;em&gt;getWidth&lt;/em&gt;，&lt;em&gt;getHeigth&lt;/em&gt;返回的是图片长宽，单位是像素，单位是&lt;em&gt;px&lt;/em&gt;，而非&lt;em&gt;dip&lt;/em&gt;。&lt;/p&gt;
 
 &lt;h2 id=&quot;section-2&quot;&gt;4，参考链接&lt;/h2&gt;
 
@@ -1400,7 +1399,6 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/yaozhongxiao/archive/2014/07/14/3842908.html&quot;&gt;http://www.cnblogs.com/yaozhongxiao/archive/2014/07/14/3842908.html&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/a/2025541/1290235&quot;&gt;http://stackoverflow.com/a/2025541/1290235&lt;/a&gt;&lt;/p&gt;
-
 
   &lt;p&gt;&lt;a href=&quot;/android/dip-sp/&quot;&gt;Android图片适配原理&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on August 04, 2015.&lt;/p&gt;</content>
 </entry>
@@ -1732,7 +1730,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;requestByHttps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
 	&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-		
+
 		&lt;span class=&quot;c1&quot;&gt;// Load CAs from an InputStream&lt;/span&gt;
 		&lt;span class=&quot;c1&quot;&gt;// (could be from a resource or ByteArrayInputStream or ...)&lt;/span&gt;
 
@@ -1859,14 +1857,14 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
 &lt;h3 id=&quot;section-2&quot;&gt;1,忽略证书&lt;/h3&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HttpClientHelper&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- 
+
     &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HttpClient&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;httpClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
- 
+
     &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;HttpClientHelper&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
+
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;synchronized&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HttpClient&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getHttpClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- 
+
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;httpClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
             &lt;span class=&quot;c1&quot;&gt;// 初始化工作&lt;/span&gt;
             &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -1875,30 +1873,30 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
                 &lt;span class=&quot;n&quot;&gt;trustStore&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
                 &lt;span class=&quot;n&quot;&gt;SSLSocketFactory&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SSLSocketFactoryEx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trustStore&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
                 &lt;span class=&quot;n&quot;&gt;sf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setHostnameVerifier&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SSLSocketFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ALLOW_ALL_HOSTNAME_VERIFIER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//允许所有主机的验证&lt;/span&gt;
- 
+
                 &lt;span class=&quot;n&quot;&gt;HttpParams&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;BasicHttpParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
- 
+
                 &lt;span class=&quot;n&quot;&gt;HttpProtocolParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setVersion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HttpVersion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;HTTP_1_1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
                 &lt;span class=&quot;n&quot;&gt;HttpProtocolParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setContentCharset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
                         &lt;span class=&quot;n&quot;&gt;HTTP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;DEFAULT_CONTENT_CHARSET&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
                 &lt;span class=&quot;n&quot;&gt;HttpProtocolParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setUseExpectContinue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
- 
+
                 &lt;span class=&quot;c1&quot;&gt;// 设置连接管理器的超时&lt;/span&gt;
                 &lt;span class=&quot;n&quot;&gt;ConnManagerParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setTimeout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
                 &lt;span class=&quot;c1&quot;&gt;// 设置连接超时&lt;/span&gt;
                 &lt;span class=&quot;n&quot;&gt;HttpConnectionParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setConnectionTimeout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
                 &lt;span class=&quot;c1&quot;&gt;// 设置socket超时&lt;/span&gt;
                 &lt;span class=&quot;n&quot;&gt;HttpConnectionParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setSoTimeout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
- 
+
                 &lt;span class=&quot;c1&quot;&gt;// 设置http https支持&lt;/span&gt;
                 &lt;span class=&quot;n&quot;&gt;SchemeRegistry&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;schReg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SchemeRegistry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
                 &lt;span class=&quot;n&quot;&gt;schReg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Scheme&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PlainSocketFactory&lt;/span&gt;
                         &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSocketFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
                 &lt;span class=&quot;n&quot;&gt;schReg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Scheme&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;443&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
- 
+
                 &lt;span class=&quot;n&quot;&gt;ClientConnectionManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;conManager&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ThreadSafeClientConnManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
                         &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;schReg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
- 
+
                 &lt;span class=&quot;n&quot;&gt;httpClient&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;DefaultHttpClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
             &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
                 &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printStackTrace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
@@ -1907,50 +1905,50 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
         &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;httpClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
+
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
+
 &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SSLSocketFactoryEx&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SSLSocketFactory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- 
+
     &lt;span class=&quot;n&quot;&gt;SSLContext&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sslContext&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SSLContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;TLS&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
- 
+
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SSLSocketFactoryEx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;KeyStore&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;truststore&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
             &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NoSuchAlgorithmException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;KeyManagementException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;KeyStoreException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UnrecoverableKeyException&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;truststore&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
- 
+
         &lt;span class=&quot;n&quot;&gt;TrustManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;X509TrustManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- 
+
             &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
             &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;security&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;cert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;X509Certificate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getAcceptedIssuers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
                 &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
             &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
+
             &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
             &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;checkClientTrusted&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
                     &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;security&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;cert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;X509Certificate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chain&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;authType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
                     &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;security&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;cert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;CertificateException&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- 
+
             &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
+
             &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
             &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;checkServerTrusted&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
                     &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;security&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;cert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;X509Certificate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chain&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;authType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
                     &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;security&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;cert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;CertificateException&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- 
+
             &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
         &lt;span class=&quot;o&quot;&gt;};&lt;/span&gt;
- 
+
         &lt;span class=&quot;n&quot;&gt;sslContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TrustManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
+
     &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Socket&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createSocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Socket&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;socket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
             &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;autoClose&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IOException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UnknownHostException&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sslContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSocketFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;createSocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;socket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
                 &lt;span class=&quot;n&quot;&gt;autoClose&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
+
     &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Socket&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createSocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IOException&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sslContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSocketFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;createSocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
@@ -1960,7 +1958,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
 &lt;h3 id=&quot;section-3&quot;&gt;2,使用证书&lt;/h3&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;AssetManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;am&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getAssets&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
- 
+
 &lt;span class=&quot;n&quot;&gt;InputStream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ins&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;am&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;robusoft.cer&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -2010,7 +2008,6 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;很简单，我们只需要在构造HttpClientStack时传入一个已经设置了证书的HttpClient，按照上面讲述的那样设置即可。&lt;/p&gt;
-
 
   &lt;p&gt;&lt;a href=&quot;/android/android-https/&quot;&gt;Android处理https请求的证书问题&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on June 15, 2015.&lt;/p&gt;</content>
 </entry>
@@ -3552,22 +3549,22 @@ Arrays.toString&lt;/p&gt;
 &lt;p&gt;我们看以下例子，我们自己定义一个View，很简单，只是继承View类。&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyView&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
-  
+
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MyView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AttributeSet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defStyleAttr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
         &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defStyleAttr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
         &lt;span class=&quot;c1&quot;&gt;// TODO Auto-generated constructor stub  &lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
-  
+
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MyView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AttributeSet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
         &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
         &lt;span class=&quot;c1&quot;&gt;// TODO Auto-generated constructor stub  &lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
-  
+
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MyView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
         &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
         &lt;span class=&quot;c1&quot;&gt;// TODO Auto-generated constructor stub  &lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
-      
+
     &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;  
     &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onMeasure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widthMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;heightMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
         &lt;span class=&quot;c1&quot;&gt;// TODO Auto-generated method stub  &lt;/span&gt;
@@ -3585,19 +3582,19 @@ Arrays.toString&lt;/p&gt;
     &lt;span class=&quot;na&quot;&gt;android:orientation=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;vertical&amp;quot;&lt;/span&gt;  
     &lt;span class=&quot;na&quot;&gt;android:padding=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;@dimen/activity_vertical_margin&amp;quot;&lt;/span&gt;  
     &lt;span class=&quot;na&quot;&gt;tools:context=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;com.notes.notes_onmeasure.EasyActivity&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;  
-  
-      
-      
+
+
+
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;com.notes.notes_onmeasure.MyView&lt;/span&gt;  
         &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wrap_content&amp;quot;&lt;/span&gt;  
         &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wrap_content&amp;quot;&lt;/span&gt;  
         &lt;span class=&quot;na&quot;&gt;android:background=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#78787878&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;  
-  
+
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;TextView&lt;/span&gt;  
         &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wrap_content&amp;quot;&lt;/span&gt;  
         &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wrap_content&amp;quot;&lt;/span&gt;  
         &lt;span class=&quot;na&quot;&gt;android:text=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;能看到我吗？&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;  
-  
+
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/LinearLayout&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;结果显示如&lt;/p&gt;
@@ -3629,13 +3626,13 @@ Arrays.toString&lt;/p&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;measureDimension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;heightMeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
         &lt;span class=&quot;n&quot;&gt;setMeasuredDimension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
-  
+
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;measureDimension&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defaultSize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;measureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;  
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
-          
+
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specMode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getMode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;measureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specSize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;measureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
-          
+
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;specMode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MeasureSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;EXACTLY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;  
             &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specSize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
         &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
@@ -3661,7 +3658,6 @@ Arrays.toString&lt;/p&gt;
   &lt;li&gt;&lt;strong&gt;EXACTLY&lt;/strong&gt;:  父结点要求其子节点的大小指定为某个确切的值。其子节点以及其他子孙结点都需要适应该大小。&lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;AT MOST&lt;/strong&gt;：父结点要求其子节点的大小不能超过某个最大值，其子节点以及其他子孙结点的大小都需要小于这个值&lt;/li&gt;
 &lt;/ul&gt;
-
 
   &lt;p&gt;&lt;a href=&quot;/android/(customView)onMeasure/&quot;&gt;Android自定义View-------为什么重写onMeasure()以及怎么重写&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on March 31, 2015.&lt;/p&gt;</content>
 </entry>
@@ -3706,7 +3702,7 @@ Arrays.toString&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;&lt;/span&gt;  
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;resources&amp;gt;&lt;/span&gt;  
-  
+
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;declare-styleable&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;slideswitch&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;  
         &lt;span class=&quot;nt&quot;&gt;&amp;lt;attr&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;themeColor&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;format=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;color&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;  
         &lt;span class=&quot;nt&quot;&gt;&amp;lt;attr&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;isOpen&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;format=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;boolean&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;  
@@ -3715,7 +3711,7 @@ Arrays.toString&lt;/p&gt;
             &lt;span class=&quot;nt&quot;&gt;&amp;lt;enum&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;circle&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;2&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;  
         &lt;span class=&quot;nt&quot;&gt;&amp;lt;/attr&amp;gt;&lt;/span&gt;  
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;/declare-styleable&amp;gt;&lt;/span&gt;  
-  
+
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/resources&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;其中定义了三个属性，一个是按钮的颜色，一个是按钮的打开状态，一个是枚举类型，它用来描述按钮的形状，关于这些的属性以及其它几个类型的属性的使用，可以容易百度谷歌到相关知识，这里暂不作记录。&lt;/p&gt;
@@ -3725,9 +3721,9 @@ Arrays.toString&lt;/p&gt;
 &lt;p&gt;在SlieSwitch中新建一个包com.leaking.slideswitch，然后再包里面新建一个文件文件SlieSwitch.java。自定义组件首先得继承View类，然后再构造器中获取自定义属性，如下艾玛片段：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SlideSwitch&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
-  
+
     &lt;span class=&quot;c1&quot;&gt;//,,,,,,,省略,,,,,,,,,,  &lt;/span&gt;
-      
+
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SlideSwitch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AttributeSet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defStyleAttr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
         &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defStyleAttr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
         &lt;span class=&quot;n&quot;&gt;listener&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
@@ -3741,11 +3737,11 @@ Arrays.toString&lt;/p&gt;
         &lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getInt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;styleable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;slideswitch_shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SHAPE_RECT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
         &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;recycle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;  
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
-  
+
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SlideSwitch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AttributeSet&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
         &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attrs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
-  
+
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SlideSwitch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
         &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
@@ -3780,7 +3776,7 @@ Arrays.toString&lt;/p&gt;
     &lt;span class=&quot;na&quot;&gt;android:orientation=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;vertical&amp;quot;&lt;/span&gt;  
     &lt;span class=&quot;na&quot;&gt;android:padding=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;10dip&amp;quot;&lt;/span&gt;  
     &lt;span class=&quot;na&quot;&gt;tools:context=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;com.example.testlibs.MainActivity&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;  
-  
+
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;com.leaking.slideswitch.SlideSwitch&lt;/span&gt;  
         &lt;span class=&quot;na&quot;&gt;android:id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;@+id/swit&amp;quot;&lt;/span&gt;  
         &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;150dip&amp;quot;&lt;/span&gt;  
@@ -3789,7 +3785,7 @@ Arrays.toString&lt;/p&gt;
         &lt;span class=&quot;na&quot;&gt;slideswitch:shape=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;rect&amp;quot;&lt;/span&gt;  
         &lt;span class=&quot;na&quot;&gt;slideswitch:themeColor=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#ffee3a00&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;  
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;/com.leaking.slideswitch.SlideSwitch&amp;gt;&lt;/span&gt;  
-  
+
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/LinearLayout&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;需要注意的是，上述代码片段的第二行，它引入了一个命名空间，其格式如下&lt;/p&gt;
@@ -3801,29 +3797,29 @@ Arrays.toString&lt;/p&gt;
 &lt;p&gt;接下来，在Java代码中设置开关的监听以及状态的设置，如下代码&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MainActivity&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Activity&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SlideListener&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
-  
+
     &lt;span class=&quot;n&quot;&gt;TextView&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
     &lt;span class=&quot;n&quot;&gt;SlideSwitch&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;slide&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
     &lt;span class=&quot;n&quot;&gt;SlideSwitch&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;slide2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;  
-  
+
     &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;  
     &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Bundle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
         &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
         &lt;span class=&quot;n&quot;&gt;setContentView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;layout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;activity_main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
         &lt;span class=&quot;n&quot;&gt;slide&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SlideSwitch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findViewById&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;swit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
         &lt;span class=&quot;n&quot;&gt;slide2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SlideSwitch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findViewById&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;swit2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
-  
+
         &lt;span class=&quot;n&quot;&gt;slide&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
         &lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TextView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findViewById&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
         &lt;span class=&quot;n&quot;&gt;slide&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setSlideListener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
-  
+
     &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;  
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
         &lt;span class=&quot;c1&quot;&gt;// TODO Auto-generated method stub  &lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setText&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot; is opend &amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  
-  
+
     &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;  
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  
         &lt;span class=&quot;c1&quot;&gt;// TODO Auto-generated method stub  &lt;/span&gt;

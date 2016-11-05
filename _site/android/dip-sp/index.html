@@ -202,69 +202,69 @@
       <div class="entry-content">
         <h2 id="section">1，一段常见的代码</h2>
 
-<p>关于Android中的大小尺寸，我们可能最常接触的概念就是<code>sp</code>，<code>dip</code>，<code>px</code>。而最常使用的代码就是px与dip二者的相互转化，以及px与sp之间的相互转化，如下：</p>
+<p>关于Android中的大小尺寸，我们可能最常接触的概念就是<em>sp</em>，<em>dip</em>，<em>px</em>。而最常使用的代码就是px与dip二者的相互转化，以及px与sp之间的相互转化，如下：</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
 <span class="cm">     * 将px值转换为dip或dp值，保证尺寸大小不变</span>
-<span class="cm">     * </span>
+<span class="cm">     *</span>
 <span class="cm">     * @param pxValue</span>
 <span class="cm">     * @param scale</span>
 <span class="cm">     *            （DisplayMetrics类中属性density）</span>
 <span class="cm">     * @return</span>
-<span class="cm">     */</span> 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">px2dip</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">pxValue</span><span class="o">)</span> <span class="o">{</span> 
-        <span class="kd">final</span> <span class="kt">float</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">density</span><span class="o">;</span> 
-        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">pxValue</span> <span class="o">/</span> <span class="n">scale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span> 
-    <span class="o">}</span> 
-   
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">px2dip</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">pxValue</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="kt">float</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">density</span><span class="o">;</span>
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">pxValue</span> <span class="o">/</span> <span class="n">scale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span>
+    <span class="o">}</span>
+
     <span class="cm">/**</span>
 <span class="cm">     * 将dip或dp值转换为px值，保证尺寸大小不变</span>
-<span class="cm">     * </span>
+<span class="cm">     *</span>
 <span class="cm">     * @param dipValue</span>
 <span class="cm">     * @param scale</span>
 <span class="cm">     *            （DisplayMetrics类中属性density）</span>
 <span class="cm">     * @return</span>
-<span class="cm">     */</span> 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">dip2px</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">dipValue</span><span class="o">)</span> <span class="o">{</span> 
-        <span class="kd">final</span> <span class="kt">float</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">density</span><span class="o">;</span> 
-        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">dipValue</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span> 
-    <span class="o">}</span> 
-   
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">dip2px</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">dipValue</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="kt">float</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">density</span><span class="o">;</span>
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">dipValue</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span>
+    <span class="o">}</span>
+
     <span class="cm">/**</span>
 <span class="cm">     * 将px值转换为sp值，保证文字大小不变</span>
-<span class="cm">     * </span>
+<span class="cm">     *</span>
 <span class="cm">     * @param pxValue</span>
 <span class="cm">     * @param fontScale</span>
 <span class="cm">     *            （DisplayMetrics类中属性scaledDensity）</span>
 <span class="cm">     * @return</span>
-<span class="cm">     */</span> 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">px2sp</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">pxValue</span><span class="o">)</span> <span class="o">{</span> 
-        <span class="kd">final</span> <span class="kt">float</span> <span class="n">fontScale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">scaledDensity</span><span class="o">;</span> 
-        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">pxValue</span> <span class="o">/</span> <span class="n">fontScale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span> 
-    <span class="o">}</span> 
-   
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">px2sp</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">pxValue</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="kt">float</span> <span class="n">fontScale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">scaledDensity</span><span class="o">;</span>
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">pxValue</span> <span class="o">/</span> <span class="n">fontScale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span>
+    <span class="o">}</span>
+
     <span class="cm">/**</span>
 <span class="cm">     * 将sp值转换为px值，保证文字大小不变</span>
-<span class="cm">     * </span>
+<span class="cm">     *</span>
 <span class="cm">     * @param spValue</span>
 <span class="cm">     * @param fontScale</span>
 <span class="cm">     *            （DisplayMetrics类中属性scaledDensity）</span>
 <span class="cm">     * @return</span>
-<span class="cm">     */</span> 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">sp2px</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">spValue</span><span class="o">)</span> <span class="o">{</span> 
-        <span class="kd">final</span> <span class="kt">float</span> <span class="n">fontScale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">scaledDensity</span><span class="o">;</span> 
-        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">spValue</span> <span class="o">*</span> <span class="n">fontScale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span> 
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">sp2px</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">spValue</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="kt">float</span> <span class="n">fontScale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">scaledDensity</span><span class="o">;</span>
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">spValue</span> <span class="o">*</span> <span class="n">fontScale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span>
     <span class="o">}</span></code></pre></div>
 
 <p>对于大多对android开发人员都很熟悉上面的代码，如果你不认识，那也没关系，接下来从各个基础概念讲起。</p>
 
 <h1 id="pxdip">2，px，dip的关系</h1>
 
-<p><code>px</code>，像素，英文简称<code>pixel</code>，简写自<code>picture element</code>，像很多文章中所说，像素就是图片中的一个点。</p>
+<p><em>px</em>，像素，英文简称<em>pixel</em>，简写自<em>picture element</em>，像很多文章中所说，像素就是图片中的一个点。</p>
 
-<p><code>dip</code> ，全称<code>Density-independent Pixels</code>。只要在布局中文件使用到大小，距离，官方都推荐使用<code>dip</code>（除了字体大小），一般我们对<code>dip</code>和<code>dp</code>不做区别。<code>dip</code>这个单位是为了使同样数量的px在不同手机上的显示效果相同，显然<code>1 dip</code>是<code>1 px</code>通过某种对应关系转化过来的。这种转化上面的代码已经有了，但是其原理是什么呢？这就得引出另一个概念<code>dpi（dots per inch)</code></p>
+<p><em>dip</em> ，全称<em>Density-independent Pixels</em>。只要在布局中文件使用到大小，距离，官方都推荐使用<em>dip</em>（除了字体大小），一般我们对<em>dip</em>和<em>dp</em>不做区别。<em>dip</em>这个单位是为了使同样数量的px在不同手机上的显示效果相同，显然<em>1 dip</em>是<em>1 px</em>通过某种对应关系转化过来的。这种转化上面的代码已经有了，但是其原理是什么呢？这就得引出另一个概念<em>dpi（dots per inch)</em></p>
 
-<p><code>dpi</code>，官方文档对这个单位的指代是<code>Screen density</code>，即屏幕密度，表示一个物理单位面积内像素点的个数。而在<code>160dpi</code>的设备上，<code>1dip = 1px</code>，在<code>120dpi</code>的设备上，<code>1dip = 0.75px</code>，没错，这就是<code>px</code>和<code>dip</code>对应关系的基础，<code>dpi</code>越大，<code>1dip</code>内就有更多的<code>px</code>。</p>
+<p><em>dpi</em>，官方文档对这个单位的指代是<em>Screen density</em>，即屏幕密度，表示一个物理单位面积内像素点的个数。而在<em>160dpi</em>的设备上，<em>1dip = 1px</em>，在<em>120dpi</em>的设备上，<em>1dip = 0.75px</em>，没错，这就是<em>px</em>和<em>dip</em>对应关系的基础，<em>dpi</em>越大，<em>1dip</em>内就有更多的<em>px</em>。</p>
 
 <table class="table">
   <thead>
@@ -319,7 +319,7 @@
   </tfoot>
 </table>
 
-<p>从上面这个表可以看出，在不同<code>dpi</code>的手机上，相同的的<code>dp</code>可以对应相应的物理大小，从而发挥了适配不同设备的作用。</p>
+<p>从上面这个表可以看出，在不同<em>dpi</em>的手机上，相同的的<em>dp</em>可以对应相应的物理大小，从而发挥了适配不同设备的作用。</p>
 
 <p>从上面的对应关系，不难得出如下公式</p>
 
@@ -327,32 +327,32 @@
   <p>px = dp * dpi  /  160</p>
 </blockquote>
 
-<p>那么再来看一下上面<code>dp</code>和<code>px</code>的转化代码。</p>
+<p>那么再来看一下上面<em>dp</em>和<em>px</em>的转化代码。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
 <span class="cm"> * 将dip或dp值转换为px值，保证尺寸大小不变</span>
-<span class="cm"> * </span>
+<span class="cm"> *</span>
 <span class="cm"> * @param dipValue</span>
 <span class="cm"> * @param scale</span>
 <span class="cm"> *            （DisplayMetrics类中属性density）</span>
 <span class="cm"> * @return</span>
-<span class="cm"> */</span> 
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">dip2px</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">dipValue</span><span class="o">)</span> <span class="o">{</span> 
-    <span class="kd">final</span> <span class="kt">float</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">density</span><span class="o">;</span> 
-    <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">dipValue</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span> 
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">dip2px</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">float</span> <span class="n">dipValue</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="kt">float</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getResources</span><span class="o">().</span><span class="na">getDisplayMetrics</span><span class="o">().</span><span class="na">density</span><span class="o">;</span>
+    <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">dipValue</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">+</span> <span class="mf">0.5f</span><span class="o">);</span>
 <span class="o">}</span></code></pre></div>
 
-<p><code>context.getResources().getDisplayMetrics()</code>返回的是一个<code>DisplayMetrics</code>对象，该对象有这么三个成员变量</p>
+<p><em>context.getResources().getDisplayMetrics()</em>返回的是一个<em>DisplayMetrics</em>对象，该对象有这么三个成员变量</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">float</span> <span class="n">density</span><span class="o">;</span>
-    
+
 <span class="kd">public</span> <span class="kt">int</span> <span class="n">densityDpi</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kt">float</span> <span class="n">scaledDensity</span><span class="o">;</span></code></pre></div>
 
-<p><code>densityDpi</code>就是上面的dpi，<code>density</code>是当前设备和默认<code>dpi ＝ 160</code>的比值，比如，对于<code>dpi = 320</code>的设备，<code>densityDpi = 320</code>,<code>density = 2</code>。<code>scaledDensity</code>是和<code>sp</code>有关的参数，下面再讲。</p>
+<p><em>densityDpi</em>就是上面的dpi，<em>density</em>是当前设备和默认<em>dpi ＝ 160</em>的比值，比如，对于<em>dpi = 320</em>的设备，<em>densityDpi = 320</em>,<em>density = 2</em>。<em>scaledDensity</em>是和<em>sp</em>有关的参数，下面再讲。</p>
 
-<p>再回头仔细看这段用于单位转化的代码，而刚刚得出的公式是不是一致的，没错，就是一样的，只是多了一个<code>0.5</code>，这个是为了四舍五入而已。到此为止，应该就理解了<code>px</code>和<code>dp</code>之间的关系了。</p>
+<p>再回头仔细看这段用于单位转化的代码，而刚刚得出的公式是不是一致的，没错，就是一样的，只是多了一个<em>0.5</em>，这个是为了四舍五入而已。到此为止，应该就理解了<em>px</em>和<em>dp</em>之间的关系了。</p>
 
 <p>于是乎，应该也能理解android项目中的图片资源文件，一般我们需要在以下几个文件夹中提供不同大小的图片。</p>
 
@@ -363,7 +363,7 @@
   <li>ldpi: 0.75</li>
 </ul>
 
-<p>如果你想要提供一张大小为<code>200x200</code>的照片给<code>xhdpi</code>的设备, 那相对应的就得提供一张<code>150*150</code>的照片给<code>hdpi</code>的设备，提供<code>100*100</code>给<code>mdpi</code>，提供<code>75*75</code>给<code>ldpi</code>。</p>
+<p>如果你想要提供一张大小为<em>200x200</em>的照片给<em>xhdpi</em>的设备, 那相对应的就得提供一张<em>150</em>150<em>的照片给</em>hdpi<em>的设备，提供</em>100<em>100</em>给<em>mdpi</em>，提供<em>75</em>75<em>给</em>ldpi*。</p>
 
 <p>再谈一个问题。大家一般都将图片文件按如下结构放在项目中。</p>
 
@@ -379,13 +379,13 @@
   <figcaption>资源图片文件</figcaption>
 </figure>
 
-<p>其实很简单，<code>mipmap</code>是用来放置<code>app</code>的<code>icon</code>图标的。其他资源图片文件也可以放在这里面，但是最好还是新建一个<code>drawable</code>的结构。真相在这个链接</p>
+<p>其实很简单，<em>mipmap</em>是用来放置<em>app</em>的<em>icon</em>图标的。其他资源图片文件也可以放在这里面，但是最好还是新建一个<em>drawable</em>的结构。真相在这个链接</p>
 
 <p><a href="http://developer.android.com/training/multiscreen/screendensities.html">http://developer.android.com/training/multiscreen/screendensities.html</a></p>
 
 <h2 id="sp">3. sp</h2>
 
-<p>sp的全称Scale-independent Pixels，布局文件中对TextView指定字体大小时，都建议使用<code>sp</code>.<code>sp</code>与<code>dip</code>相比多考虑了手机字体大小的偏好设置。而<code>sp</code>与<code>px</code>的转化关系，与<code>dp</code>和<code>px</code>的转化关系，只是对应的比例参数从<code>density</code>变成了<code>scaledDensity</code>原理是一样的。</p>
+<p>sp的全称Scale-independent Pixels，布局文件中对TextView指定字体大小时，都建议使用<em>sp</em>.<em>sp</em>与<em>dip</em>相比多考虑了手机字体大小的偏好设置。而<em>sp</em>与<em>px</em>的转化关系，与<em>dp</em>和<em>px</em>的转化关系，只是对应的比例参数从<em>density</em>变成了<em>scaledDensity</em>原理是一样的。</p>
 
 <h2 id="section-1">4。举例</h2>
 
@@ -393,7 +393,7 @@
 
 <p>如果一个hdpi设备，在drawable-hdpi文件夹中没图片，反而在drawable-xhdpi文件夹中存在，那么加载到内存的图片会相比在drawable-hdpi的图片会变小一半，占用内存也会变小（变成四分之一），</p>
 
-<p>另外，再注意一点，一个<code>ImageView</code>控件，修改其<code>layout_height</code>和<code>layout_width</code>的值，图片显示大小会变化，但是像素，占用内存不会变化。</p>
+<p>另外，再注意一点，一个<em>ImageView</em>控件，修改其<em>layout_height</em>和<em>layout_width</em>的值，图片显示大小会变化，但是像素，占用内存不会变化。</p>
 
 <p>下面是我写的一个小demo的截图，可以参考参考，加深理解：</p>
 
@@ -402,9 +402,9 @@
   <figcaption></figcaption>
 </figure>
 
-<p>这是一个<code>hdpi</code>的设备，第一幅图加载<code>hdpi</code>的图片，第二幅图加载<code>xhdpi</code>的图片，第三幅图加载<code>xhdpi</code>图片但是指定了长宽。</p>
+<p>这是一个<em>hdpi</em>的设备，第一幅图加载<em>hdpi</em>的图片，第二幅图加载<em>xhdpi</em>的图片，第三幅图加载<em>xhdpi</em>图片但是指定了长宽。</p>
 
-<p>此处<code>getWidth</code>，<code>getHeigth</code>返回的是图片长宽，单位是像素，单位是<code>px</code>，而非<code>dip</code>。</p>
+<p>此处<em>getWidth</em>，<em>getHeigth</em>返回的是图片长宽，单位是像素，单位是<em>px</em>，而非<em>dip</em>。</p>
 
 <h2 id="section-2">4，参考链接</h2>
 
@@ -415,7 +415,6 @@
 <p><a href="http://www.cnblogs.com/yaozhongxiao/archive/2014/07/14/3842908.html">http://www.cnblogs.com/yaozhongxiao/archive/2014/07/14/3842908.html</a></p>
 
 <p><a href="http://stackoverflow.com/a/2025541/1290235">http://stackoverflow.com/a/2025541/1290235</a></p>
-
 
         <nav class="pagination" role="navigation">
           

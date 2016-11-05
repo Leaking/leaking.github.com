@@ -214,22 +214,22 @@
 <p>我们看以下例子，我们自己定义一个View，很简单，只是继承View类。</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyView</span> <span class="kd">extends</span> <span class="n">View</span> <span class="o">{</span>  
-  
+
     <span class="kd">public</span> <span class="nf">MyView</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">AttributeSet</span> <span class="n">attrs</span><span class="o">,</span> <span class="kt">int</span> <span class="n">defStyleAttr</span><span class="o">)</span> <span class="o">{</span>  
         <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">attrs</span><span class="o">,</span> <span class="n">defStyleAttr</span><span class="o">);</span>  
         <span class="c1">// TODO Auto-generated constructor stub  </span>
     <span class="o">}</span>  
-  
+
     <span class="kd">public</span> <span class="nf">MyView</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">AttributeSet</span> <span class="n">attrs</span><span class="o">)</span> <span class="o">{</span>  
         <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">attrs</span><span class="o">);</span>  
         <span class="c1">// TODO Auto-generated constructor stub  </span>
     <span class="o">}</span>  
-  
+
     <span class="kd">public</span> <span class="nf">MyView</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>  
         <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>  
         <span class="c1">// TODO Auto-generated constructor stub  </span>
     <span class="o">}</span>  
-      
+
     <span class="nd">@Override</span>  
     <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onMeasure</span><span class="o">(</span><span class="kt">int</span> <span class="n">widthMeasureSpec</span><span class="o">,</span> <span class="kt">int</span> <span class="n">heightMeasureSpec</span><span class="o">)</span> <span class="o">{</span>  
         <span class="c1">// TODO Auto-generated method stub  </span>
@@ -247,19 +247,19 @@
     <span class="na">android:orientation=</span><span class="s">&quot;vertical&quot;</span>  
     <span class="na">android:padding=</span><span class="s">&quot;@dimen/activity_vertical_margin&quot;</span>  
     <span class="na">tools:context=</span><span class="s">&quot;com.notes.notes_onmeasure.EasyActivity&quot;</span> <span class="nt">&gt;</span>  
-  
-      
-      
+
+
+
     <span class="nt">&lt;com.notes.notes_onmeasure.MyView</span>  
         <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>  
         <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>  
         <span class="na">android:background=</span><span class="s">&quot;#78787878&quot;</span> <span class="nt">/&gt;</span>  
-  
+
     <span class="nt">&lt;TextView</span>  
         <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>  
         <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>  
         <span class="na">android:text=</span><span class="s">&quot;能看到我吗？&quot;</span> <span class="nt">/&gt;</span>  
-  
+
 <span class="nt">&lt;/LinearLayout&gt;</span></code></pre></div>
 
 <p>结果显示如</p>
@@ -291,13 +291,13 @@
         <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">measureDimension</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="n">heightMeasureSpec</span><span class="o">);</span>  
         <span class="n">setMeasuredDimension</span><span class="o">(</span><span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">);</span>  
     <span class="o">}</span>  
-  
+
     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">measureDimension</span><span class="o">(</span><span class="kt">int</span> <span class="n">defaultSize</span><span class="o">,</span> <span class="kt">int</span> <span class="n">measureSpec</span><span class="o">){</span>  
         <span class="kt">int</span> <span class="n">result</span><span class="o">;</span>  
-          
+
         <span class="kt">int</span> <span class="n">specMode</span> <span class="o">=</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">getMode</span><span class="o">(</span><span class="n">measureSpec</span><span class="o">);</span>  
         <span class="kt">int</span> <span class="n">specSize</span> <span class="o">=</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">getSize</span><span class="o">(</span><span class="n">measureSpec</span><span class="o">);</span>  
-          
+
         <span class="k">if</span><span class="o">(</span><span class="n">specMode</span> <span class="o">==</span> <span class="n">MeasureSpec</span><span class="o">.</span><span class="na">EXACTLY</span><span class="o">){</span>  
             <span class="n">result</span> <span class="o">=</span> <span class="n">specSize</span><span class="o">;</span>  
         <span class="o">}</span><span class="k">else</span><span class="o">{</span>  
@@ -323,7 +323,6 @@
   <li><strong>EXACTLY</strong>:  父结点要求其子节点的大小指定为某个确切的值。其子节点以及其他子孙结点都需要适应该大小。</li>
   <li><strong>AT MOST</strong>：父结点要求其子节点的大小不能超过某个最大值，其子节点以及其他子孙结点的大小都需要小于这个值</li>
 </ul>
-
 
         <nav class="pagination" role="navigation">
           

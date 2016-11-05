@@ -304,7 +304,7 @@
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestByHttps</span><span class="o">()</span> <span class="o">{</span>
 	<span class="k">try</span> <span class="o">{</span>
-		
+
 		<span class="c1">// Load CAs from an InputStream</span>
 		<span class="c1">// (could be from a resource or ByteArrayInputStream or ...)</span>
 
@@ -431,14 +431,14 @@
 <h3 id="section-2">1,忽略证书</h3>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HttpClientHelper</span> <span class="o">{</span>
- 
+
     <span class="kd">private</span> <span class="kd">static</span> <span class="n">HttpClient</span> <span class="n">httpClient</span><span class="o">;</span>
- 
+
     <span class="kd">private</span> <span class="nf">HttpClientHelper</span><span class="o">()</span> <span class="o">{</span>
     <span class="o">}</span>
- 
+
     <span class="kd">public</span> <span class="kd">static</span> <span class="kd">synchronized</span> <span class="n">HttpClient</span> <span class="nf">getHttpClient</span><span class="o">()</span> <span class="o">{</span>
- 
+
         <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="n">httpClient</span><span class="o">)</span> <span class="o">{</span>
             <span class="c1">// 初始化工作</span>
             <span class="k">try</span> <span class="o">{</span>
@@ -447,30 +447,30 @@
                 <span class="n">trustStore</span><span class="o">.</span><span class="na">load</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
                 <span class="n">SSLSocketFactory</span> <span class="n">sf</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SSLSocketFactoryEx</span><span class="o">(</span><span class="n">trustStore</span><span class="o">);</span>
                 <span class="n">sf</span><span class="o">.</span><span class="na">setHostnameVerifier</span><span class="o">(</span><span class="n">SSLSocketFactory</span><span class="o">.</span><span class="na">ALLOW_ALL_HOSTNAME_VERIFIER</span><span class="o">);</span>  <span class="c1">//允许所有主机的验证</span>
- 
+
                 <span class="n">HttpParams</span> <span class="n">params</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">BasicHttpParams</span><span class="o">();</span>
- 
+
                 <span class="n">HttpProtocolParams</span><span class="o">.</span><span class="na">setVersion</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="n">HttpVersion</span><span class="o">.</span><span class="na">HTTP_1_1</span><span class="o">);</span>
                 <span class="n">HttpProtocolParams</span><span class="o">.</span><span class="na">setContentCharset</span><span class="o">(</span><span class="n">params</span><span class="o">,</span>
                         <span class="n">HTTP</span><span class="o">.</span><span class="na">DEFAULT_CONTENT_CHARSET</span><span class="o">);</span>
                 <span class="n">HttpProtocolParams</span><span class="o">.</span><span class="na">setUseExpectContinue</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
- 
+
                 <span class="c1">// 设置连接管理器的超时</span>
                 <span class="n">ConnManagerParams</span><span class="o">.</span><span class="na">setTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
                 <span class="c1">// 设置连接超时</span>
                 <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setConnectionTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
                 <span class="c1">// 设置socket超时</span>
                 <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setSoTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
- 
+
                 <span class="c1">// 设置http https支持</span>
                 <span class="n">SchemeRegistry</span> <span class="n">schReg</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SchemeRegistry</span><span class="o">();</span>
                 <span class="n">schReg</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="k">new</span> <span class="nf">Scheme</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="n">PlainSocketFactory</span>
                         <span class="o">.</span><span class="na">getSocketFactory</span><span class="o">(),</span> <span class="mi">80</span><span class="o">));</span>
                 <span class="n">schReg</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="k">new</span> <span class="nf">Scheme</span><span class="o">(</span><span class="s">&quot;https&quot;</span><span class="o">,</span> <span class="n">sf</span><span class="o">,</span> <span class="mi">443</span><span class="o">));</span>
- 
+
                 <span class="n">ClientConnectionManager</span> <span class="n">conManager</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ThreadSafeClientConnManager</span><span class="o">(</span>
                         <span class="n">params</span><span class="o">,</span> <span class="n">schReg</span><span class="o">);</span>
- 
+
                 <span class="n">httpClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">DefaultHttpClient</span><span class="o">(</span><span class="n">conManager</span><span class="o">,</span> <span class="n">params</span><span class="o">);</span>
             <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
                 <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
@@ -479,50 +479,50 @@
         <span class="o">}</span>
         <span class="k">return</span> <span class="n">httpClient</span><span class="o">;</span>
     <span class="o">}</span>
- 
+
 <span class="o">}</span>
- 
+
 <span class="kd">class</span> <span class="nc">SSLSocketFactoryEx</span> <span class="kd">extends</span> <span class="n">SSLSocketFactory</span> <span class="o">{</span>
- 
+
     <span class="n">SSLContext</span> <span class="n">sslContext</span> <span class="o">=</span> <span class="n">SSLContext</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">&quot;TLS&quot;</span><span class="o">);</span>
- 
+
     <span class="kd">public</span> <span class="nf">SSLSocketFactoryEx</span><span class="o">(</span><span class="n">KeyStore</span> <span class="n">truststore</span><span class="o">)</span>
             <span class="kd">throws</span> <span class="n">NoSuchAlgorithmException</span><span class="o">,</span> <span class="n">KeyManagementException</span><span class="o">,</span>
             <span class="n">KeyStoreException</span><span class="o">,</span> <span class="n">UnrecoverableKeyException</span> <span class="o">{</span>
         <span class="kd">super</span><span class="o">(</span><span class="n">truststore</span><span class="o">);</span>
- 
+
         <span class="n">TrustManager</span> <span class="n">tm</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">X509TrustManager</span><span class="o">()</span> <span class="o">{</span>
- 
+
             <span class="nd">@Override</span>
             <span class="kd">public</span> <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">cert</span><span class="o">.</span><span class="na">X509Certificate</span><span class="o">[]</span> <span class="nf">getAcceptedIssuers</span><span class="o">()</span> <span class="o">{</span>
                 <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
             <span class="o">}</span>
- 
+
             <span class="nd">@Override</span>
             <span class="kd">public</span> <span class="kt">void</span> <span class="nf">checkClientTrusted</span><span class="o">(</span>
                     <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">cert</span><span class="o">.</span><span class="na">X509Certificate</span><span class="o">[]</span> <span class="n">chain</span><span class="o">,</span> <span class="n">String</span> <span class="n">authType</span><span class="o">)</span>
                     <span class="kd">throws</span> <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">cert</span><span class="o">.</span><span class="na">CertificateException</span> <span class="o">{</span>
- 
+
             <span class="o">}</span>
- 
+
             <span class="nd">@Override</span>
             <span class="kd">public</span> <span class="kt">void</span> <span class="nf">checkServerTrusted</span><span class="o">(</span>
                     <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">cert</span><span class="o">.</span><span class="na">X509Certificate</span><span class="o">[]</span> <span class="n">chain</span><span class="o">,</span> <span class="n">String</span> <span class="n">authType</span><span class="o">)</span>
                     <span class="kd">throws</span> <span class="n">java</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">cert</span><span class="o">.</span><span class="na">CertificateException</span> <span class="o">{</span>
- 
+
             <span class="o">}</span>
         <span class="o">};</span>
- 
+
         <span class="n">sslContext</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="k">new</span> <span class="n">TrustManager</span><span class="o">[]</span> <span class="o">{</span> <span class="n">tm</span> <span class="o">},</span> <span class="kc">null</span><span class="o">);</span>
     <span class="o">}</span>
- 
+
     <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="n">Socket</span> <span class="nf">createSocket</span><span class="o">(</span><span class="n">Socket</span> <span class="n">socket</span><span class="o">,</span> <span class="n">String</span> <span class="n">host</span><span class="o">,</span> <span class="kt">int</span> <span class="n">port</span><span class="o">,</span>
             <span class="kt">boolean</span> <span class="n">autoClose</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">UnknownHostException</span> <span class="o">{</span>
         <span class="k">return</span> <span class="n">sslContext</span><span class="o">.</span><span class="na">getSocketFactory</span><span class="o">().</span><span class="na">createSocket</span><span class="o">(</span><span class="n">socket</span><span class="o">,</span> <span class="n">host</span><span class="o">,</span> <span class="n">port</span><span class="o">,</span>
                 <span class="n">autoClose</span><span class="o">);</span>
     <span class="o">}</span>
- 
+
     <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="n">Socket</span> <span class="nf">createSocket</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
         <span class="k">return</span> <span class="n">sslContext</span><span class="o">.</span><span class="na">getSocketFactory</span><span class="o">().</span><span class="na">createSocket</span><span class="o">();</span>
@@ -532,7 +532,7 @@
 <h3 id="section-3">2,使用证书</h3>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">AssetManager</span> <span class="n">am</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getAssets</span><span class="o">();</span>
- 
+
 <span class="n">InputStream</span> <span class="n">ins</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="s">&quot;robusoft.cer&quot;</span><span class="o">);</span>
 
 <span class="k">try</span> <span class="o">{</span>
@@ -582,7 +582,6 @@
 <span class="o">}</span></code></pre></div>
 
 <p>很简单，我们只需要在构造HttpClientStack时传入一个已经设置了证书的HttpClient，按照上面讲述的那样设置即可。</p>
-
 
         <nav class="pagination" role="navigation">
           
