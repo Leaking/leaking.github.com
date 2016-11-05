@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2016-11-05T16:43:10+08:00</updated>
+<updated>2016-11-05T16:44:50+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -311,7 +311,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
 
 &lt;h1 id=&quot;waitnotifynotifyall&quot;&gt;一、wait，notify，notifyall的使用&lt;/h1&gt;
 
-&lt;p&gt;这三个方法都是被定义在Object类中，它们主要应用于线程间交换对象锁的状态，先从一个例子入手吧，看完例子再解释其原理，这是一个&lt;code&gt;生产者－消费者&lt;/code&gt;案例。&lt;/p&gt;
+&lt;p&gt;这三个方法都是被定义在Object类中，它们主要应用于线程间交换对象锁的状态，先从一个例子入手吧，看完例子再解释其原理，这是一个&lt;em&gt;生产者－消费者&lt;/em&gt;案例。&lt;/p&gt;
 
 &lt;p&gt;以下是生产者的代码：&lt;/p&gt;
 
@@ -335,7 +335,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
          &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;
          &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;produce&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++);&lt;/span&gt;
-         &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 
+         &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 		 &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;InterruptedException&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
          &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;ex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printStackTrace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
@@ -352,7 +352,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
             &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Queue is full &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;currentThread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot; is waiting , size: &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;taskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;taskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;wait&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-		  
+
          &lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
          &lt;span class=&quot;n&quot;&gt;taskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
          &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Produced: &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
@@ -361,7 +361,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;code&gt;taskQueue&lt;/code&gt;是存放商品的媒介，对于生产者和消费者而言是互斥访问的，所以自然是用&lt;code&gt;synchronized&lt;/code&gt;括起来了。另外，当&lt;code&gt;taskQueue&lt;/code&gt;已经存满，则生产者需要进入等待状态，此时调用了&lt;code&gt;taskQueue.wait()&lt;/code&gt;，当前线程放弃了对象锁&lt;code&gt;taskQueue&lt;/code&gt;，使得其他线程——消费者可以获得该对象锁。后面我们会看到，当另一个线程（消费者）调用&lt;code&gt;taskQueue.notify()&lt;/code&gt;后，停留在&lt;code&gt;taskQueue.wait()&lt;/code&gt;的生产者线程会恢复运行。生产者生产了商品后，调用了&lt;code&gt;taskQueue.notifyAll()&lt;/code&gt;，这个方法可以唤醒所有正在等待商品的消费者中线程优先级最高的一个。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;taskQueue&lt;/em&gt;是存放商品的媒介，对于生产者和消费者而言是互斥访问的，所以自然是用&lt;em&gt;synchronized&lt;/em&gt;括起来了。另外，当&lt;em&gt;taskQueue&lt;/em&gt;已经存满，则生产者需要进入等待状态，此时调用了&lt;em&gt;taskQueue.wait()&lt;/em&gt;，当前线程放弃了对象锁&lt;em&gt;taskQueue&lt;/em&gt;，使得其他线程——消费者可以获得该对象锁。后面我们会看到，当另一个线程（消费者）调用&lt;em&gt;taskQueue.notify()&lt;/em&gt;后，停留在&lt;em&gt;taskQueue.wait()&lt;/em&gt;的生产者线程会恢复运行。生产者生产了商品后，调用了&lt;em&gt;taskQueue.notifyAll()&lt;/em&gt;，这个方法可以唤醒所有正在等待商品的消费者中线程优先级最高的一个。&lt;/p&gt;
 
 &lt;p&gt;相信解释了生产者的实现代码，以下消费者的实现代码就很容易理解了。&lt;/p&gt;
 
@@ -370,12 +370,12 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Consumer&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Runnable&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;taskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
- 
+
    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Consumer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sharedQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
       &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;taskQueue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sharedQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
+
    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -390,7 +390,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
       &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
+
    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;consume&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;InterruptedException&lt;/span&gt;
    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
       &lt;span class=&quot;kd&quot;&gt;synchronized&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;taskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
@@ -446,9 +446,9 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
 &lt;span class=&quot;nl&quot;&gt;Consumed:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;Queue&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Consumer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;waiting&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;size:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;从上面的例子可以看出，生产者和消费者两个异步线程可以借助&lt;code&gt;wait&lt;/code&gt;和&lt;code&gt;notify&lt;/code&gt;很好地进行通信。&lt;/p&gt;
+&lt;p&gt;从上面的例子可以看出，生产者和消费者两个异步线程可以借助&lt;em&gt;wait&lt;/em&gt;和&lt;em&gt;notify&lt;/em&gt;很好地进行通信。&lt;/p&gt;
 
-&lt;p&gt;接下来再稍微做个总结，我们一般按如下代码调用&lt;code&gt;wait&lt;/code&gt;方法&lt;/p&gt;
+&lt;p&gt;接下来再稍微做个总结，我们一般按如下代码调用&lt;em&gt;wait&lt;/em&gt;方法&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;synchronized&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lockObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -456,27 +456,27 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
     &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;lockObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;wait&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-     
+
     &lt;span class=&quot;c1&quot;&gt;//take the action here;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;如上将&lt;code&gt;wait&lt;/code&gt;方法放到&lt;code&gt;while&lt;/code&gt;循环中，其中的好处有很多说法，不过有一种我比较赞同，就是当其他恶意线程想&lt;code&gt;notify&lt;/code&gt;这个线程时会失败，因为如果该恶意线程没有翻转此处&lt;code&gt;condition&lt;/code&gt;的状态的话。&lt;/p&gt;
+&lt;p&gt;如上将&lt;em&gt;wait&lt;/em&gt;方法放到&lt;em&gt;while&lt;/em&gt;循环中，其中的好处有很多说法，不过有一种我比较赞同，就是当其他恶意线程想&lt;em&gt;notify&lt;/em&gt;这个线程时会失败，因为如果该恶意线程没有翻转此处&lt;em&gt;condition&lt;/em&gt;的状态的话。&lt;/p&gt;
 
-&lt;p&gt;另外，我们一般按照如下代码调用&lt;code&gt;notify&lt;/code&gt;方法或者&lt;code&gt;notifyall&lt;/code&gt;方法&lt;/p&gt;
+&lt;p&gt;另外，我们一般按照如下代码调用&lt;em&gt;notify&lt;/em&gt;方法或者&lt;em&gt;notifyall&lt;/em&gt;方法&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;synchronized&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lockObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;c1&quot;&gt;//establish_the_condition;&lt;/span&gt;
- 
+
     &lt;span class=&quot;n&quot;&gt;lockObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;notify&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
     &lt;span class=&quot;c1&quot;&gt;//lockObject.notifyAll();&lt;/span&gt;
-     
+
     &lt;span class=&quot;c1&quot;&gt;//any additional code if needed&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;sleepinterrupt&quot;&gt;二、sleep，interrupt的使用&lt;/h1&gt;
 
-&lt;p&gt;&lt;code&gt;sleep&lt;/code&gt;方法我们再熟悉不过，平时见到的很多Java例子都喜欢借助这个方法，&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;sleep&lt;/em&gt;方法我们再熟悉不过，平时见到的很多Java例子都喜欢借助这个方法，&lt;/p&gt;
 
 &lt;p&gt;该方法的签名如下：&lt;/p&gt;
 
@@ -488,42 +488,42 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
    &lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;InterruptedException&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
    &lt;span class=&quot;c1&quot;&gt;//interrupttd by other thread&lt;/span&gt;
-   
+
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;code&gt;sleep&lt;/code&gt;方法属于Thread的静态方法，&lt;code&gt;interrupt&lt;/code&gt;属于线程对象的方法，不是静态方法。当在其他线程中调用了上 面例子中的线程的&lt;code&gt;interrupt&lt;/code&gt;，则上述代码会进入&lt;code&gt;InterruptedException&lt;/code&gt;异常捕获中。到这里，发现没有，这就起到了线程交互的目的了，你只要把你将要做的事情放在异常处理的代码里就行了。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;sleep&lt;/em&gt;方法属于Thread的静态方法，&lt;em&gt;interrupt&lt;/em&gt;属于线程对象的方法，不是静态方法。当在其他线程中调用了上 面例子中的线程的&lt;em&gt;interrupt&lt;/em&gt;，则上述代码会进入&lt;em&gt;InterruptedException&lt;/em&gt;异常捕获中。到这里，发现没有，这就起到了线程交互的目的了，你只要把你将要做的事情放在异常处理的代码里就行了。&lt;/p&gt;
 
-&lt;p&gt;另外&lt;code&gt;interrupt&lt;/code&gt;除了会使&lt;code&gt;sleep&lt;/code&gt;抛出&lt;code&gt;InterruptedException&lt;/code&gt;异常，也会使&lt;code&gt;wait&lt;/code&gt;抛出&lt;code&gt;InterruptedException&lt;/code&gt;异常。&lt;/p&gt;
+&lt;p&gt;另外&lt;em&gt;interrupt&lt;/em&gt;除了会使&lt;em&gt;sleep&lt;/em&gt;抛出&lt;em&gt;InterruptedException&lt;/em&gt;异常，也会使&lt;em&gt;wait&lt;/em&gt;抛出&lt;em&gt;InterruptedException&lt;/em&gt;异常。&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;sleep&lt;/code&gt;和&lt;code&gt;wait&lt;/code&gt;方法虽然很相似，但是也有很多区别，如下：&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;sleep&lt;/em&gt;和&lt;em&gt;wait&lt;/em&gt;方法虽然很相似，但是也有很多区别，如下：&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;调用&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;sleep&lt;/code&gt;: 通过当前线程调用&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;sleep&lt;/em&gt;: 通过当前线程调用&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;wait&lt;/code&gt;: 通过Object对象调用&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;wait&lt;/em&gt;: 通过Object对象调用&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;锁&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;sleep&lt;/code&gt;: 不会释放对象锁&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;sleep&lt;/em&gt;: 不会释放对象锁&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;wait&lt;/code&gt;: 释放对象锁&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;wait&lt;/em&gt;: 释放对象锁&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;唤醒&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;sleep&lt;/code&gt;: 当&lt;code&gt;sleep&lt;/code&gt;的时间过去后才唤醒，或者通过&lt;code&gt;interrupt &lt;/code&gt;方法唤醒&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;sleep&lt;/em&gt;: 当&lt;em&gt;sleep&lt;/em&gt;的时间过去后才唤醒，或者通过*interrupt *方法唤醒&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;wait&lt;/code&gt;: 有人调用了当前对象的&lt;code&gt;notify&lt;/code&gt;或者&lt;code&gt;notifyAll&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;wait&lt;/em&gt;: 有人调用了当前对象的&lt;em&gt;notify&lt;/em&gt;或者&lt;em&gt;notifyAll&lt;/em&gt;.&lt;/p&gt;
 
 &lt;h1 id=&quot;yieldjoin&quot;&gt;三、yield，join的使用&lt;/h1&gt;
 
-&lt;p&gt;&lt;code&gt;yield&lt;/code&gt;方法是&lt;code&gt;Thread&lt;/code&gt;的静态方法，方法声明如下&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;yield&lt;/em&gt;方法是&lt;em&gt;Thread&lt;/em&gt;的静态方法，方法声明如下&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;native&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;yield&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;code&gt;yield&lt;/code&gt;方法可以使当前线程让出执行机会，让其他相同优先级或者更高优先级的线程有机会执行。执行完&lt;code&gt;yield&lt;/code&gt;方法后的线程将从&lt;code&gt;Running State&lt;/code&gt;状态进入&lt;code&gt;Runnable State&lt;/code&gt;状态，而非&lt;code&gt;blocked state&lt;/code&gt;。与之形成对比的是，&lt;code&gt;sleep&lt;/code&gt;方法会使线程进入&lt;code&gt;blocked state&lt;/code&gt;状态，而且&lt;code&gt;sleep&lt;/code&gt;方法是不仅为所有优先级的线程提供运行机会，包括更低优先级的线程。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;yield&lt;/em&gt;方法可以使当前线程让出执行机会，让其他相同优先级或者更高优先级的线程有机会执行。执行完&lt;em&gt;yield&lt;/em&gt;方法后的线程将从&lt;em&gt;Running State&lt;/em&gt;状态进入&lt;em&gt;Runnable State&lt;/em&gt;状态，而非&lt;em&gt;blocked state&lt;/em&gt;。与之形成对比的是，&lt;em&gt;sleep&lt;/em&gt;方法会使线程进入&lt;em&gt;blocked state&lt;/em&gt;状态，而且&lt;em&gt;sleep&lt;/em&gt;方法是不仅为所有优先级的线程提供运行机会，包括更低优先级的线程。&lt;/p&gt;
 
-&lt;p&gt;请参考下面一个小例子加深对&lt;code&gt;yield&lt;/code&gt;方法的理解&lt;/p&gt;
+&lt;p&gt;请参考下面一个小例子加深对&lt;em&gt;yield&lt;/em&gt;方法的理解&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;YieldExample&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -531,15 +531,15 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
       &lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;producer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Producer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
       &lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;consumer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Consumer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-       
+
       &lt;span class=&quot;n&quot;&gt;producer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setPriority&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN_PRIORITY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//Min Priority&lt;/span&gt;
       &lt;span class=&quot;n&quot;&gt;consumer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setPriority&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX_PRIORITY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//Max Priority&lt;/span&gt;
-       
+
       &lt;span class=&quot;n&quot;&gt;producer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
       &lt;span class=&quot;n&quot;&gt;consumer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
+
 &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Producer&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
@@ -551,7 +551,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
       &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
+
 &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Consumer&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
@@ -564,7 +564,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;注释掉以上两个&lt;code&gt;yield&lt;/code&gt;方法，输出如下&lt;/p&gt;
+&lt;p&gt;注释掉以上两个&lt;em&gt;yield&lt;/em&gt;方法，输出如下&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;am&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Consumer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Consumed&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Item&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;am&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Consumer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Consumed&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Item&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
@@ -577,7 +577,7 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
  &lt;span class=&quot;n&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;am&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Producer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Produced&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Item&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;am&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Producer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Produced&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Item&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;执行以上两个&lt;code&gt;yield&lt;/code&gt;方法，输出如下&lt;/p&gt;
+&lt;p&gt;执行以上两个&lt;em&gt;yield&lt;/em&gt;方法，输出如下&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;am&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Producer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Produced&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Item&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;am&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Consumer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Consumed&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Item&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
@@ -590,12 +590,12 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
  &lt;span class=&quot;n&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;am&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Producer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Produced&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Item&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;am&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Consumer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Consumed&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Item&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;接下来再讲讲&lt;code&gt;join&lt;/code&gt;方法，该方法的签名如下：&lt;/p&gt;
+&lt;p&gt;接下来再讲讲&lt;em&gt;join&lt;/em&gt;方法，该方法的签名如下：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//Waits for this thread to die.&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;InterruptedException&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;如果在B线程中执行A线程的&lt;code&gt;join&lt;/code&gt;方法，则B线程会暂停，等待A线程执行完毕。&lt;/p&gt;
+&lt;p&gt;如果在B线程中执行A线程的&lt;em&gt;join&lt;/em&gt;方法，则B线程会暂停，等待A线程执行完毕。&lt;/p&gt;
 
 &lt;p&gt;看如下例子&lt;/p&gt;
 
@@ -631,15 +631,15 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
       &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
- 
+
 &lt;span class=&quot;nl&quot;&gt;Output:&lt;/span&gt;
- 
+
 &lt;span class=&quot;n&quot;&gt;First&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;started&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;Sleeping&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;First&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;completed&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;Second&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;completed&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;code&gt;join&lt;/code&gt;和&lt;code&gt;sleep&lt;/code&gt;一样，会因为&lt;code&gt;interrupt&lt;/code&gt;抛出&lt;code&gt;InterruptedException&lt;/code&gt;，而&lt;code&gt;yield&lt;/code&gt;不会。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;join&lt;/em&gt;和&lt;em&gt;sleep&lt;/em&gt;一样，会因为&lt;em&gt;interrupt&lt;/em&gt;抛出&lt;em&gt;InterruptedException&lt;/em&gt;，而&lt;em&gt;yield&lt;/em&gt;不会。&lt;/p&gt;
 
 &lt;h1 id=&quot;section&quot;&gt;四、参考链接&lt;/h1&gt;
 
@@ -650,7 +650,6 @@ NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://howtodoinjava.com/2013/03/08/difference-between-sleep-and-wait/&quot;&gt;Difference between sleep and wait&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://howtodoinjava.com/2014/06/03/difference-between-yield-and-join-in-threads-in-java/&quot;&gt;Difference between yield and join&lt;/a&gt;&lt;/p&gt;
-
 
   &lt;p&gt;&lt;a href=&quot;/android/Thread/&quot;&gt;Thread常用方法&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on November 01, 2015.&lt;/p&gt;</content>
 </entry>
