@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2016-11-01T02:59:14+08:00</updated>
+<updated>2016-11-05T16:34:06+08:00</updated>
 <id>/</id>
 <author>
   <name>Quinn Chen</name>
@@ -68,16 +68,15 @@
 &lt;span class=&quot;cm&quot;&gt; * autofocus. To stop continuous focus, applications should change the&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; * focus mode to other modes.&lt;/span&gt;
 &lt;span class=&quot;cm&quot;&gt; *&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; * @see #FOCUS_MODE_CONTINUOUS_PICTURE&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;
- 
+&lt;span class=&quot;cm&quot;&gt; * @see #FOCUS_MODE_CONTINUOUS_PICTURE**/&lt;/span&gt;
+
 &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FOCUS_MODE_CONTINUOUS_VIDEO&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;continuous-video&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;另外有一个小技巧，就是在调用拍照时，先调用&lt;code&gt;camera.autoFocus&lt;/code&gt;然后在成功聚焦回调里拍照。当然，对于聚焦失败你应该设置最大的失败次数限制。&lt;/p&gt;
 
 &lt;h2 id=&quot;crash&quot;&gt;关于crash&lt;/h2&gt;
 
-&lt;p&gt;&lt;code&gt;camera.autofocus&lt;/code&gt;聚焦还有&lt;code&gt;camera.takePicture&lt;/code&gt;这两个API都不能持续重复调用，否则会crash，执行完一次聚焦才能执行下一次聚焦，执行完一次拍照才能执行下一次拍照，所以你做好做一个保护，另外，根据官方文档解释，&lt;code&gt;camera.takePicture&lt;/code&gt;返回拍照数据后，preview是自动被stop了的，所以你需要重新start一次，否则下次拍照会crash。另外，我发现在三星上拍完照preview并没有自动stop。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;camera.autofocus&lt;/code&gt;聚焦还有&lt;code&gt;camera.takePicture&lt;/code&gt;这两个API都不能持续重复调用，否则会crash，执行完一次聚焦才能执行下一次聚焦，执行完一次拍照才能执行下一次拍照，所以你最好做一个保护，另外，根据官方文档解释，&lt;code&gt;camera.takePicture&lt;/code&gt;返回拍照数据后，preview是自动被stop了的，所以你需要重新start一次，否则下次拍照会crash。然而，我发现在三星上拍完照preview并没有自动stop。&lt;/p&gt;
 
 &lt;h2 id=&quot;setfocusarea&quot;&gt;setFocusArea&lt;/h2&gt;
 
@@ -94,13 +93,39 @@
 
 &lt;h2 id=&quot;camera&quot;&gt;关于camera的生命周期&lt;/h2&gt;
 
-&lt;p&gt;回头写，，，&lt;/p&gt;
+&lt;p&gt;这里主要关于什么时候释放相机资源的问题，涉及到切后台，锁屏的情况，具体可以参考QQ空间的这片技术文章，文章最后讲到了这一点。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&amp;amp;mid=401454605&amp;amp;idx=1&amp;amp;sn=d5a16f6dc13e7581fec08a4e704cd5d0&amp;amp;scene=1&amp;amp;srcid=070755OBPvgLTborfTSdRBPK&amp;amp;key=77421cf58af4a653bd19893e9cedc5f214e24a9f43d1b6a648950d96ec071465a25b23ef315340e73e13e493193a91ce&amp;amp;ascene=0&amp;amp;uin=Mjk1NzEwNjYxMA%3D%3D&amp;amp;devicetype=iMac15%2C1+OSX+OSX+10.10.4+build(14E46)&amp;amp;version=11020201&amp;amp;pass_ticket=R3QSQ71v43i%2FmEv8zhmbY40zPeaKdZYL1p4zPkxxBDSA4%2BGBnJaKkuXxDe42CW2Q&quot;&gt;QQ空间开发团队-Android相机开发那些坑&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;主要技巧在于：&lt;code&gt;SurfaceView&lt;/code&gt;设置&lt;code&gt;INVISIBLE&lt;/code&gt;时会自动释放相机资源。&lt;/p&gt;
 
 &lt;h2 id=&quot;previewpicture&quot;&gt;preview到picture的坐标转换&lt;/h2&gt;
 
-&lt;p&gt;回头写，，，&lt;/p&gt;
+&lt;p&gt;如果此时你的自定义相机有这样一个需求，在&lt;code&gt;preview&lt;/code&gt;中某个坐标比如（100，100）处添加一个红点，那么，你如何在最终拍照的&lt;code&gt;picture&lt;/code&gt;上同一个地方还原放上红点呢？而且可能此时你的&lt;code&gt;preview&lt;/code&gt;分辨率是1080 * 1440，&lt;code&gt;picture&lt;/code&gt;分辨率是3000 * 4000.&lt;/p&gt;
+
+&lt;p&gt;问题就在于如何在&lt;code&gt;preview&lt;/code&gt;和&lt;code&gt;picture&lt;/code&gt;之间做坐标转换，对于原生的&lt;code&gt;Android&lt;/code&gt;系统相机，是比较好处理的，你可以参考这个&lt;code&gt;Stackoverflow&lt;/code&gt;的回答&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/a/18159351/1290235&quot;&gt;http://stackoverflow.com/a/18159351/1290235&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;上面这个回答其中讲到，所有可选的&lt;code&gt;preview&lt;/code&gt;和&lt;code&gt;picture&lt;/code&gt;大小都是基于最大的 &lt;code&gt;picture&lt;/code&gt; 而来, 而且是在&lt;code&gt;Matrix.ScaleToFit.CENTER&lt;/code&gt;的规则上缩放而来，这种缩放的规则就是，小的分辨率往大的分辨率放大，小的分辨率至少会有宽或者高和大的分辨率贴合，只要宽或者高其中一者贴合即可，那么你就可以按照上面链接中讲到的方法进行坐标转换。&lt;/p&gt;
+
+&lt;p&gt;那么问题来了，在开发过程中，我遇到华为等机器上并不符合以上规则，也就是&lt;code&gt;preview&lt;/code&gt;放大后，和最大的&lt;code&gt;picture&lt;/code&gt;对比之下，宽和高都不贴合。这种情况就无法换算了。那么怎么解决这个问题呢？&lt;/p&gt;
+
+&lt;p&gt;最终解决方法是这样：在寻找&lt;code&gt;preview&lt;/code&gt;和&lt;code&gt;picture&lt;/code&gt;大小时，要求二者的宽/高比例相等，这样就可以解决坐标转换的问题了。&lt;/p&gt;
 
 &lt;h2 id=&quot;yuv-1&quot;&gt;理解图片格式 YUV&lt;/h2&gt;
+
+&lt;p&gt;可参考以下两篇文章&lt;/p&gt;
+
+&lt;p&gt;[&lt;a href=&quot;http://www.cnblogs.com/azraelly/archive/2013/01/01/2841269.html&quot;&gt;http://www.cnblogs.com/azraelly/archive/2013/01/01/2841269.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/beyond_cn/article/details/12998247&quot;&gt;http://blog.csdn.net/beyond_cn/article/details/12998247&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;以下公式你可能得看上面的文章后才看得懂。&lt;/p&gt;
 
 &lt;p&gt;YUV的存储格式比较特别，一般都是多个Y公用UV，常见如下&lt;/p&gt;
 
@@ -110,19 +135,6 @@ YV12: YYYYYYYY VV UU    =&amp;gt;  YUV420P&lt;br /&gt;
 NV12: YYYYYYYY UVUV     =&amp;gt;  YUV420SP&lt;br /&gt;
 NV21: YYYYYYYY VUVU     =&amp;gt;  YUV420SP&lt;/p&gt;
 &lt;/blockquote&gt;
-
-&lt;p&gt;可参考以下两篇文章&lt;/p&gt;
-
-&lt;p&gt;[&lt;a href=&quot;http://www.cnblogs.com/azraelly/archive/2013/01/01/2841269.html&quot;&gt;http://www.cnblogs.com/azraelly/archive/2013/01/01/2841269.html&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/beyond_cn/article/details/12998247&quot;&gt;http://blog.csdn.net/beyond_cn/article/details/12998247&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;section-2&quot;&gt;几篇有用的文章&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&amp;amp;mid=401454605&amp;amp;idx=1&amp;amp;sn=d5a16f6dc13e7581fec08a4e704cd5d0&amp;amp;scene=1&amp;amp;srcid=070755OBPvgLTborfTSdRBPK&amp;amp;key=77421cf58af4a653bd19893e9cedc5f214e24a9f43d1b6a648950d96ec071465a25b23ef315340e73e13e493193a91ce&amp;amp;ascene=0&amp;amp;uin=Mjk1NzEwNjYxMA%3D%3D&amp;amp;devicetype=iMac15%2C1+OSX+OSX+10.10.4+build(14E46)&amp;amp;version=11020201&amp;amp;pass_ticket=R3QSQ71v43i%2FmEv8zhmbY40zPeaKdZYL1p4zPkxxBDSA4%2BGBnJaKkuXxDe42CW2Q&quot;&gt;QQ空间开发团队-Android相机开发那些坑&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/yanzi1225627/article/details/33313707&quot;&gt;CSDN某博主一系列不错的Camera文章&lt;/a&gt;&lt;/p&gt;
-
 
   &lt;p&gt;&lt;a href=&quot;/android/android-camera/&quot;&gt;开发Android Camera遇到的问题&lt;/a&gt; was originally published by Quinn Chen at &lt;a href=&quot;&quot;&gt;My Stupid Blog&lt;/a&gt; on November 01, 2016.&lt;/p&gt;</content>
 </entry>
