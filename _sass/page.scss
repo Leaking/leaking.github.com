@@ -48,27 +48,12 @@ body {
 // Responsive nav toggle stuff
 #site-nav {
 	z-index: 9000;
-	display: none;
+	display: inline;
 	@media #{$medium} {
 		-webkit-animation-duration: 1s;
 		-moz-animation-duration: 1s;
 		-o-animation-duration: 1s;
 		animation-duration: 1s;
-	}
-	&.closed {
-		@media #{$medium} {
-			display: block;
-		}
-	}
-	&.opened {
-		display: block;
-		max-height: 100%;
-		li {
-			float: none;
-			@media #{$medium} {
-				float: left;
-			}
-		}
 	}
 }
 .no-js #site-nav {
