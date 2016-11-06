@@ -2,14 +2,13 @@
 
 title: My Stupid Blog
 locale: en_US
-description: 我写下的故事，只是时间的灰烬
+description:
 logo: site-logo.png
 search: true
 url: 
 
 
 # Jekyll configuration
-
 permalink:   /:categories/:title/
 markdown:    kramdown  
 sass:
