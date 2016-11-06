@@ -17,8 +17,8 @@
 <meta name="twitter:site" content="@chenhuazhaoao">
 <meta name="twitter:creator" content="@chenhuazhaoao">
 
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="/images/so-simple-sample-image-1.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/site-logo.png">
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
@@ -146,18 +146,19 @@
 </div><!-- ./search-wrapper -->
 
 <header class="masthead">
-	
-		<div class="wrap">
-			<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated bounceInDown"></a>
-		</div>
-	
+	<div class="wrap">
+        
+    		<a href="" class="site-logo" rel="home" title="My Stupid Blog"><img src="/images/site-logo.png" width="200" height="200" alt="My Stupid Blog logo" class="animated fadeInUp"></a>
+        
+        <h1 class="site-title animated fadeIn"><a href="/">My Stupid Blog</a></h1>
+		<h2 class="site-description animated fadeIn" itemprop="description"></h2>
+	</div>
 </header><!-- /.masthead -->
-
 
 
 <div id="main" role="main">
   <article class="hentry">
-    <img src="/images/so-simple-sample-image-1.jpg" class="entry-feature-image" alt="JVM运行时数据区域和垃圾回收" ><p class="image-credit">Photo Credit: <a href="http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/">WeGraphics</a>
+    
     <div class="entry-wrapper">
       <header class="entry-header">
         <span class="entry-tags"><a href="/tags/#Java" title="Pages tagged Java">Java</a></span>
@@ -203,11 +204,11 @@
   <figcaption></figcaption>
 </figure>
 
-<p>我们可以看到右边三个数据区域是属于线程隔离的数据区，随着用户线程启动和结束而建立和销毁。也就是这一部分的内存分配和回收都是会比较准确地执行。而相比之下，左边的线程隔离数据区，则就没那么准确了，虽然也是会自动回收垃圾，但是需要GC（垃圾回收器）进行一些考量和计算。到这里注意到没有，我们平时讲的垃圾回收，其实不是针对所有内存区域的，而是只是针对左边的线程隔离数据区，它们包括<code>方法区</code>和<code>堆</code>。接下来从这两个数据区域讲起。</p>
+<p>我们可以看到右边三个数据区域是属于线程隔离的数据区，随着用户线程启动和结束而建立和销毁。也就是这一部分的内存分配和回收都是会比较准确地执行。而相比之下，左边的线程隔离数据区，则就没那么准确了，虽然也是会自动回收垃圾，但是需要GC（垃圾回收器）进行一些考量和计算。到这里注意到没有，我们平时讲的垃圾回收，其实不是针对所有内存区域的，而是只是针对左边的线程隔离数据区，它们包括<em>方法区</em>和<em>堆</em>。接下来从这两个数据区域讲起。</p>
 
 <h2 id="section-1">1.1 由所有线程共享的数据区域</h2>
 
-<p>这个区域包括<code>堆</code>和<code>方法区</code>，</p>
+<p>这个区域包括<em>堆</em>和<em>方法区</em>，</p>
 
 <h3 id="java">1.1.1 Java堆</h3>
 
@@ -215,9 +216,9 @@
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Object</span> <span class="n">object</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Object</span><span class="o">();</span></code></pre></div>
 
-<p>此处其实产生了两个对象，一个是引用对象，一个是实例对象，前者就是此处的<code>object</code>,后者就是此处<code>new Object()</code>创建的对象，引用对象记录着实例对象的起始地址。而存储位置二者也不同，实例对象存储在堆上，引用对象存储在栈上（关于栈后续会讲解）。</p>
+<p>此处其实产生了两个对象，一个是引用对象，一个是实例对象，前者就是此处的<em>object</em>,后者就是此处<em>new Object()</em>创建的对象，引用对象记录着实例对象的起始地址。而存储位置二者也不同，实例对象存储在堆上，引用对象存储在栈上（关于栈后续会讲解）。</p>
 
-<p>我们平时说的垃圾回收主要针对的就是堆，所有有时也称堆为<code>GC堆</code>。</p>
+<p>我们平时说的垃圾回收主要针对的就是堆，所有有时也称堆为<em>GC堆</em>。</p>
 
 <h3 id="section-2">1.1.2 方法区</h3>
 
@@ -229,7 +230,7 @@
 
 <p>String具有不可变性，因为String类时final类型，不可以被修改，那么为什么string需要被设置为final呢？</p>
 
-<p>JVM在内存中留出一块特殊的内存区域，成为“String常量池”，当编译器创建一个字面值的字符串时，比如<code>String s = "abc"</code>，可以检验池内是否已经存在相同的String字面值，如果找到，则直接让引用指向它，如果没有则创建一个新的字符串再指向它，所以，会有一种情况，多个引用指向同一个常量池中的字面值字符串，任何一个引用改变字符串其他引用页得改变，所以，就得让String具有不可变性。</p>
+<p>JVM在内存中留出一块特殊的内存区域，成为“String常量池”，当编译器创建一个字面值的字符串时，比如<em>String s = “abc”</em>，可以检验池内是否已经存在相同的String字面值，如果找到，则直接让引用指向它，如果没有则创建一个新的字符串再指向它，所以，会有一种情况，多个引用指向同一个常量池中的字面值字符串，任何一个引用改变字符串其他引用页得改变，所以，就得让String具有不可变性。</p>
 
 <p>然后，我们需要分清以下这个概念，关于字符串，内存中有两个不同的部分，一个是字符串常量池，一个是堆。</p>
 
@@ -243,11 +244,11 @@
 
 <p>第一行代码只创建了一个字符串对象放在常量池中，但是第二行代码为什么就创建了两个对象呢？</p>
 
-<p>因为使用了<code>new</code>关键字，所以Java将在堆中创建一个新的String对象，并且引用变量s将引用它。此外，字面值“abc”将被放入常量池，所以也就有了两个对象，一个在堆中，一个在String常量池。</p>
+<p>因为使用了<em>new</em>关键字，所以Java将在堆中创建一个新的String对象，并且引用变量s将引用它。此外，字面值“abc”将被放入常量池，所以也就有了两个对象，一个在堆中，一个在String常量池。</p>
 
-<p>另外，关于<code>intern</code>方法，它只创建一个常量池中的对象。</p>
+<p>另外，关于<em>intern</em>方法，它只创建一个常量池中的对象。</p>
 
-<p>到此为止，我们介绍完了<code>方法区</code>和<code>堆</code>这两个线程共享的数据区域，接下来开始介绍线程隔离数据区域。</p>
+<p>到此为止，我们介绍完了<em>方法区</em>和<em>堆</em>这两个线程共享的数据区域，接下来开始介绍线程隔离数据区域。</p>
 
 <h2 id="section-3">1.2 线程隔离数据区域</h2>
 
@@ -259,7 +260,7 @@
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Object</span> <span class="n">object</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Object</span><span class="o">();</span></code></pre></div>
 
-<p>此处建立的引用变量<code>object</code>就存储在栈中。</p>
+<p>此处建立的引用变量<em>object</em>就存储在栈中。</p>
 
 <p>Java虚拟机栈描述了Java方法执行的内存模型，每个方法被执行的时候会同时创建一个栈帧，此处栈帧的概念不用细纠，此处只要知道它是描述方法的相关信息的实体即可。</p>
 
@@ -289,9 +290,9 @@
 
 <p>这一行简单的代码涉及了堆，方法区，Java虚拟机栈三个数据区域，</p>
 
-<p><code>Object object</code>这部分的语义映射到Java虚拟机栈的本地变量表，做为一个<code>reference</code>引用类型存在。</p>
+<p><em>Object object</em>这部分的语义映射到Java虚拟机栈的本地变量表，做为一个<em>reference</em>引用类型存在。</p>
 
-<p><code>new Object()</code>这一部分映射到堆中，在堆中描述该对象的数据，另外还需要在堆中还需要保存能查找到该对象类型数据的地址，这些类型数据就是保存方法区中。</p>
+<p><em>new Object()</em>这一部分映射到堆中，在堆中描述该对象的数据，另外还需要在堆中还需要保存能查找到该对象类型数据的地址，这些类型数据就是保存方法区中。</p>
 
 <p>方法区保存对象的对象类型，父类，实现的接口等信息。</p>
 
@@ -317,7 +318,7 @@
 
 <h1 id="section-7">四、 垃圾回收</h1>
 
-<p>垃圾回收，英文叫<code>Garbage Collection, GC</code>，其实垃圾回收在Java语言之前就出现了，最早在Lisp语言中使用。其实垃圾回收是一个自动化的过程，那么学习它的意义何在呢？当遇到内存泄漏的问题时，具备一定垃圾回收的知识将对问题排查起到很大的作用，在Android开发中使用MAT时就会感受到。</p>
+<p>垃圾回收，英文叫<em>Garbage Collection, GC</em>，其实垃圾回收在Java语言之前就出现了，最早在Lisp语言中使用。其实垃圾回收是一个自动化的过程，那么学习它的意义何在呢？当遇到内存泄漏的问题时，具备一定垃圾回收的知识将对问题排查起到很大的作用，在Android开发中使用MAT时就会感受到。</p>
 
 <h2 id="section-8">4.1 对象死的证据</h2>
 
@@ -329,7 +330,7 @@
 
 <h3 id="section-10">4.1.2 根搜索法</h3>
 
-<p>根搜索法的思路是通过一系列名为<code>GC Root</code>，没有引用链到达任何<code>GC Root</code>的对象，则证明此对象是不可用的，这些对象将被列入回收的范围。</p>
+<p>根搜索法的思路是通过一系列名为<em>GC Root</em>，没有引用链到达任何<em>GC Root</em>的对象，则证明此对象是不可用的，这些对象将被列入回收的范围。</p>
 
 <h2 id="section-11">4.2 引用的扩展概念</h2>
 
