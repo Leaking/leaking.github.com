@@ -1,15 +1,11 @@
 ---
 layout: post
 title: "开发Android Camera遇到的问题"
-excerpt: "Custom written post descriptions are the way to go... if you're not lazy."
+excerpt: "Nothing."
 categories: android
 tags: [android]
 comments: true
 share: true
-image:
-  feature: camera_bk.jpg
-  credit: WeGraphics
-  creditlink: http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/
 comments: true
 share: true
 ---
