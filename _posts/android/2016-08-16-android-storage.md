@@ -6,8 +6,6 @@ categories: android
 tags: [android]
 comments: true
 share: true
-comments: true
-share: true
 ---
 
 一直以来用到Android中关于*Sdcard*或者*data/data*相关的存储时，以及读写权限问题，难免会有混淆，这里做个总结。
