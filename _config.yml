@@ -5,7 +5,7 @@ locale: en_US
 description:
 logo: site-logo.png
 search: true
-url: 
+url: http://leaking.github.io
 
 
 # Jekyll configuration
@@ -35,25 +35,14 @@ exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.
 # Site owner
 owner:
   name: Quinn Chen
-  avatar: bio-photo.jpg
+  avatar: site-log.png
   email: chenhuazhaoao@gmail.com
-  disqus-shortname:
   twitter: chenhuazhaoao
-  facebook: #username
+  facebook: chenhuazhaoao
   github: Leaking
   weibo: hereamme
   stackexchange: #http://stackoverflow.com/users/1290235/zil-mike
-  linkedin: #username
-  instagram: #username
-  flickr: #username
-  tumblr: #username
-  google:
-    plus: #username
-    analytics:
-    verify:
-    ad-client:
-    ad-slot: 
-  bing-verify:
+
 
 
 
