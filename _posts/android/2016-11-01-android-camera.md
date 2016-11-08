@@ -8,6 +8,7 @@ comments: true
 share: true
 comments: true
 share: true
+id: 2016/11/01/android-camera
 ---
 
 近来在做一个关于Android中Camera的需求，此处做点简要记录。提供给大家参考，避免以后猜到这些坑。
